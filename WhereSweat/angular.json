@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "WhereSweat": {
+    "wheresweat": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/WhereSweat",
+            "outputPath": "dist/wheresweat",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -30,9 +30,7 @@
               "src/styles.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": [
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -71,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "WhereSweat:build:production"
+              "browserTarget": "wheresweat:build:production"
             },
             "development": {
-              "browserTarget": "WhereSweat:build:development"
+              "browserTarget": "wheresweat:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "WhereSweat:build"
+            "browserTarget": "wheresweat:build"
           }
         },
         "test": {
@@ -105,5 +103,5 @@
       }
     }
   },
-  "defaultProject": "WhereSweat"
+  "defaultProject": "wheresweat"
 }
