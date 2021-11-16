@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class CategoryPageComponent implements OnInit {
 
   constructor() { }
+  imgSrc = "./assets/images/profile_rock.PNG";
 
   ngOnInit(): void {
   }
