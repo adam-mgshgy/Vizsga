@@ -4,12 +4,14 @@ import { CategoriesPageComponent } from './components/categories-page/categories
 import { CategoryPageComponent } from './components/category-page/category-page.component';
 import { LoginpageComponent } from './components/loginpage/loginpage.component';
 import { MainpageComponent } from './components/mainpage/mainpage.component';
+import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
 
 const routes: Routes = [
   {path: 'home', component: MainpageComponent},
   {path: 'login', component: LoginpageComponent},
   {path: 'categories', component: CategoriesPageComponent},
-  {path: 'category', component: CategoryPageComponent}
+  {path: 'category', component: CategoryPageComponent},
+  {path: 'profile', component: ProfileSettingsComponent}
 ];
 
 @NgModule({
