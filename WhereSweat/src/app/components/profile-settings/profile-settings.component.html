@@ -1,1 +1,36 @@
-<p>profile-settings works!</p>
+<form>
+    <div class="mb-3">
+        <label for="username" class="form-label">
+            Teljes név
+        </label>
+        <input type="text" class="form-control" id="username" name="username">
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">E-mail cím</label>
+        <input type="email" class="form-control" id="email" value="{{user.email}}" readonly>
+        <div id="emailHelp" class="form-text">Az e-mail cím regisztráció után nem változtatható meg.</div>
+    </div>
+    <div class="mb-3">
+        <label for="phone_number" class="form-label">
+            Telefonszám
+        </label>
+        <input type="text" class="form-control" id="phone_number" name="phone_number">
+    </div>
+    <div class="mb-3">
+        <label for="city" class="form-label">
+            Város
+        </label>
+        <input type="text" class="form-control" id="city" name="city">
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Jelszó</label>
+        <input type="password" class="form-control" id="password">
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Jelszó ismét</label>
+        <input type="password" class="form-control" id="password">
+    </div>
+    <p>Edző?</p>
+    <button type="submit" class="btn btn-primary">Módosítás</button>
+    <button class="btn btn-danger ms-2">Mégsem</button>
+</form>
