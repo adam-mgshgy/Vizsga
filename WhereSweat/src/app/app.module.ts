@@ -7,6 +7,7 @@ import { LoginpageComponent } from './components/loginpage/loginpage.component';
 import { MainpageComponent } from './components/mainpage/mainpage.component';
 import { CategoriesPageComponent } from './components/categories-page/categories-page.component';
 import { CategoryPageComponent } from './components/category-page/category-page.component';
+import { RegistryPageComponent } from './components/registry-page/registry-page.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { CategoryPageComponent } from './components/category-page/category-page.
     LoginpageComponent,
     MainpageComponent,
     CategoriesPageComponent,
-    CategoryPageComponent
+    CategoryPageComponent,
+    RegistryPageComponent
   ],
   imports: [
     BrowserModule,
