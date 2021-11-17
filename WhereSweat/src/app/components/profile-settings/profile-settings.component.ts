@@ -8,7 +8,16 @@ import { UserModel } from 'src/app/models/user-model';
 })
 export class ProfileSettingsComponent implements OnInit {
 
-  user = new UserModel();
+  //users: UserModel[] = [];
+  user: UserModel = {
+      id: 1,
+      email: 'tesztelek@gmail.com',
+      full_name: 'Teszt Elek',
+      trainer: true,
+      phone_number: '+36701234678',
+      city: 'Győr' 
+  }
+
   constructor() { }
 
   ngOnInit(): void {

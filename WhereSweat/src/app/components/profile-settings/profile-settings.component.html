@@ -3,7 +3,7 @@
         <label for="username" class="form-label">
             Teljes név
         </label>
-        <input type="text" class="form-control" id="username" name="username">
+        <input type="text" class="form-control" id="username" name="username" value="{{user.full_name}}">
     </div>
     <div class="mb-3">
         <label for="email" class="form-label">E-mail cím</label>
@@ -11,16 +11,17 @@
         <div id="emailHelp" class="form-text">Az e-mail cím regisztráció után nem változtatható meg.</div>
     </div>
     <div class="mb-3">
-        <label for="phone_number" class="form-label">
+        <label for="phoneNumber" class="form-label">
             Telefonszám
         </label>
-        <input type="text" class="form-control" id="phone_number" name="phone_number">
+        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="{{user.phone_number}}">
+        <div id="phoneNumberNelp" class="form-text">Kérjük ezt a formátumot használd: +36123456789</div>
     </div>
     <div class="mb-3">
         <label for="city" class="form-label">
             Város
         </label>
-        <input type="text" class="form-control" id="city" name="city">
+        <input type="text" class="form-control" id="city" name="city" value="{{user.city}}">
     </div>
     <div class="mb-3">
         <label for="password" class="form-label">Jelszó</label>
@@ -30,7 +31,18 @@
         <label for="password" class="form-label">Jelszó ismét</label>
         <input type="password" class="form-control" id="password">
     </div>
-    <p>Edző?</p>
-    <button type="submit" class="btn btn-primary">Módosítás</button>
-    <button class="btn btn-danger ms-2">Mégsem</button>
+    <div class="mb-3">
+        <button [ngClass]="user.trainer ? 'd-none' : 'd-block'" type="button" class="btn btn-info" data-bs-toggle="tooltip" data-bs-html="true" 
+        title="Ha szeretnél edzővé válni és feltölteni edzéseid, nézd meg ajánlatainkat a gombra kattinva!">
+            Edzővé válok!
+        </button>
+        <button [ngClass]="user.trainer ? 'd-block' : 'd-none'" type="button" class="btn btn-info" data-bs-toggle="tooltip" data-bs-html="true" 
+        title="Ha szeretnéd lemondani edzői előfizetésed, kattints a gombra!">
+            Előfizetés lemondása
+        </button>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Módosítás</button>
+        <button class="btn btn-danger ms-2">Mégsem</button>
+    </div>
 </form>
