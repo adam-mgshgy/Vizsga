@@ -2,3 +2,6 @@
     display: block;
     margin-top: 0;
  }
+ .dropdown:not(:hover) .dropdown-menu{
+    display: none;
+ }
