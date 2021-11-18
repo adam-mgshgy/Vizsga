@@ -4,6 +4,7 @@ import { CategoriesPageComponent } from './components/categories-page/categories
 import { CategoryPageComponent } from './components/category-page/category-page.component';
 import { LoginpageComponent } from './components/loginpage/loginpage.component';
 import { MainpageComponent } from './components/mainpage/mainpage.component';
+import { RegistryPageComponent } from './components/registry-page/registry-page.component';
 import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   {path: 'login', component: LoginpageComponent},
   {path: 'categories', component: CategoriesPageComponent},
   {path: 'category', component: CategoryPageComponent},
+  {path: 'register', component: RegistryPageComponent},
   {path: 'profile', component: ProfileSettingsComponent}
 ];
 

@@ -7,6 +7,7 @@ import { LoginpageComponent } from './components/loginpage/loginpage.component';
 import { MainpageComponent } from './components/mainpage/mainpage.component';
 import { CategoriesPageComponent } from './components/categories-page/categories-page.component';
 import { CategoryPageComponent } from './components/category-page/category-page.component';
+import { RegistryPageComponent } from './components/registry-page/registry-page.component';
 import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { ProfileSettingsComponent } from './components/profile-settings/profile-
     MainpageComponent,
     CategoriesPageComponent,
     CategoryPageComponent,
+    RegistryPageComponent,
     ProfileSettingsComponent
   ],
   imports: [
