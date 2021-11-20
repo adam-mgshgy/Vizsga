@@ -8,8 +8,15 @@ import { Component, OnInit } from '@angular/core';
 export class CategoryPageComponent implements OnInit {  
   constructor() { }
   imgSrc = "./assets/images/profile_rock.png";
-  imgBckgSrc = "./assets/images/trx.jpg";
+  imgBckgSrc = "./assets/images/gym.jpg";
+
+  mobile: boolean = false;
+
   ngOnInit(): void {
+    if (window.innerWidth <= 991) { 
+      this.mobile = true;
+    }
+    window.onresize = () => this.mobile = window.innerWidth <= 991;
   }
 
 }
