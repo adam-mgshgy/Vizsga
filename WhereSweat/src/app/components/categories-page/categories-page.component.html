@@ -1,8 +1,8 @@
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div *ngFor="let category of categories" id="catImgDiv" class="col-lg-4 mb-5 position-relative" >
-            <img class="img-fluid border" id="catImg" [src]="imgPrefix +category.imgSrc" alt="">
-            <a class="centered text-decoration-none fw-bold" id="catRef" href=""><span class="centered">{{category.name}}</span></a>
+            <img class="img-fluid border" id="catImg" [src]="imgPrefix + category.imgSrc" alt="">
+            <a class="centered text-decoration-none fw-bold" id="catRef" routerLink="/category"><span class="centered">{{category.name}}</span></a>
         </div>
     </div>
 </div>

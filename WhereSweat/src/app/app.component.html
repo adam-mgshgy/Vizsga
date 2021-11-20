@@ -10,12 +10,12 @@
           <a class="nav-link active" routerLink="/home">Kezdőlap</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+          <a class="nav-link dropdown-toggle" routerLink="/categories" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
             Kategóriák
           </a>
           <ul class="dropdown-menu">
             <li *ngFor="let cat of categories">             
-                <a class="dropdown-item" href="#">{{cat.name}}</a>              
+                <a class="dropdown-item" routerLink="/category">{{cat.name}}</a>              
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -40,6 +40,6 @@
     </div>
   </div>
 </nav>
-<div class="container">
+<div>
   <router-outlet></router-outlet>
 </div>
