@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
 
@@ -9,7 +10,7 @@ import { UserModel } from 'src/app/models/user-model';
 })
 export class CategoryPageComponent implements OnInit {  
   constructor() { }
-  imgSrc = "./assets/images/profile_rock.PNG";
+  imgSrc = "./assets/images/profile_rock.png";
   imgBckgSrc = "./assets/images/gym.jpg";
 
   mobile: boolean = false;
@@ -39,7 +40,14 @@ export class CategoryPageComponent implements OnInit {
     {id: 9,email: 'tesztelek@gmail.com',full_name: 'Teszt Elek',trainer: true,phone_number: '+36701234678',city: 'Győr' },
     {id: 10,email: 'tesztelek@gmail.com',full_name: 'Teszt Elek',trainer: true,phone_number: '+36701234678',city: 'Győr' },
     {id: 11,email: 'tesztelek@gmail.com',full_name: 'Teszt Elek',trainer: true,phone_number: '+36701234678',city: 'Győr' }
-];
+  ];
+  public tags: TagModel[] = [
+    {id: 0, name:"csoportos", colour:"#6610f2"},
+    {id: 1, name:"erőnléti",colour:"black"},
+    {id: 2, name:"saját testsúlyos",colour:"#fd7e14"},
+    {id: 3, name:"edzőterem",colour:"red"},
+    {id: 4, name:"zsírégető",colour:"#0dcaf0"}
+  ];
 
 
   ngOnInit(): void {

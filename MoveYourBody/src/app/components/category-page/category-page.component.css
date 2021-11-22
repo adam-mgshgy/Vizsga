@@ -1,0 +1,9 @@
+.container-fluid{
+    width: 80%;
+}
+#tag{    
+    height: 30px;
+    font-size: x-small;
+    border: 0px;
+    color: white;
+}
