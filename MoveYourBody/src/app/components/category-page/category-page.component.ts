@@ -14,6 +14,7 @@ export class CategoryPageComponent implements OnInit {
   imgBckgSrc = "./assets/images/gym.jpg";
 
   mobile: boolean = false;
+
   public trainings: TrainingModel[] = [
     {name: 'Teri trx', description: 'Zenés TRX edzés Bana city központjában', category:'TRX', id:0, max_member:8, trainer_id:0},
     {name: 'Teri trx', description: 'Zenés TRX edzés Bana city központjában', category:'TRX', id:0, max_member:8, trainer_id:0},
