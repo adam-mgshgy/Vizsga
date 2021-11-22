@@ -7,7 +7,7 @@ import { CategoryModel } from './models/category-model';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'WhereSweat';
+  title = 'MoveYourBody';
 
   public categories: CategoryModel[] = [
      {name: 'Box', imgSrc:""},
