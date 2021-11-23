@@ -11,7 +11,7 @@ export class CategoriesPageComponent implements OnInit {
 
   constructor() { }
   imgPrefix = "./assets/images/";
-  smScreen = false;
+  public selectedCategory = '';
 
   public categories: CategoryModel[] = [
    {name: 'Box', imgSrc: 'box.jpg'},

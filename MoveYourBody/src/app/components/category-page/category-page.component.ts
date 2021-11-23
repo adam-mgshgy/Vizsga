@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
+
 
 @Component({
   selector: 'app-category-page',
@@ -9,22 +10,27 @@ import { UserModel } from 'src/app/models/user-model';
   styleUrls: ['./category-page.component.css']
 })
 export class CategoryPageComponent implements OnInit {  
-  constructor() { }
+
+
+  constructor() {
+    
+   }
   imgSrc = "./assets/images/profile_rock.png";
   imgBckgSrc = "./assets/images/gym.jpg";
 
   mobile: boolean = false;
+  
 
   public trainings: TrainingModel[] = [
     {name: 'Teri trx', description: 'Zenés TRX edzés Bana city központjában', category:'TRX', id:0, max_member:8, trainer_id:0},
-    {name: 'Teri trx', description: 'Zenés TRX edzés Bana city központjában', category:'TRX', id:0, max_member:8, trainer_id:0},
-    {name: 'Teri trx', description: 'Zenés TRX edzés Bana city központjában', category:'TRX', id:0, max_member:8, trainer_id:0},
-    {name: 'Teri trx', description: 'Zenés TRX edzés Bana city központjában', category:'TRX', id:0, max_member:8, trainer_id:0},
-    {name: 'Teri trx', description: 'Zenés TRX edzés Bana city központjában', category:'TRX', id:0, max_member:8, trainer_id:0},
-    {name: 'Teri trx', description: 'Zenés TRX edzés Bana city központjában', category:'TRX', id:0, max_member:8, trainer_id:0},
-    {name: 'Teri trx', description: 'Zenés TRX edzés Bana city központjában', category:'TRX', id:0, max_member:8, trainer_id:0},
-    {name: 'Teri trx', description: 'Zenés TRX edzés Bana city központjában', category:'TRX', id:0, max_member:8, trainer_id:0},
-    {name: 'Teri trx', description: 'Zenés TRX edzés Bana city központjában', category:'TRX', id:0, max_member:8, trainer_id:0},
+    {name: 'Kiütünk mindenkit', description: 'Zenés TRX edzés Bana city központjában', category:'Box', id:0, max_member:8, trainer_id:0},
+    {name: 'Lovaglás nagyoknak', description: 'Zenés TRX edzés Bana city központjában', category:'Lovaglás', id:0, max_member:8, trainer_id:0},
+    {name: 'Légy hal', description: 'Zenés TRX edzés Bana city központjában', category:'Úszás', id:0, max_member:8, trainer_id:0},
+    {name: '300 helyett 8an spartan edzés', description: 'Zenés TRX edzés Bana city központjában', category:'Spartan', id:0, max_member:8, trainer_id:0},
+    {name: 'Foci Ferivel', description: 'Zenés TRX edzés Bana city központjában', category:'Labdarúgás', id:0, max_member:8, trainer_id:0},
+    {name: 'Ripi röpi Rebekával', description: 'Zenés TRX edzés Bana city központjában', category:'Röplabda', id:0, max_member:8, trainer_id:0},
+    {name: 'Crossfit edzés', description: 'Zenés TRX edzés Bana city központjában', category:'Crossfit', id:0, max_member:8, trainer_id:0},
+    {name: 'Foci Viktorral', description: 'Zenés TRX edzés Bana city központjában', category:'Labdarúgás', id:0, max_member:8, trainer_id:0},
     {name: 'Teri trx', description: 'Zenés TRX edzés Bana city központjában', category:'TRX', id:0, max_member:8, trainer_id:0},
     {name: 'Teri trx', description: 'Zenés TRX edzés Bana city központjában', category:'TRX', id:0, max_member:8, trainer_id:0},
      
@@ -32,7 +38,7 @@ export class CategoryPageComponent implements OnInit {
   public users: UserModel[] = [
     {id: 1,email: 'tesztelek@gmail.com',full_name: 'Teszt Elek',trainer: true,phone_number: '+36701234678',city: 'Győr' },
     {id: 2,email: 'tesztelek@gmail.com',full_name: 'Suttyofalvi Csoves Banat',trainer: true,phone_number: '+36701234678',city: 'Budapest' },
-    {id: 3,email: 'tesztelek@gmail.com',full_name: 'Kandisz Nóra',trainer: true,phone_number: '+36701234678',city: 'Miskoc' },
+    {id: 3,email: 'tesztelek@gmail.com',full_name: 'Kandisz Nóra',trainer: true,phone_number: '+36701234678',city: 'Miskolc' },
     {id: 4,email: 'tesztelek@gmail.com',full_name: 'Kovács Ákos',trainer: true,phone_number: '+36701234678',city: 'Tatabanya' },
     {id: 5,email: 'tesztelek@gmail.com',full_name: 'Futty Imre',trainer: true,phone_number: '+36701234678',city: 'Balatonfured' },
     {id: 6,email: 'tesztelek@gmail.com',full_name: 'Mittomen Karoly',trainer: true,phone_number: '+36701234678',city: 'Szeged' },
@@ -56,6 +62,7 @@ export class CategoryPageComponent implements OnInit {
       this.mobile = true;
     }
     window.onresize = () => this.mobile = window.innerWidth <= 991;
+    
   }
 
 }

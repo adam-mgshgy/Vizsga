@@ -11,7 +11,7 @@ export class AppComponent {
 
   public categories: CategoryModel[] = [
      {name: 'Box', imgSrc:""},
-     {name: 'Cross Fitt', imgSrc:""},
+     {name: 'Crossfit', imgSrc:""},
      {name: 'Jóga', imgSrc:""},
      {name: 'Spartan', imgSrc:""},
      {name: 'Tenisz', imgSrc:""},
