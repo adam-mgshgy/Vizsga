@@ -1,0 +1,51 @@
+#catImg {
+  border-radius: 25px;    
+}
+
+#catImgDiv{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.centered {
+position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#catRef{
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 70%;
+  height: 20%;
+  text-align: center;
+}
+
+a#catRef{
+  color: white;
+  font-size: xx-large;
+}
+
+h1, h2 {
+  text-align: center;
+  margin: 10px;
+}
+
+#moreCategories {
+  color: black;
+  text-decoration: none;
+}
+.links {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  margin-bottom: 10%;
+}
+#logoImage {
+  width: 100%;
+}
+.trainingImage {
+  width: 90%;
+  margin: 5%;
+}
