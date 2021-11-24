@@ -11,7 +11,7 @@ const routes: Routes = [
   {path: 'home', component: MainpageComponent},
   {path: 'login', component: LoginpageComponent},
   {path: 'categories', component: CategoriesPageComponent},
-  {path: 'category', component: CategoryPageComponent},
+  {path: 'category/:category', component: CategoryPageComponent},
   {path: 'register', component: RegistryPageComponent},
   {path: 'profile', component: ProfileSettingsComponent}
 ];
