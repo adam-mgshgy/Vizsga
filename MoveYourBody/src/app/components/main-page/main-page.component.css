@@ -6,6 +6,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  margin-top: 5%;
 }
 
 .centered {
@@ -30,12 +31,9 @@ a#catRef{
 h1, h2 {
   text-align: center;
   margin: 10px;
+  color: black;
 }
 
-#moreCategories {
-  color: black;
-  text-decoration: none;
-}
 .links {
   color: black;
   text-decoration: none;
@@ -48,4 +46,9 @@ h1, h2 {
 .trainingImage {
   width: 90%;
   margin: 5%;
+}
+.cats {
+  width: 92%;
+  margin-left: 4%;
+  margin-right: 4%;
 }
