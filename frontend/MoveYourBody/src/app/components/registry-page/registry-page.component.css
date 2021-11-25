@@ -1,9 +1,22 @@
 div input{
     width: 40%;
+    margin: auto;
+    text-align: center;
 }
 #accept {
     width: 1rem;
 }
 .form-text {
     width: 40%;
+    margin: auto;
+}
+.container {
+    align-content: center;
+    text-align: center;
+}
+#registerButton{
+    background-color: #80ED99;
+}
+#trainerButton {
+    background-color: #57CC99;
 }

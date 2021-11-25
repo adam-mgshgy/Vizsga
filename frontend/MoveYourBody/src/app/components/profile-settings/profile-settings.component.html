@@ -1,49 +1,49 @@
-<h1>Fiókbeállítások</h1>
-<form>
-    <div class="mb-3">
-        <label for="username" class="form-label fs-5">
-            Teljes név
-        </label>
-        <input type="text" class="form-control" id="username" name="username" value="{{user.full_name}}">
-    </div>
-    <div class="mb-3">
-        <label for="email" class="form-label fs-5">E-mail cím</label>
-        <input type="email" class="form-control" id="email" value="{{user.email}}" readonly>
-        <div id="emailHelp" class="form-text">Az e-mail cím regisztráció után nem változtatható meg.</div>
-    </div>
-    <div class="mb-3">
-        <label for="phoneNumber" class="form-label fs-5">
-            Telefonszám
-        </label>
-        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="{{user.phone_number}}">
-        <div id="phoneNumberNelp" class="form-text">Kérjük ezt a formátumot használd: +36123456789</div>
-    </div>
-    <div class="mb-3">
-        <label for="city" class="form-label fs-5">
-            Város
-        </label>
-        <input type="text" class="form-control" id="city" name="city" value="{{user.city}}">
-    </div>
-    <div class="mb-3">
-        <label for="password" class="form-label fs-5">Jelszó</label>
-        <input type="password" class="form-control" id="password">
-    </div>
-    <div class="mb-3">
-        <label for="password" class="form-label fs-5">Jelszó ismét</label>
-        <input type="password" class="form-control" id="password">
-    </div>
-    <div class="mb-3">
-        <button [ngClass]="user.trainer ? 'd-none' : 'd-block'" type="button" class="btn btn-info fs-5" data-bs-toggle="tooltip" data-bs-html="true" 
-        title="Ha szeretnél edzővé válni és feltölteni edzéseid, nézd meg ajánlatainkat a gombra kattinva!">
-            Edzővé válok!
-        </button>
-        <button [ngClass]="user.trainer ? 'd-block' : 'd-none'" type="button" class="btn btn-info fs-5" data-bs-toggle="tooltip" data-bs-html="true" 
-        title="Ha szeretnéd lemondani edzői előfizetésed, kattints a gombra!">
-            Előfizetés lemondása
-        </button>
-    </div>
-    <div class="mb-3">
-        <button type="submit" class="btn btn-primary fs-5">Módosítás</button>
-        <button class="btn btn-danger ms-2 fs-5">Mégsem</button>
-    </div>
-</form>
+<div class="container">
+    <h1>Fiókbeállítások</h1>
+    <form>
+        <div class="mb-3">
+            <label for="username" class="form-label fs-5">
+                Teljes név
+            </label>
+            <input type="text" class="form-control" id="username" name="username" value="{{user.full_name}}">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label fs-5">E-mail cím</label>
+            <input type="email" class="form-control" id="email" value="{{user.email}}" readonly>
+            <div id="emailHelp" class="form-text">Az e-mail cím regisztráció után nem változtatható meg.</div>
+        </div>
+        <div class="mb-3">
+            <label for="phoneNumber" class="form-label fs-5">
+                Telefonszám
+            </label>
+            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="{{user.phone_number}}">
+            <div id="phoneNumberNelp" class="form-text">Kérjük ezt a formátumot használd: +36123456789</div>
+        </div>
+        <div class="mb-3">
+            <label for="city" class="form-label fs-5">
+                Város
+            </label>
+            <input type="text" class="form-control" id="city" name="city" value="{{user.city}}">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label fs-5">Jelszó</label>
+            <input type="password" class="form-control" id="password">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label fs-5">Jelszó ismét</label>
+            <input type="password" class="form-control" id="password">
+        </div>
+        <div class="mb-3">
+            <button id="subscribeButton" [ngClass]="user.trainer ? 'd-none' : 'd-inline-block'" type="button" class="btn btn-info fs-5" data-bs-toggle="tooltip" data-bs-html="true" title="Ha szeretnél edzővé válni és feltölteni edzéseid, nézd meg ajánlatainkat a gombra kattinva!">
+                Edzővé válok!
+            </button>
+            <button id="cancelSubscriptionButton" [ngClass]="user.trainer ? 'd-inline-block' : 'd-none'" type="button" class="btn btn-info fs-5" data-bs-toggle="tooltip" data-bs-html="true" title="Ha szeretnéd lemondani edzői előfizetésed, kattints a gombra!">
+                Előfizetés lemondása
+            </button>
+        </div>
+        <div class="mb-3">
+            <button id="modifyButton" type="submit" class="btn btn-primary fs-5">Módosítás</button>
+            <button class="btn btn-danger ms-2 fs-5">Mégsem</button>
+        </div>
+    </form>
+</div>
