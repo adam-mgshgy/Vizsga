@@ -1,3 +1,26 @@
-input {
-    width: 30%;
+div input{
+    width: 40%;
+    margin: auto;
+    text-align: center;
 }
+button {
+    border: none;
+}
+.form-text {
+    width: 40%;
+    margin: auto;
+}
+.container {
+    align-content: center;
+    text-align: center;
+}
+#cancelSubscriptionButton{
+    background-color: #FE5F55;
+}
+#modifyButton {
+    background-color: #57CC99;
+}
+#subscribeButton {
+    background-color: #80ED99 ;
+}
+
