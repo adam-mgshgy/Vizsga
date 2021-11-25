@@ -215,12 +215,19 @@ export class CategoryPageComponent implements OnInit {
       city: 'Győr',
     },
   ];
-  public tags: TagModel[] = [
+  public primaryTags: TagModel[] = [
+    { id: 0, name: 'csoportos', colour: '#6610f2' },
+    { id: 1, name: 'erőnléti', colour: 'black' },
+    { id: 2, name: 'saját testsúlyos', colour: '#fd7e14' },
+    { id: 3, name: 'edzőterem', colour: 'red' }
+  ];
+  public allTags: TagModel[] = [
     { id: 0, name: 'csoportos', colour: '#6610f2' },
     { id: 1, name: 'erőnléti', colour: 'black' },
     { id: 2, name: 'saját testsúlyos', colour: '#fd7e14' },
     { id: 3, name: 'edzőterem', colour: 'red' },
     { id: 4, name: 'zsírégető', colour: '#0dcaf0' },
+    { id: 5, name: 'személyi edzés', colour: '#0dcaf0' }
   ];
 
   ngOnInit(): void {
