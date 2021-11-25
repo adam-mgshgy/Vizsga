@@ -1,54 +1,56 @@
-<h1>Regisztráció</h1>
-<form>
-    <p>A *-gal jelölt mezők kitöltése kötelező!</p>
-    <div class="mb-3">
-        <label for="username" class="form-label fs-5">
-            Teljes név*
-        </label>
-        <input type="text" class="form-control" id="username" name="username" required>
-    </div>
-    <div class="mb-3">
-        <label for="email" class="form-label fs-5">E-mail cím*</label>
-        <input type="email" class="form-control" id="email" required>
-        <div id="emailHelp" class="form-text">Az e-mail cím regisztráció után nem változtatható meg!</div>
-    </div>
-    <div class="mb-3">
-        <label for="phoneNumber" class="form-label fs-5">
-            Telefonszám*
-        </label>
-        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
-        <div id="phoneNumberNelp" class="form-text">Kérjük ezt a formátumot használd: +36123456789</div>
-    </div>
-    <div class="mb-3">
-        <label for="city" class="form-label fs-5">
-            Város
-        </label>
-        <input type="text" class="form-control" id="city" name="city">
-        <div id="cityHelp" class="form-text">Kérjük add meg a várost, ahol szívesen edzenél, hogy a megfelelő edzéseket mutathassuk!</div>
+<div class="container">
+    <h1>Regisztráció</h1>
+    <form>
+        <p>A *-gal jelölt mezők kitöltése kötelező!</p>
+        <div class="mb-3">
+            <label for="username" class="form-label fs-5">
+                Teljes név*
+            </label>
+            <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label fs-5">E-mail cím*</label>
+            <input type="email" class="form-control" id="email" required>
+            <div id="emailHelp" class="form-text">Az e-mail cím regisztráció után nem változtatható meg!</div>
+        </div>
+        <div class="mb-3">
+            <label for="phoneNumber" class="form-label fs-5">
+                Telefonszám*
+            </label>
+            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
+            <div id="phoneNumberNelp" class="form-text">Kérjük ezt a formátumot használd: +36123456789</div>
+        </div>
+        <div class="mb-3">
+            <label for="city" class="form-label fs-5">
+                Város*
+            </label>
+            <input type="text" class="form-control" id="city" name="city" required>
+            <div id="cityHelp" class="form-text">Kérjük add meg a várost, ahol szívesen edzenél, hogy a megfelelő edzéseket mutathassuk!</div>
 
-    </div>
-    <div class="mb-3">
-        <label for="password" class="form-label fs-5">Jelszó*</label>
-        <input type="password" class="form-control" id="password" required>
-    </div>
-    <div class="mb-3">
-        <label for="password" class="form-label fs-5">Jelszó ismét*</label>
-        <input type="password" class="form-control" id="password" required>
-    </div>
-    <div class="mb-3">
-        <input class="form-check-input" type="checkbox" id="accept" name="accept">
-        <label class="form-check-label ms-2" for="accept">
-            Felhasználási feltételek elfogadása
-        </label>
-    </div>
-    <div class="mb-3">
-        <button type="button" class="btn btn-info fs-5" data-bs-toggle="tooltip" data-bs-html="true" 
-        title="Ha szeretnél edzővé válni és feltölteni edzéseid, nézd meg ajánlatainkat a gombra kattinva!">
-            Edzőként szeretnék regisztrálni
-        </button>
-    </div>
-    <div class="mb-3">
-        <button type="submit" class="btn btn-primary fs-5">Regisztráció</button>
-        <button class="btn btn-danger ms-2 fs-5">Mégsem</button>
-    </div>
-</form>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label fs-5">Jelszó*</label>
+            <input type="password" class="form-control" id="password" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label fs-5">Jelszó ismét*</label>
+            <input type="password" class="form-control" id="password" required>
+        </div>
+        <div class="mb-3">
+            <input class="form-check-input" type="checkbox" id="accept" name="accept" required>
+            <label class="form-check-label ms-2" for="accept">
+                Felhasználási feltételek elfogadása*
+            </label>
+        </div>
+        <div class="mb-3">
+            <button id="trainerButton" type="button" class="btn fs-5" data-bs-toggle="tooltip" data-bs-html="true" 
+                    title="Ha szeretnél edzővé válni és feltölteni edzéseid, nézd meg ajánlatainkat a gombra kattinva!">
+                Edzőként szeretnék regisztrálni
+            </button>
+        </div>
+        <div class="mb-3">
+            <button id="registerButton" type="submit" class="btn fs-5">Regisztráció</button>
+            <button class="btn btn-danger ms-2 fs-5">Mégsem</button>
+        </div>
+    </form>
+</div>
