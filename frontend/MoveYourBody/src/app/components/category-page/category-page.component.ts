@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
@@ -13,15 +13,15 @@ export class CategoryPageComponent implements OnInit {
   category: string | null = null;
 
   constructor(private route: ActivatedRoute) {}
-  imgSrc = './assets/images/profile_rock.png';
-  imgBckgSrc = './assets/images/gym.jpg';
+  imgSrc = './assets/images/categoryPageImages/profile_rock.png';
+  imgBckgSrc = './assets/images/categoryPageImages/index.jpg';
 
   mobile: boolean = false;
 
   public trainings: TrainingModel[] = [];
   public allTrainings: TrainingModel[] = [
     {
-      name: 'Teri trx',
+      name: 'Nagyon hosszú nevű edzés',
       description: 'Zenés TRX edzés Bana city központjában',
       category: 'TRX',
       id: 0,
@@ -129,7 +129,7 @@ export class CategoryPageComponent implements OnInit {
     {
       id: 1,
       email: 'tesztelek@gmail.com',
-      full_name: 'Teszt Elek',
+      full_name: 'Tesztelek Károlyné Elekfalvi Károly',
       trainer: true,
       phone_number: '+36701234678',
       city: 'Győr',
