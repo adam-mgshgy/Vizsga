@@ -21,7 +21,7 @@ export class CategoryPageComponent implements OnInit {
   public trainings: TrainingModel[] = [];
   public allTrainings: TrainingModel[] = [
     {
-      name: 'Teri trx',
+      name: 'Nagyon hosszú nevű edzés',
       description: 'Zenés TRX edzés Bana city központjában',
       category: 'TRX',
       id: 0,
@@ -129,7 +129,7 @@ export class CategoryPageComponent implements OnInit {
     {
       id: 1,
       email: 'tesztelek@gmail.com',
-      full_name: 'Tesztelek Károlyné Elek',
+      full_name: 'Tesztelek Károlyné Elekfalvi Károly',
       trainer: true,
       phone_number: '+36701234678',
       city: 'Győr',

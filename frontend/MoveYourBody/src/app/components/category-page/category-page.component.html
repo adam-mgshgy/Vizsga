@@ -14,24 +14,14 @@
           </div>
 
           <div class="card-body" style="background-color: #343a40;">
-            
-            <div class="container">
-              <div class="row">
-                <div class="col-6">
-                  <h4 class="card-title text-white mb-3">{{training.name}}</h4>
-                  <button class="btn btn-primary">Megnézem</button>
-                </div>
-                <div class="col-6">
-                  <h5 class="card-title text-white">{{users[i].full_name}}</h5>
-                </div>
-              </div>
-              
-            </div>
+            <h4 class="card-title text-white mb-3">{{training.name}}</h4>
+            <button class="btn btn-primary mb-3">Megnézem</button>
+            <h6 class="card-title text-white">{{users[i].full_name}}</h6>
           </div>
 
           <div class="col-md-12" style="background-color: white;">
             <div class="card-body">
-              
+
               <p class="card-text">{{training.description}}</p>
               <button id="tag" [ngStyle]="{'background-color':tag.colour, 'border-color':'tag.colour'}" *ngFor="let tag of tags" class="btn fw-bold me-1 mb-1">{{tag.name}}</button>
               <p class="card-text fw-bold"><a class="text-decoration-none text-black" routerLink="">{{users[i].city}}</a></p>
