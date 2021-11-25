@@ -4,19 +4,34 @@
     <div *ngFor="let training of trainings;let i=index" class="col-xxl-4 col-xl-6 col-md-6">
       <div class="card mb-3">
         <div class="row g-0">
-          <div class="col-6 col-lg-4 align-items-center" style="max-width: 50%;">
+
+          <div class="col-4 align-items-center">
             <img [src]="imgSrc" style=" width: 100%;height: 100%;object-fit: cover;" class="img-fluid" alt="...">
           </div>
-          <div *ngIf="mobile" class="col-6" id="bckg">
+
+          <div class="col-8" id="bckg">
             <img [src]="imgBckgSrc" style=" width: 100%;height: 100%;object-fit: cover;" class="img-fluid " alt="...">
           </div>
-          <div class="col-md-12 col-lg-8 card-body " style="background-color: #343a40;">
-            <h4 class="card-title text-white mb-3">{{training.name}}</h4>
-            <button class="btn btn-primary">Megnézem</button>
+
+          <div class="card-body" style="background-color: #343a40;">
+            
+            <div class="container">
+              <div class="row">
+                <div class="col-6">
+                  <h4 class="card-title text-white mb-3">{{training.name}}</h4>
+                  <button class="btn btn-primary">Megnézem</button>
+                </div>
+                <div class="col-6">
+                  <h5 class="card-title text-white">{{users[i].full_name}}</h5>
+                </div>
+              </div>
+              
+            </div>
           </div>
+
           <div class="col-md-12" style="background-color: white;">
             <div class="card-body">
-              <h5 class="card-title">{{users[i].full_name}}</h5>
+              
               <p class="card-text">{{training.description}}</p>
               <button id="tag" [ngStyle]="{'background-color':tag.colour, 'border-color':'tag.colour'}" *ngFor="let tag of tags" class="btn fw-bold me-1 mb-1">{{tag.name}}</button>
               <p class="card-text fw-bold"><a class="text-decoration-none text-black" routerLink="">{{users[i].city}}</a></p>
