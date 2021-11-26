@@ -13,9 +13,15 @@
             <img [src]="imgBckgSrc" style=" width: 100%;height: 100%;object-fit: cover;" class="img-fluid " alt="...">
           </div>
 
-          <div class="card-body" style="background-color: #343a40;">
-            <h4 class="card-title text-white mb-3">{{training.name}}</h4>
-            <button class="btn btn-primary mb-3">Megnézem</button>
+          <div class="card-body container-fluid row g-0" style="background-color: #343a40;">
+            <div class="col-auto">
+              <h4 class="card-title text-white mb-3 me-3">{{training.name}}</h4>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary mb-3">Megnézem</button>
+
+            </div>
+            
             <h6 class="card-title text-white">{{users[i].full_name}}</h6>
           </div>
 
