@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div [ngStyle]="{'width.%': mobile ==true ? '100' : '80'}" class="container-fluid">
   <div class="row">
 
     <div *ngFor="let training of trainings;let i=index" class="col-xxl-4 col-xl-6 col-md-6">
@@ -13,9 +13,15 @@
             <img [src]="imgBckgSrc" style=" width: 100%;height: 100%;object-fit: cover;" class="img-fluid " alt="...">
           </div>
 
-          <div class="card-body" style="background-color: #343a40;">
-            <h4 class="card-title text-white mb-3">{{training.name}}</h4>
-            <button class="btn btn-primary mb-3">Megnézem</button>
+          <div class="card-body container-fluid row g-0" style="background-color: #343a40;">
+            <div class="col-auto">
+              <h4 class="card-title text-white mb-3 me-3">{{training.name}}</h4>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary mb-3">Megnézem</button>
+
+            </div>
+            
             <h6 class="card-title text-white">{{users[i].full_name}}</h6>
           </div>
 
@@ -23,7 +29,8 @@
             <div class="card-body">
 
               <p class="card-text">{{training.description}}</p>
-              <button id="tag" [ngStyle]="{'background-color':tag.colour, 'border-color':'tag.colour'}" *ngFor="let tag of tags" class="btn fw-bold me-1 mb-1">{{tag.name}}</button>
+              <button id="tag" [ngStyle]="{'background-color':tag.colour, 'border-color':'tag.colour'}" *ngFor="let tag of primaryTags" class="btn fw-bold me-1 mb-1">{{tag.name}}</button>
+              <button id="moreTag" *ngIf="allTags.length >= 5" class="btn fw-bold me-1 mb-1">...</button>
               <p class="card-text fw-bold"><a class="text-decoration-none text-black" routerLink="">{{users[i].city}}</a></p>
             </div>
           </div>
