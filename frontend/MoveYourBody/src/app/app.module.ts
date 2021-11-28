@@ -9,6 +9,7 @@ import { CategoriesPageComponent } from './components/categories-page/categories
 import { CategoryPageComponent } from './components/category-page/category-page.component';
 import { RegistryPageComponent } from './components/registry-page/registry-page.component';
 import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
+import { CreateTrainingPageComponent } from './components/create-training-page/create-training-page.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ProfileSettingsComponent } from './components/profile-settings/profile-
     CategoriesPageComponent,
     CategoryPageComponent,
     RegistryPageComponent,
-    ProfileSettingsComponent
+    ProfileSettingsComponent,
+    CreateTrainingPageComponent
   ],
   imports: [
     BrowserModule,
