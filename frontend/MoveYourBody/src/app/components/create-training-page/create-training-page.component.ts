@@ -9,6 +9,7 @@ import { UserModel } from 'src/app/models/user-model';
   styleUrls: ['./create-training-page.component.css']
 })
 export class CreateTrainingPageComponent implements OnInit {
+  isChecked = false;
   user: UserModel = {
     id: 1,
     email: 'tesztelek@gmail.com',
@@ -40,7 +41,9 @@ public tags : TagModel[] = [
   
 ];
 public selectedTags: TagModel[] = [];
-public SelectTag(tag: TagModel) {
+
+public OnSelect(tag: TagModel): void {
+  console.log("tag");
   this.selectedTags.push(tag);
 }
   constructor() { }

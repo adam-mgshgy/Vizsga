@@ -1,27 +1,18 @@
-<div class="container">
+<div class="container fs-5">
     <h1>Edzés létrehozása</h1>
     <form>
         <div class="mb-3">
-            <!-- <div class="mb-4">
-              <img src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg"
-                class="rounded-circle z-depth-1-half avatar-pic" alt="example placeholder avatar">
-            </div> -->
-            <!-- <div class="d-flex justify-content-center"> -->
-                <div class="btn btn-mdb-color btn-rounded float-left">
-                    <span>Fényképek feltöltése:</span>
-                    <input type="file">
-                </div>
-            <!-- </div> -->
+            <div>Fényképek feltöltése:</div>
+            <input type="file" multiple>
         </div>
-
         <div class="mb-3">
-            <label for="name" class="form-label fs-5">
+            <label for="name" class="form-label">
                 Edzés neve:
             </label>
-            <input type="text" class="form-control" id="name" name="username" required>
+            <input type="text" class="form-control" id="name" name="name" required>
         </div>
-        <div class="mb-3">
-            <p>Edző neve: {{user.full_name}}</p>
+        <div class="mb-3 fs-4">
+            <label>Edző neve: {{user.full_name}}</label>
         </div>
         <div class="mb-3">
             <label for="category" class="form-control-label me-3">Kategória:</label>
@@ -40,23 +31,24 @@
             <input type="number" name="memberNumber" id="memberNumber">
         </div>
         <div class="mb-3">
-            <label for="tags" class="form-control-label">Címkék:</label>
+            <label for="tags" class="form-control-label me-2">Címkék:</label>
             <select id="tags" name="tags">
-                <option *ngFor="let tag of tags" [value]="tag.name" (select)="SelectTag(tag)">{{tag.name}}</option>
+                <option *ngFor="let tag of tags" (change)="OnSelect(tag)" [value]="tag.name">{{tag.name}}</option>
             </select>
             <span *ngFor="let tag of selectedTags">{{tag.name}} </span>
         </div>
 
         <div class="mb-3">
-            <input class="form-check-input" type="radio" name="phone" id="phone" checked>
+            <input (click)="isChecked = false" class="form-check-input" type="radio" name="phone" id="phone" checked>
             <label class="form-check-label" for="phone">
-                A saját telefonszámom szeretném haszálni({{user.phone_number}})
+                A saját telefonszámom szeretném használni ({{user.phone_number}})
             </label>
             <br>
-            <input class="form-check-input" type="radio" name="phone" id="phone">
-            <label class="form-check-label" for="phone">
-                Másik telefonszámot adok meg: <input type="text">
+            <input (click)="isChecked = true" class="form-check-input" type="radio" name="phone" id="phone">
+            <label class="form-check-label me-2" for="phone">
+                Másik telefonszámot adok meg:
             </label>
+            <input [disabled]="!isChecked" type="text" id="otherPhone" name="otherPhone">
         </div>
 
         <div class="mb-3">

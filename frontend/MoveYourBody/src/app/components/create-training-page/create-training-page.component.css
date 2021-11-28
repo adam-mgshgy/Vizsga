@@ -1,0 +1,19 @@
+#name{
+    width: 40%;
+    margin: auto;
+    text-align: center;
+}
+.form-text {
+    width: 40%;
+    margin: auto;
+}
+.container {
+    align-content: center;
+    text-align: center;
+}
+#memberNumber { 
+    width: 3rem;
+}
+textarea {
+    width: 40%;
+}
