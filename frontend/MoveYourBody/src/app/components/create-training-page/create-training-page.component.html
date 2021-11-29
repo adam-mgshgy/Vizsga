@@ -1,7 +1,7 @@
 <div class="container fs-5">
     <h1>Edzés létrehozása</h1>
     <form>
-        <div class="mb-3">
+        <div class="mb-3" id="photo">
             <div>Fényképek feltöltése:</div>
             <input type="file" multiple>
         </div>
@@ -26,29 +26,33 @@
             <textarea name="description" id="description" cols="50" rows="8"></textarea>
         </div>
         <div class="mb-3">
-            <label for="memberNumber" class="form-control-label d-block">Résztvevők száma:</label>
-            <input type="number" name="memberNumber" id="memberNumber"> -
-            <input type="number" name="memberNumber" id="memberNumber">
+            <label class="form-control-label d-block">Résztvevők száma:</label>
+            <input type="number" class="memberNumber" name="minMemberNumber" id="minMemberNumber"> -
+            <input type="number" class="memberNumber" name="maxMemberNumber" id="maxMemberNumber">
         </div>
-        <div class="mb-3">
-            <label for="tags" class="form-control-label me-2">Címkék:</label>
-            <select id="tags" name="tags">
-                <option *ngFor="let tag of tags" (change)="OnSelect(tag)" [value]="tag.name">{{tag.name}}</option>
-            </select>
-            <span *ngFor="let tag of selectedTags">{{tag.name}} </span>
+        <div class="mb-3 checks">
+            <div class="form-control-label me-2">Címkék:</div>
+            <ul>
+                <li *ngFor="let tag of tags" class="checks">
+                    <input [value]="tag.name" class="form-check-input me-2" type="checkbox" value="{{tag.name}}" id="cbTags">
+                    <label class="form-check-label" for="cbTags">
+                        {{tag.name}}
+                    </label>
+                </li>
+            </ul>
         </div>
 
         <div class="mb-3">
-            <input (click)="isChecked = false" class="form-check-input" type="radio" name="phone" id="phone" checked>
+            <input class="form-check-input" type="radio" name="phone" id="phone" checked>
             <label class="form-check-label" for="phone">
                 A saját telefonszámom szeretném használni ({{user.phone_number}})
             </label>
             <br>
-            <input (click)="isChecked = true" class="form-check-input" type="radio" name="phone" id="phone">
-            <label class="form-check-label me-2" for="phone">
+            <input class="form-check-input" type="radio" name="phone" id="otherPhone">
+            <label class="form-check-label me-2" for="otherPhone">
                 Másik telefonszámot adok meg:
+                <input type="text" id="otherPhoneNumber" name="otherPhoneNumber">
             </label>
-            <input [disabled]="!isChecked" type="text" id="otherPhone" name="otherPhone">
         </div>
 
         <div class="mb-3">
