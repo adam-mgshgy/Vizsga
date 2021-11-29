@@ -11,6 +11,8 @@ import { RegistryPageComponent } from './components/registry-page/registry-page.
 import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
 import { CreateTrainingPageComponent } from './components/create-training-page/create-training-page.component';
 
+import { AngularResizeEventModule } from 'angular-resize-event';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +26,8 @@ import { CreateTrainingPageComponent } from './components/create-training-page/c
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AngularResizeEventModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ResizedEvent } from 'angular-resize-event';
 import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
@@ -241,9 +242,10 @@ export class CategoryPageComponent implements OnInit {
 
     if (window.innerWidth <= 1650) {
       this.mobileTag = true;
-      this.counter = 2;
     }
     window.onresize = () => (this.mobileTag = window.innerWidth <= 1650);
+
+   
 
     this.route.paramMap.subscribe((params) => {
       this.category = params.get('category');
@@ -253,6 +255,14 @@ export class CategoryPageComponent implements OnInit {
     });
 
     //Lekérdezés a back-end-ről
+  }
+  onResized(event: ResizedEvent) {
+    if (this.mobileTag == true) {
+      this.counter = 2
+    }
+    else{
+      this.counter = 4;
+    }
   }
   
 }
