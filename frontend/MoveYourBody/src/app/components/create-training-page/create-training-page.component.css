@@ -11,9 +11,20 @@
     align-content: center;
     text-align: center;
 }
-#memberNumber { 
+.memberNumber { 
     width: 3rem;
 }
 textarea {
+    width: 45%;
+}
+ul {
+    margin-left: 40%;
+    list-style: none;
     width: 40%;
+    text-align: left;
+}
+#photo {
+    width: 40%;
+    margin: auto;
+
 }
