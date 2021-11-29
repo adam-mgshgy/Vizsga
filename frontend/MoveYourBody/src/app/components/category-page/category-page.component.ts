@@ -17,6 +17,7 @@ export class CategoryPageComponent implements OnInit {
   imgBckgSrc = './assets/images/categoryPageImages/index.jpg';
 
   mobile: boolean = false;
+  mobileTag: boolean = false;
 
   public trainings: TrainingModel[] = [];
   public allTrainings: TrainingModel[] = [
@@ -227,7 +228,7 @@ export class CategoryPageComponent implements OnInit {
     { id: 2, name: 'saját testsúlyos', colour: '#fd7e14' },
     { id: 3, name: 'edzőterem', colour: 'red' },
     { id: 4, name: 'zsírégető', colour: '#0dcaf0' },
-    { id: 5, name: 'személyi edzés', colour: '#0dcaf0' }
+    { id: 5, name: 'személyi edzés', colour: 'green' }
   ];
 
   ngOnInit(): void {
@@ -235,6 +236,11 @@ export class CategoryPageComponent implements OnInit {
       this.mobile = true;
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
+
+    if (window.innerWidth <= 767) {
+      this.mobileTag = true;
+    }
+    window.onresize = () => (this.mobileTag = window.innerWidth <= 767);
 
     this.route.paramMap.subscribe((params) => {
       this.category = params.get('category');
