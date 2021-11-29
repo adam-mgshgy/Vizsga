@@ -19,6 +19,8 @@ export class CategoryPageComponent implements OnInit {
   mobile: boolean = false;
   mobileTag: boolean = false;
 
+  counter = 4;
+
   public trainings: TrainingModel[] = [];
   public allTrainings: TrainingModel[] = [
     {
@@ -237,10 +239,11 @@ export class CategoryPageComponent implements OnInit {
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
 
-    if (window.innerWidth <= 767) {
+    if (window.innerWidth <= 1650) {
       this.mobileTag = true;
+      this.counter = 2;
     }
-    window.onresize = () => (this.mobileTag = window.innerWidth <= 767);
+    window.onresize = () => (this.mobileTag = window.innerWidth <= 1650);
 
     this.route.paramMap.subscribe((params) => {
       this.category = params.get('category');
@@ -251,4 +254,5 @@ export class CategoryPageComponent implements OnInit {
 
     //Lekérdezés a back-end-ről
   }
+  
 }

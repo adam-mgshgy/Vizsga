@@ -29,7 +29,8 @@
             <div class="card-body">
 
               <p class="card-text">{{training.description}}</p>
-              <button id="tag" [ngStyle]="{'background-color':tag.colour, 'border-color':'tag.colour'}" *ngFor="let tag of primaryTags" class="btn fw-bold me-1 mb-1">{{tag.name}}</button>
+              <button id="tag" [ngStyle]="{'background-color':tag.colour, 'border-color':'tag.colour'}" 
+                *ngFor="let tag of allTags | slice:0:this.counter" class="btn fw-bold me-1 mb-1">{{tag.name}}</button>
               <select  *ngIf="allTags.length > 4" id="moreTag" class="btn fw-bold me-1 mb-1">
                 <option value="">...</option>
                 <option *ngFor="let tag of allTags" value="">{{tag.name}}</option>
