@@ -18,9 +18,8 @@ export class CategoryPageComponent implements OnInit {
   imgBckgSrc = './assets/images/categoryPageImages/index.jpg';
 
   mobile: boolean = false;
-  mobileTag: boolean = false;
 
-  counter = 4;
+  counter = 0;
 
   public trainings: TrainingModel[] = [];
   public allTrainings: TrainingModel[] = [
@@ -122,7 +121,8 @@ export class CategoryPageComponent implements OnInit {
     },
     {
       name: 'Kosárlabda focilabdával',
-      description: 'Nincs pénz kosárlabdára, gyakorolni jó lesz focilabdával is.',
+      description:
+        'Nincs pénz kosárlabdára, gyakorolni jó lesz focilabdával is.',
       category: 'Kosárlabda',
       id: 0,
       max_member: 8,
@@ -219,12 +219,6 @@ export class CategoryPageComponent implements OnInit {
       city: 'Győr',
     },
   ];
-  public primaryTags: TagModel[] = [
-    { id: 0, name: 'csoportos', colour: '#6610f2' },
-    { id: 1, name: 'erőnléti', colour: 'black' },
-    { id: 2, name: 'saját testsúlyos', colour: '#fd7e14' },
-    { id: 3, name: 'edzőterem', colour: 'red' }
-  ];
   public allTags: TagModel[] = [
     { id: 0, name: 'csoportos', colour: '#6610f2' },
     { id: 1, name: 'erőnléti', colour: 'black' },
@@ -234,18 +228,14 @@ export class CategoryPageComponent implements OnInit {
     { id: 5, name: 'személyi edzés', colour: 'green' }
   ];
 
+
   ngOnInit(): void {
     if (window.innerWidth <= 991) {
       this.mobile = true;
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
 
-    if (window.innerWidth <= 1650) {
-      this.mobileTag = true;
-    }
-    window.onresize = () => (this.mobileTag = window.innerWidth <= 1650);
-
-   
+    this.tagsOnMobile();
 
     this.route.paramMap.subscribe((params) => {
       this.category = params.get('category');
@@ -257,12 +247,33 @@ export class CategoryPageComponent implements OnInit {
     //Lekérdezés a back-end-ről
   }
   onResized(event: ResizedEvent) {
-    if (this.mobileTag == true) {
-      this.counter = 2
-    }
-    else{
+    this.tagsOnMobile();
+  }
+  tagsOnMobile() {
+    if (window.innerWidth < 2250 && window.innerWidth > 1950) {
+      this.counter = 5;
+    } else if (window.innerWidth <= 1950 && window.innerWidth > 1700) {
       this.counter = 4;
+    } else if (window.innerWidth <= 1700 && window.innerWidth > 1399) {
+      this.counter = 3;
+    } else if (window.innerWidth <= 1399 && window.innerWidth > 1300) {
+      this.counter = 5;
+    } else if (window.innerWidth <= 1300 && window.innerWidth > 1150) {
+      this.counter = 4;
+    } else if (window.innerWidth <= 1150 && window.innerWidth > 950) {
+      this.counter = 3;
+    } else if (window.innerWidth <= 950 && window.innerWidth > 767) {
+      this.counter = 2;
+    } else if (window.innerWidth <= 767 && window.innerWidth > 650) {
+      this.counter = 5;
+    } else if (window.innerWidth <= 650 && window.innerWidth > 580) {
+      this.counter = 4;
+    } else if (window.innerWidth <= 580 && window.innerWidth > 480) {
+      this.counter = 3;
+    } else if (window.innerWidth <= 480) {
+      this.counter = 2;
+    } else {
+      this.counter = 6;
     }
   }
-  
 }
