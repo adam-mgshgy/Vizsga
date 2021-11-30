@@ -7,6 +7,7 @@ import { MainpageComponent } from './components/main-page/main-page.component';
 import { RegistryPageComponent } from './components/registry-page/registry-page.component';
 import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
 import { CreateTrainingPageComponent } from './components/create-training-page/create-training-page.component';
+import { AddSessionPageComponent } from './components/add-session-page/add-session-page.component';
 
 const routes: Routes = [
   {path: 'home', component: MainpageComponent},
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path: 'category/:category', component: CategoryPageComponent},
   {path: 'register', component: RegistryPageComponent},
   {path: 'profile', component: ProfileSettingsComponent},
-  {path: 'createtraining', component: CreateTrainingPageComponent}
+  {path: 'createtraining', component: CreateTrainingPageComponent},
+  {path: 'addsession', component: AddSessionPageComponent}
 ];
 
 @NgModule({
