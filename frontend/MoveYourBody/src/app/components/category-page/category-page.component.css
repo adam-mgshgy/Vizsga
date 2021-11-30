@@ -9,5 +9,7 @@
 }
 #moreTag{
     height: 30px;
-    background-color: gray;
+    padding: 0px;
+    border: 1px solid black;
+    width: 3rem;
 }

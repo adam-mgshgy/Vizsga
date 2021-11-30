@@ -12,6 +12,8 @@ import { ProfileSettingsComponent } from './components/profile-settings/profile-
 import { CreateTrainingPageComponent } from './components/create-training-page/create-training-page.component';
 import { AddSessionPageComponent } from './components/add-session-page/add-session-page.component';
 
+import { AngularResizeEventModule } from 'angular-resize-event';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +28,8 @@ import { AddSessionPageComponent } from './components/add-session-page/add-sessi
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AngularResizeEventModule
   ],
   providers: [],
   bootstrap: [AppComponent]
