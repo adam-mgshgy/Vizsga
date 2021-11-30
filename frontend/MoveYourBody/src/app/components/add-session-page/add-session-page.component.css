@@ -2,5 +2,15 @@
     align-content: center;
     text-align: center;
     width: 40%;
-    font-size: medium;
+    font-size: large;
+}
+input[type=number] {
+    width: 8rem;
+    margin: auto;
+    text-align: center;
+}
+input[type=text] {
+    width: 30rem;
+    margin: auto;
+    text-align: center;
 }
