@@ -11,6 +11,7 @@ import { RegistryPageComponent } from './components/registry-page/registry-page.
 import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
 import { CreateTrainingPageComponent } from './components/create-training-page/create-training-page.component';
 import { AddSessionPageComponent } from './components/add-session-page/add-session-page.component';
+import { TrainingPageComponent } from './components/training-page/training-page.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AddSessionPageComponent } from './components/add-session-page/add-sessi
     RegistryPageComponent,
     ProfileSettingsComponent,
     CreateTrainingPageComponent,
-    AddSessionPageComponent
+    AddSessionPageComponent,
+    TrainingPageComponent
   ],
   imports: [
     BrowserModule,
