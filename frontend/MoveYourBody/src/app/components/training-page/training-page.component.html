@@ -1,1 +1,17 @@
-<p>training-page works!</p>
+<div class="container">
+    <div>
+        <img src=".//src/assets/images/categoryPageImages/profile_rock.png" alt="">
+        <h1>{{user.full_name}}</h1>
+        <h3>{{user.phone_number}}</h3>
+    </div>
+    <div>
+        <h1>{{training.name}}</h1>
+        <h2>Az edzés leírása: {{training.description}}</h2>
+        <h3>Kategória: <a [routerLink]="'/category/' + training.category">{{training.category}}</a></h3>
+        <h3>Résztvevők száma: {{training.min_member}} - {{training.max_member}}</h3>
+        <h3>Címkék:</h3>
+        <button id="tag" [ngStyle]="{'background-color':tag.colour, 'border-color':'tag.colour'}" *ngFor="let tag of tags" class="btn fw-bold me-1 mb-1">{{tag.name}}</button>
+    </div>
+
+    <button>Megnézem az alkalmakat!</button>
+</div>
