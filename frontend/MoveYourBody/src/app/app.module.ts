@@ -13,6 +13,7 @@ import { CreateTrainingPageComponent } from './components/create-training-page/c
 import { AddSessionPageComponent } from './components/add-session-page/add-session-page.component';
 
 import { AngularResizeEventModule } from 'angular-resize-event';
+import { MyTrainingsPageComponent } from './components/my-trainings-page/my-trainings-page.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AngularResizeEventModule } from 'angular-resize-event';
     RegistryPageComponent,
     ProfileSettingsComponent,
     CreateTrainingPageComponent,
-    AddSessionPageComponent
+    AddSessionPageComponent,
+    MyTrainingsPageComponent
   ],
   imports: [
     BrowserModule,
