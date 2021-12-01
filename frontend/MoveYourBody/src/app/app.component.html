@@ -39,10 +39,27 @@
           <a class="nav-link active" routerLink="/addsession">Alkalom hozzáadása</a> <!-- nem így lesz -->
         </li>
       </ul>
+
+      <ul id="userDropdown" class="navbar-nav mr-auto mb-2 mb-lg-0">
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+          {{users[0].full_name}} <!--TODO aktuálisan bejelentkezett user neve-->
+        </a>
+        <ul class="dropdown-menu">
+          <li>             
+              <a *ngIf="users[0].trainer == true" class="dropdown-item" >Edzéseim</a>              
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class=" dropdown-item" routerLink="/categories">További kategóriák</a></li>
+        </ul>
+      </li>
+    </ul>
     </div>
   </div>
 </nav>
