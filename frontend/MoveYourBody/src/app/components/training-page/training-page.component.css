@@ -1,0 +1,23 @@
+.container {
+    color: black;
+}
+a {
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+}
+img {
+    width: 90%;
+    border-radius: 5%;
+}
+.trainer {
+    text-align: center;
+}
+.sessions {
+    border: solid 2px gray;
+    border-radius: 5%;
+}
+.center {
+    margin-left: 30%;
+    width: 40%;
+}
