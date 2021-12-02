@@ -9,6 +9,7 @@ import { ProfileSettingsComponent } from './components/profile-settings/profile-
 import { CreateTrainingPageComponent } from './components/create-training-page/create-training-page.component';
 import { AddSessionPageComponent } from './components/add-session-page/add-session-page.component';
 import { TrainingPageComponent } from './components/training-page/training-page.component';
+import { MyTrainingsPageComponent } from './components/my-trainings-page/my-trainings-page.component';
 
 const routes: Routes = [
   {path: 'home', component: MainpageComponent},
@@ -19,7 +20,8 @@ const routes: Routes = [
   {path: 'profile', component: ProfileSettingsComponent},
   {path: 'createtraining', component: CreateTrainingPageComponent},
   {path: 'addsession', component: AddSessionPageComponent},
-  {path: 'training', component: TrainingPageComponent}
+  {path: 'training', component: TrainingPageComponent},
+  {path: 'mytrainings', component: MyTrainingsPageComponent}
 ];
 
 @NgModule({

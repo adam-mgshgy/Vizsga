@@ -5,3 +5,6 @@
  .dropdown:not(:hover) .dropdown-menu{
     display: none;
  }
+ #userDropdown{
+    margin-right: 3rem;
+ }
