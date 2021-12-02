@@ -11,6 +11,7 @@ import { UserModel } from 'src/app/models/user-model';
 })
 export class TrainingPageComponent implements OnInit {
 
+  viewSessions = true;
   constructor() { }
   public training: TrainingModel =
     {
