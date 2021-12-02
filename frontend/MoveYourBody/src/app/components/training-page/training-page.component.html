@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col col-4">
+        <div class="col col-4 trainer">
             <img src=".//src/assets/images/categoryPageImages/profile_rock.png" alt="">
             <h1>{{user.full_name}}</h1>
             <h3>{{user.phone_number}}</h3>
@@ -9,21 +9,24 @@
             <h1 class="mb-4">{{training.name}}</h1>
             <h2 class="mb-4">Az edzés leírása: {{training.description}}</h2>
             <h3 class="mb-4">Kategória: <a [routerLink]="'/category/' + training.category">{{training.category}}</a></h3>
-            <h3 class="mb-4">Résztvevők száma: {{training.min_member}} - {{training.max_member}}</h3>
+            <h3 class="mb-4">Résztvevők száma: {{training.min_member}} - {{training.max_member}} fő</h3>
             <h3 class="mb-4">Címkék:</h3>
-            <button id="tag" [ngStyle]="{'background-color':tag.colour, 'border-color':'tag.colour'}" *ngFor="let tag of tags" class="btn fw-bold me-1 mb-1">{{tag.name}}</button>
+            <button id="tag" [ngStyle]="{'background-color':tag.colour, 'border-color':'tag.colour'}" *ngFor="let tag of tags" class="btn fw-bold me-1 mb-4">{{tag.name}}</button>
+            <button (click)="viewSessions = true" class="btn fw-bold btn-success center mb-4">Megnézem az alkalmakat!</button>
         </div>
         <div class="row">
-            <button (click)="viewSessions = true" class="btn fw-bold btn-success w-25 mx-auto mb-4">Megnézem az alkalmakat!</button>
         </div>
     </div>
     <div *ngIf="viewSessions" class="row">
-        <div *ngFor="let session of sessions" class="col">
-            <h3 class="mb-2">Helyszín: {{session.place}}</h3>
-            <h3 class="mb-2">Edzés ára: {{session.price}} Ft</h3>
-            <h3 class="mb-2">Időpont: {{session.date}}</h3>
-            <h3 class="mb-2">Időtartam: {{session.minutes}} perc</h3>
-            <button class="btn fw-bold btn-success w-50 mx-auto">Jelentkezek!</button>
+        <div *ngFor="let session of sessions" class="col sessions mx-2">
+            <h3 class="mb-2"><u>Helyszín:</u></h3> 
+            <h3>
+                {{session.place}}
+            </h3>
+            <h3 class="mb-2"><u>Edzés ára:</u> {{session.price}} Ft</h3>
+            <h3 class="mb-2"><u>Időpont:</u> {{session.date}}</h3>
+            <h3 class="mb-2"><u>Időtartam:</u> {{session.minutes}} perc</h3>
+            <button class="btn fw-bold btn-success center mb-2">Jelentkezek!</button>
         </div>
     </div>
 </div>
