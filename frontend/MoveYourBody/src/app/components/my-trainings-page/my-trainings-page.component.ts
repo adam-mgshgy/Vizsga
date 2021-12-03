@@ -29,6 +29,7 @@ export class MyTrainingsPageComponent implements OnInit {
       description: 'Zenés TRX edzés Bana city központjában',
       category: 'TRX',
       id: 0,
+      min_member: 3,
       max_member: 8,
       trainer_id: 0,
     },
@@ -37,6 +38,7 @@ export class MyTrainingsPageComponent implements OnInit {
       description: 'Zenés TRX edzés személyi edzés keretein belül',
       category: 'TRX',
       id: 0,
+      min_member: 1,
       max_member: 1,
       trainer_id: 0,
     }
