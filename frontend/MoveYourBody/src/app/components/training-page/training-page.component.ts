@@ -11,7 +11,7 @@ import { UserModel } from 'src/app/models/user-model';
 })
 export class TrainingPageComponent implements OnInit {
 
-  viewSessions = true;
+  viewSessions = false;
   constructor() { }
   public training: TrainingModel =
     {
@@ -24,6 +24,13 @@ export class TrainingPageComponent implements OnInit {
       trainer_id: 0,
     }
   public sessions: SessionModel[] = [
+    {
+      id: 1,
+      date: '2021.12.12. 15:30',
+      place: 'Bana, Kis Károly utca 8.',
+      price: 1500,
+      minutes: 60,
+    },
     {
       id: 1,
       date: '2021.12.12. 15:30',
