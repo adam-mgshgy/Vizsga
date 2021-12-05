@@ -1,16 +1,13 @@
-.container {
+.container-fluid {
     align-content: center;
     text-align: center;
-    width: 40%;
     font-size: large;
 }
 input[type=number] {
-    width: 8rem;
     margin: auto;
     text-align: center;
 }
 input[type=text] {
-    width: 30rem;
     margin: auto;
     text-align: center;
 }
