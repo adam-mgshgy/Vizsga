@@ -17,10 +17,14 @@ export class ProfileSettingsComponent implements OnInit {
       phone_number: '+36701234678',
       city: 'Győr' 
   }
-
+  mobile: boolean = false;
   constructor() { }
 
   ngOnInit(): void {
+    if (window.innerWidth <= 800) {
+      this.mobile = true;
+    }
+    window.onresize = () => (this.mobile = window.innerWidth <= 991);
   }
 
 }
