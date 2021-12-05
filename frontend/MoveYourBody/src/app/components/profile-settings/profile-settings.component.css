@@ -1,5 +1,4 @@
 div input{
-    width: 40%;
     margin: auto;
     text-align: center;
 }
@@ -7,10 +6,9 @@ button {
     border: none;
 }
 .form-text {
-    width: 40%;
     margin: auto;
 }
-.container {
+.container-fluid {
     align-content: center;
     text-align: center;
 }

@@ -1,5 +1,7 @@
 .container {
     color: black;
+    align-items: center;
+    width: 90%;
 }
 a {
     text-decoration: none;
@@ -16,8 +18,12 @@ img {
 .sessions {
     border: solid 2px gray;
     border-radius: 5%;
+    padding: 1%;
 }
 .center {
     margin-left: 30%;
     width: 40%;
+}
+.sessions button {
+    width: 100%;
 }

@@ -12,21 +12,20 @@
             <h3 class="mb-4">Résztvevők száma: {{training.min_member}} - {{training.max_member}} fő</h3>
             <h3 class="mb-4">Címkék:</h3>
             <button id="tag" [ngStyle]="{'background-color':tag.colour, 'border-color':'tag.colour'}" *ngFor="let tag of tags" class="btn fw-bold me-1 mb-4">{{tag.name}}</button>
-            <button (click)="viewSessions = true" class="btn fw-bold btn-success center mb-4">Megnézem az alkalmakat!</button>
         </div>
         <div class="row">
         </div>
     </div>
-    <div *ngIf="viewSessions" class="row">
-        <div *ngFor="let session of sessions" class="col sessions mx-2">
-            <h3 class="mb-2"><u>Helyszín:</u></h3> 
+    <div class="row g-0">
+        <div *ngFor="let session of sessions" class="col-lg-4 col-md-5 col-sm-12 sessions">
+            <h3 class="mb-2"><u>Helyszín:</u></h3>
             <h3>
                 {{session.place}}
             </h3>
             <h3 class="mb-2"><u>Edzés ára:</u> {{session.price}} Ft</h3>
             <h3 class="mb-2"><u>Időpont:</u> {{session.date}}</h3>
             <h3 class="mb-2"><u>Időtartam:</u> {{session.minutes}} perc</h3>
-            <button class="btn fw-bold btn-success center mb-2">Jelentkezek!</button>
+            <button class="btn fw-bold btn-success mb-2">Jelentkezek!</button>
         </div>
     </div>
 </div>
