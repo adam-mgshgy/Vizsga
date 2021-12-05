@@ -46,9 +46,14 @@ public OnSelect(tag: TagModel): void {
   console.log("tag");
   this.selectedTags.push(tag);
 }
-  constructor() { }
+mobile: boolean = false;
+constructor() { }
 
-  ngOnInit(): void {
+ngOnInit(): void {
+  if (window.innerWidth <= 800) {
+    this.mobile = true;
   }
+  window.onresize = () => (this.mobile = window.innerWidth <= 991);
+}
 
 }

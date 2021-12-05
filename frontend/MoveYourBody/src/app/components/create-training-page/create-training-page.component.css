@@ -1,30 +1,21 @@
 #name{
-    width: 40%;
     margin: auto;
     text-align: center;
 }
 .form-text {
-    width: 40%;
     margin: auto;
 }
-.container {
+.container-fluid {
     align-content: center;
     text-align: center;
 }
-.memberNumber { 
-    width: 3rem;
-}
-textarea {
-    width: 45%;
-}
 ul {
-    margin-left: 40%;
+    margin-left: 35%;
+    width: 60%;
     list-style: none;
-    width: 40%;
     text-align: left;
 }
 #photo {
-    width: 40%;
     margin: auto;
 
 }
