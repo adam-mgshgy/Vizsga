@@ -1,4 +1,4 @@
-<div class="container">
+<div [ngStyle]="{'width.%': mobile ==true ? '100' : '80'}" class="container-fluid">
     <h1>Regisztráció</h1>
     <form>
         <p>A *-gal jelölt mezők kitöltése kötelező!</p>
@@ -6,35 +6,35 @@
             <label for="username" class="form-label fs-5">
                 Teljes név*
             </label>
-            <input type="text" class="form-control" id="username" name="username" required>
+            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="text" class="form-control" id="username" name="username" required>
         </div>
         <div class="mb-3">
             <label for="email" class="form-label fs-5">E-mail cím*</label>
-            <input type="email" class="form-control" id="email" required>
-            <div id="emailHelp" class="form-text">Az e-mail cím regisztráció után nem változtatható meg!</div>
+            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="email" class="form-control" id="email" required>
+            <div [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" id="emailHelp" class="form-text">Az e-mail cím regisztráció után nem változtatható meg!</div>
         </div>
         <div class="mb-3">
             <label for="phoneNumber" class="form-label fs-5">
                 Telefonszám*
             </label>
-            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
+            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
             <div id="phoneNumberNelp" class="form-text">Kérjük ezt a formátumot használd: +36123456789</div>
         </div>
         <div class="mb-3">
             <label for="city" class="form-label fs-5">
                 Város*
             </label>
-            <input type="text" class="form-control" id="city" name="city" required>
-            <div id="cityHelp" class="form-text">Kérjük add meg a várost, ahol szívesen edzenél, hogy a megfelelő edzéseket mutathassuk!</div>
+            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="text" class="form-control" id="city" name="city" required>
+            <div [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}"  id="cityHelp" class="form-text">Kérjük add meg a várost, ahol szívesen edzenél, hogy a megfelelő edzéseket mutathassuk!</div>
 
         </div>
         <div class="mb-3">
             <label for="password" class="form-label fs-5">Jelszó*</label>
-            <input type="password" class="form-control" id="password" required>
+            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="password" class="form-control" id="password" required>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label fs-5">Jelszó ismét*</label>
-            <input type="password" class="form-control" id="password" required>
+            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="password" class="form-control" id="password" required>
         </div>
         <div class="mb-3">
             <input class="form-check-input" type="checkbox" id="accept" name="accept" required>
@@ -43,9 +43,10 @@
             </label>
         </div>
         <div class="mb-3">
-            <button id="trainerButton" type="button" class="btn fs-5" data-bs-toggle="tooltip" data-bs-html="true" title="Ha szeretnél edzővé válni és feltölteni edzéseid, nézd meg ajánlatainkat a gombra kattinva!">
+            <input class="form-check-input" type="checkbox" id="trainer" name="trainer">
+            <label class="form-check-label ms-2" for="trainer">
                 Edzőként szeretnék regisztrálni
-            </button>
+            </label>
         </div>
         <div class="mb-3">
             <button id="registerButton" type="submit" class="btn fs-5">Regisztráció</button>

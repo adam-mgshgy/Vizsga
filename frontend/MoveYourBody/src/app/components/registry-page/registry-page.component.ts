@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistryPageComponent implements OnInit {
 
+  mobile: boolean = false;
   constructor() { }
 
   ngOnInit(): void {
+    if (window.innerWidth <= 800) {
+      this.mobile = true;
+    }
+    window.onresize = () => (this.mobile = window.innerWidth <= 991);
   }
-
+  
 }

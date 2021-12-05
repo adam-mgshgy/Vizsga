@@ -3,14 +3,15 @@ div input{
     margin: auto;
     text-align: center;
 }
-#accept {
+#accept, #trainer {
     width: 1rem;
 }
 .form-text {
-    width: 40%;
     margin: auto;
+    text-align: center;
+    display: block;
 }
-.container {
+.container-fluid {
     align-content: center;
     text-align: center;
 }
@@ -19,4 +20,11 @@ div input{
 }
 #trainerButton {
     background-color: #57CC99;
+}
+label {
+    text-align: center;
+    display: block;
+}
+.form-check-label, .form-check-input {
+    display:inline-block;
 }
