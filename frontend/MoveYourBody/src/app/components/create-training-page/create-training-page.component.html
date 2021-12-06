@@ -1,5 +1,6 @@
 <div [ngStyle]="{'width.%': mobile ? '100' : '80'}" class="container-fluid fs-5">
-    <h1>Edzés létrehozása</h1>
+    <h1  [ngClass]="user.trainer ? 'd-none' : 'd-inline-block'">Edzés létrehozása</h1>
+    <h1  [ngClass]="user.trainer ? 'd-inline-block' : 'd-none'">Edzés szerkesztése</h1>
     <form>
         <div class="mb-3" id="photo">
             <div>Fényképek feltöltése:</div>
@@ -7,9 +8,9 @@
         </div>
         <div class="mb-3">
             <label for="name" class="form-label">
-                Edzés neve:
+                Edzés neve: 
             </label>
-            <input [ngStyle]="{'width.%': mobile ? '70' : '50'}" type="text" class="form-control" id="name" name="name" required>
+            <input [ngStyle]="{'width.%': mobile ? '70' : '50'}" type="text" class="form-control" id="name" name="name" required value="{{training.name}}">
         </div>
         <div class="mb-3 fs-4">
             <label>Edző neve: {{user.full_name}}</label>
@@ -23,12 +24,12 @@
         </div>
         <div class="mb-3">
             <label for="description" class="form-control-label d-block">Edzés leírása:</label>
-            <textarea [ngStyle]="{'width.%': mobile ? '70' : '50'}" type="text" name="description" id="description" cols="50" rows="8"></textarea>
+            <textarea [ngStyle]="{'width.%': mobile ? '70' : '50'}" type="text" name="description" id="description" cols="50" rows="8">{{training.description}}</textarea>
         </div>
         <div class="mb-3">
             <label class="form-control-label d-block">Résztvevők száma:</label>
-            <input [ngStyle]="{'width.%': mobile ? '15' : '8'}" type="text" type="number" name="minMemberNumber" id="minMemberNumber"> -
-            <input [ngStyle]="{'width.%': mobile ? '15' : '8'}" type="text" type="number" name="maxMemberNumber" id="maxMemberNumber">
+            <input [ngStyle]="{'width.%': mobile ? '15' : '8'}" type="text" type="number" name="minMemberNumber" id="minMemberNumber" value="{{training.min_member}}"> -
+            <input [ngStyle]="{'width.%': mobile ? '15' : '8'}" type="text" type="number" name="maxMemberNumber" id="maxMemberNumber" value="{{training.max_member}}">
         </div>
         <div class="mb-3 checks">
             <div class="form-control-label me-2">Címkék:</div>
@@ -51,7 +52,7 @@
             <input class="form-check-input" type="radio" name="phone" id="otherPhone">
             <label  type="text" class="form-check-label ms-2 me-2" for="otherPhone">
                 Másik telefonszámot adok meg:
-                <input  type="text" type="text" id="otherPhoneNumber" name="otherPhoneNumber">
+                <input type="text" id="otherPhoneNumber" name="otherPhoneNumber">
             </label>
         </div>
 

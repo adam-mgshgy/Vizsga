@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryModel } from 'src/app/models/category-model';
 import { TagModel } from 'src/app/models/tag-model';
+import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
 
 @Component({
@@ -40,6 +41,16 @@ public tags : TagModel[] = [
     { id: 4, name: 'zsírégető', colour: '#0dcaf0' },
   
 ];
+public training: TrainingModel =
+    {
+      name: 'Nagyon hosszú nevű edzés',
+      description: 'Zenés TRX edzés Bana city központjában Hozz magaddal törcsit, váltócipőt és vizet!',
+      category: 'TRX',
+      id: 0,
+      min_member: 6,
+      max_member: 8,
+      trainer_id: 0,
+    }
 public selectedTags: TagModel[] = [];
 
 public OnSelect(tag: TagModel): void {
