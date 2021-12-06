@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CategoryModel } from 'src/app/models/category-model';
 import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
@@ -10,6 +11,7 @@ import { UserModel } from 'src/app/models/user-model';
   styleUrls: ['./create-training-page.component.css']
 })
 export class CreateTrainingPageComponent implements OnInit {
+  id: string | null = null;
   isChecked = false;
   user: UserModel = {
     id: 1,
@@ -17,54 +19,79 @@ export class CreateTrainingPageComponent implements OnInit {
     full_name: 'Teszt Elek',
     trainer: true,
     phone_number: '+36701234678',
-    city: 'Győr' 
-}
-public categories: CategoryModel[] = [
-  { name: 'Box', imgSrc: 'box.jpg' },
-  { name: 'Crossfit', imgSrc: 'crossFitt.jpg' },
-  { name: 'Labdarúgás', imgSrc: 'football.jpg' },
-  { name: 'Kosárlabda', imgSrc: 'basketball.jpg' },
-  { name: 'Kézilabda', imgSrc: 'handball.jpg' },
-  { name: 'Röplabda', imgSrc: 'volleyball.jpg' },
-  { name: 'Spartan', imgSrc: 'spartan.jpg' },
-  { name: 'Tenisz', imgSrc: 'tennis.jpg' },
-  { name: 'TRX', imgSrc: 'trx.jpg' },
-  { name: 'Úszás', imgSrc: 'swimming.jpg' },
-  { name: 'Lovaglás', imgSrc: 'riding.jpg' },
-  { name: 'Jóga', imgSrc: 'yoga.jpg' },
-];
-public tags : TagModel[] = [
+    city: 'Győr'
+  }
+  public categories: CategoryModel[] = [
+    { name: 'Box', imgSrc: 'box.jpg' },
+    { name: 'Crossfit', imgSrc: 'crossFitt.jpg' },
+    { name: 'Labdarúgás', imgSrc: 'football.jpg' },
+    { name: 'Kosárlabda', imgSrc: 'basketball.jpg' },
+    { name: 'Kézilabda', imgSrc: 'handball.jpg' },
+    { name: 'Röplabda', imgSrc: 'volleyball.jpg' },
+    { name: 'Spartan', imgSrc: 'spartan.jpg' },
+    { name: 'Tenisz', imgSrc: 'tennis.jpg' },
+    { name: 'TRX', imgSrc: 'trx.jpg' },
+    { name: 'Úszás', imgSrc: 'swimming.jpg' },
+    { name: 'Lovaglás', imgSrc: 'riding.jpg' },
+    { name: 'Jóga', imgSrc: 'yoga.jpg' },
+  ];
+  public tags: TagModel[] = [
     { id: 0, name: 'csoportos', colour: '#6610f2' },
     { id: 1, name: 'erőnléti', colour: 'black' },
     { id: 2, name: 'saját testsúlyos', colour: '#fd7e14' },
     { id: 3, name: 'edzőterem', colour: 'red' },
     { id: 4, name: 'zsírégető', colour: '#0dcaf0' },
-  
-];
-public training: TrainingModel =
+
+  ];
+  public training: TrainingModel = new TrainingModel();
+  public selectedTags: TagModel[] = [];
+  public myTrainings: TrainingModel[] = [
     {
       name: 'Nagyon hosszú nevű edzés',
-      description: 'Zenés TRX edzés Bana city központjában Hozz magaddal törcsit, váltócipőt és vizet!',
+      description: 'Zenés TRX edzés Bana city központjában',
       category: 'TRX',
-      id: 0,
-      min_member: 6,
+      id: 1,
+      min_member: 3,
       max_member: 8,
       trainer_id: 0,
+    },
+    {
+      name: 'Egyéni Teri trx',
+      description: 'Zenés TRX edzés személyi edzés keretein belül',
+      category: 'TRX',
+      id: 2,
+      min_member: 1,
+      max_member: 1,
+      trainer_id: 0,
     }
-public selectedTags: TagModel[] = [];
-
-public OnSelect(tag: TagModel): void {
-  console.log("tag");
-  this.selectedTags.push(tag);
-}
-mobile: boolean = false;
-constructor() { }
-
-ngOnInit(): void {
-  if (window.innerWidth <= 800) {
-    this.mobile = true;
+  ];
+  public OnSelect(tag: TagModel): void {
+    console.log("tag");
+    this.selectedTags.push(tag);
   }
-  window.onresize = () => (this.mobile = window.innerWidth <= 991);
-}
+  mobile: boolean = false;
+  constructor(private route: ActivatedRoute) { }
+
+  ngOnInit(): void {
+    if (window.innerWidth <= 800) {
+      this.mobile = true;
+    }
+    window.onresize = () => (this.mobile = window.innerWidth <= 991);
+    this.route.paramMap.subscribe((params) => {
+      this.id = params.get('id');
+      if (this.id) {
+        const filteredTrainings = this.myTrainings.filter(
+          (t) => t.id == this.id);
+        if (filteredTrainings.length == 1) {
+          this.training = filteredTrainings[0];
+        }
+        else {
+          this.training = new TrainingModel();
+        }
+      } else {
+        this.training = new TrainingModel();
+      }
+    });
+  }
 
 }

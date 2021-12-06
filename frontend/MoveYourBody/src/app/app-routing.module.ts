@@ -19,6 +19,7 @@ const routes: Routes = [
   {path: 'register', component: RegistryPageComponent},
   {path: 'profile', component: ProfileSettingsComponent},
   {path: 'createtraining', component: CreateTrainingPageComponent},
+  {path: 'createtraining/:id', component: CreateTrainingPageComponent},
   {path: 'addsession', component: AddSessionPageComponent},
   {path: 'training', component: TrainingPageComponent},
   {path: 'mytrainings', component: MyTrainingsPageComponent}
