@@ -1,9 +1,9 @@
 export class TrainingModel{
-    public id = -1;
+    public id: number | null = null;
     public name = '';
     public category = '';
     public trainer_id = 0;
-    public min_member = 0;
-    public max_member = 0;
+    public min_member: number | null = null;
+    public max_member: number | null = null;
     public description = '';
 }

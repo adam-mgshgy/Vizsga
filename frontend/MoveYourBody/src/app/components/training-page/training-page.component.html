@@ -1,13 +1,14 @@
 <div class="container">
     <div class="row">
-        <div class="col col-4 trainer">
+        <div class="col-lg-4 col-md-10 col-sm-10 trainer">
             <img src=".//src/assets/images/categoryPageImages/profile_rock.png" alt="">
             <h1>{{user.full_name}}</h1>
-            <h3>{{user.phone_number}}</h3>
+            <h3 class="fw-2">{{user.phone_number}}</h3>
         </div>
-        <div class="col col-8">
+        <div class="col-lg-8 col-md-10 col-sm-10 trainer">
             <h1 class="mb-4">{{training.name}}</h1>
-            <h2 class="mb-4">Az edzés leírása: {{training.description}}</h2>
+            <h2 class="mb-4">Az edzés leírása: </h2>
+            <h2 class="mb-4">{{training.description}}</h2>
             <h3 class="mb-4">Kategória: <a [routerLink]="'/category/' + training.category">{{training.category}}</a></h3>
             <h3 class="mb-4">Résztvevők száma: {{training.min_member}} - {{training.max_member}} fő</h3>
             <h3 class="mb-4">Címkék:</h3>

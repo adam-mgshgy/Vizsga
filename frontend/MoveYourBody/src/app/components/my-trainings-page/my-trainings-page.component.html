@@ -17,8 +17,8 @@
                 <h4 class="card-title text-white mb-3 me-3">{{training.name}}</h4>
               </div>
               <div class="col-12">
-                <button *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3" routerLink="/createtraining">Szerkesztés</button>
-                <button *ngIf="users[0].trainer" class="btn btn-primary mb-3" routerLink="/addsession">Új alkalom</button>
+                <button class="btn btn-primary mb-3 me-3" [routerLink]="'/createtraining/' + training.id">Szerkesztés</button>
+                <button class="btn btn-primary mb-3" routerLink="/addsession">Új alkalom</button>
                 <button *ngIf="users[0].trainer == false" class="btn btn-danger mb-3">Lemondás</button>
               </div>
               
@@ -39,7 +39,11 @@
               </div>
             </div>
           </div>
+          
         </div>
+      </div>
+      <div class="col">
+        <button class="btn fw-bold me-1 mb-1 btn-success" routerLink="/createtraining" >Új edzés</button>
       </div>
     </div>
   </div>
