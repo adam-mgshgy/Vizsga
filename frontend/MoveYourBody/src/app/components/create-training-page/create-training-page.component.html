@@ -9,21 +9,21 @@
             <label for="name" class="form-label">
                 Edzés neve:
             </label>
-            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-control" id="name" name="name" required>
+            <input [ngStyle]="{'width.%': mobile ? '70' : '50'}" type="text" class="form-control" id="name" name="name" required>
         </div>
         <div class="mb-3 fs-4">
             <label>Edző neve: {{user.full_name}}</label>
         </div>
         <div class="mb-3">
             <label for="category" class="form-control-label me-3">Kategória:</label>
-            <select [ngStyle]="{'width.%': mobile ? '60' : '50'}" type="text" id="category" name="category">
+            <select [ngStyle]="{'width.%': mobile ? '50' : '40'}" type="text" id="category" name="category">
                 <option value=""></option>
                 <option *ngFor="let cat of categories" [value]="cat.name">{{cat.name}}</option>
             </select>
         </div>
         <div class="mb-3">
             <label for="description" class="form-control-label d-block">Edzés leírása:</label>
-            <textarea [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" name="description" id="description" cols="50" rows="8"></textarea>
+            <textarea [ngStyle]="{'width.%': mobile ? '70' : '50'}" type="text" name="description" id="description" cols="50" rows="8"></textarea>
         </div>
         <div class="mb-3">
             <label class="form-control-label d-block">Résztvevők száma:</label>
@@ -44,14 +44,14 @@
 
         <div class="mb-3">
             <input class="form-check-input" type="radio" name="phone" id="phone" checked>
-            <label  [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-check-label" for="phone">
+            <label  type="text" class="form-check-label ms-2" for="phone">
                 A saját telefonszámom szeretném használni ({{user.phone_number}})
             </label>
             <br>
             <input class="form-check-input" type="radio" name="phone" id="otherPhone">
-            <label [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-check-label me-2" for="otherPhone">
+            <label  type="text" class="form-check-label ms-2 me-2" for="otherPhone">
                 Másik telefonszámot adok meg:
-                <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" type="text" id="otherPhoneNumber" name="otherPhoneNumber">
+                <input  type="text" type="text" id="otherPhoneNumber" name="otherPhoneNumber">
             </label>
         </div>
 
