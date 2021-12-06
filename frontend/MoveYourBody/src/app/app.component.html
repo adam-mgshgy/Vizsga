@@ -1,6 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
+<nav class="navbar navbar-expand-lg navbar-dark mb-2">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/home">{{title}}</a>
+    <img id="logoImage" src="./assets/images/mainPageImages/logoWhite.png" alt="logo">
+    <!-- <a class="navbar-brand" routerLink="/home">{{title}}</a> -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -35,7 +36,7 @@
       <ul id="userDropdown" class="navbar-nav mr-auto mb-2 mb-lg-0">
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
+          <button id="searchBtn" class="btn" type="submit">Search</button>
         </form>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown">

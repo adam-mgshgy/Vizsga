@@ -13,12 +13,16 @@ button {
     text-align: center;
 }
 #cancelSubscriptionButton{
-    background-color: #FE5F55;
+    background-color: #1F2421;
+    color: white;
 }
 #modifyButton {
-    background-color: #57CC99;
+    background-color: #216869;
 }
 #subscribeButton {
-    background-color: #80ED99 ;
+    background-color: #49A078 ;
+}
+#email {
+    background-color: #9CC5A1;
 }
 

@@ -17,15 +17,15 @@
                 <h4 class="card-title text-white mb-3 me-3">{{training.name}}</h4>
               </div>
               <div class="col-12">
-                <button class="btn btn-primary mb-3 me-3" [routerLink]="'/createtraining/' + training.id">Szerkesztés</button>
-                <button class="btn btn-primary mb-3" routerLink="/addsession">Új alkalom</button>
-                <button *ngIf="users[0].trainer == false" class="btn btn-danger mb-3">Lemondás</button>
+                <button id="modify" *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3" routerLink="/createtraining">Szerkesztés</button>
+                <button id="newSession" *ngIf="users[0].trainer" class="btn btn-primary mb-3" routerLink="/addsession">Új alkalom</button>
+                <button id="cancel" *ngIf="users[0].trainer == false" class="btn btn-danger mb-3">Lemondás</button>
               </div>
               
               <h6 class="card-title text-white">{{users[0].full_name}}</h6>
             </div>
   
-            <div class="col-md-12" style="background-color: white;">
+            <div class="col-md-12" id="lightBckg">
               <div class="card-body">
   
                 <p class="card-text">{{training.description}}</p>

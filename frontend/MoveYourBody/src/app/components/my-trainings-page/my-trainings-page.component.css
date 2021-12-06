@@ -13,3 +13,15 @@
     border: 1px solid black;
     width: 3rem;
 }
+#lightBckg {
+    background-color: white;
+}
+#modify{
+    background-color: #216869;
+    border-color: white;
+}
+#newSession{
+    background-color: #49A078;
+    border-color: white;
+
+}

@@ -16,10 +16,8 @@ div input{
     text-align: center;
 }
 #registerButton{
-    background-color: #80ED99;
-}
-#trainerButton {
-    background-color: #57CC99;
+    background-color: #216869;
+    color: white;
 }
 label {
     text-align: center;
