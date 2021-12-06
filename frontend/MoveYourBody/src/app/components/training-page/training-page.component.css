@@ -27,3 +27,7 @@ img {
 .sessions button {
     width: 100%;
 }
+h2 {
+    width: 90%;
+    margin: auto;
+}
