@@ -14,7 +14,7 @@ export class TrainingPageComponent implements OnInit {
   public training: TrainingModel =
     {
       name: 'Nagyon hosszú nevű edzés',
-      description: 'Zenés TRX edzés Bana city központjában Hozz magaddal törcsit, váltócipőt és vizet!',
+      description: 'Zenés TRX edzés Bana city központjában. Hozz magaddal törölközőt, váltócipőt és vizet! Várunk sok szeretettel!',
       category: 'TRX',
       id: 0,
       min_member: 6,
