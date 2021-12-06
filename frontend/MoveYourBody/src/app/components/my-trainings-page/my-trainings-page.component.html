@@ -1,6 +1,5 @@
 <div (resized)="onResized($event)" [ngStyle]="{'width.%': mobile ==true ? '100' : '80'}" class="container-fluid">
     <div class="row">
-  
       <div *ngFor="let training of myTrainings;let i=index" class="col-xxl-4 col-xl-6 col-md-6">
         <div class="card mb-3">
           <div class="row g-0">
@@ -20,6 +19,7 @@
               <div class="col-12">
                 <button class="btn btn-primary mb-3 me-3" [routerLink]="'/createtraining/' + training.id">Szerkesztés</button>
                 <button class="btn btn-primary mb-3" routerLink="/addsession">Új alkalom</button>
+                <button *ngIf="users[0].trainer == false" class="btn btn-danger mb-3">Lemondás</button>
               </div>
               
               <h6 class="card-title text-white">{{users[0].full_name}}</h6>

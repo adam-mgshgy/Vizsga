@@ -51,6 +51,14 @@ export class MyTrainingsPageComponent implements OnInit {
       trainer: true,
       phone_number: '+36701234678',
       city: 'Győr',
+    },
+    {
+      id: 2,
+      email: 'jelentelek@gmail.com',
+      full_name: 'Jelentkező Elek',
+      trainer: false,
+      phone_number: '+36301234678',
+      city: 'Bana',
     }
   ];
   public allTags: TagModel[] = [
