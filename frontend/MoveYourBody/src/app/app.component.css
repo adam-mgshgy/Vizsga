@@ -8,3 +8,21 @@
  #userDropdown{
     margin-right: 3rem;
  }
+ nav {
+   background-color: #216869;
+   color: white;
+ }
+ a {
+    color: white;
+    text-decoration: none;
+ }
+ .dropdown-item {
+    color: black;
+ }
+ .navbar-dark .navbar-nav .nav-link {
+    color: white;
+ }
+ #searchBtn {
+    color: #216869;
+    background-color: white;
+ }
