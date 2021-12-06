@@ -25,3 +25,10 @@
     border-color: white;
 
 }
+#newTraining {
+    width: 40%;
+    height: 40%;
+    font-size: xx-large;
+    background-color: #9CC5A1;
+    color: white;
+}
