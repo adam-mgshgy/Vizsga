@@ -36,3 +36,6 @@
     background-color: #9CC5A1;
     color: white;
 }
+#exPanel{
+  pointer-events: none;
+}

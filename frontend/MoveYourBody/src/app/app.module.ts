@@ -19,7 +19,8 @@ import { AngularResizeEventModule } from 'angular-resize-event';
 import { MyTrainingsPageComponent } from './components/my-trainings-page/my-trainings-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
+import {MatDividerModule} from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
     AngularResizeEventModule,
     BrowserAnimationsModule,
     NgbModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -5,19 +5,18 @@ import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
 
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { SessionModel } from 'src/app/models/session-model';
 
 @Component({
   selector: 'app-my-trainings-page',
   templateUrl: './my-trainings-page.component.html',
-  styleUrls: ['./my-trainings-page.component.css']
+  styleUrls: ['./my-trainings-page.component.css'],
 })
 export class MyTrainingsPageComponent implements OnInit {
-
-  constructor(private route: ActivatedRoute, private modalService: NgbModal) { }
+  constructor(private route: ActivatedRoute, private modalService: NgbModal) {}
   closeResult = '';
-  panelOpenState = false;
 
   category: string | null = null;
   imgSrc = './assets/images/categoryPageImages/profile_rock.png';
@@ -27,7 +26,6 @@ export class MyTrainingsPageComponent implements OnInit {
 
   counter = 0;
 
-  
   public myTrainings: TrainingModel[] = [
     {
       name: 'Nagyon hosszú nevű edzés',
@@ -46,7 +44,7 @@ export class MyTrainingsPageComponent implements OnInit {
       min_member: 1,
       max_member: 1,
       trainer_id: 0,
-    }
+    },
   ];
   public users: UserModel[] = [
     {
@@ -64,7 +62,23 @@ export class MyTrainingsPageComponent implements OnInit {
       trainer: false,
       phone_number: '+36301234678',
       city: 'Bana',
-    }
+    },
+    {
+      id: 3,
+      email: 'jelentelek@gmail.com',
+      full_name: 'Jelentkező Károly',
+      trainer: false,
+      phone_number: '+36301234678',
+      city: 'Bana',
+    },
+    {
+      id: 4,
+      email: 'jelentelek@gmail.com',
+      full_name: 'Jelentkező Erika',
+      trainer: false,
+      phone_number: '+36301234678',
+      city: 'Bana',
+    },
   ];
   public allTags: TagModel[] = [
     { id: 0, name: 'csoportos', colour: '#6610f2' },
@@ -72,9 +86,19 @@ export class MyTrainingsPageComponent implements OnInit {
     { id: 2, name: 'saját testsúlyos', colour: '#fd7e14' },
     { id: 3, name: 'edzőterem', colour: 'red' },
     { id: 4, name: 'zsírégető', colour: '#0dcaf0' },
-    { id: 5, name: 'személyi edzés', colour: 'green' }
+    { id: 5, name: 'személyi edzés', colour: 'green' },
+  ];
+  public applicant = [
+    {
+      training_session_id: 1,
+      user_id: 2,
+    },
   ];
 
+  public training_session: SessionModel[] = [
+    { id: 1, date: '2021.12.23 09:00', place: 'OSP', price: 4000, minutes: 60 },
+    { id: 2, date: '2021.12.23 15:00', place: 'Jedlik kondi', price: 5000, minutes: 70 }
+  ];
 
   ngOnInit(): void {
     if (window.innerWidth <= 991) {
@@ -87,9 +111,7 @@ export class MyTrainingsPageComponent implements OnInit {
     //Lekérdezés a back-end-ről
   }
 
-  usersList(){
-
-  }
+  usersList() {}
   onResized(event: ResizedEvent) {
     this.tagsOnMobile();
   }
@@ -120,12 +142,17 @@ export class MyTrainingsPageComponent implements OnInit {
       this.counter = 6;
     }
   }
-  open(content:any) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+  open(content: any) {
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
   }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {

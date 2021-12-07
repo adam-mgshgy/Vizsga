@@ -1,72 +1,33 @@
-<div
-  (resized)="onResized($event)"
-  [ngStyle]="{ 'width.%': mobile == true ? '100' : '80' }"
-  class="container-fluid"
->
+<div (resized)="onResized($event)" [ngStyle]="{ 'width.%': mobile == true ? '100' : '80' }" class="container-fluid">
   <div class="row">
-    <div
-      *ngFor="let training of myTrainings; let i = index"
-      class="col-xxl-4 col-xl-6 col-md-6"
-    >
+    <div *ngFor="let training of myTrainings; let i = index" class="col-xxl-4 col-xl-6 col-md-6">
       <div class="card mb-3">
         <div class="row g-0">
           <div class="col-4 align-items-center">
-            <img
-              [src]="imgSrc"
-              style="width: 100%; height: 100%; object-fit: cover"
-              class="img-fluid"
-              alt="..."
-            />
+            <img [src]="imgSrc" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
           </div>
 
           <div class="col-8" id="bckg">
-            <img
-              [src]="imgBckgSrc"
-              style="width: 100%; height: 100%; object-fit: cover"
-              class="img-fluid"
-              alt="..."
-            />
+            <img [src]="imgBckgSrc" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
           </div>
 
-          <div
-            class="card-body container-fluid row g-0"
-            style="background-color: #343a40"
-          >
+          <div class="card-body container-fluid row g-0" style="background-color: #343a40">
             <div class="col-auto">
               <h4 class="card-title text-white mb-3 me-3">
                 {{ training.name }}
               </h4>
             </div>
             <div class="col-12">
-              <button
-                id="modify"
-                *ngIf="users[0].trainer"
-                class="btn btn-primary mb-3 me-3"
-                routerLink="/createtraining"
-              >
+              <button id="modify" *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3" routerLink="/createtraining">
                 Szerkesztés
               </button>
-              <button
-                id="newSession"
-                *ngIf="users[0].trainer"
-                class="btn btn-primary mb-3 me-3"
-                routerLink="/addsession"
-              >
+              <button id="newSession" *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3" routerLink="/addsession">
                 Új alkalom
               </button>
-              <button
-                id="cancel"
-                *ngIf="users[0].trainer == false"
-                class="btn btn-danger mb-3"
-              >
+              <button id="cancel" *ngIf="users[0].trainer == false" class="btn btn-danger mb-3">
                 Lemondás
               </button>
-              <button
-                id="users"
-                *ngIf="users[0].trainer"
-                class="btn btn-primary mb-3"
-                (click)="open(content)"
-              >
+              <button id="users" *ngIf="users[0].trainer" class="btn btn-primary mb-3" (click)="open(content)">
                 Jelentkezők megtekintése
               </button>
             </div>
@@ -77,22 +38,13 @@
           <div class="col-md-12" id="lightBckg">
             <div class="card-body">
               <p class="card-text">{{ training.description }}</p>
-              <button
-                id="tag"
-                [ngStyle]="{
+              <button id="tag" [ngStyle]="{
                   'background-color': tag.colour,
                   'border-color': 'tag.colour'
-                }"
-                *ngFor="let tag of allTags | slice: 0:this.counter"
-                class="btn fw-bold me-1 mb-1"
-              >
+                }" *ngFor="let tag of allTags | slice: 0:this.counter" class="btn fw-bold me-1 mb-1">
                 {{ tag.name }}
               </button>
-              <select
-                *ngIf="allTags.length > 4"
-                id="moreTag"
-                class="btn fw-bold me-1 mb-1"
-              >
+              <select *ngIf="allTags.length > 4" id="moreTag" class="btn fw-bold me-1 mb-1">
                 <option value="">...</option>
                 <option *ngFor="let tag of allTags" value="">
                   {{ tag.name }}
@@ -101,19 +53,16 @@
               <p class="card-text fw-bold">
                 <a class="text-decoration-none text-black" routerLink="">{{
                   users[0].city
-                }}</a>
+                  }}</a>
               </p>
+             
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="col">
-      <button
-        id="newTraining"
-        class="btn fw-bold mx-2"
-        routerLink="/createtraining"
-      >
+      <button id="newTraining" class="btn fw-bold mx-2" routerLink="/createtraining">
         Új edzés
       </button>
     </div>
@@ -123,7 +72,8 @@
 <!--Modal popup-->
 <ng-template #content let-modal>
   <mat-accordion>
-    <mat-expansion-panel hideToggle><!--TODO diable open-->
+    <mat-expansion-panel id="exPanel" hideToggle>
+      <!--TODO disable open-->
       <mat-expansion-panel-header>
         <mat-panel-title>
           Jelentkező neve
@@ -132,22 +82,25 @@
           Foglalás időpontja
         </mat-panel-description>
       </mat-expansion-panel-header>
-      
     </mat-expansion-panel>
-    <mat-expansion-panel
-      *ngFor="let user of users"
-      (opened)="panelOpenState = true"
-      (closed)="panelOpenState = false"
-    >
+
+    <mat-divider></mat-divider>
+
+    <mat-expansion-panel  *ngFor="let user of users">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{ user.full_name }}
+          <mat-divider></mat-divider>
         </mat-panel-title>
+        
         <mat-panel-description>
           Itt lesz majd a foglalás időpontja
         </mat-panel-description>
+        
       </mat-expansion-panel-header>
       {{ user.phone_number }}
+     
     </mat-expansion-panel>
+    
   </mat-accordion>
 </ng-template>
