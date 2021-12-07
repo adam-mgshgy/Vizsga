@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ResizedEvent } from 'angular-resize-event';
 import { ActivatedRoute } from '@angular/router';
 import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
+
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @Component({
   selector: 'app-my-trainings-page',
@@ -12,7 +15,9 @@ import { UserModel } from 'src/app/models/user-model';
 })
 export class MyTrainingsPageComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private modalService: NgbModal) { }
+  closeResult = '';
+  panelOpenState = false;
 
   category: string | null = null;
   imgSrc = './assets/images/categoryPageImages/profile_rock.png';
@@ -81,6 +86,10 @@ export class MyTrainingsPageComponent implements OnInit {
 
     //Lekérdezés a back-end-ről
   }
+
+  usersList(){
+
+  }
   onResized(event: ResizedEvent) {
     this.tagsOnMobile();
   }
@@ -111,5 +120,20 @@ export class MyTrainingsPageComponent implements OnInit {
       this.counter = 6;
     }
   }
-
+  open(content:any) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 }

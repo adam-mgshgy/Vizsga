@@ -25,6 +25,10 @@
     border-color: white;
 
 }
+#users{
+    background-color: #216869;
+    border-color: white;
+}
 #newTraining {
     width: 40%;
     height: 40%;
