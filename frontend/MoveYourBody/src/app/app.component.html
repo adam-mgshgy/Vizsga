@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark mb-2">
   <div class="container-fluid">
-    <img id="logoImage" src="./assets/images/mainPageImages/logoWhite.png" alt="logo">
+    <a  id="logoLink" routerLink="/home"><img id="logoImage" src="./assets/images/mainPageImages/logoWhite.png" alt="logo"></a>
     <!-- <a class="navbar-brand" routerLink="/home">{{title}}</a> -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
@@ -24,7 +24,7 @@
             <li><a class=" dropdown-item" routerLink="/categories">További kategóriák</a></li>
           </ul>
         </li>
-        
+
         <li class="nav-item">
           <a class="nav-link active" routerLink="/register">Regisztráció</a> <!-- nem így lesz -->
         </li>
@@ -44,8 +44,10 @@
             <!--TODO aktuálisan bejelentkezett user neve-->
           </a>
           <ul class="dropdown-menu">
-            <li><a  class=" dropdown-item" routerLink="/profile">Fiókbeállítások</a></li>
-            <li><hr class="dropdown-divider"></li>
+            <li><a class=" dropdown-item" routerLink="/profile">Fiókbeállítások</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
             <li><a *ngIf="users[0].trainer == true" class="dropdown-item" routerLink="/mytrainings">Edzéseim</a></li>
             <li><a class=" dropdown-item">Kijelentkezés</a></li>
           </ul>
