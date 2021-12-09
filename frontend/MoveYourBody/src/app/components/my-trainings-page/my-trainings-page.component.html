@@ -18,17 +18,22 @@
               </h4>
             </div>
             <div class="col-12">
-              <button id="modify" *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3" routerLink="/createtraining">
+              <button id="modify" *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3"
+                routerLink="/createtraining">
                 Szerkesztés
               </button>
-              <button id="newSession" *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3" routerLink="/addsession">
+              <button id="newSession" *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3"
+                routerLink="/addsession">
                 Új alkalom
               </button>
               <button id="cancel" *ngIf="users[0].trainer == false" class="btn btn-danger mb-3">
                 Lemondás
               </button>
-              <button id="users" *ngIf="users[0].trainer" class="btn btn-primary mb-3" (click)="open(content)">
-                Jelentkezők megtekintése
+              <button id="sessions" *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3" (click)="open(content)">
+                Alkalmak
+              </button>
+              <button id="delete" *ngIf="users[0].trainer" class="btn btn-danger mb-3 ">
+                Törlés
               </button>
             </div>
 
@@ -55,7 +60,7 @@
                   users[0].city
                   }}</a>
               </p>
-             
+
             </div>
           </div>
         </div>
@@ -76,31 +81,47 @@
       <!--TODO disable open-->
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Jelentkező neve
+          Időpont
         </mat-panel-title>
-        <mat-panel-description>
+        <!-- <mat-panel-description>
           Foglalás időpontja
-        </mat-panel-description>
+        </mat-panel-description> -->
       </mat-expansion-panel-header>
     </mat-expansion-panel>
 
     <mat-divider></mat-divider>
 
-    <mat-expansion-panel  *ngFor="let user of users">
+    <mat-expansion-panel *ngFor="let session of training_session">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{ user.full_name }}
+          {{ session.date.substr(0, 10) }}
           <mat-divider></mat-divider>
         </mat-panel-title>
-        
         <mat-panel-description>
-          Itt lesz majd a foglalás időpontja
+          
         </mat-panel-description>
-        
       </mat-expansion-panel-header>
-      {{ user.phone_number }}
-     
+      <mat-expansion-panel >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ session.date.substr(10) }}
+            <mat-divider></mat-divider>
+          </mat-panel-title>
+          <mat-panel-description>
+            3/8
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="row" *ngFor="let user of users">
+          <div class="col-6">
+            <div *ngIf="user.trainer == false">{{user.full_name}}</div>
+          </div>
+          <div class="col-6">
+            <div *ngIf="user.trainer == false">{{user.phone_number}}</div>
+          </div>
+        </div>
+
+      </mat-expansion-panel>
     </mat-expansion-panel>
-    
+
   </mat-accordion>
 </ng-template>

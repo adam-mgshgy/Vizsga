@@ -97,7 +97,9 @@ export class MyTrainingsPageComponent implements OnInit {
 
   public training_session: SessionModel[] = [
     { id: 1, date: '2021.12.23 09:00', place: 'OSP', price: 4000, minutes: 60 },
-    { id: 2, date: '2021.12.23 15:00', place: 'Jedlik kondi', price: 5000, minutes: 70 }
+    { id: 2, date: '2021.12.24 15:00', place: 'Jedlik kondi', price: 5000, minutes: 70 },
+    { id: 3, date: '2021.12.25 14:00', place: 'Jedlik kondi', price: 5000, minutes: 70 },
+    { id: 4, date: '2021.12.25 15:00', place: 'Jedlik kondi', price: 5000, minutes: 70 }
   ];
 
   ngOnInit(): void {
