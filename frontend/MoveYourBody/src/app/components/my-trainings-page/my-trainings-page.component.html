@@ -101,10 +101,10 @@
           
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <mat-expansion-panel >
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{ session.date.substr(10) }}
+      <mat-expansion-panel *ngFor="let session2 of ordered_session">
+        <mat-expansion-panel-header >
+          <mat-panel-title >
+            {{ this.date }}
             <mat-divider></mat-divider>
           </mat-panel-title>
           <mat-panel-description>

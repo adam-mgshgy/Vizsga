@@ -8,6 +8,7 @@ import { UserModel } from 'src/app/models/user-model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SessionModel } from 'src/app/models/session-model';
+import { OrderedSessionModel } from 'src/app/models/ordered-session-model';
 
 @Component({
   selector: 'app-my-trainings-page',
@@ -25,6 +26,8 @@ export class MyTrainingsPageComponent implements OnInit {
   mobile: boolean = false;
 
   counter = 0;
+
+  date = '';
 
   public myTrainings: TrainingModel[] = [
     {
@@ -96,13 +99,63 @@ export class MyTrainingsPageComponent implements OnInit {
   ];
 
   public training_session: SessionModel[] = [
-    { id: 1, date: '2021.12.23 09:00', place: 'OSP', price: 4000, minutes: 60 },
-    { id: 2, date: '2021.12.24 15:00', place: 'Jedlik kondi', price: 5000, minutes: 70 },
-    { id: 3, date: '2021.12.25 14:00', place: 'Jedlik kondi', price: 5000, minutes: 70 },
-    { id: 4, date: '2021.12.25 15:00', place: 'Jedlik kondi', price: 5000, minutes: 70 }
+    { id: 1,
+      date: '2021.12.23 09:00',
+      place: 'OSP',
+      price: 4000,
+      minutes: 60
+    },
+    {
+      id: 2,
+      date: '2021.12.24 15:00',
+      place: 'Jedlik kondi',
+      price: 5000,
+      minutes: 70,
+    },
+    {
+      id: 3,
+      date: '2021.12.25 18:00',
+      place: 'Jedlik kondi',
+      price: 5000,
+      minutes: 70,
+    },
+    {
+      id: 4,
+      date: '2021.12.25 19:00',
+      place: 'Jedlik kondi',
+      price: 5000,
+      minutes: 70,
+    },
   ];
+  public ordered_session: SessionModel[] = [];
+  
+  public asd(){
 
-  ngOnInit(): void {
+    return "asd";
+  }
+  
+  public orderByDate() {
+     for (let index2 = 0; index2 < this.training_session.length; index2++) {
+       this.ordered_session.push(this.training_session[index2]);
+     }
+     for (let index = 1; index < this.training_session.length-1; index++) {
+      if (this.ordered_session[index+1].date.substring(0,10) == this.ordered_session[index].date.substring(0,10)){
+        this.ordered_session[index].date = this.ordered_session[index].date + ';' + this.ordered_session[index+1].date.substring(10);
+        this.ordered_session.pop();
+        console.log(this.ordered_session[index]);
+      } 
+      else {
+
+      }
+     }
+    
+    this.date = "asd";    
+    
+  }
+
+  ngOnInit(): void {    
+    this.orderByDate()
+    console.log(this.date);
     if (window.innerWidth <= 991) {
       this.mobile = true;
     }
