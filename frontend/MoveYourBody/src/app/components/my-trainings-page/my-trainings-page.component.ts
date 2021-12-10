@@ -84,6 +84,14 @@ export class MyTrainingsPageComponent implements OnInit {
       phone_number: '+36301234678',
       city: 'Bana',
     },
+    {
+      id: 5,
+      email: 'jelentelek@gmail.com',
+      full_name: 'Jelentkező Zsolt',
+      trainer: false,
+      phone_number: '+36301234678',
+      city: 'Bana',
+    },
   ];
   public allTags: TagModel[] = [
     { id: 0, name: 'csoportos', colour: '#6610f2' },
@@ -129,7 +137,14 @@ export class MyTrainingsPageComponent implements OnInit {
       minutes: 70,
     },
   ];
-  
+
+  public statuses = [
+    "4/8",
+    "8/8 Betelt",
+    "2/8 Kevés jelentkező",
+    "5/8"
+  ];
+
   public ordered_session:any[] = [];
   
   groupByDate(array, property) {

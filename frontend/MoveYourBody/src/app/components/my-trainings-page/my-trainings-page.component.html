@@ -91,35 +91,37 @@
 
     <mat-divider></mat-divider>
     <!-- https://stackblitz.com/edit/angular-f86jqn-tspqn8?file=app%2Fexpansion-overview-example.ts -->
-    <mat-expansion-panel *ngFor="let item of ordered_session">
+    <mat-expansion-panel *ngFor="let item of ordered_session;let i = index">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{ item[0].date.substr(0,10) }}
           <mat-divider></mat-divider>
         </mat-panel-title>
         <mat-panel-description>
-          
+          <button class="btn btn-primary me-3">Módosítás</button>
+          <button class="btn btn-danger">Törlés</button>
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <mat-expansion-panel *ngFor="let obj of item">
+      <mat-expansion-panel *ngFor="let obj of item ">
         <mat-expansion-panel-header >
           <mat-panel-title >
             {{ obj.date.substr(10) }}
             <mat-divider></mat-divider>
           </mat-panel-title>
-          <mat-panel-description>
-            3/8
+          <mat-panel-description [ngStyle]="{'color': statuses[i].includes('Betelt')|| statuses[i].includes('Kevés') ? 'red' : 'black'}">
+            {{statuses[i]}}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div class="row" *ngFor="let user of users">
+        <div class="row" *ngFor="let user of users" >
           <div class="col-6">
-            <div *ngIf="user.trainer == false">{{user.full_name}}</div>
+            <div *ngIf="user.trainer == false" >{{user.full_name}}</div>
           </div>
           <div class="col-6">
-            <div *ngIf="user.trainer == false">{{user.phone_number}}</div>
+            <div *ngIf="user.trainer == false" >{{user.phone_number}}</div>
           </div>
+          <hr>
         </div>
-
+        
       </mat-expansion-panel>
     </mat-expansion-panel>
 
