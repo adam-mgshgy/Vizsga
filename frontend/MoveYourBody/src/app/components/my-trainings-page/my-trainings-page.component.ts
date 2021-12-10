@@ -17,8 +17,7 @@ import { OrderedSessionModel } from 'src/app/models/ordered-session-model';
 })
 export class MyTrainingsPageComponent implements OnInit {
   constructor(private route: ActivatedRoute, private modalService: NgbModal) {
-    this.ordered_session = Object.values(this.groupItemBy(this.fixtures, 'date'));
-    console.log(this.ordered_session);
+    this.ordered_session = Object.values(this.groupByDate(this.training_session, 'date'));//date alapján rendez
   }
   closeResult = '';
 
@@ -130,37 +129,18 @@ export class MyTrainingsPageComponent implements OnInit {
       minutes: 70,
     },
   ];
-  fixtures = [
-    {
-      id:1,
-      date: '2021.12.25 19:00',
-      place: 'Jedlik kondi',
-      price: 5000,
-      minutes: 70,
-    },
-    {
-      id: 2,
-      date: '2021.12.25 19:00',
-      place: 'Jedlik kondi',
-      price: 5000,
-      minutes: 70,
-    },
-    {
-      id: 3,
-      date: '2021.12.25 20:00',
-      place: 'Jedlik kondi',
-      price: 5000,
-      minutes: 70,
-    },
-  ];
+  
   public ordered_session:any[] = [];
   
-  groupItemBy(array, property) {
+  groupByDate(array, property) {
+    
+    
     var hash = {},
       props = property.split('.');
     for (var i = 0; i < array.length; i++) {
       var key = props.reduce(function (acc, prop) {
-        return acc && acc[prop];
+        return acc && acc[prop].substr(0,10);
+        
       }, array[i]);
       if (!hash[key]) hash[key] = [];
       hash[key].push(array[i]);
