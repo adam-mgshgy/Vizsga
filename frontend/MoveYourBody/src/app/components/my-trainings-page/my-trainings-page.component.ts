@@ -16,7 +16,10 @@ import { OrderedSessionModel } from 'src/app/models/ordered-session-model';
   styleUrls: ['./my-trainings-page.component.css'],
 })
 export class MyTrainingsPageComponent implements OnInit {
-  constructor(private route: ActivatedRoute, private modalService: NgbModal) {}
+  constructor(private route: ActivatedRoute, private modalService: NgbModal) {
+    this.ordered_session = Object.values(this.groupItemBy(this.fixtures, 'date'));
+    console.log(this.ordered_session);
+  }
   closeResult = '';
 
   category: string | null = null;
@@ -127,34 +130,47 @@ export class MyTrainingsPageComponent implements OnInit {
       minutes: 70,
     },
   ];
-  public ordered_session: SessionModel[] = [];
+  fixtures = [
+    {
+      id:1,
+      date: '2021.12.25 19:00',
+      place: 'Jedlik kondi',
+      price: 5000,
+      minutes: 70,
+    },
+    {
+      id: 2,
+      date: '2021.12.25 19:00',
+      place: 'Jedlik kondi',
+      price: 5000,
+      minutes: 70,
+    },
+    {
+      id: 3,
+      date: '2021.12.25 20:00',
+      place: 'Jedlik kondi',
+      price: 5000,
+      minutes: 70,
+    },
+  ];
+  public ordered_session:any[] = [];
   
-  public asd(){
-
-    return "asd";
+  groupItemBy(array, property) {
+    var hash = {},
+      props = property.split('.');
+    for (var i = 0; i < array.length; i++) {
+      var key = props.reduce(function (acc, prop) {
+        return acc && acc[prop];
+      }, array[i]);
+      if (!hash[key]) hash[key] = [];
+      hash[key].push(array[i]);
+    }
+    return hash;
   }
   
-  public orderByDate() {
-     for (let index2 = 0; index2 < this.training_session.length; index2++) {
-       this.ordered_session.push(this.training_session[index2]);
-     }
-     for (let index = 1; index < this.training_session.length-1; index++) {
-      if (this.ordered_session[index+1].date.substring(0,10) == this.ordered_session[index].date.substring(0,10)){
-        this.ordered_session[index].date = this.ordered_session[index].date + ';' + this.ordered_session[index+1].date.substring(10);
-        this.ordered_session.pop();
-        console.log(this.ordered_session[index]);
-      } 
-      else {
-
-      }
-     }
-    
-    this.date = "asd";    
-    
-  }
 
   ngOnInit(): void {    
-    this.orderByDate()
+    
     console.log(this.date);
     if (window.innerWidth <= 991) {
       this.mobile = true;

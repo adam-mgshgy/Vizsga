@@ -90,21 +90,21 @@
     </mat-expansion-panel>
 
     <mat-divider></mat-divider>
-
-    <mat-expansion-panel *ngFor="let session of training_session">
+    <!-- https://stackblitz.com/edit/angular-f86jqn-tspqn8?file=app%2Fexpansion-overview-example.ts -->
+    <mat-expansion-panel *ngFor="let item of ordered_session">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{ session.date.substr(0, 10) }}
+          {{ item.date }}
           <mat-divider></mat-divider>
         </mat-panel-title>
         <mat-panel-description>
           
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <mat-expansion-panel *ngFor="let session2 of ordered_session">
-        <mat-expansion-panel-header >
+      <mat-expansion-panel >
+        <mat-expansion-panel-header *ngFor="let obj of item; let i= index">
           <mat-panel-title >
-            {{ this.date }}
+            {{ obj.date.substr(10) }}
             <mat-divider></mat-divider>
           </mat-panel-title>
           <mat-panel-description>
