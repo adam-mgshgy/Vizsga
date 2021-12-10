@@ -8,7 +8,6 @@ import { UserModel } from 'src/app/models/user-model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SessionModel } from 'src/app/models/session-model';
-import { OrderedSessionModel } from 'src/app/models/ordered-session-model';
 
 @Component({
   selector: 'app-my-trainings-page',
