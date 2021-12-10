@@ -15,7 +15,7 @@ export class ProfileSettingsComponent implements OnInit {
       full_name: 'Teszt Elek',
       trainer: true,
       phone_number: '+36701234678',
-      city: 'Győr' 
+      location_id: 1 
   }
   mobile: boolean = false;
   constructor() { }

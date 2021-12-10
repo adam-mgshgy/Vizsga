@@ -19,7 +19,7 @@ export class CreateTrainingPageComponent implements OnInit {
     full_name: 'Teszt Elek',
     trainer: true,
     phone_number: '+36701234678',
-    city: 'Győr'
+    location_id: 1
   }
   public categories: CategoryModel[] = [
     { name: 'Box', imgSrc: 'box.jpg' },
@@ -36,11 +36,11 @@ export class CreateTrainingPageComponent implements OnInit {
     { name: 'Jóga', imgSrc: 'yoga.jpg' },
   ];
   public tags: TagModel[] = [
-    { id: 0, name: 'csoportos', colour: '#6610f2' },
-    { id: 1, name: 'erőnléti', colour: 'black' },
-    { id: 2, name: 'saját testsúlyos', colour: '#fd7e14' },
-    { id: 3, name: 'edzőterem', colour: 'red' },
-    { id: 4, name: 'zsírégető', colour: '#0dcaf0' },
+    { id: 0, name: 'csoportos'},
+    { id: 1, name: 'erőnléti'},
+    { id: 2, name: 'saját testsúlyos'},
+    { id: 3, name: 'edzőterem'},
+    { id: 4, name: 'zsírégető'},
 
   ];
   public training: TrainingModel = new TrainingModel();
@@ -54,6 +54,7 @@ export class CreateTrainingPageComponent implements OnInit {
       min_member: 3,
       max_member: 8,
       trainer_id: 0,
+      contact_phone: '06701234567'
     },
     {
       name: 'Egyéni Teri trx',
@@ -63,6 +64,8 @@ export class CreateTrainingPageComponent implements OnInit {
       min_member: 1,
       max_member: 1,
       trainer_id: 0,
+      contact_phone: '06701234567'
+
     }
   ];
   public OnSelect(tag: TagModel): void {

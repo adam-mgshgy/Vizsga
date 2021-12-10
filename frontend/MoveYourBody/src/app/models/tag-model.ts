@@ -1,5 +1,4 @@
 export class TagModel{
-    id = 0;
+    id: number | null = null;
     name = "";
-    colour = "";
 }
