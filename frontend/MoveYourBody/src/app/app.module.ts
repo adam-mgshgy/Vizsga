@@ -13,8 +13,14 @@ import { CreateTrainingPageComponent } from './components/create-training-page/c
 import { AddSessionPageComponent } from './components/add-session-page/add-session-page.component';
 import { TrainingPageComponent } from './components/training-page/training-page.component';
 
+
+
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { MyTrainingsPageComponent } from './components/my-trainings-page/my-trainings-page.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatDividerModule} from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -33,7 +39,11 @@ import { MyTrainingsPageComponent } from './components/my-trainings-page/my-trai
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AngularResizeEventModule
+    AngularResizeEventModule,
+    BrowserAnimationsModule,
+    NgbModule,
+    MatExpansionModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
