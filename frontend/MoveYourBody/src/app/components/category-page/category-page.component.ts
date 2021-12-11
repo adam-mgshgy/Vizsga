@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ResizedEvent } from 'angular-resize-event';
+import { LocationModel } from 'src/app/models/location-model';
 import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
@@ -31,6 +32,7 @@ export class CategoryPageComponent implements OnInit {
       min_member: 6,
       max_member: 8,
       trainer_id: 0,
+      contact_phone: '06701234567'
     },
     {
       name: 'Teri trx',
@@ -40,6 +42,7 @@ export class CategoryPageComponent implements OnInit {
       min_member: 6,
       max_member: 8,
       trainer_id: 0,
+      contact_phone: '06701234567'
     },
     {
       name: 'Teri trx',
@@ -49,6 +52,7 @@ export class CategoryPageComponent implements OnInit {
       min_member: 6,
       max_member: 8,
       trainer_id: 0,
+      contact_phone: '06701234567'
     },
     {
       name: 'Kiütünk mindenkit',
@@ -58,6 +62,7 @@ export class CategoryPageComponent implements OnInit {
       min_member: 6,
       max_member: 8,
       trainer_id: 0,
+      contact_phone: '06701234567'
     },
     {
       name: 'Lovaglás nagyoknak',
@@ -67,6 +72,7 @@ export class CategoryPageComponent implements OnInit {
       min_member: 6,
       max_member: 8,
       trainer_id: 0,
+      contact_phone: '06701234567'
     },
     {
       name: 'Légy hal',
@@ -76,6 +82,7 @@ export class CategoryPageComponent implements OnInit {
       min_member: 6,
       max_member: 8,
       trainer_id: 0,
+      contact_phone: '06701234567'
     },
     {
       name: '300 helyett 8an spartan edzés',
@@ -85,6 +92,7 @@ export class CategoryPageComponent implements OnInit {
       min_member: 6,
       max_member: 8,
       trainer_id: 0,
+      contact_phone: '06701234567'
     },
     {
       name: 'Foci Ferivel',
@@ -94,6 +102,7 @@ export class CategoryPageComponent implements OnInit {
       min_member: 6,
       max_member: 8,
       trainer_id: 0,
+      contact_phone: '06701234567'
     },
     {
       name: 'Ripi röpi Rebekával',
@@ -103,6 +112,7 @@ export class CategoryPageComponent implements OnInit {
       min_member: 6,
       max_member: 8,
       trainer_id: 0,
+      contact_phone: '06701234567'
     },
     {
       name: 'Crossfit edzés',
@@ -112,6 +122,7 @@ export class CategoryPageComponent implements OnInit {
       min_member: 6,
       max_member: 8,
       trainer_id: 0,
+      contact_phone: '06701234567'
     },
     {
       name: 'Foci Viktorral',
@@ -121,6 +132,7 @@ export class CategoryPageComponent implements OnInit {
       min_member: 6,
       max_member: 8,
       trainer_id: 0,
+      contact_phone: '06701234567'
     },
     {
       name: 'Tenisz a salgótarjáni Federerrel',
@@ -130,6 +142,7 @@ export class CategoryPageComponent implements OnInit {
       min_member: 6,
       max_member: 8,
       trainer_id: 0,
+      contact_phone: '06701234567'
     },
     {
       name: 'Kosárlabda focilabdával',
@@ -140,6 +153,7 @@ export class CategoryPageComponent implements OnInit {
       min_member: 6,
       max_member: 8,
       trainer_id: 0,
+      contact_phone: '06701234567'
     },
   ];
   public users: UserModel[] = [
@@ -149,7 +163,7 @@ export class CategoryPageComponent implements OnInit {
       full_name: 'Tesztelek Károlyné Elekfalvi Károly',
       trainer: true,
       phone_number: '+36701234678',
-      city: 'Győr',
+      location_id: 1
     },
     {
       id: 2,
@@ -157,7 +171,7 @@ export class CategoryPageComponent implements OnInit {
       full_name: 'Tóth Sándor',
       trainer: true,
       phone_number: '+36701234678',
-      city: 'Budapest',
+      location_id: 1
     },
     {
       id: 3,
@@ -165,7 +179,7 @@ export class CategoryPageComponent implements OnInit {
       full_name: 'Kandisz Nóra',
       trainer: true,
       phone_number: '+36701234678',
-      city: 'Miskolc',
+      location_id: 1
     },
     {
       id: 4,
@@ -173,7 +187,7 @@ export class CategoryPageComponent implements OnInit {
       full_name: 'Kovács Ákos',
       trainer: true,
       phone_number: '+36701234678',
-      city: 'Tatabanya',
+      location_id: 1
     },
     {
       id: 5,
@@ -181,7 +195,7 @@ export class CategoryPageComponent implements OnInit {
       full_name: 'Futty Imre',
       trainer: true,
       phone_number: '+36701234678',
-      city: 'Balatonfured',
+      location_id: 1
     },
     {
       id: 6,
@@ -189,7 +203,7 @@ export class CategoryPageComponent implements OnInit {
       full_name: 'Mittomen Karoly',
       trainer: true,
       phone_number: '+36701234678',
-      city: 'Szeged',
+      location_id: 1
     },
     {
       id: 7,
@@ -197,7 +211,7 @@ export class CategoryPageComponent implements OnInit {
       full_name: 'Teszt Elek',
       trainer: true,
       phone_number: '+36701234678',
-      city: 'Győr',
+      location_id: 1
     },
     {
       id: 8,
@@ -205,7 +219,7 @@ export class CategoryPageComponent implements OnInit {
       full_name: 'Teszt Elek',
       trainer: true,
       phone_number: '+36701234678',
-      city: 'Győr',
+      location_id: 1
     },
     {
       id: 9,
@@ -213,7 +227,7 @@ export class CategoryPageComponent implements OnInit {
       full_name: 'Teszt Elek',
       trainer: true,
       phone_number: '+36701234678',
-      city: 'Győr',
+      location_id: 1
     },
     {
       id: 10,
@@ -221,7 +235,7 @@ export class CategoryPageComponent implements OnInit {
       full_name: 'Teszt Elek',
       trainer: true,
       phone_number: '+36701234678',
-      city: 'Győr',
+      location_id: 1
     },
     {
       id: 11,
@@ -229,7 +243,7 @@ export class CategoryPageComponent implements OnInit {
       full_name: 'Teszt Elek',
       trainer: true,
       phone_number: '+36701234678',
-      city: 'Győr',
+      location_id: 1
     },
   ];
   public allTags: TagModel[] = [
@@ -240,6 +254,19 @@ export class CategoryPageComponent implements OnInit {
     { id: 4, name: 'zsírégető', colour: '#0dcaf0' },
     { id: 5, name: 'személyi edzés', colour: 'green' }
   ];
+  public locations: LocationModel[] = [
+    {
+      id: 1,
+      county_name: "Komárom-Esztergom megye",
+      city_name: "Bana",
+      address_name: "Kis Károly utca 11."
+    }, 
+    {
+      id: 2,
+      county_name: "Komárom-Esztergom megye",
+      city_name: "Bana",
+      address_name: "Kis Károly utca 12."
+    }];
 
 
   ngOnInit(): void {

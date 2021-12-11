@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
+import { LocationModel } from 'src/app/models/location-model';
+import { isNull } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-my-trainings-page',
@@ -63,13 +65,26 @@ export class MyTrainingsPageComponent implements OnInit {
       location_id: 1,
     }
   ];
+  public locations: LocationModel[] = [
+  {
+    id: 1,
+    county_name: "Komárom-Esztergom megye",
+    city_name: "Bana",
+    address_name: "Kis Károly utca 11."
+  }, 
+  {
+    id: 2,
+    county_name: "Komárom-Esztergom megye",
+    city_name: "Bana",
+    address_name: "Kis Károly utca 12."
+  }];
   public allTags: TagModel[] = [
-    { id: 0, name: 'csoportos'},
-    { id: 1, name: 'erőnléti'},
-    { id: 2, name: 'saját testsúlyos'},
-    { id: 3, name: 'edzőterem'},
-    { id: 4, name: 'zsírégető'},
-    { id: 5, name: 'személyi edzés'}
+    { id: 0, name: 'csoportos', colour: '#6610f2' },
+    { id: 1, name: 'erőnléti', colour: 'black' },
+    { id: 2, name: 'saját testsúlyos', colour: '#fd7e14' },
+    { id: 3, name: 'edzőterem', colour: 'red' },
+    { id: 4, name: 'zsírégető', colour: '#0dcaf0' },
+    { id: 5, name: 'személyi edzés', colour: '#0dcaf0' }
   ];
 
 
@@ -78,6 +93,7 @@ export class MyTrainingsPageComponent implements OnInit {
       this.mobile = true;
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
+    
 
     this.tagsOnMobile();
 

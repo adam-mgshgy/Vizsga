@@ -3,6 +3,7 @@ import { TrainingSessionModel } from 'src/app/models/training-session-model';
 import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
+import { LocationModel } from 'src/app/models/location-model';
 
 @Component({
   selector: 'app-training-page',
@@ -11,6 +12,13 @@ import { UserModel } from 'src/app/models/user-model';
 })
 export class TrainingPageComponent implements OnInit {
 
+  public location: LocationModel = {
+    id: 1,
+    county_name: "Komárom-Esztergom megye",
+    city_name: "Bana",
+    address_name: "Kis Károly utca 11."
+  }
+  
   public training: TrainingModel =
     {
       id: 0,
@@ -26,7 +34,6 @@ export class TrainingPageComponent implements OnInit {
     {
       id: 1,
       date: '2021.12.12. 15:30',
-      place: 'Bana, Kis Károly utca 8.',
       price: 1500,
       minutes: 60,
       training_id: 1,
@@ -35,7 +42,6 @@ export class TrainingPageComponent implements OnInit {
     {
       id: 1,
       date: '2021.12.12. 15:30',
-      place: 'Bana, Kis Károly utca 8.',
       price: 1500,
       minutes: 60,
       training_id: 1,
@@ -44,7 +50,6 @@ export class TrainingPageComponent implements OnInit {
     {
       id: 1,
       date: '2021.12.12. 15:30',
-      place: 'Bana, Kis Károly utca 8.',
       price: 1500,
       minutes: 60,
       training_id: 1,
@@ -53,7 +58,6 @@ export class TrainingPageComponent implements OnInit {
     {
       id: 2,
       date: '2021.12.12. 16:30',
-      place: 'Bana, Kis Károly utca 8.',
       price: 1500,
       minutes: 60,
       training_id: 1,
@@ -62,7 +66,6 @@ export class TrainingPageComponent implements OnInit {
     {
       id: 3,
       date: '2021.12.12. 17:30',
-      place: 'Bana, Kis Károly utca 8.',
       price: 1500,
       minutes: 60,
       training_id: 1,
@@ -70,12 +73,12 @@ export class TrainingPageComponent implements OnInit {
     }
   ]
     public tags: TagModel[] = [
-      { id: 0, name: 'csoportos'},
-      { id: 1, name: 'erőnléti'},
-      { id: 2, name: 'saját testsúlyos'},
-      { id: 3, name: 'edzőterem'},
-      { id: 4, name: 'zsírégető'},
-      { id: 5, name: 'személyi edzés'}
+      { id: 0, name: 'csoportos', colour: '#6610f2' },
+      { id: 1, name: 'erőnléti', colour: 'black' },
+      { id: 2, name: 'saját testsúlyos', colour: '#fd7e14' },
+      { id: 3, name: 'edzőterem', colour: 'red' },
+      { id: 4, name: 'zsírégető', colour: '#0dcaf0' },
+      { id: 5, name: 'személyi edzés', colour: '#0dcaf0' }
     ];
     user: UserModel = {
       id: 1,

@@ -36,11 +36,12 @@ export class CreateTrainingPageComponent implements OnInit {
     { name: 'Jóga', imgSrc: 'yoga.jpg' },
   ];
   public tags: TagModel[] = [
-    { id: 0, name: 'csoportos'},
-    { id: 1, name: 'erőnléti'},
-    { id: 2, name: 'saját testsúlyos'},
-    { id: 3, name: 'edzőterem'},
-    { id: 4, name: 'zsírégető'},
+    { id: 0, name: 'csoportos', colour: '#6610f2' },
+    { id: 1, name: 'erőnléti', colour: 'black' },
+    { id: 2, name: 'saját testsúlyos', colour: '#fd7e14' },
+    { id: 3, name: 'edzőterem', colour: 'red' },
+    { id: 4, name: 'zsírégető', colour: '#0dcaf0' },
+    { id: 5, name: 'személyi edzés', colour: '#0dcaf0' }
 
   ];
   public training: TrainingModel = new TrainingModel();
@@ -84,7 +85,7 @@ export class CreateTrainingPageComponent implements OnInit {
       this.id = params.get('id');
       if (this.id) {
         const filteredTrainings = this.myTrainings.filter(
-          (t) => t.id == this.id);
+          (t) => t.id == Number(this.id));
         if (filteredTrainings.length == 1) {
           this.training = filteredTrainings[0];
         }

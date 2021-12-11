@@ -11,13 +11,12 @@ export class AppComponent {
   title = 'MoveYourBody';
 
   public categories: CategoryModel[] = [
-     {name: 'Box'},
-     {name: 'Crossfit'},
-     {name: 'Jóga'},
-     {name: 'Spartan'},
-     {name: 'Tenisz'},
-     {name: 'TRX'}
-    
+    { name: 'Box', imgSrc: 'box.jpg' },
+    { name: 'Crossfit', imgSrc: 'crossFitt.jpg' },
+    { name: 'Jóga', imgSrc: 'yoga.jpg' },
+    { name: 'Spartan', imgSrc: 'spartan.jpg' },
+    { name: 'Tenisz', imgSrc: 'tennis.jpg' },
+    { name: 'TRX', imgSrc: 'trx.jpg' },
   ];
   public users: UserModel[] = [
     {

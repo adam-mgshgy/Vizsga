@@ -21,7 +21,7 @@
         <div *ngFor="let session of sessions" class="col-lg-4 col-md-5 col-sm-12 sessions">
             <h3 class="mb-2"><u>Helyszín:</u></h3>
             <h3>
-                {{session.place}}
+                {{location.city_name}}, {{location.address_name}}
             </h3>
             <h3 class="mb-2"><u>Edzés ára:</u> {{session.price}} Ft</h3>
             <h3 class="mb-2"><u>Időpont:</u> {{session.date}}</h3>

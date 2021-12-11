@@ -35,7 +35,7 @@
                   <option value="">...</option>
                   <option *ngFor="let tag of allTags" value="">{{tag.name}}</option>
                 </select>
-                <p class="card-text fw-bold"><a class="text-decoration-none text-black" routerLink="">{{users[0].city}}</a></p>
+                <p class="card-text fw-bold"><a class="text-decoration-none text-black" routerLink="">{{locations[users[i].location_id].city_name}}</a></p>
               </div>
             </div>
           </div>
