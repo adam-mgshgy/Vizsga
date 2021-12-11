@@ -6,10 +6,9 @@ import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
 import { LocationModel } from 'src/app/models/location-model';
 import { isNull } from '@angular/compiler/src/output/output_ast';
-
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { SessionModel } from 'src/app/models/session-model';
+import { TrainingSessionModel } from 'src/app/models/training-session-model';
 
 @Component({
   selector: 'app-my-trainings-page',
@@ -124,33 +123,37 @@ export class MyTrainingsPageComponent implements OnInit {
     },
   ];
 
-  public training_session: SessionModel[] = [
+  public training_session: TrainingSessionModel[] = [
     { id: 1,
       date: '2021.12.23 09:00',
-      place: 'OSP',
       price: 4000,
-      minutes: 60
+      minutes: 60,
+      location_id: 1,
+      training_id: 1
     },
     {
       id: 2,
       date: '2021.12.24 15:00',
-      place: 'Jedlik kondi',
       price: 5000,
       minutes: 70,
+      location_id: 1,
+      training_id: 1
     },
     {
       id: 3,
       date: '2021.12.25 18:00',
-      place: 'Jedlik kondi',
       price: 5000,
       minutes: 70,
+      location_id: 1,
+      training_id: 1
     },
     {
       id: 4,
       date: '2021.12.25 19:00',
-      place: 'Jedlik kondi',
       price: 5000,
       minutes: 70,
+      location_id: 1,
+      training_id: 1
     },
   ];
 

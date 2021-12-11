@@ -18,12 +18,10 @@
               </h4>
             </div>
             <div class="col-12">
-              <button id="modify" *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3"
-                routerLink="/createtraining">
+              <button id="modify" *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3" [routerLink]="'/createtraining/' + training.id">
                 Szerkesztés
               </button>
-              <button id="newSession" *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3"
-                routerLink="/addsession">
+              <button id="newSession" *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3" routerLink="/addsession">
                 Új alkalom
               </button>
               <button id="cancel" *ngIf="users[0].trainer == false" class="btn btn-danger mb-3">
@@ -36,31 +34,17 @@
                 Törlés
               </button>
             </div>
-            <div class="col-md-12" id="lightBckg">
-              <div class="card-body">
-  
-                <p class="card-text">{{training.description}}</p>
-                <button id="tag" [ngStyle]="{'background-color':tag.colour, 'border-color':'tag.colour'}" 
-                  *ngFor="let tag of allTags | slice:0:this.counter" class="btn fw-bold me-1 mb-1">{{tag.name}}</button>
-                <select  *ngIf="allTags.length > 4" id="moreTag" class="btn fw-bold me-1 mb-1">
-                  <option value="">...</option>
-                  <option *ngFor="let tag of allTags" value="">{{tag.name}}</option>
-                </select>
-                <p class="card-text fw-bold"><a class="text-decoration-none text-black" routerLink="">{{locations[users[i].location_id].city_name}}</a></p>
-              </div>
-
             <h6 class="card-title text-white">{{ users[0].full_name }}</h6>
           </div>
-        <div class="col-md-12" id="lightBckg">
-              <div class="card-body">
-                <p class="card-text">{{training.description}}</p>
-                <button id="tag" [ngStyle]="{'background-color':tag.colour, 'border-color':'tag.colour'}" 
-                  *ngFor="let tag of allTags | slice:0:this.counter" class="btn fw-bold me-1 mb-1">{{tag.name}}</button>
-                <select  *ngIf="allTags.length > 4" id="moreTag" class="btn fw-bold me-1 mb-1">
-                  <option value="">...</option>
-                  <option *ngFor="let tag of allTags" value="">{{tag.name}}</option>
-                </select>
-                <p class="card-text fw-bold"><a class="text-decoration-none text-black" routerLink="">{{locations[users[i].location_id].city_name}}</a></p>
+          <div class="col-md-12" id="lightBckg">
+            <div class="card-body">
+              <p class="card-text">{{training.description}}</p>
+              <button id="tag" [ngStyle]="{'background-color':tag.colour, 'border-color':'tag.colour'}" *ngFor="let tag of allTags | slice:0:this.counter" class="btn fw-bold me-1 mb-1">{{tag.name}}</button>
+              <select *ngIf="allTags.length > 4" id="moreTag" class="btn fw-bold me-1 mb-1">
+                <option value="">...</option>
+                <option *ngFor="let tag of allTags" value="tag.name">{{tag.name}}</option>
+              </select>
+              <p class="card-text fw-bold"><a class="text-decoration-none text-black" routerLink="">{{locations[users[i].location_id-1].city_name}}</a></p>
             </div>
           </div>
         </div>
@@ -103,8 +87,8 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <mat-expansion-panel *ngFor="let obj of item ">
-        <mat-expansion-panel-header >
-          <mat-panel-title >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
             {{ obj.date.substr(10) }}
             <mat-divider></mat-divider>
           </mat-panel-title>
@@ -112,16 +96,16 @@
             {{statuses[i]}}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div class="row" *ngFor="let user of users" >
+        <div class="row" *ngFor="let user of users">
           <div class="col-6">
-            <div *ngIf="user.trainer == false" >{{user.full_name}}</div>
+            <div *ngIf="user.trainer == false">{{user.full_name}}</div>
           </div>
           <div class="col-6">
-            <div *ngIf="user.trainer == false" >{{user.phone_number}}</div>
+            <div *ngIf="user.trainer == false">{{user.phone_number}}</div>
           </div>
           <hr>
         </div>
-        
+
       </mat-expansion-panel>
     </mat-expansion-panel>
 
