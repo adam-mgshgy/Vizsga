@@ -21,15 +21,21 @@
             <div id="phoneNumberNelp" class="form-text">Kérjük ezt a formátumot használd: +36123456789</div>
         </div>
         <div class="mb-3">
+            <label class="form-label fs-5"> Helyszín:</label>
+            <div [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}"  id="cityHelp" class="form-text">Kérjük add meg a várost és megyét, ahol szívesen edzenél, hogy a megfelelő edzéseket mutathassuk!</div>
+
+        </div>
+        <div class="mb-3">
             <label for="county" class="form-label fs-5">
                 Megye*
             </label>
             <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="text" class="form-control" id="county" name="county" required>
+        </div>
+        <div class="mb-3">
             <label for="city" class="form-label fs-5">
                 Város*
             </label>
             <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="text" class="form-control" id="city" name="city" required>
-            <div [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}"  id="cityHelp" class="form-text">Kérjük add meg a várost és megyét, ahol szívesen edzenél, hogy a megfelelő edzéseket mutathassuk!</div>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label fs-5">Jelszó*</label>
