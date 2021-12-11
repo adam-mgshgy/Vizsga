@@ -38,7 +38,8 @@ USE moveyourbody;
 CREATE TABLE IF NOT EXISTS location (
   id INT(11) NOT NULL AUTO_INCREMENT,
   city_name VARCHAR(50) NOT NULL,
-  county_name VARCHAR(255) DEFAULT NULL,
+  county_name VARCHAR(255) NOT NULL,
+  address_name VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (id)
 )
 ENGINE = INNODB,
@@ -99,8 +100,8 @@ CREATE TABLE IF NOT EXISTS training (
   name VARCHAR(50) NOT NULL,
   category VARCHAR(100) NOT NULL,
   trainer_id INT(11) NOT NULL,
-  min_member_number INT(3) NOT NULL,
-  max_member_number INT(3) NOT NULL,
+  min_member INT(3) NOT NULL,
+  max_member INT(3) NOT NULL,
   description VARCHAR(255) NOT NULL,
   contact_phone VARCHAR(12) DEFAULT NULL,
   PRIMARY KEY (id)
@@ -133,7 +134,7 @@ CREATE TABLE IF NOT EXISTS training_session (
   place VARCHAR(255) DEFAULT NULL,
   price DECIMAL(10, 2) DEFAULT NULL,
   minutes INT(11) DEFAULT NULL,
-  county_id INT(11) DEFAULT NULL,
+  location_id INT(11) DEFAULT NULL,
   PRIMARY KEY (id)
 )
 ENGINE = INNODB,
@@ -144,7 +145,7 @@ COLLATE utf8_hungarian_ci;
 -- Create foreign key
 --
 ALTER TABLE training_session 
-  ADD CONSTRAINT FK_training_session_city_id FOREIGN KEY (county_id)
+  ADD CONSTRAINT FK_training_session_city_id FOREIGN KEY (location_id)
     REFERENCES location(id) ON DELETE NO ACTION;
 
 --
@@ -185,6 +186,7 @@ ALTER TABLE applicant
 CREATE TABLE IF NOT EXISTS tag (
   id INT(11) NOT NULL AUTO_INCREMENT,
   name VARCHAR(50) NOT NULL,
+  colpur VARCHAR(50) NOT NULL,
   PRIMARY KEY (id)
 )
 ENGINE = INNODB,

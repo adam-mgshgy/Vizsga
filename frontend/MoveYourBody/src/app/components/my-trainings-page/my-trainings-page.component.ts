@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
+import { LocationModel } from 'src/app/models/location-model';
+import { isNull } from '@angular/compiler/src/output/output_ast';
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -39,6 +41,7 @@ export class MyTrainingsPageComponent implements OnInit {
       min_member: 3,
       max_member: 8,
       trainer_id: 0,
+      contact_phone: '06701234567'
     },
     {
       name: 'Egyéni Teri trx',
@@ -48,6 +51,7 @@ export class MyTrainingsPageComponent implements OnInit {
       min_member: 1,
       max_member: 1,
       trainer_id: 0,
+      contact_phone: '06701234567'
     },
   ];
   public users: UserModel[] = [
@@ -57,7 +61,7 @@ export class MyTrainingsPageComponent implements OnInit {
       full_name: 'Tesztelek Károlyné Elekfalvi Károly',
       trainer: true,
       phone_number: '+36701234678',
-      city: 'Győr',
+      location_id: 1,
     },
     {
       id: 2,
@@ -65,7 +69,7 @@ export class MyTrainingsPageComponent implements OnInit {
       full_name: 'Jelentkező Elek',
       trainer: false,
       phone_number: '+36301234678',
-      city: 'Bana',
+      location_id: 2,
     },
     {
       id: 3,
@@ -73,7 +77,7 @@ export class MyTrainingsPageComponent implements OnInit {
       full_name: 'Jelentkező Károly',
       trainer: false,
       phone_number: '+36301234678',
-      city: 'Bana',
+      location_id: 1,
     },
     {
       id: 4,
@@ -81,7 +85,7 @@ export class MyTrainingsPageComponent implements OnInit {
       full_name: 'Jelentkező Erika',
       trainer: false,
       phone_number: '+36301234678',
-      city: 'Bana',
+      location_id: 1,
     },
     {
       id: 5,
@@ -89,9 +93,22 @@ export class MyTrainingsPageComponent implements OnInit {
       full_name: 'Jelentkező Zsolt',
       trainer: false,
       phone_number: '+36301234678',
-      city: 'Bana',
+      location_id: 2,
     },
   ];
+  public locations: LocationModel[] = [
+  {
+    id: 1,
+    county_name: "Komárom-Esztergom megye",
+    city_name: "Bana",
+    address_name: "Kis Károly utca 11."
+  }, 
+  {
+    id: 2,
+    county_name: "Komárom-Esztergom megye",
+    city_name: "Bana",
+    address_name: "Kis Károly utca 12."
+  }];
   public allTags: TagModel[] = [
     { id: 0, name: 'csoportos', colour: '#6610f2' },
     { id: 1, name: 'erőnléti', colour: 'black' },
@@ -170,6 +187,7 @@ export class MyTrainingsPageComponent implements OnInit {
       this.mobile = true;
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
+    
 
     this.tagsOnMobile();
 

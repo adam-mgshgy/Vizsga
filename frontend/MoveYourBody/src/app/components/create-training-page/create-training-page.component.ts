@@ -19,7 +19,7 @@ export class CreateTrainingPageComponent implements OnInit {
     full_name: 'Teszt Elek',
     trainer: true,
     phone_number: '+36701234678',
-    city: 'Győr'
+    location_id: 1
   }
   public categories: CategoryModel[] = [
     { name: 'Box', imgSrc: 'box.jpg' },
@@ -41,6 +41,7 @@ export class CreateTrainingPageComponent implements OnInit {
     { id: 2, name: 'saját testsúlyos', colour: '#fd7e14' },
     { id: 3, name: 'edzőterem', colour: 'red' },
     { id: 4, name: 'zsírégető', colour: '#0dcaf0' },
+    { id: 5, name: 'személyi edzés', colour: '#0dcaf0' }
 
   ];
   public training: TrainingModel = new TrainingModel();
@@ -54,6 +55,7 @@ export class CreateTrainingPageComponent implements OnInit {
       min_member: 3,
       max_member: 8,
       trainer_id: 0,
+      contact_phone: '06701234567'
     },
     {
       name: 'Egyéni Teri trx',
@@ -63,6 +65,8 @@ export class CreateTrainingPageComponent implements OnInit {
       min_member: 1,
       max_member: 1,
       trainer_id: 0,
+      contact_phone: '06701234567'
+
     }
   ];
   public OnSelect(tag: TagModel): void {
@@ -81,7 +85,7 @@ export class CreateTrainingPageComponent implements OnInit {
       this.id = params.get('id');
       if (this.id) {
         const filteredTrainings = this.myTrainings.filter(
-          (t) => t.id == this.id);
+          (t) => t.id == Number(this.id));
         if (filteredTrainings.length == 1) {
           this.training = filteredTrainings[0];
         }

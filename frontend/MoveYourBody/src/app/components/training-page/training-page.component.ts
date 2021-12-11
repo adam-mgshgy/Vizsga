@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SessionModel } from 'src/app/models/session-model';
+import { TrainingSessionModel } from 'src/app/models/training-session-model';
 import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
+import { LocationModel } from 'src/app/models/location-model';
 
 @Component({
   selector: 'app-training-page',
@@ -11,51 +12,64 @@ import { UserModel } from 'src/app/models/user-model';
 })
 export class TrainingPageComponent implements OnInit {
 
+  public location: LocationModel = {
+    id: 1,
+    county_name: "Komárom-Esztergom megye",
+    city_name: "Bana",
+    address_name: "Kis Károly utca 11."
+  }
+  
   public training: TrainingModel =
     {
-      name: 'Nagyon hosszú nevű edzés',
-      description: 'Zenés TRX edzés Bana city központjában. Hozz magaddal törölközőt, váltócipőt és vizet! Várunk sok szeretettel!',
-      category: 'TRX',
       id: 0,
+      name: 'Nagyon hosszú nevű edzés',
+      category: 'TRX',
+      trainer_id: 0,
       min_member: 6,
       max_member: 8,
-      trainer_id: 0,
+      description: 'Zenés TRX edzés Bana city központjában. Hozz magaddal törölközőt, váltócipőt és vizet! Várunk sok szeretettel!',
+      contact_phone: '0670123456'
     }
-  public sessions: SessionModel[] = [
+  public sessions: TrainingSessionModel[] = [
     {
       id: 1,
       date: '2021.12.12. 15:30',
-      place: 'Bana, Kis Károly utca 8.',
       price: 1500,
       minutes: 60,
+      training_id: 1,
+      location_id: 1
     },
     {
       id: 1,
       date: '2021.12.12. 15:30',
-      place: 'Bana, Kis Károly utca 8.',
       price: 1500,
       minutes: 60,
+      training_id: 1,
+      location_id: 1
     },
     {
       id: 1,
       date: '2021.12.12. 15:30',
-      place: 'Bana, Kis Károly utca 8.',
       price: 1500,
       minutes: 60,
+      training_id: 1,
+      location_id: 1
     },
     {
       id: 2,
       date: '2021.12.12. 16:30',
-      place: 'Bana, Kis Károly utca 8.',
       price: 1500,
       minutes: 60,
+      training_id: 1,
+      location_id: 1
     },
     {
       id: 3,
       date: '2021.12.12. 17:30',
-      place: 'Bana, Kis Károly utca 8.',
       price: 1500,
       minutes: 60,
+      training_id: 1,
+      location_id: 1
     }
   ]
     public tags: TagModel[] = [
@@ -72,7 +86,7 @@ export class TrainingPageComponent implements OnInit {
       full_name: 'Teszt Elek',
       trainer: true,
       phone_number: '+36701234678',
-      city: 'Győr' 
+      location_id: 1, 
   }
   mobile: boolean = false;
   constructor() { }

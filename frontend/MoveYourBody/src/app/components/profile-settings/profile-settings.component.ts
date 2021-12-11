@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LocationModel } from 'src/app/models/location-model';
 import { UserModel } from 'src/app/models/user-model';
 
 @Component({
@@ -15,7 +16,13 @@ export class ProfileSettingsComponent implements OnInit {
       full_name: 'Teszt Elek',
       trainer: true,
       phone_number: '+36701234678',
-      city: 'Győr' 
+      location_id: 1 
+  }
+  public location: LocationModel = {
+    id: 1,
+    county_name: "Komárom-Esztergom megye",
+    city_name: "Bana",
+    address_name: "Kis Károly utca 11."
   }
   mobile: boolean = false;
   constructor() { }

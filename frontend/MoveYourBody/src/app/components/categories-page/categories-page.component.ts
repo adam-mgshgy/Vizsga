@@ -23,7 +23,6 @@ export class CategoriesPageComponent implements OnInit {
     { name: 'TRX', imgSrc: 'trx.jpg' },
     { name: 'Úszás', imgSrc: 'swimming.jpg' },
     { name: 'Lovaglás', imgSrc: 'riding.jpg' },
-
     { name: 'Jóga', imgSrc: 'yoga.jpg' },
   ];
 
