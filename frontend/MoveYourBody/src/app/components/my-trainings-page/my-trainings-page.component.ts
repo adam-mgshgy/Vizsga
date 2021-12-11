@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ResizedEvent } from 'angular-resize-event';
 import { ActivatedRoute } from '@angular/router';
 import { TagModel } from 'src/app/models/tag-model';
@@ -7,14 +7,20 @@ import { UserModel } from 'src/app/models/user-model';
 import { LocationModel } from 'src/app/models/location-model';
 import { isNull } from '@angular/compiler/src/output/output_ast';
 
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { SessionModel } from 'src/app/models/session-model';
+
 @Component({
   selector: 'app-my-trainings-page',
   templateUrl: './my-trainings-page.component.html',
-  styleUrls: ['./my-trainings-page.component.css']
+  styleUrls: ['./my-trainings-page.component.css'],
 })
 export class MyTrainingsPageComponent implements OnInit {
-
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private modalService: NgbModal) {
+    this.ordered_session = Object.values(this.groupByDate(this.training_session, 'date'));//date alapján rendez
+  }
+  closeResult = '';
 
   category: string | null = null;
   imgSrc = './assets/images/categoryPageImages/profile_rock.png';
@@ -24,7 +30,8 @@ export class MyTrainingsPageComponent implements OnInit {
 
   counter = 0;
 
-  
+  date = '';
+
   public myTrainings: TrainingModel[] = [
     {
       name: 'Nagyon hosszú nevű edzés',
@@ -45,7 +52,7 @@ export class MyTrainingsPageComponent implements OnInit {
       max_member: 1,
       trainer_id: 0,
       contact_phone: '06701234567'
-    }
+    },
   ];
   public users: UserModel[] = [
     {
@@ -62,8 +69,32 @@ export class MyTrainingsPageComponent implements OnInit {
       full_name: 'Jelentkező Elek',
       trainer: false,
       phone_number: '+36301234678',
+      location_id: 2,
+    },
+    {
+      id: 3,
+      email: 'jelentelek@gmail.com',
+      full_name: 'Jelentkező Károly',
+      trainer: false,
+      phone_number: '+36301234678',
       location_id: 1,
-    }
+    },
+    {
+      id: 4,
+      email: 'jelentelek@gmail.com',
+      full_name: 'Jelentkező Erika',
+      trainer: false,
+      phone_number: '+36301234678',
+      location_id: 1,
+    },
+    {
+      id: 5,
+      email: 'jelentelek@gmail.com',
+      full_name: 'Jelentkező Zsolt',
+      trainer: false,
+      phone_number: '+36301234678',
+      location_id: 2,
+    },
   ];
   public locations: LocationModel[] = [
   {
@@ -84,11 +115,74 @@ export class MyTrainingsPageComponent implements OnInit {
     { id: 2, name: 'saját testsúlyos', colour: '#fd7e14' },
     { id: 3, name: 'edzőterem', colour: 'red' },
     { id: 4, name: 'zsírégető', colour: '#0dcaf0' },
-    { id: 5, name: 'személyi edzés', colour: '#0dcaf0' }
+    { id: 5, name: 'személyi edzés', colour: 'green' },
+  ];
+  public applicant = [
+    {
+      training_session_id: 1,
+      user_id: 2,
+    },
   ];
 
+  public training_session: SessionModel[] = [
+    { id: 1,
+      date: '2021.12.23 09:00',
+      place: 'OSP',
+      price: 4000,
+      minutes: 60
+    },
+    {
+      id: 2,
+      date: '2021.12.24 15:00',
+      place: 'Jedlik kondi',
+      price: 5000,
+      minutes: 70,
+    },
+    {
+      id: 3,
+      date: '2021.12.25 18:00',
+      place: 'Jedlik kondi',
+      price: 5000,
+      minutes: 70,
+    },
+    {
+      id: 4,
+      date: '2021.12.25 19:00',
+      place: 'Jedlik kondi',
+      price: 5000,
+      minutes: 70,
+    },
+  ];
 
-  ngOnInit(): void {
+  public statuses = [
+    "4/8",
+    "8/8 Betelt",
+    "2/8 Kevés jelentkező",
+    "5/8"
+  ];
+
+  public ordered_session:any[] = [];
+  
+  groupByDate(array, property) {
+    
+    
+    var hash = {},
+      props = property.split('.');
+    for (var i = 0; i < array.length; i++) {
+      var key = props.reduce(function (acc, prop) {
+        return acc && acc[prop].substr(0,10);
+        
+      }, array[i]);
+      if (!hash[key]) hash[key] = [];
+      hash[key].push(array[i]);
+    }
+    return hash;
+  }
+  
+
+  ngOnInit(): void {    
+    
+    console.log(this.date);
     if (window.innerWidth <= 991) {
       this.mobile = true;
     }
@@ -99,6 +193,8 @@ export class MyTrainingsPageComponent implements OnInit {
 
     //Lekérdezés a back-end-ről
   }
+
+  usersList() {}
   onResized(event: ResizedEvent) {
     this.tagsOnMobile();
   }
@@ -129,5 +225,25 @@ export class MyTrainingsPageComponent implements OnInit {
       this.counter = 6;
     }
   }
-
+  open(content: any) {
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 }

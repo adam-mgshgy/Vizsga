@@ -25,10 +25,17 @@
     border-color: white;
 
 }
+#sessions{
+    background-color: #216869;
+    border-color: white;
+}
 #newTraining {
     width: 40%;
     height: 40%;
     font-size: xx-large;
     background-color: #9CC5A1;
     color: white;
+}
+#exPanel{
+  pointer-events: none;
 }
