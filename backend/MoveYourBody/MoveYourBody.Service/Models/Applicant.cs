@@ -8,8 +8,8 @@ namespace MoveYourBody.Service.Models
     public class Applicant
     {
         [Required]
-        public int Training_session_id { get; set; }
+        public TrainingSession Training_session { get; set; }
         [Required]
-        public int User_id { get; set; }
+        public User User { get; set; }
     }
 }

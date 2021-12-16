@@ -18,6 +18,6 @@ namespace MoveYourBody.Service.Models
         [Required]
         public bool Trainer { get; set; }
         [Required]
-        public int Location_id { get; set; }
+        public Location Location { get; set; }
     }
 }

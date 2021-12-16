@@ -8,8 +8,8 @@ namespace MoveYourBody.Service.Models
     public class TagTraining
     {
         [Required]
-        public int Training_id { get; set; }
+        public Training Training { get; set; }
         [Required]
-        public int Tag_id { get; set; }
+        public Tag Tag { get; set; }
     }
 }
