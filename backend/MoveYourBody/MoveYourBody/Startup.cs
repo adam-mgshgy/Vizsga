@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MoveYourBody.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +28,7 @@ namespace MoveYourBody
             services.AddControllers();
             services.AddDbContext<ApplicationDbContext>(option =>
             {
-                option.UseMySql(Configuration.GetConnectionString("nyitottkapukreg"));
+                option.UseMySql(Configuration.GetConnectionString("MoveYourBody"));
             });
 #if DEBUG
             services.AddCors(option =>
