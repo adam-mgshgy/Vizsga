@@ -9,5 +9,8 @@ namespace MoveYourBody.Service.Models
     {
         [Required, Key]
         public string Name { get; set; }
+        [Required]
+        public string Img_src { get; set; }
+
     }
 }
