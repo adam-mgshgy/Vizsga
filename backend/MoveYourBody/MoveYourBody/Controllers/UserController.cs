@@ -46,6 +46,34 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(user);
             });
         }
-        
+        [HttpPut]
+        public ActionResult New(User user)
+        {
+            return this.Run(() =>
+            {
+                if (dbContext.Set<User>().Any(u => u.Email == user.Email))
+                    return BadRequest(new
+                    {
+                        ErrorMessage = "A megadott e-mail címmel már történt korábban regisztráció"
+                    });
+
+
+                var register = new User()
+                {
+                    Id = user.Id,
+                    Full_name = user.Full_name,
+                    Email = user.Email
+                };
+                dbContext.Set<User>().Add(user);
+                dbContext.SaveChanges();
+                return Ok(new
+                {
+                    id = register.Id,
+                    email = register.Email,
+                    full_name = register.Full_name
+                });
+            });
+        }
+
     }
 }
