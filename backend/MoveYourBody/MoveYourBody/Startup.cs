@@ -28,7 +28,7 @@ namespace MoveYourBody
             services.AddControllers();
             services.AddDbContext<ApplicationDbContext>(option =>
             {
-                option.UseMySql(Configuration.GetConnectionString("MoveYourBody"));
+                option.UseMySql(Configuration.GetConnectionString("moveyourbody"));
             });
 #if DEBUG
             services.AddCors(option =>

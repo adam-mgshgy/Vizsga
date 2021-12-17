@@ -154,7 +154,7 @@ namespace MoveYourBody.Service.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("MoveYourBody.Service.Models.User", b =>

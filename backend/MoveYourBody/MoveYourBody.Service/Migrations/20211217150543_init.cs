@@ -36,7 +36,7 @@ namespace MoveYourBody.Service.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "User",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -49,9 +49,9 @@ namespace MoveYourBody.Service.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Location_LocationId",
+                        name: "FK_User_Location_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Location",
                         principalColumn: "Id",
@@ -78,8 +78,8 @@ namespace MoveYourBody.Service.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_LocationId",
-                table: "Users",
+                name: "IX_User_LocationId",
+                table: "User",
                 column: "LocationId");
         }
 
@@ -89,7 +89,7 @@ namespace MoveYourBody.Service.Migrations
                 name: "Category");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Location");

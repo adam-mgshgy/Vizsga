@@ -8,7 +8,7 @@ using MoveYourBody.Service;
 namespace MoveYourBody.Service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211216200058_init")]
+    [Migration("20211217150543_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -156,7 +156,7 @@ namespace MoveYourBody.Service.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("MoveYourBody.Service.Models.User", b =>
