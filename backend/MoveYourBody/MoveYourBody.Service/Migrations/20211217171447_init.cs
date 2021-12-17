@@ -42,6 +42,7 @@ namespace MoveYourBody.Service.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Email = table.Column<string>(maxLength: 320, nullable: false),
+                    Full_name = table.Column<string>(maxLength: 255, nullable: false),
                     Password = table.Column<string>(maxLength: 255, nullable: false),
                     Phone_number = table.Column<string>(maxLength: 12, nullable: false),
                     Trainer = table.Column<bool>(nullable: false),

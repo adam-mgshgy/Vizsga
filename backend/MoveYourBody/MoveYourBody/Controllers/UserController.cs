@@ -46,5 +46,6 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(user);
             });
         }
+        
     }
 }

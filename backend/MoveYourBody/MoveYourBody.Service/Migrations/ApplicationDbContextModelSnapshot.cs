@@ -134,6 +134,11 @@ namespace MoveYourBody.Service.Migrations
                         .HasColumnType("varchar(320) CHARACTER SET utf8mb4")
                         .HasMaxLength(320);
 
+                    b.Property<string>("Full_name")
+                        .IsRequired()
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
+                        .HasMaxLength(255);
+
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
 
