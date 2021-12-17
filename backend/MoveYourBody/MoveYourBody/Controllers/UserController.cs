@@ -51,20 +51,26 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                if (dbContext.Set<User>().Any(u => u.Email == user.Email))
-                    return BadRequest(new
-                    {
-                        ErrorMessage = "A megadott e-mail címmel már történt korábban regisztráció"
-                    });
+            if (dbContext.Set<User>().Any(u => u.Email == user.Email))
+                return BadRequest(new
+                {
+                    ErrorMessage = "A megadott e-mail címmel már történt korábban regisztráció"
+                });
 
 
                 var register = new User()
                 {
                     Id = user.Id,
                     Full_name = user.Full_name,
-                    Email = user.Email
+                    Email = user.Email,
+                    Password = user.Password,
+                    Phone_number = user.Phone_number,
+                    Trainer = user.Trainer,
+                    Location = dbContext.Set<Location>().FirstOrDefault(l => l.City_name == user.Location.City_name)
+                   
+                    
                 };
-                dbContext.Set<User>().Add(user);
+                dbContext.Set<User>().Add(register);//TODO ha ures a tablicsku csak userrel mukodik
                 dbContext.SaveChanges();
                 return Ok(new
                 {

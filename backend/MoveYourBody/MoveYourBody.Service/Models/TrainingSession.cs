@@ -19,6 +19,10 @@ namespace MoveYourBody.Service.Models
         public double Price { get; set; }
         [Required]
         public int Minutes { get; set; }
+        [Required, StringLength(255)]
+        public string Address_name { get; set; }
+        [Required, StringLength(255)]
+        public string Place_name { get; set; }
 
     }
 }

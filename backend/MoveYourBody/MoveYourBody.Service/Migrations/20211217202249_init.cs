@@ -25,10 +25,8 @@ namespace MoveYourBody.Service.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    City_name = table.Column<string>(maxLength: 50, nullable: false),
-                    Place_name = table.Column<string>(maxLength: 255, nullable: false),
                     County_name = table.Column<string>(maxLength: 255, nullable: false),
-                    Address_name = table.Column<string>(maxLength: 255, nullable: false)
+                    City_name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {

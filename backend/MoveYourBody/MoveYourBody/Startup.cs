@@ -52,7 +52,7 @@ namespace MoveYourBody
             app.UseSwagger();
             app.UseSwaggerUI(option =>
             {
-                option.SwaggerEndpoint("/swagger/v1/swagger.json", "Nyitott kapuk API V1");
+                option.SwaggerEndpoint("/swagger/v1/swagger.json", "MoveYourBody API V1");
             });
             if (env.IsDevelopment())
             {

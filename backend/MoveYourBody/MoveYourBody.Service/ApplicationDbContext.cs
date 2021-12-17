@@ -10,6 +10,7 @@ namespace MoveYourBody.Service
         private readonly string connectionString;
 
         public DbSet<User> User { get; set; }
+        public DbSet<Location> Location { get; set; }
 
         public ApplicationDbContext()
         {
