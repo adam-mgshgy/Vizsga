@@ -21,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatDividerModule} from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     BrowserAnimationsModule,
     NgbModule,
     MatExpansionModule,
-    MatDividerModule
+    MatDividerModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
