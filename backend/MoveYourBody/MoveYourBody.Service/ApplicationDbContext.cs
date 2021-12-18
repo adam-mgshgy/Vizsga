@@ -9,12 +9,13 @@ namespace MoveYourBody.Service
     {
         private readonly string connectionString;
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<Location> Location { get; set; }
 
         public ApplicationDbContext()
         {
 #if DEBUG        
-            connectionString = "Server=localhost;Database=MoveYourBody;Uid=root;Pwd=;";
+            connectionString = "Server=localhost;Database=moveyourbody;Uid=root;Pwd=;";
 #endif
         }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -43,6 +44,15 @@ namespace MoveYourBody.Service
                 new Category() { Name = "Úszás", Img_src = "swimming.jpg" },
                 new Category() { Name = "Lovaglás", Img_src = "riding.jpg" },
                 new Category() { Name = "Jóga", Img_src = "yoga.jpg" }
+                );
+
+            modelBuilder.Entity<Location>().HasData(
+                new Location() { City_name = "Győr", County_name = "Győr-Moson-Sporon", Id = 1},
+                new Location() { City_name = "Sopron", County_name = "Győr-Moson-Sporon", Id = 2 },
+                new Location() { City_name = "Komárom", County_name = "Komárom-Esztergom", Id = 3 },
+                new Location() { City_name = "Esztergom", County_name = "Komárom-Esztergom", Id = 4 },
+                new Location() { City_name = "Budapest", County_name = "Pest", Id = 5 },
+                new Location() { City_name = "Pápa", County_name = "Veszprém", Id = 6 }
                 );
 
         }

@@ -12,6 +12,8 @@ namespace MoveYourBody.Service.Models
         [Required, StringLength(320)]
         public string Email { get; set; }
         [Required, StringLength(255)]
+        public string Full_name { get; set; }
+        [Required, StringLength(255)]
         public string Password { get; set; }
         [Required, StringLength(12)]
         public string Phone_number { get; set; }

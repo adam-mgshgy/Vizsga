@@ -9,13 +9,12 @@ namespace MoveYourBody.Service.Models
     {
         [Required, Key]
         public int Id { get; set; }
+        
+       
+        [StringLength(255)] // Not required
+        public string County_name { get; set; }
         [Required, StringLength(50)]
         public string City_name { get; set; }
-        [Required, StringLength(255)]
-        public string Place_name { get; set; }
-        [Required, StringLength(255)]
-        public string County_name { get; set; }
-        [Required, StringLength(255)]
-        public string Address_name { get; set; }
+
     }
 }
