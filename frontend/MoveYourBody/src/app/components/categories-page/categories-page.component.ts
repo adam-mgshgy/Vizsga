@@ -12,6 +12,7 @@ export class CategoriesPageComponent implements OnInit {
   constructor(private categoryService: CategoriesService) {}
   imgPrefix = './assets/images/';
 
+
   public categories: CategoryModel[] = [];  
 
   ngOnInit(): void {
