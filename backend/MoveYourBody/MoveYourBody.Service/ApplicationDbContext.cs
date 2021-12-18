@@ -47,14 +47,15 @@ namespace MoveYourBody.Service
                 new Category() { Name = "Jóga", Img_src = "yoga.jpg" }
                 );
 
-            string[] lines = File.ReadAllText("cities.csv").Trim().Split('\n');
-            int i = 1;
-            foreach (var line in lines)
-            {
-                modelBuilder.Entity<Location>().HasData(
-                    new Location() { City_name = line.Split(';')[0], County_name = line.Split(';')[1], Id = i++}
-                    );
-            }
+            //string[] lines = File.ReadAllText("cities.csv").Trim().Split('\n');
+            //int i = 1;
+            //foreach (var line in lines)
+            //{
+            //    modelBuilder.Entity<Location>().HasData(
+            //        new Location() { City_name = line.Split(';')[0].Trim(), County_name = line.Split(';')[1].Trim(), Id = i++ }
+            //        );
+            //}
+
 
         }
 
