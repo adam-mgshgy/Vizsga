@@ -46,6 +46,15 @@ namespace MoveYourBody.Service
                 new Category() { Name = "Jóga", Img_src = "yoga.jpg" }
                 );
 
+            modelBuilder.Entity<Location>().HasData(
+                new Location() { City_name = "Győr", County_name = "Győr-Moson-Sporon", Id = 1},
+                new Location() { City_name = "Sopron", County_name = "Győr-Moson-Sporon", Id = 2 },
+                new Location() { City_name = "Komárom", County_name = "Komárom-Esztergom", Id = 3 },
+                new Location() { City_name = "Esztergom", County_name = "Komárom-Esztergom", Id = 4 },
+                new Location() { City_name = "Budapest", County_name = "Pest", Id = 5 },
+                new Location() { City_name = "Pápa", County_name = "Veszprém", Id = 6 }
+                );
+
         }
 
     }

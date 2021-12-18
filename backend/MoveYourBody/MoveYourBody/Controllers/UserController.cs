@@ -56,27 +56,39 @@ namespace MoveYourBody.WebAPI.Controllers
                 {
                     ErrorMessage = "A megadott e-mail címmel már történt korábban regisztráció"
                 });
-
-
-                var register = new User()
+                User register = null;
+                var location = dbContext.Set<Location>().FirstOrDefault(l => l.City_name == user.Location.City_name);
+                if (location == null)
                 {
-                    Id = user.Id,
-                    Full_name = user.Full_name,
-                    Email = user.Email,
-                    Password = user.Password,
-                    Phone_number = user.Phone_number,
-                    Trainer = user.Trainer,
-                    Location = dbContext.Set<Location>().FirstOrDefault(l => l.City_name == user.Location.City_name)
-                   
-                    
-                };
-                dbContext.Set<User>().Add(register);//TODO ha ures a tablicsku csak userrel mukodik
+                    return BadRequest(new
+                    {
+                        ErrorMessage = "A megadott város nem létezik"
+                    });
+                }
+                else
+                {
+                    register = new User()
+                    {
+                        Id = user.Id,
+                        Full_name = user.Full_name,
+                        Email = user.Email,
+                        Password = user.Password,
+                        Phone_number = user.Phone_number,
+                        Trainer = user.Trainer,
+                        Location = dbContext.Set<Location>().FirstOrDefault(l => l.City_name == user.Location.City_name)
+
+
+                    };
+                }
+                
+                dbContext.Set<User>().Add(register);
                 dbContext.SaveChanges();
                 return Ok(new
                 {
                     id = register.Id,
                     email = register.Email,
-                    full_name = register.Full_name
+                    full_name = register.Full_name,
+                    location = register.Location
                 });
             });
         }

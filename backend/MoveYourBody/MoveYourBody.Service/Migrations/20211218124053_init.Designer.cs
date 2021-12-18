@@ -8,7 +8,7 @@ using MoveYourBody.Service;
 namespace MoveYourBody.Service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211217202249_init")]
+    [Migration("20211218124053_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,13 +106,50 @@ namespace MoveYourBody.Service.Migrations
                         .HasMaxLength(50);
 
                     b.Property<string>("County_name")
-                        .IsRequired()
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
                         .HasMaxLength(255);
 
                     b.HasKey("Id");
 
                     b.ToTable("Location");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            City_name = "Győr",
+                            County_name = "Győr-Moson-Sporon"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            City_name = "Sopron",
+                            County_name = "Győr-Moson-Sporon"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            City_name = "Komárom",
+                            County_name = "Komárom-Esztergom"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            City_name = "Esztergom",
+                            County_name = "Komárom-Esztergom"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            City_name = "Budapest",
+                            County_name = "Pest"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            City_name = "Pápa",
+                            County_name = "Veszprém"
+                        });
                 });
 
             modelBuilder.Entity("MoveYourBody.Service.Models.User", b =>

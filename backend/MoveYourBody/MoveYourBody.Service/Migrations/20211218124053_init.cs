@@ -25,7 +25,7 @@ namespace MoveYourBody.Service.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    County_name = table.Column<string>(maxLength: 255, nullable: false),
+                    County_name = table.Column<string>(maxLength: 255, nullable: true),
                     City_name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -63,17 +63,30 @@ namespace MoveYourBody.Service.Migrations
                 values: new object[,]
                 {
                     { "Box", "box.jpg" },
-                    { "Crossfit", "crossFitt.jpg" },
-                    { "Labdarúgás", "football.jpg" },
-                    { "Kosárlabda", "basketball.jpg" },
-                    { "Kézilabda", "handball.jpg" },
-                    { "Röplabda", "volleyball.jpg" },
-                    { "Spartan", "spartan.jpg" },
-                    { "Tenisz", "tennis.jpg" },
-                    { "TRX", "trx.jpg" },
-                    { "Úszás", "swimming.jpg" },
+                    { "Jóga", "yoga.jpg" },
                     { "Lovaglás", "riding.jpg" },
-                    { "Jóga", "yoga.jpg" }
+                    { "Úszás", "swimming.jpg" },
+                    { "Tenisz", "tennis.jpg" },
+                    { "Spartan", "spartan.jpg" },
+                    { "TRX", "trx.jpg" },
+                    { "Kézilabda", "handball.jpg" },
+                    { "Kosárlabda", "basketball.jpg" },
+                    { "Labdarúgás", "football.jpg" },
+                    { "Crossfit", "crossFitt.jpg" },
+                    { "Röplabda", "volleyball.jpg" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Location",
+                columns: new[] { "Id", "City_name", "County_name" },
+                values: new object[,]
+                {
+                    { 5, "Budapest", "Pest" },
+                    { 1, "Győr", "Győr-Moson-Sporon" },
+                    { 2, "Sopron", "Győr-Moson-Sporon" },
+                    { 3, "Komárom", "Komárom-Esztergom" },
+                    { 4, "Esztergom", "Komárom-Esztergom" },
+                    { 6, "Pápa", "Veszprém" }
                 });
 
             migrationBuilder.CreateIndex(
