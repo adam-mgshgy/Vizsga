@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { CategoryModel } from 'src/app/models/category-model';
+import { CategoriesService } from 'src/app/services/categories.service';
 
 @Component({
   selector: 'app-categories-page',
@@ -8,23 +9,15 @@ import { CategoryModel } from 'src/app/models/category-model';
   styleUrls: ['./categories-page.component.css'],
 })
 export class CategoriesPageComponent implements OnInit {
-  constructor() {}
+  constructor(private categoryService: CategoriesService) {}
   imgPrefix = './assets/images/';
 
-  public categories: CategoryModel[] = [
-    { name: 'Box', imgSrc: 'box.jpg' },
-    { name: 'Crossfit', imgSrc: 'crossFitt.jpg' },
-    { name: 'Labdarúgás', imgSrc: 'football.jpg' },
-    { name: 'Kosárlabda', imgSrc: 'basketball.jpg' },
-    { name: 'Kézilabda', imgSrc: 'handball.jpg' },
-    { name: 'Röplabda', imgSrc: 'volleyball.jpg' },
-    { name: 'Spartan', imgSrc: 'spartan.jpg' },
-    { name: 'Tenisz', imgSrc: 'tennis.jpg' },
-    { name: 'TRX', imgSrc: 'trx.jpg' },
-    { name: 'Úszás', imgSrc: 'swimming.jpg' },
-    { name: 'Lovaglás', imgSrc: 'riding.jpg' },
-    { name: 'Jóga', imgSrc: 'yoga.jpg' }
-  ];
+  public categories: CategoryModel[] = [];  
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.categoryService.getCategories().subscribe(
+      result => this.categories = result,
+      error => console.log(error)
+    );
+  }
 }
