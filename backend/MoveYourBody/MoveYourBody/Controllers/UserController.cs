@@ -20,7 +20,7 @@ namespace MoveYourBody.WebAPI.Controllers
             this.dbContext = dbContext;
         }
         [HttpGet("{id}")]                                     // http://localhost:5000/user/12
-        public ActionResult Get(int id)
+        public ActionResult GetById(int id)
         {
             return this.Run(() =>
             {
@@ -46,7 +46,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(user);
             });
         }
-        [HttpPut]
+        [HttpPut("register")]
         public ActionResult New(User user)
         {
             return this.Run(() =>
@@ -76,8 +76,6 @@ namespace MoveYourBody.WebAPI.Controllers
                         Phone_number = user.Phone_number,
                         Trainer = user.Trainer,
                         Location = dbContext.Set<Location>().FirstOrDefault(l => l.City_name == user.Location.City_name)
-
-
                     };
                 }
                 
@@ -92,6 +90,53 @@ namespace MoveYourBody.WebAPI.Controllers
                 });
             });
         }
+        [HttpPost("login")]
+        public ActionResult Login(Login login) 
+        {
+            return this.Run(() =>
+            {
+                var user = dbContext.Set<User>().Include(u => u.Location)
+                            .FirstOrDefault(u => u.Email == login.Email && u.Password == login.Password);
+                if (user == null)
+                {
+                    return Unauthorized(new
+                    {
+                        errorMessage = "Hibás e-mail cím vagy jelszó"
+                    });
+                }
+                return Ok(user);
+            });
+            //TODO
+            //var jwt = new JwtService(config);
+            //var token = jwt.GenerateSecurityToken(user.Email, new List<Claim>() { new Claim("LoginId", login.Id.ToString()) });
 
+            //return Ok(new
+            //{
+            //    token = token
+            //});
+        }
+
+        [HttpPost("modify")]
+        public ActionResult Modify(User user)
+        {
+            return this.Run(() =>
+            {
+                dbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                dbContext.SaveChanges();
+
+                return Ok(user);
+            });
+        }
+        [HttpDelete]
+        public ActionResult Delete(User user)
+        {
+            return this.Run(() =>
+            {
+                //TODO cancel subscriptions before delete
+                dbContext.Remove(user);
+                dbContext.SaveChanges();
+                return Ok(user);
+            });
+        }
     }
 }
