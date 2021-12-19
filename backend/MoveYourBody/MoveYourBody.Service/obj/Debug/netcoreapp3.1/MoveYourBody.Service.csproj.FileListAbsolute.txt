@@ -6,7 +6,6 @@ C:\Users\HP\Desktop\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\n
 C:\Users\HP\Desktop\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\MoveYourBody.Service.runtimeconfig.json
 C:\Users\HP\Desktop\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\MoveYourBody.Service.runtimeconfig.dev.json
 C:\Users\HP\Desktop\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\MoveYourBody.Service.pdb
-C:\Users\HP\Desktop\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.csproj.CoreCompileInputs.cache
 C:\Users\HP\Desktop\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.dll
 C:\Users\HP\Desktop\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.pdb
 C:\Users\HP\Desktop\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.genruntimeconfig.cache
