@@ -13,7 +13,35 @@ export class LocationService {
 
   constructor(private http: HttpClient) { }
   getLocations(): Observable<LocationModel[]> {
-    return this.http.get<LocationModel[]>(`${environment.ApiURL}`).pipe(
+    return this.http.get<LocationModel[]>(`${environment.ApiURL}/locations`).pipe(
+      map((data: LocationModel[]) => {
+        return data;
+      }),
+      catchError(err => {
+        if (!environment.production && err.status == 404) {
+          return of(err);
+        } 
+        else 
+          throw err;
+      })
+    );
+  }
+  getCounties(): Observable<LocationModel[]> {
+    return this.http.get<LocationModel[]>(`${environment.ApiURL}/locations/counties`).pipe(
+      map((data: LocationModel[]) => {
+        return data;
+      }),
+      catchError(err => {
+        if (!environment.production && err.status == 404) {
+          return of(err);
+        } 
+        else 
+          throw err;
+      })
+    );
+  }
+  getCities(county: string): Observable<LocationModel[]> {
+    return this.http.get<LocationModel[]>(`${environment.ApiURL}/locations/field?field=${county}`).pipe(
       map((data: LocationModel[]) => {
         return data;
       }),

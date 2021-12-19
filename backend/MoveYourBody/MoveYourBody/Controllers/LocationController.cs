@@ -44,8 +44,8 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(location);
             });
         }
-        [HttpGet("{field}")]                                  
-        public ActionResult ListByField(string field)
+        [HttpGet("field")]                                  
+        public ActionResult ListByField([FromQuery] string field)
         {
                 return this.Run(() =>
                 {
@@ -58,6 +58,7 @@ namespace MoveYourBody.WebAPI.Controllers
                     });
                     return Ok(location);
                 });
+            
         }
     }
     
