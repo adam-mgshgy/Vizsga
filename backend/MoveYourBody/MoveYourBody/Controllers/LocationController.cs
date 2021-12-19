@@ -44,17 +44,20 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(location);
             });
         }
-        [HttpGet("{county}")]                                  
-        public ActionResult ListCitiesInCounty(string county)
+        [HttpGet("{field}")]                                  
+        public ActionResult ListByField(string field)
         {
-            return this.Run(() =>
-            {
-                var location = dbContext.Set<Location>().Where(c => c.County_name == county).Select(l => new
+                return this.Run(() =>
                 {
-                    city_name = l.City_name
+                    int.TryParse(field, out int id);
+                    var location = dbContext.Set<Location>().Where(c => c.County_name == field || c.City_name == field || c.Id == id).Select(l => new
+                    {
+                        id = l.Id,
+                        county_name = l.County_name,
+                        city_name = l.City_name
+                    });
+                    return Ok(location);
                 });
-                return Ok(location);
-            });
         }
     }
     
