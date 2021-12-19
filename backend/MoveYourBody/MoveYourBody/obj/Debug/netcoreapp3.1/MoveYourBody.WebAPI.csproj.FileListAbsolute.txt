@@ -275,3 +275,4 @@ D:\Programozas\Szakdolgozat\Vizsga\backend\MoveYourBody\MoveYourBody\obj\Debug\n
 D:\Programozas\Szakdolgozat\Vizsga\backend\MoveYourBody\MoveYourBody\obj\Debug\netcoreapp3.1\MoveYourBody.WebAPI.dll
 D:\Programozas\Szakdolgozat\Vizsga\backend\MoveYourBody\MoveYourBody\obj\Debug\netcoreapp3.1\MoveYourBody.WebAPI.pdb
 D:\Programozas\Szakdolgozat\Vizsga\backend\MoveYourBody\MoveYourBody\obj\Debug\netcoreapp3.1\MoveYourBody.WebAPI.genruntimeconfig.cache
+C:\Users\HP\Desktop\Vizsga\backend\MoveYourBody\MoveYourBody\bin\Debug\netcoreapp3.1\cities.csv

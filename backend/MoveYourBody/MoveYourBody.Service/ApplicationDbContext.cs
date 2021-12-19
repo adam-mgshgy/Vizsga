@@ -2,6 +2,7 @@
 using MoveYourBody.Service.Models;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure.Internal;
 using System;
+using System.IO;
 
 namespace MoveYourBody.Service
 {
@@ -46,14 +47,15 @@ namespace MoveYourBody.Service
                 new Category() { Name = "Jóga", Img_src = "yoga.jpg" }
                 );
 
-            modelBuilder.Entity<Location>().HasData(
-                new Location() { City_name = "Győr", County_name = "Győr-Moson-Sporon", Id = 1},
-                new Location() { City_name = "Sopron", County_name = "Győr-Moson-Sporon", Id = 2 },
-                new Location() { City_name = "Komárom", County_name = "Komárom-Esztergom", Id = 3 },
-                new Location() { City_name = "Esztergom", County_name = "Komárom-Esztergom", Id = 4 },
-                new Location() { City_name = "Budapest", County_name = "Pest", Id = 5 },
-                new Location() { City_name = "Pápa", County_name = "Veszprém", Id = 6 }
-                );
+            //string[] lines = File.ReadAllText("cities.csv").Trim().Split('\n');
+            //int i = 1;
+            //foreach (var line in lines)
+            //{
+            //    modelBuilder.Entity<Location>().HasData(
+            //        new Location() { City_name = line.Split(';')[0].Trim(), County_name = line.Split(';')[1].Trim(), Id = i++ }
+            //        );
+            //}
+
 
         }
 
