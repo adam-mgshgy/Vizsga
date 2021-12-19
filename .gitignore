@@ -1,0 +1,10 @@
+backend/MoveYourBody/.vs
+backend/MoveYourBody/MoveYourBody/obj/MoveYourBody.WebAPI.csproj.nuget.dgspec.json
+backend/MoveYourBody/MoveYourBody/obj/MoveYourBody.WebAPI.csproj.nuget.g.props
+backend/MoveYourBody/MoveYourBody/obj/project.assets.json
+backend/MoveYourBody/MoveYourBody/obj/project.nuget.cache
+backend/MoveYourBody/MoveYourBody/obj/Debug/netcoreapp3.1/MoveYourBody.WebAPI.assets.cache
+backend/MoveYourBody/MoveYourBody.Service/obj/MoveYourBody.Service.csproj.nuget.dgspec.json
+backend/MoveYourBody/MoveYourBody.Service/obj/MoveYourBody.Service.csproj.nuget.g.props
+backend/MoveYourBody/MoveYourBody.Service/obj/project.assets.json
+backend/MoveYourBody/MoveYourBody.Service/obj/project.nuget.cache
