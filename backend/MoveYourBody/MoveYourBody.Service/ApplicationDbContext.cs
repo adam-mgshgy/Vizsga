@@ -12,6 +12,11 @@ namespace MoveYourBody.Service
 
         public DbSet<User> User { get; set; }
         public DbSet<Location> Location { get; set; }
+        public DbSet<Training> Training { get; set; }
+        public DbSet<Applicant> Applicant { get; set; }
+        public DbSet<Tag> Tag { get; set; }
+        public DbSet<TagTraining> TagTraining { get; set; }
+        public DbSet<TrainingSession> TrainingSession { get; set; }
 
         public ApplicationDbContext()
         {
@@ -32,6 +37,8 @@ namespace MoveYourBody.Service
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Applicant>().HasNoKey();
+            modelBuilder.Entity<TagTraining>().HasNoKey();
             modelBuilder.Entity<Category>().HasData(
                 new Category() { Name = "Box", Img_src = "box.jpg" },
                 new Category() { Name = "Crossfit", Img_src = "crossFitt.jpg" },
