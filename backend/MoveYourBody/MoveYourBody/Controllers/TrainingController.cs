@@ -43,8 +43,59 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(newTraining);
 
             });
+        }
+        [HttpPost("modify")]
+        public ActionResult Modify(Training training)
+        {
+            return this.Run(() =>
+            {
 
+                //TODO category value doesn't change
+                dbContext.Entry(training).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                dbContext.SaveChanges();
 
+                return Ok(training.Category);
+            });
+        }
+        [HttpDelete]
+        public ActionResult Delete(Training training)
+        {
+            return this.Run(() =>
+            {
+                
+                dbContext.Remove(training);
+                dbContext.SaveChanges();
+                return Ok(training);
+            });
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult GetById(int id)
+        {
+            return this.Run(() =>
+            {
+                var training = dbContext.Set<Training>()
+                                            .Where(t => t.Id == id)
+                                            .Select(t => new
+                                            {
+                                                Id = t.Id,
+                                                Name = t.Name,
+                                                Trainer = dbContext.Set<User>().FirstOrDefault(u => u.Id == t.Trainer.Id),
+                                                Category = dbContext.Set<Category>().FirstOrDefault(c => c.Name == t.Category.Name),
+                                                Min_member = t.Min_member,
+                                                Max_member = t.Max_member,
+                                                Description = t.Description,
+                                                Contact_phone = t.Contact_phone
+                                            })
+                                            .FirstOrDefault();
+
+                if (training == null)
+                    return BadRequest(new
+                    {
+                        ErrorMessage = "Nem létező edzés"
+                    });
+                return Ok(training);
+            });
         }
     }
 }
