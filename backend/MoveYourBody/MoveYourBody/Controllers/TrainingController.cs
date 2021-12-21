@@ -52,9 +52,13 @@ namespace MoveYourBody.WebAPI.Controllers
 
                 //TODO category value doesn't change
                 dbContext.Entry(training).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                dbContext.Entry(training.Category).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                dbContext.Entry(training).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
+
                 dbContext.SaveChanges();
 
-                return Ok(training.Category);
+                return Ok(training);
             });
         }
         [HttpDelete]
