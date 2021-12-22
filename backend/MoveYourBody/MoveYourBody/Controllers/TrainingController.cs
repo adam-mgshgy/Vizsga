@@ -130,34 +130,34 @@ namespace MoveYourBody.WebAPI.Controllers
             });
         }
 
-        [HttpGet("location")]
-        public ActionResult GetByLocation([FromQuery] string field)
-        {
-            return this.Run(() =>
-            {
-                int.TryParse(field, out int id);
-                var training = dbContext.Set<Training>()
-                .Include(u => u.Trainer.Location)
-                .Where(c => 
-                    c.Trainer.Location.County_name == field || 
-                    c.Trainer.Location.City_name == field ||
-                    c.Trainer.Location.Id == id)
-                .Select(t => new
+        // [HttpGet("location")]
+        // public ActionResult GetByLocation([FromQuery] string field)
+        // {
+        //     return this.Run(() =>
+        //     {
+        //         int.TryParse(field, out int id);
+        //         var training = dbContext.Set<Training>()
+        //         .Include(u => u.Trainer.Location)
+        //         .Where(c => 
+        //             c.Trainer.Location.County_name == field || 
+        //             c.Trainer.Location.City_name == field ||
+        //             c.Trainer.Location.Id == id)
+        //         .Select(t => new
 
-                {
-                    Id = t.Id,
-                    Name = t.Name,
-                    Trainer = dbContext.Set<User>().Any(u => u.Id == t.Trainer.Id),
-                    Category = t.Category.Name,
-                    Min_member = t.Min_member,
-                    Max_member = t.Max_member,
-                    Description = t.Description,
-                    Contact_phone = t.Contact_phone,
-                    Location = dbContext.Set<Location>().FirstOrDefault(l => l.City_name == t.Trainer.Location.City_name)
-                });
-                return Ok(training);
-            });
+        //         {
+        //             Id = t.Id,
+        //             Name = t.Name,
+        //             Trainer = dbContext.Set<User>().Any(u => u.Id == t.Trainer.Id),
+        //             Category = t.Category.Name,
+        //             Min_member = t.Min_member,
+        //             Max_member = t.Max_member,
+        //             Description = t.Description,
+        //             Contact_phone = t.Contact_phone,
+        //             Location = dbContext.Set<Location>().FirstOrDefault(l => l.City_name == t.Trainer.Location.City_name)
+        //         });
+        //         return Ok(training);
+        //     });
 
-        }
+        // }
     }
 }
