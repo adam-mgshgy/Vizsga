@@ -14,7 +14,6 @@ namespace MoveYourBody.Service
         public DbSet<Location> Location { get; set; }
         public DbSet<Training> Training { get; set; }
         public DbSet<Applicant> Applicant { get; set; }
-        public DbSet<Tag> Tag { get; set; }
         public DbSet<TagTraining> TagTraining { get; set; }
         public DbSet<TrainingSession> TrainingSession { get; set; }
 
@@ -52,6 +51,22 @@ namespace MoveYourBody.Service
                 new Category() { Name = "Úszás", Img_src = "swimming.jpg" },
                 new Category() { Name = "Lovaglás", Img_src = "riding.jpg" },
                 new Category() { Name = "Jóga", Img_src = "yoga.jpg" }
+
+                );
+            
+            modelBuilder.Entity<Tag>().HasData(
+                new Tag() { Id = 1, Name = "Csoportos", Colour = "#6610f2" },
+                new Tag() { Id = 2, Name = "Saját testsúlyos", Colour = "#05A8AA" },
+                new Tag() { Id = 3, Name = "Edzőterem", Colour = "red" },
+                new Tag() { Id = 4, Name = "Szabadtéri", Colour = "black" },
+                new Tag() { Id = 5, Name = "Zsírégető", Colour = "#0dcaf0" },
+                new Tag() { Id = 6, Name = "Személyi edzés", Colour = "green" },
+                new Tag() { Id = 7, Name = "Erőnléti", Colour = "#D7263D" },
+                new Tag() { Id = 8, Name = "Aerobic", Colour = "blue" },
+                new Tag() { Id = 9, Name = "Rehabilitációs", Colour = "#373F51" },
+                new Tag() { Id = 10, Name = "Köredzés", Colour = "#9984D4" },
+                new Tag() { Id = 11, Name = "Bemelegítés", Colour = "#F17300" },
+                new Tag() { Id = 12, Name = "Flexibilitás", Colour = "#3A405A" }
                 );
 
             //string[] lines = File.ReadAllText("cities.csv").Trim().Split('\n');

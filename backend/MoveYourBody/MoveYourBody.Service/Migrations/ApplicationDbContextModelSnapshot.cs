@@ -2237,6 +2237,80 @@ namespace MoveYourBody.Service.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tag");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Colour = "#6610f2",
+                            Name = "Csoportos"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Colour = "#05A8AA",
+                            Name = "Saját testsúlyos"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Colour = "red",
+                            Name = "Edzőterem"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Colour = "black",
+                            Name = "Szabadtéri"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Colour = "#0dcaf0",
+                            Name = "Zsírégető"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Colour = "green",
+                            Name = "Személyi edzés"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Colour = "#D7263D",
+                            Name = "Erőnléti"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Colour = "blue",
+                            Name = "Aerobic"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Colour = "#373F51",
+                            Name = "Rehabilitációs"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Colour = "#9984D4",
+                            Name = "Köredzés"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Colour = "#F17300",
+                            Name = "Bemelegítés"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Colour = "#3A405A",
+                            Name = "Flexibilitás"
+                        });
                 });
 
             modelBuilder.Entity("MoveYourBody.Service.Models.TagTraining", b =>
