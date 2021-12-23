@@ -44,44 +44,36 @@ namespace MoveYourBody.WebAPI.Controllers
             });
         }
 
-        //[HttpGet("tag")]
-        //public ActionResult ListByTag([FromQuery] string field)
-        //{
-        //    return this.Run(() =>
-        //    {
-        //        var tag = new Tag();
-
-        //        int.TryParse(field, out int id);
-        //        if (id != 0)
-        //        {
-        //            tag = dbContext.Set<Tag>().FirstOrDefault(t => t.Name == field);
-        //        }
-        //        else
-        //        {
-        //            tag = dbContext.Set<Tag>().FirstOrDefault(t => t.Id == id);
-        //        }
-        //        var training = dbContext.Set<Training>();
-        //        var tagTraining = dbContext.Set<TagTraining>().Where(t => t.TagId == tag.Id || t.TrainingId == id).Select(t => new
-        //        {
-        //            tagId = t.TagId,
-        //            trainingId = t.TrainingId
-        //        });
-        //        return Ok(tagTraining);
-        //    });
-        //}
-        //[HttpGet("training")]
-        //public ActionResult ListByTraining([FromQuery] int id)
-        //{
-        //    return this.Run(() =>
-        //    {
-        //        var tagTraining = dbContext.Set<TagTraining>().Where(t => t.Training.Id == id).Select(t => new
-        //        {
-        //            tag = t.Tag,
-        //            training = t.Training
-        //        });
-        //        return Ok(tagTraining);
-        //    });
-        //}
+        [HttpGet("tag")]
+        public ActionResult ListByTag([FromQuery] string field)
+        {
+            return this.Run(() =>
+            {                
+                int.TryParse(field, out int id);                
+                
+                var tagTraining = dbContext.Set<TagTraining>().Where(t => t.Tag.Id == id || t.Tag.Name == field).Select(t => new
+                {
+                    Id = t.Id,
+                    Training = dbContext.Set<Training>().FirstOrDefault(tr => tr.Id == t.Training.Id),
+                    Tag = dbContext.Set<Tag>().FirstOrDefault(tag => tag.Id == t.Tag.Id)
+                });
+                return Ok(tagTraining);
+            });
+        }
+        [HttpGet("training")]
+        public ActionResult ListByTraining([FromQuery] int id)
+        {
+            return this.Run(() =>
+            {               
+                var tagTraining = dbContext.Set<TagTraining>().Where(t => t.Training.Id == id).Select(t => new
+                {
+                    Id = t.Id,
+                    Training = dbContext.Set<Training>().FirstOrDefault(tr => tr.Id == t.Training.Id),
+                    Tag = dbContext.Set<Tag>().FirstOrDefault(tag => tag.Id == t.Tag.Id)
+                });
+                return Ok(tagTraining);
+            });
+        }
 
 
 
