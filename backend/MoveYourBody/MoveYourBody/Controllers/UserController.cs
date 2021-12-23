@@ -30,6 +30,7 @@ namespace MoveYourBody.WebAPI.Controllers
                                             .Select(u => new
                                             {
                                                 id = u.Id,
+                                                full_name = u.Full_name,
                                                 email = u.Email,
                                                 password = u.Password,
                                                 phone_number = u.Phone_number,
@@ -81,13 +82,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 
                 dbContext.Set<User>().Add(register);
                 dbContext.SaveChanges();
-                return Ok(new
-                {
-                    id = register.Id,
-                    email = register.Email,
-                    full_name = register.Full_name,
-                    location = register.Location
-                });
+                return Ok(register);
             });
         }
         [HttpPost("login")]

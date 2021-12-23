@@ -46,8 +46,8 @@ namespace MoveYourBody.WebAPI.Controllers
                 var newSession = new TrainingSession
                 {
                     Id = session.Id,
-                    Training = session.Training,
-                    Location = session.Location,
+                    Training = dbContext.Set<Training>().FirstOrDefault(t => t.Id == session.Training.Id),
+                    Location = dbContext.Set<Location>().FirstOrDefault(l => l.Id == session.Location.Id),
                     Date = session.Date,
                     Price = session.Price,
                     Minutes = session.Minutes,
@@ -64,6 +64,8 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
+                dbContext.Entry(session.Training).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                dbContext.Entry(session.Location).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 dbContext.Entry(session).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 dbContext.SaveChanges();
                 return Ok(session);
