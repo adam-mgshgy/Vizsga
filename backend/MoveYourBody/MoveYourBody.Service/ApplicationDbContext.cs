@@ -37,7 +37,6 @@ namespace MoveYourBody.Service
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Applicant>().HasNoKey();
-            modelBuilder.Entity<TagTraining>().HasNoKey();
             modelBuilder.Entity<Category>().HasData(
                 new Category() { Name = "Box", Img_src = "box.jpg" },
                 new Category() { Name = "Crossfit", Img_src = "crossFitt.jpg" },
