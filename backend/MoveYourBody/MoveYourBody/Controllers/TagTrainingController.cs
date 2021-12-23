@@ -25,7 +25,7 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                if (dbContext.Set<TagTraining>().Any(t => t.Tag == tagTraining.Tag && t.Training == tagTraining.Training))
+                if (dbContext.Set<TagTraining>().Any(t => t.Tag.Id == tagTraining.Tag.Id && t.Training.Id == tagTraining.Training.Id))
                     return BadRequest(new
                     {
                         ErrorMessage = "A megadott edzés-tag kombináció már létezik"
@@ -75,7 +75,17 @@ namespace MoveYourBody.WebAPI.Controllers
             });
         }
 
+        [HttpDelete]
+        public ActionResult Delete(TagTraining tagTraining)
+        {
+            return this.Run(() =>
+            {
 
+                dbContext.Remove(tagTraining);
+                dbContext.SaveChanges();
+                return Ok(tagTraining);
+            });
+        }
 
     }
 }
