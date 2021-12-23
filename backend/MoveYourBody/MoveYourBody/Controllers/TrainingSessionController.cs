@@ -17,13 +17,13 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             this.dbContext = dbContext;
         }
-        [HttpGet("list")]
-        public ActionResult ListByTraining(Training training)
+        [HttpGet("trainingId")]
+        public ActionResult ListByTraining([FromQuery] int trainingId)
         {
             return this.Run(() =>
             {
 
-                var sessions = dbContext.Set<TrainingSession>().Where(t => t.Training.Id == training.Id).Select(s => new //nincs include
+                var sessions = dbContext.Set<TrainingSession>().Where(t => t.Training.Id == trainingId).Select(s => new //nincs include
                 {
                     id = s.Id,
                     training = s.Training,
