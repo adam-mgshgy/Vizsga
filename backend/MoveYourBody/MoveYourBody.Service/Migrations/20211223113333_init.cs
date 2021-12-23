@@ -107,11 +107,14 @@ namespace MoveYourBody.Service.Migrations
                 name: "TagTraining",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     TrainingId = table.Column<int>(nullable: false),
                     TagId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_TagTraining", x => x.Id);
                     table.ForeignKey(
                         name: "FK_TagTraining_Tag_TagId",
                         column: x => x.TagId,

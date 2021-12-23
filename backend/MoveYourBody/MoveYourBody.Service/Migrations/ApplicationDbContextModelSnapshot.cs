@@ -2315,11 +2315,17 @@ namespace MoveYourBody.Service.Migrations
 
             modelBuilder.Entity("MoveYourBody.Service.Models.TagTraining", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
                     b.Property<int>("TagId")
                         .HasColumnType("int");
 
                     b.Property<int>("TrainingId")
                         .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("TagId");
 
