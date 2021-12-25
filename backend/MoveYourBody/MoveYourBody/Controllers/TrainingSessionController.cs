@@ -17,18 +17,17 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             this.dbContext = dbContext;
         }
-        [HttpGet("trainingId")]
+        [HttpGet("list")]
         public ActionResult ListByTraining([FromQuery] int trainingId)
         {
             return this.Run(() =>
             {
-
                 var sessions = dbContext.Set<TrainingSession>().Where(t => t.Training.Id == trainingId).Select(s => new //nincs include
                 {
                     id = s.Id,
-                    training = s.Training,
-                    location = s.Location,
-                    date = s.Date.ToString("yyyy.MM.dd. hh:mm"), //??
+                    training = dbContext.Set<Training>().FirstOrDefault(t => t.Id == s.Training.Id),
+                    location = dbContext.Set<Location>().FirstOrDefault(l => l.Id == s.Location.Id),
+                    date = s.Date,//.ToString("yyyy.MM.dd. hh:mm"), //??
                     price = s.Price,
                     minutes = s.Minutes,
                     address_name = s.Address_name,
@@ -54,6 +53,8 @@ namespace MoveYourBody.WebAPI.Controllers
                     Address_name = session.Address_name,
                     Place_name = session.Place_name,
                 };
+                newSession.Training.Trainer = dbContext.Set<User>().FirstOrDefault(u => u.Id == session.Training.Trainer.Id);
+                newSession.Training.Category = dbContext.Set<Category>().FirstOrDefault(c => c.Name == session.Training.Category.Name);
                 dbContext.Set<TrainingSession>().Add(newSession);
                 dbContext.SaveChanges();
                 return Ok(newSession);
@@ -71,11 +72,12 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(session);
             });
         }
-        [HttpDelete]
-        public ActionResult Delete(TrainingSession session)
+        [HttpDelete("delete")]
+        public ActionResult Delete([FromQuery] int trainingSessionId)
         {
             return this.Run(() =>
             {
+                var session = dbContext.Set<TrainingSession>().FirstOrDefault(t => t.Training.Id == trainingSessionId);
                 dbContext.Remove(session);
                 dbContext.SaveChanges();
                 return Ok(session);
