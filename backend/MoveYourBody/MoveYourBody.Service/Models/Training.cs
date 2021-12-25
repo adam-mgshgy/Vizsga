@@ -8,7 +8,7 @@ namespace MoveYourBody.Service.Models
     public class Training
     {
         [Required, Key]
-        public int Id { get; set; }
+        public int Id { get; set; } //id name cat trainer minm maxm desc phone
         [Required, StringLength(50)]
         public string Name { get; set; }
         [Required]

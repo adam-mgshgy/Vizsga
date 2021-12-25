@@ -27,15 +27,14 @@ namespace MoveYourBody.WebAPI.Controllers
 
                 Training newTraining = new Training()
                 {
-
-                    Contact_phone = training.Contact_phone,
-                    Description = training.Description,
                     Id = training.Id,
-                    Max_member = training.Max_member,
-                    Min_member = training.Min_member,
                     Name = training.Name,
+                    Category = dbContext.Set<Category>().FirstOrDefault(c => c.Name == training.Category.Name),
                     Trainer = dbContext.Set<User>().FirstOrDefault(u => u.Id == training.Trainer.Id),
-                    Category = dbContext.Set<Category>().FirstOrDefault(c => c.Name == training.Category.Name)
+                    Min_member = training.Min_member,
+                    Max_member = training.Max_member,
+                    Description = training.Description,
+                    Contact_phone = training.Contact_phone,
                 };
                 newTraining.Trainer.Location = dbContext.Set<Location>().FirstOrDefault(l => l.Id == training.Trainer.Location.Id);
                 dbContext.Set<Training>().Add(newTraining);
