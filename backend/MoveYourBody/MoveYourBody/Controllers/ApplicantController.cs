@@ -31,15 +31,16 @@ namespace MoveYourBody.WebAPI.Controllers
 
         }
         [HttpPut("add")]
-        public ActionResult AddApplicant(Applicant applicant)
+        public ActionResult AddApplicant([FromQuery] int trainingSessionId, int userId)
         {
             return this.Run(() =>
             {
+
                 var newApplicant = new Applicant
                 {
-                    Id = applicant.Id,
-                    Training_session = dbContext.Set<TrainingSession>().FirstOrDefault(s => s.Id == applicant.Training_session.Id),
-                    User = dbContext.Set<User>().FirstOrDefault(u => u.Id == applicant.User.Id)
+                    Id = 1,
+                    Training_session = dbContext.Set<TrainingSession>().FirstOrDefault(s => s.Id == trainingSessionId),
+                    User = dbContext.Set<User>().FirstOrDefault(u => u.Id == userId)
                 };
                 //newApplicant.Training_session.Training.Trainer = dbContext.Set<User>().FirstOrDefault(trainer => trainer.Id == newApplicant.Training_session.Training.Trainer.Id);
                 //newApplicant.Training_session.Training.Trainer.Location = dbContext.Set<Location>().FirstOrDefault(tLoc => tLoc.Id == newApplicant.Training_session.Training.Trainer.Location.Id);
@@ -53,13 +54,15 @@ namespace MoveYourBody.WebAPI.Controllers
         }
         
         [HttpDelete]
-        public ActionResult Delete(User user)
+        public ActionResult Delete([FromQuery] int applicantId)
         {
             return this.Run(() =>
             {
-                dbContext.Remove(user);
+                var newApplicant = dbContext.Set<Applicant>().FirstOrDefault(a => a.Id == applicantId);
+                dbContext.Remove(newApplicant);
                 dbContext.SaveChanges();
-                return Ok(user);
+                //dbContext.Entry(applicant).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+                return Ok(newApplicant);
             });
         }
     }

@@ -164,11 +164,14 @@ namespace MoveYourBody.Service.Migrations
                 name: "Applicant",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Training_sessionId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_Applicant", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Applicant_TrainingSession_Training_sessionId",
                         column: x => x.Training_sessionId,
