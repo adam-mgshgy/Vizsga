@@ -43,9 +43,9 @@ export class UserService {
       })
     );
   }
-  Login(model: LoginModel): Observable<LoginModel> {
-    return this.http.post<LoginModel>(`${environment.ApiURL}/user/login`, model).pipe(
-      map((data: LoginModel) => {
+  Login(email, password): Observable<UserModel> {
+    return this.http.get<UserModel>(`${environment.ApiURL}/user/login?email=${email}&password=${password}`).pipe(
+      map((data: UserModel) => {
         return data;
       }),
       catchError((err) => {
@@ -53,7 +53,7 @@ export class UserService {
           !environment.production &&
           (err.status == 404 || err.status == 405)
         ) {         
-          return of(model);
+          return of(email, password);
         } else throw err;
       })
     );
