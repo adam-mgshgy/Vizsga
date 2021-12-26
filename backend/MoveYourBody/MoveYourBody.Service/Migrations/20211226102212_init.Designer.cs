@@ -9,7 +9,7 @@ using MoveYourBody.Service;
 namespace MoveYourBody.Service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211223113333_init")]
+    [Migration("20211226102212_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,11 +21,17 @@ namespace MoveYourBody.Service.Migrations
 
             modelBuilder.Entity("MoveYourBody.Service.Models.Applicant", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
                     b.Property<int>("Training_sessionId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("Training_sessionId");
 
