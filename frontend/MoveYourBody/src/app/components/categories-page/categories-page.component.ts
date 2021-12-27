@@ -13,12 +13,12 @@ export class CategoriesPageComponent implements OnInit {
   imgPrefix = './assets/images/';
 
 
-  public categories: CategoryModel[] = [];  
+  public categories: CategoryModel[] = [];
 
   ngOnInit(): void {
     this.categoryService.getCategories().subscribe(
-      result => this.categories = result,
-      error => console.log(error)
-    );
+      (result) => this.categories = result,
+      (error) => console.log(error)
+    );    
   }
 }
