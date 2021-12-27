@@ -1,4 +1,5 @@
 export class CategoryModel {
-    public name = '';
-    public imgSrc = '';
+  public id: number | null = null;
+  public name = '';
+  public imgSrc = '';
 }

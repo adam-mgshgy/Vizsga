@@ -12,12 +12,14 @@ namespace MoveYourBody.Service.Migrations
                 name: "Category",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
                     Img_src = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Category", x => x.Name);
+                    table.PrimaryKey("PK_Category", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -49,6 +51,39 @@ namespace MoveYourBody.Service.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TagTraining",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Training_id = table.Column<int>(nullable: false),
+                    Tag_id = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TagTraining", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Training",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Category_id = table.Column<int>(nullable: false),
+                    Trainer_id = table.Column<int>(nullable: false),
+                    Min_member = table.Column<int>(nullable: false),
+                    Max_member = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(maxLength: 255, nullable: false),
+                    Contact_phone = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Training", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -68,63 +103,6 @@ namespace MoveYourBody.Service.Migrations
                         name: "FK_User_Location_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Location",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Training",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
-                    CategoryName = table.Column<string>(nullable: false),
-                    TrainerId = table.Column<int>(nullable: false),
-                    Min_member = table.Column<int>(nullable: false),
-                    Max_member = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(maxLength: 255, nullable: false),
-                    Contact_phone = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Training", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Training_Category_CategoryName",
-                        column: x => x.CategoryName,
-                        principalTable: "Category",
-                        principalColumn: "Name",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Training_User_TrainerId",
-                        column: x => x.TrainerId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TagTraining",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    TrainingId = table.Column<int>(nullable: false),
-                    TagId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TagTraining", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TagTraining_Tag_TagId",
-                        column: x => x.TagId,
-                        principalTable: "Tag",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TagTraining_Training_TrainingId",
-                        column: x => x.TrainingId,
-                        principalTable: "Training",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -188,21 +166,21 @@ namespace MoveYourBody.Service.Migrations
 
             migrationBuilder.InsertData(
                 table: "Category",
-                columns: new[] { "Name", "Img_src" },
+                columns: new[] { "Id", "Img_src", "Name" },
                 values: new object[,]
                 {
-                    { "Box", "box.jpg" },
-                    { "Jóga", "yoga.jpg" },
-                    { "Úszás", "swimming.jpg" },
-                    { "TRX", "trx.jpg" },
-                    { "Tenisz", "tennis.jpg" },
-                    { "Spartan", "spartan.jpg" },
-                    { "Lovaglás", "riding.jpg" },
-                    { "Kézilabda", "handball.jpg" },
-                    { "Kosárlabda", "basketball.jpg" },
-                    { "Labdarúgás", "football.jpg" },
-                    { "Crossfit", "crossFitt.jpg" },
-                    { "Röplabda", "volleyball.jpg" }
+                    { 1, "box.jpg", "Box" },
+                    { 12, "yoga.jpg", "Jóga" },
+                    { 10, "swimming.jpg", "Úszás" },
+                    { 9, "trx.jpg", "TRX" },
+                    { 8, "tennis.jpg", "Tenisz" },
+                    { 7, "spartan.jpg", "Spartan" },
+                    { 11, "riding.jpg", "Lovaglás" },
+                    { 5, "handball.jpg", "Kézilabda" },
+                    { 4, "basketball.jpg", "Kosárlabda" },
+                    { 3, "football.jpg", "Labdarúgás" },
+                    { 2, "crossFitt.jpg", "Crossfit" },
+                    { 6, "volleyball.jpg", "Röplabda" }
                 });
 
             migrationBuilder.InsertData(
@@ -590,26 +568,6 @@ namespace MoveYourBody.Service.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TagTraining_TagId",
-                table: "TagTraining",
-                column: "TagId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TagTraining_TrainingId",
-                table: "TagTraining",
-                column: "TrainingId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Training_CategoryName",
-                table: "Training",
-                column: "CategoryName");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Training_TrainerId",
-                table: "Training",
-                column: "TrainerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TrainingSession_LocationId",
                 table: "TrainingSession",
                 column: "LocationId");
@@ -631,22 +589,22 @@ namespace MoveYourBody.Service.Migrations
                 name: "Applicant");
 
             migrationBuilder.DropTable(
+                name: "Category");
+
+            migrationBuilder.DropTable(
+                name: "Tag");
+
+            migrationBuilder.DropTable(
                 name: "TagTraining");
 
             migrationBuilder.DropTable(
                 name: "TrainingSession");
 
             migrationBuilder.DropTable(
-                name: "Tag");
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Training");
-
-            migrationBuilder.DropTable(
-                name: "Category");
-
-            migrationBuilder.DropTable(
-                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Location");

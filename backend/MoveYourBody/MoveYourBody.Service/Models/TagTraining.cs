@@ -10,8 +10,8 @@ namespace MoveYourBody.Service.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public Training Training { get; set; }
+        public int Training_id { get; set; }
         [Required]
-        public Tag Tag { get; set; }
+        public int Tag_id { get; set; }
     }
 }

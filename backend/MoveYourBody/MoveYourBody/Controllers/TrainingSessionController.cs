@@ -53,8 +53,8 @@ namespace MoveYourBody.WebAPI.Controllers
                     Address_name = session.Address_name,
                     Place_name = session.Place_name,
                 };
-                newSession.Training.Trainer = dbContext.Set<User>().FirstOrDefault(u => u.Id == session.Training.Trainer.Id);
-                newSession.Training.Category = dbContext.Set<Category>().FirstOrDefault(c => c.Name == session.Training.Category.Name);
+                newSession.Training.Trainer_id = session.Training.Trainer_id;
+                newSession.Training.Category_id = session.Training.Category_id;
                 dbContext.Set<TrainingSession>().Add(newSession);
                 dbContext.SaveChanges();
                 return Ok(newSession);

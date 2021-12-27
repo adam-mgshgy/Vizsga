@@ -27,7 +27,7 @@ export class CategoryPageComponent implements OnInit {
     {
       name: 'Nagyon hosszú nevű edzés',
       description: 'Zenés TRX edzés Bana city központjában',
-      category: 'TRX',
+      category_id: 1,
       id: 0,
       min_member: 6,
       max_member: 8,
@@ -37,7 +37,7 @@ export class CategoryPageComponent implements OnInit {
     {
       name: 'Teri trx',
       description: 'Zenés TRX edzés Bana city központjában',
-      category: 'TRX',
+      category_id: 1,
       id: 0,
       min_member: 6,
       max_member: 8,
@@ -47,7 +47,7 @@ export class CategoryPageComponent implements OnInit {
     {
       name: 'Teri trx',
       description: 'Zenés TRX edzés Bana city központjában',
-      category: 'TRX',
+      category_id: 1,
       id: 0,
       min_member: 6,
       max_member: 8,
@@ -57,7 +57,7 @@ export class CategoryPageComponent implements OnInit {
     {
       name: 'Kiütünk mindenkit',
       description: 'Box edzés Pistivel',
-      category: 'Box',
+      category_id:2,
       id: 0,
       min_member: 6,
       max_member: 8,
@@ -67,7 +67,7 @@ export class CategoryPageComponent implements OnInit {
     {
       name: 'Lovaglás nagyoknak',
       description: 'Zenés TRX edzés Bana city központjában',
-      category: 'Lovaglás',
+      category_id: 3,
       id: 0,
       min_member: 6,
       max_member: 8,
@@ -77,7 +77,7 @@ export class CategoryPageComponent implements OnInit {
     {
       name: 'Légy hal',
       description: 'Ússz a víz alatt',
-      category: 'Úszás',
+      category_id: 4,
       id: 0,
       min_member: 6,
       max_member: 8,
@@ -87,7 +87,7 @@ export class CategoryPageComponent implements OnInit {
     {
       name: '300 helyett 8an spartan edzés',
       description: 'Thermöpula helyett Bana city központjában',
-      category: 'Spartan',
+      category_id: 5,
       id: 0,
       min_member: 6,
       max_member: 8,
@@ -97,7 +97,7 @@ export class CategoryPageComponent implements OnInit {
     {
       name: 'Foci Ferivel',
       description: 'Kígyós edzés',
-      category: 'Labdarúgás',
+      category_id:61,
       id: 0,
       min_member: 6,
       max_member: 8,
@@ -107,7 +107,7 @@ export class CategoryPageComponent implements OnInit {
     {
       name: 'Ripi röpi Rebekával',
       description: 'Röplabda antireptetése',
-      category: 'Röplabda',
+      category_id: 6,
       id: 0,
       min_member: 6,
       max_member: 8,
@@ -117,7 +117,7 @@ export class CategoryPageComponent implements OnInit {
     {
       name: 'Crossfit edzés',
       description: 'Crossmotor helyett rendes edzés',
-      category: 'Crossfit',
+      category_id: 6,
       id: 0,
       min_member: 6,
       max_member: 8,
@@ -127,7 +127,7 @@ export class CategoryPageComponent implements OnInit {
     {
       name: 'Foci Viktorral',
       description: 'Minden edzés után GYŐZÜNK!',
-      category: 'Labdarúgás',
+      category_id: 7,
       id: 0,
       min_member: 6,
       max_member: 8,
@@ -137,7 +137,7 @@ export class CategoryPageComponent implements OnInit {
     {
       name: 'Tenisz a salgótarjáni Federerrel',
       description: 'Fejleszd magad az új lyukas hálós ütőkkel!!',
-      category: 'Tenisz',
+      category_id: 8,
       id: 0,
       min_member: 6,
       max_member: 8,
@@ -148,7 +148,7 @@ export class CategoryPageComponent implements OnInit {
       name: 'Kosárlabda focilabdával',
       description:
         'Nincs pénz kosárlabdára, gyakorolni jó lesz focilabdával is.',
-      category: 'Kosárlabda',
+        category_id: 8,
       id: 0,
       min_member: 6,
       max_member: 8,
@@ -288,12 +288,12 @@ export class CategoryPageComponent implements OnInit {
 
     this.tagsOnMobile();
 
-    this.route.paramMap.subscribe((params) => {
-      this.category = params.get('category');
-      this.trainings = this.allTrainings.filter(
-        (t) => t.category == this.category
-      );
-    });
+    // this.route.paramMap.subscribe((params) => {
+    //   this.category = params.get('category');
+    //   this.trainings = this.allTrainings.filter(
+    //     (t) => t.category == this.category
+    //   );
+    // });
 
     //Lekérdezés a back-end-ről
   }

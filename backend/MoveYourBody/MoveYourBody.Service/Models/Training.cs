@@ -12,9 +12,9 @@ namespace MoveYourBody.Service.Models
         [Required, StringLength(50)]
         public string Name { get; set; }
         [Required]
-        public Category Category { get; set; }
+        public int Category_id { get; set; }
         [Required]
-        public User Trainer { get; set; }
+        public int Trainer_id { get; set; }
         [Required]
         public int Min_member { get; set; }
         [Required]

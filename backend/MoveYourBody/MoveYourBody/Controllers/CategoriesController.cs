@@ -27,6 +27,7 @@ namespace MoveYourBody.WebAPI.Controllers
             {
                 var category = dbContext.Set<Category>().Select(c => new
                 {
+                    id = c.Id,
                     img_src = c.Img_src,
                     name = c.Name                    
                 });

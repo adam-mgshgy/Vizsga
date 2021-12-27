@@ -25,7 +25,7 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                if (dbContext.Set<TagTraining>().Any(t => t.Tag.Id == tagTraining.Tag.Id && t.Training.Id == tagTraining.Training.Id))
+                if (dbContext.Set<TagTraining>().Any(t => t.Tag_id == tagTraining.Tag_id && t.Training_id == tagTraining.Training_id))
                     return BadRequest(new
                     {
                         ErrorMessage = "A megadott edzés-tag kombináció már létezik"
@@ -33,8 +33,8 @@ namespace MoveYourBody.WebAPI.Controllers
                 var newTagTraining = new TagTraining()
                 {
                     Id = tagTraining.Id,
-                    Tag = dbContext.Set<Tag>().FirstOrDefault(t => t.Name == tagTraining.Tag.Name),
-                    Training = dbContext.Set<Training>().FirstOrDefault(t => t.Name == tagTraining.Training.Name),
+                    Tag_id = tagTraining.Tag_id,
+                    Training_id =  tagTraining.Training_id,
                 };
 
 
@@ -45,17 +45,15 @@ namespace MoveYourBody.WebAPI.Controllers
         }
 
         [HttpGet("tag")]
-        public ActionResult ListByTag([FromQuery] string field)
+        public ActionResult ListByTag([FromQuery] int id)
         {
             return this.Run(() =>
-            {                
-                int.TryParse(field, out int id);                
-                
-                var tagTraining = dbContext.Set<TagTraining>().Where(t => t.Tag.Id == id || t.Tag.Name == field).Select(t => new
+            {                                                               
+                var tagTraining = dbContext.Set<TagTraining>().Where(t => t.Tag_id == id).Select(t => new
                 {
                     Id = t.Id,
-                    Training = dbContext.Set<Training>().FirstOrDefault(tr => tr.Id == t.Training.Id),
-                    Tag = dbContext.Set<Tag>().FirstOrDefault(tag => tag.Id == t.Tag.Id)
+                    Training_id = t.Training_id,
+                    Tag_id = t.Tag_id
                 });
                 return Ok(tagTraining);
             });
@@ -65,11 +63,11 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {               
-                var tagTraining = dbContext.Set<TagTraining>().Where(t => t.Training.Id == id).Select(t => new
+                var tagTraining = dbContext.Set<TagTraining>().Where(t => t.Training_id == id).Select(t => new
                 {
                     Id = t.Id,
-                    Training = dbContext.Set<Training>().FirstOrDefault(tr => tr.Id == t.Training.Id),
-                    Tag = dbContext.Set<Tag>().FirstOrDefault(tag => tag.Id == t.Tag.Id)
+                    Training = t.Training_id,
+                    Tag = t.Tag_id
                 });
                 return Ok(tagTraining);
             });
@@ -79,8 +77,7 @@ namespace MoveYourBody.WebAPI.Controllers
         public ActionResult Delete(TagTraining tagTraining)
         {
             return this.Run(() =>
-            {
-
+            {                
                 dbContext.Remove(tagTraining);
                 dbContext.SaveChanges();
                 return Ok(tagTraining);
