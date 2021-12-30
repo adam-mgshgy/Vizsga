@@ -19,6 +19,6 @@ export class CategoriesPageComponent implements OnInit {
     this.categoryService.getCategories().subscribe(
       (result) => this.categories = result,
       (error) => console.log(error)
-    );    
+    );            
   }
 }

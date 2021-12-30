@@ -29,11 +29,14 @@ namespace MoveYourBody.WebAPI.Controllers
                 {
                     id = c.Id,
                     img_src = c.Img_src,
-                    name = c.Name                    
+                    name = c.Name
                 });
                 return Ok(category);
             });
         }
+
+        
+
 
     }
 }
