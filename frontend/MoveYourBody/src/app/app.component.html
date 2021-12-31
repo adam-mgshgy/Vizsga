@@ -15,7 +15,7 @@
             Kategóriák
           </a>
           <ul class="dropdown-menu">
-            <li *ngFor="let cat of categories">
+            <li *ngFor="let cat of categories | slice:0:5">
               <a class="dropdown-item" [routerLink]="'/category/' +  cat.name">{{cat.name}}</a>
             </li>
             <li>

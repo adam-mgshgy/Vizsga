@@ -20,5 +20,6 @@ export class CategoriesPageComponent implements OnInit {
       (result) => this.categories = result,
       (error) => console.log(error)
     );            
+    console.log(this.categories)
   }
 }

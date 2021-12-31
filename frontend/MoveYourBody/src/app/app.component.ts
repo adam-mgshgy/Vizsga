@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { LoginpageComponent } from './components/login-page/login-page.component';
 import { CategoryModel } from './models/category-model';
 import { UserModel } from './models/user-model';
 import { Subscription } from 'rxjs';
 import { LoginService } from './services/login.service';
+import { CategoriesService } from './services/categories.service';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +13,14 @@ import { LoginService } from './services/login.service';
 export class AppComponent {
   user: UserModel;
   subscription: Subscription;
-  constructor(private loginService: LoginService) {  }
+  constructor(private loginService: LoginService, private categoryService: CategoriesService) {  }
   ngOnInit() {
-    this.subscription = this.loginService.currentUser.subscribe(user => this.user = user)
+    this.subscription = this.loginService.currentUser.subscribe(user => this.user = user);
+
+    this.categoryService.getCategories().subscribe(
+      (result) => this.categories = result,
+      (error) => console.log(error)
+    );
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
