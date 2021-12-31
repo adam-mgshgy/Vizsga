@@ -33,13 +33,9 @@ export class CreateTrainingPageComponent implements OnInit {
   public categories: CategoryModel[] = [];
   public tags: TagModel[] = [];
   public training: TrainingModel = new TrainingModel();
-  public selectedTags: TagModel[] = [];
+  public selectedTags: string[]= [];
   public tagTraining: TagTrainingModel = new TagTrainingModel();
 
-  public OnSelect(tag: TagModel): void {
-    console.log('tag');
-    this.selectedTags.push(tag);
-  }
   mobile: boolean = false;
   constructor(
     private route: ActivatedRoute,
@@ -107,20 +103,32 @@ export class CreateTrainingPageComponent implements OnInit {
       this.training.contact_phone = this.user.phone_number;
 
       this.trainingService.newTraining(this.training).subscribe(
-        (result) => {},
+        (result) => {
+          this.training.id = result.id;
+          this.tagTraining.id = 0;
+          this.tagTraining.training_id = this.training.id;
+          
+          for (const item of this.selectedTags) {
+            for (const tag of this.tags) {
+              if (item == tag.name) {
+                
+                this.tagTraining.tag_id = tag.id;                
+              }              
+            }
+            console.log(this.tagTraining);
+            this.tagTrainingService.newTagTraining(this.tagTraining).subscribe(
+              result => {},
+              error => console.log(error)
+            );
+          }
+          this.tagTrainingService.newTagTraining(this.tagTraining);
+        },
         (error) => console.log(error)
       );
     }
     //TODO errormessage and success box
     //TODO edit or create
-    this.tagTraining.id = 0;
-    this.tagTraining.training_id = this.training.id;
-    for (const item of this.selectedTags) {
-      this.tagTraining.tag_id = item.id;
-      this.tagTrainingService.newTagTraining(this.tagTraining);
-    }
-
-    this.tagTrainingService.newTagTraining(this.tagTraining);
+    
     //TODO add tagtraining
   }
   phone() {
@@ -140,7 +148,7 @@ export class CreateTrainingPageComponent implements OnInit {
     
   }
   onTagChange(value) {
-    if (!this.selectedTags.includes(value)) {
+    if (!this.selectedTags.includes(value)) {      
       this.selectedTags.push(value);
     } else {
       const index: number = this.selectedTags.indexOf(value);
