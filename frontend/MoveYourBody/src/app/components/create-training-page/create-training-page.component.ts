@@ -10,6 +10,7 @@ import { CategoriesService } from 'src/app/services/categories.service';
 import { TagTrainingService } from 'src/app/services/tag-training.service';
 import { TagService } from 'src/app/services/tag.service';
 import { TrainingService } from 'src/app/services/training.service';
+import { ModalDismissReasons, NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-create-training-page',
@@ -19,7 +20,17 @@ import { TrainingService } from 'src/app/services/training.service';
 export class CreateTrainingPageComponent implements OnInit {
   id: string | null = null;
   isChecked = false;
+
   selectedCat = '';
+  public min_member: number;
+  public max_member: number;
+  otherPhoneNumber = false;
+  otherPhoneNumberInput: string;
+
+  mobile: boolean = false;
+
+  public messageBox = '';
+  public messageTitle = '';
 
   user: UserModel = {
     id: 1,
@@ -36,13 +47,14 @@ export class CreateTrainingPageComponent implements OnInit {
   public selectedTags: string[]= [];
   public tagTraining: TagTrainingModel = new TagTrainingModel();
 
-  mobile: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private categoryService: CategoriesService,
     private trainingService: TrainingService,
     private tagService: TagService,
-    private tagTrainingService: TagTrainingService
+    private tagTrainingService: TagTrainingService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -77,12 +89,11 @@ export class CreateTrainingPageComponent implements OnInit {
     //   }
     // });
   }
-  public min_member: number;
-  public max_member: number;
-  otherPhoneNumber = false;
-  otherPhoneNumberInput: string;
+
 
   save() {
+    this.errorCheck()
+
     if (this.otherPhoneNumber == true) {
       if (this.otherPhoneNumberInput != null) {
         this.training.id = 0;
@@ -115,7 +126,6 @@ export class CreateTrainingPageComponent implements OnInit {
                 this.tagTraining.tag_id = tag.id;                
               }              
             }
-            console.log(this.tagTraining);
             this.tagTrainingService.newTagTraining(this.tagTraining).subscribe(
               result => {},
               error => console.log(error)
@@ -123,13 +133,38 @@ export class CreateTrainingPageComponent implements OnInit {
           }
           this.tagTrainingService.newTagTraining(this.tagTraining);
         },
-        (error) => console.log(error)
+        (error) =>console.log(error)
       );
     }
-    //TODO errormessage and success box
+
     //TODO edit or create
-    
-    //TODO add tagtraining
+        
+  }
+  errorCheck(){
+    this.messageTitle = "Hiba"
+    if (this.training.name == "") {
+      this.messageBox = "Kérem adja meg az edzés nevét!"
+    }
+    else if(this.training.category_id == null){
+      this.messageBox = "Kérem adja meg az edzéshez tartozó kategóriát!"
+    }
+    else if(this.training.description == ""){
+      this.messageBox = "Kérem adjon meg az edzéshez egy rövid tájékoztató leírást!"
+    }
+    else if(this.training.max_member == 0){
+      this.messageBox = "Kérem adja meg az edzés résztvevőinek maximum számát!"
+    }
+    else if(this.training.min_member > this.max_member){
+      this.messageBox = "Az edzéshez tartozó minimum résztvevők száma nagyobb mint a maximum!" //TODO az inputból kikattintva menti csak el a résztvevők számát
+    }
+    else if(this.otherPhoneNumber == true && this.otherPhoneNumberInput == null){
+      this.messageBox = "Kérem adja meg a másodlagos telefonszámot!"
+    }
+    else{
+      this.messageTitle = "Siker"
+      this.messageBox = "Edzése sikeresen létrehozva!"
+
+    }
   }
   phone() {
     this.otherPhoneNumber = false;
@@ -143,6 +178,9 @@ export class CreateTrainingPageComponent implements OnInit {
         this.training.category_id = item.id;
         this.selectedCat = item.name;
       }
+      else if(value == ""){
+        this.training.category_id = null;
+      }
     }
 
     
@@ -154,5 +192,36 @@ export class CreateTrainingPageComponent implements OnInit {
       const index: number = this.selectedTags.indexOf(value);
       this.selectedTags.splice(index, 1);
     }
+  }
+  closeResult = '';
+  open(content: any) {
+    this.modalService
+      .open(content)
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+      
+  }
+  modal: NgbModal
+  close(){
+    this.modalService.dismissAll()
+
+  }
+  
+  
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+    
   }
 }
