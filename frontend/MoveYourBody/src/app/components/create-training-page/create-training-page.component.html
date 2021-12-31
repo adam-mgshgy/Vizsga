@@ -57,8 +57,22 @@
         </div>
 
         <div class="mb-3">
-            <button id="createButton" type="submit" class="btn btn-success fs-5" (click)="save()">Edzés mentése</button>
+            <button id="createButton" type="submit" class="btn btn-success fs-5" (click)="save()" (click)="open(content)">Edzés mentése</button>
             <button class="btn btn-danger ms-2 fs-5">Mégsem</button>
         </div>
     </form>
 </div>
+
+<!--Modal popup-->
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">{{messageTitle}}</h4>        
+        <mat-icon id="close" class="close-icon" color="warn" class="close" (click)="close()">close</mat-icon>
+      </div>
+      <div class="modal-body">
+        {{messageBox}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="close()">Ok</button>
+      </div>
+  </ng-template>

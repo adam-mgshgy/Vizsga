@@ -13,7 +13,7 @@ import { CreateTrainingPageComponent } from './components/create-training-page/c
 import { AddSessionPageComponent } from './components/add-session-page/add-session-page.component';
 import { TrainingPageComponent } from './components/training-page/training-page.component';
 
-
+import {MatIconModule} from '@angular/material/icon';
 
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { MyTrainingsPageComponent } from './components/my-trainings-page/my-trainings-page.component';
@@ -47,7 +47,8 @@ import { FormsModule } from '@angular/forms';
     MatExpansionModule,
     MatDividerModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
