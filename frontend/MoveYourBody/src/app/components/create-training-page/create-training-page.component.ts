@@ -19,7 +19,7 @@ import { TrainingService } from 'src/app/services/training.service';
 export class CreateTrainingPageComponent implements OnInit {
   id: string | null = null;
   isChecked = false;
-  selectedCat = 0;
+  selectedCat = '';
 
   user: UserModel = {
     id: 1,
@@ -104,7 +104,7 @@ export class CreateTrainingPageComponent implements OnInit {
       this.training.trainer_id = this.user.id;
       this.training.min_member = Number(this.min_member);
       this.training.max_member = Number(this.max_member);
-      this.training.contact_phone = '+36301112233';
+      this.training.contact_phone = this.user.phone_number;
 
       this.trainingService.newTraining(this.training).subscribe(
         (result) => {},
@@ -123,19 +123,20 @@ export class CreateTrainingPageComponent implements OnInit {
     this.tagTrainingService.newTagTraining(this.tagTraining);
     //TODO add tagtraining
   }
-  phone(value) {
+  phone() {
     this.otherPhoneNumber = false;
   }
-  otherPhone(value) {
+  otherPhone() {
     this.otherPhoneNumber = true;
   }
   onChange(value) {
     for (const item of this.categories) {
       if (item.name == value) {
         this.training.category_id = item.id;
+        this.selectedCat = item.name;
       }
     }
-    this.selectedCat = this.training.category_id;
+
     
   }
   onTagChange(value) {
