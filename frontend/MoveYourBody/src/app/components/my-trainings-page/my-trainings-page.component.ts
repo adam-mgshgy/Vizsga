@@ -9,6 +9,7 @@ import { isNull } from '@angular/compiler/src/output/output_ast';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TrainingSessionModel } from 'src/app/models/training-session-model';
+import { TrainingService } from 'src/app/services/training.service';
 
 @Component({
   selector: 'app-my-trainings-page',
@@ -16,7 +17,7 @@ import { TrainingSessionModel } from 'src/app/models/training-session-model';
   styleUrls: ['./my-trainings-page.component.css'],
 })
 export class MyTrainingsPageComponent implements OnInit {
-  constructor(private route: ActivatedRoute, private modalService: NgbModal) {
+  constructor(private route: ActivatedRoute, private trainingService: TrainingService ,private modalService: NgbModal) {
     this.ordered_session = Object.values(this.groupByDate(this.training_session, 'date'));//date alapján rendez
   }
   closeResult = '';
@@ -32,36 +33,36 @@ export class MyTrainingsPageComponent implements OnInit {
   date = '';
 
   public myTrainings: TrainingModel[] = [
-    {
-      name: 'Nagyon hosszú nevű edzés',
-      description: 'Zenés TRX edzés Bana city központjában',
-      category_id: 4,
-      id: 1,
-      min_member: 3,
-      max_member: 8,
-      trainer_id: 1,
-      contact_phone: '06701234567'
-    },
-    {
-      name: 'Egyéni Teri trx',
-      description: 'Zenés TRX edzés személyi edzés keretein belül',
-      category_id: 4,
-      id: 2,
-      min_member: 1,
-      max_member: 1,
-      trainer_id: 1,
-      contact_phone: '06701234567'
-    },
+    // {
+    //   name: 'Nagyon hosszú nevű edzés',
+    //   description: 'Zenés TRX edzés Bana city központjában',
+    //   category_id: 4,
+    //   id: 1,
+    //   min_member: 3,
+    //   max_member: 8,
+    //   trainer_id: 1,
+    //   contact_phone: '06701234567'
+    // },
+    // {
+    //   name: 'Egyéni Teri trx',
+    //   description: 'Zenés TRX edzés személyi edzés keretein belül',
+    //   category_id: 4,
+    //   id: 2,
+    //   min_member: 1,
+    //   max_member: 1,
+    //   trainer_id: 1,
+    //   contact_phone: '06701234567'
+    // },
   ];
-  public users: UserModel[] = [
+  public users: UserModel[] = [//TODO from backend
     {
       id: 1,
-      email: 'tesztelek@gmail.com',
-      full_name: 'Tesztelek Károlyné Elekfalvi Károly',
-      password: "pwd",
+      email: 'elekgmail',
+      full_name: 'Teszt Elek',
       trainer: true,
-      phone_number: '+36701234678',
-      location_id: 1,
+      phone_number: '+36301234678',
+      password: "pwd",
+      location_id: 2,
     },
     {
       id: 2,
@@ -111,6 +112,12 @@ export class MyTrainingsPageComponent implements OnInit {
     id: 2,
     county_name: "Komárom-Esztergom megye",
     city_name: "Bana",
+    address_name: "Kis Károly utca 12."
+  },
+  {
+    id: 348,
+    county_name: "Pest",
+    city_name: "Zsámbék",
     address_name: "Kis Károly utca 12."
   }];
   public allTags: TagModel[] = [
@@ -189,7 +196,11 @@ export class MyTrainingsPageComponent implements OnInit {
   
 
   ngOnInit(): void {    
-    
+    this.trainingService.getByTrainerId(this.users[0].id).subscribe(
+      (result) => (this.myTrainings = result),
+      (error) => console.log(error)
+    );
+
     console.log(this.date);
     if (window.innerWidth <= 991) {
       this.mobile = true;
@@ -200,6 +211,8 @@ export class MyTrainingsPageComponent implements OnInit {
     this.tagsOnMobile();
 
     //Lekérdezés a back-end-ről
+
+   
   }
 
   usersList() {}

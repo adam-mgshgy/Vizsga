@@ -88,6 +88,21 @@ export class TrainingService {
       );
   }
 
+  getByTrainerId(trainerId: any): Observable<TrainingModel[]> {
+    return this.http
+      .get<TrainingModel[]>(`${environment.ApiURL}/training/TrainerId/${trainerId}`)
+      .pipe(
+        map((data: TrainingModel[]) => {
+          return data;
+        }),
+        catchError((err) => {
+          if (!environment.production && err.status == 404) {
+            return of(err);
+          } else throw err;
+        })
+      );
+  }
+
   getByCategory(id: any): Observable<TrainingModel[]> {
     return this.http
       .get<TrainingModel[]>(

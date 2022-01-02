@@ -63,6 +63,30 @@ export class CreateTrainingPageComponent implements OnInit {
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
 
+    this.trainingService.getByTrainerId(this.user.id).subscribe(
+      (result) => {
+        this.myTrainings = result;
+        this.route.paramMap.subscribe((params) => {
+          this.id = params.get('id');
+          if (this.id) {
+            const filteredTrainings = this.myTrainings.filter(
+              (t) => t.id == Number(this.id)
+              
+            );
+            console.log(this.myTrainings);
+            if (filteredTrainings.length == 1) {
+              this.training = filteredTrainings[0];
+            } else {
+              this.training = new TrainingModel();
+    
+            }
+          } else {
+            this.training = new TrainingModel();
+          }
+        });},
+      (error) => console.log(error)
+    );
+
     this.categoryService.getCategories().subscribe(
       (result) => (this.categories = result),
       (error) => console.log(error)
@@ -73,25 +97,28 @@ export class CreateTrainingPageComponent implements OnInit {
       (error) => console.log(error)
     );
 
-    this.route.paramMap.subscribe((params) => {
-      this.id = params.get('id');
-      if (this.id) {
-        const filteredTrainings = this.myTrainings.filter(
-          (t) => t.id == Number(this.id)
-        );
-        if (filteredTrainings.length == 1) {
-          this.training = filteredTrainings[0];
-        } else {
-          this.training = new TrainingModel();
-        }
-      } else {
-        this.training = new TrainingModel();
-      }
-    });
-  }
-  getMyTrainings(){
+    // this.route.paramMap.subscribe((params) => {
+    //   this.id = params.get('id');
+    //   if (this.id) {
+    //     const filteredTrainings = this.myTrainings.filter(
+    //       (t) => t.id == Number(this.id)
+          
+    //     );
+    //     console.log(this.myTrainings);
+    //     if (filteredTrainings.length == 1) {
+    //       this.training = filteredTrainings[0];
+    //     } else {
+    //       this.training = new TrainingModel();
+    //     console.log(this.training);
+
+    //     }
+    //   } else {
+    //     this.training = new TrainingModel();
+    //   }
+    // });
     
   }
+  
 
   save() {
     this.errorCheck()
