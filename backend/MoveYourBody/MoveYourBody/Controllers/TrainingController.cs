@@ -94,6 +94,34 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(training);
             });
         }
+        [HttpGet("TrainerId/{trainerId}")]
+        public ActionResult GetByTrainerId(int trainerId)
+        {
+            return this.Run(() =>
+            {
+                var user = dbContext.Set<User>().Where(u => u.Id == trainerId).FirstOrDefault();
+                var training = dbContext.Set<Training>()
+                                            .Where(t => t.Trainer_id == user.Id)
+                                            .Select(t => new
+                                            {
+                                                Id = t.Id,
+                                                Name = t.Name,
+                                                Trainer_id = t.Trainer_id,
+                                                Category_id = t.Category_id,
+                                                Min_member = t.Min_member,
+                                                Max_member = t.Max_member,
+                                                Description = t.Description,
+                                                Contact_phone = t.Contact_phone
+                                            });
+
+                if (training == null)
+                    return BadRequest(new
+                    {
+                        ErrorMessage = "Nem létező edzés ehhez a felhasználóhoz"
+                    });
+                return Ok(training);
+            });
+        }
         [HttpGet("category")]
         public ActionResult GetByCategory([FromQuery] int id)
         {

@@ -39,7 +39,7 @@ export class MyTrainingsPageComponent implements OnInit {
       id: 1,
       min_member: 3,
       max_member: 8,
-      trainer_id: 0,
+      trainer_id: 1,
       contact_phone: '06701234567'
     },
     {
@@ -49,7 +49,7 @@ export class MyTrainingsPageComponent implements OnInit {
       id: 2,
       min_member: 1,
       max_member: 1,
-      trainer_id: 0,
+      trainer_id: 1,
       contact_phone: '06701234567'
     },
   ];

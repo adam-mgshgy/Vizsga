@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryModel } from 'src/app/models/category-model';
-import { LocationModel } from 'src/app/models/location-model';
 import { TagModel } from 'src/app/models/tag-model';
 import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { TrainingModel } from 'src/app/models/training-model';
@@ -10,7 +9,7 @@ import { CategoriesService } from 'src/app/services/categories.service';
 import { TagTrainingService } from 'src/app/services/tag-training.service';
 import { TagService } from 'src/app/services/tag.service';
 import { TrainingService } from 'src/app/services/training.service';
-import { ModalDismissReasons, NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-create-training-page',
@@ -32,7 +31,7 @@ export class CreateTrainingPageComponent implements OnInit {
   public messageBox = '';
   public messageTitle = '';
 
-  user: UserModel = {
+  user: UserModel = { //TODO user from backend
     id: 1,
     email: 'elekgmail',
     full_name: 'Teszt Elek',
@@ -44,6 +43,7 @@ export class CreateTrainingPageComponent implements OnInit {
   public categories: CategoryModel[] = [];
   public tags: TagModel[] = [];
   public training: TrainingModel = new TrainingModel();
+  public myTrainings: TrainingModel[] = [];
   public selectedTags: string[]= [];
   public tagTraining: TagTrainingModel = new TagTrainingModel();
 
@@ -73,23 +73,25 @@ export class CreateTrainingPageComponent implements OnInit {
       (error) => console.log(error)
     );
 
-    // this.route.paramMap.subscribe((params) => {
-    //   this.id = params.get('id');
-    //   if (this.id) {
-    //     const filteredTrainings = this.myTrainings.filter(
-    //       (t) => t.id == Number(this.id)
-    //     );
-    //     if (filteredTrainings.length == 1) {
-    //       this.training = filteredTrainings[0];
-    //     } else {
-    //       this.training = new TrainingModel();
-    //     }
-    //   } else {
-    //     this.training = new TrainingModel();
-    //   }
-    // });
+    this.route.paramMap.subscribe((params) => {
+      this.id = params.get('id');
+      if (this.id) {
+        const filteredTrainings = this.myTrainings.filter(
+          (t) => t.id == Number(this.id)
+        );
+        if (filteredTrainings.length == 1) {
+          this.training = filteredTrainings[0];
+        } else {
+          this.training = new TrainingModel();
+        }
+      } else {
+        this.training = new TrainingModel();
+      }
+    });
   }
-
+  getMyTrainings(){
+    
+  }
 
   save() {
     this.errorCheck()
@@ -207,7 +209,6 @@ export class CreateTrainingPageComponent implements OnInit {
       );
       
   }
-  modal: NgbModal
   close(){
     this.modalService.dismissAll()
 
