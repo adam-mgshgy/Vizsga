@@ -26,6 +26,8 @@ export class CreateTrainingPageComponent implements OnInit {
   otherPhoneNumber = false;
   otherPhoneNumberInput: string;
 
+  create = true;
+
   mobile: boolean = false;
 
   public messageBox = '';
@@ -37,7 +39,7 @@ export class CreateTrainingPageComponent implements OnInit {
     email: 'elekgmail',
     full_name: 'Teszt Elek',
     trainer: true,
-    phone_number: '+36301112',
+    phone_number: '+36301112233',
     location_id: 348,
     password: 'pwd',
   };
@@ -95,10 +97,18 @@ export class CreateTrainingPageComponent implements OnInit {
           },
           (error) => console.log(error)
         );
-
-        if (this.training.contact_phone != this.user.phone_number) {
+        if (
+          this.training.contact_phone != this.user.phone_number &&
+          this.training.contact_phone != ''
+        ) {
           this.otherPhoneNumber = true;
           this.otherPhoneNumberInput = this.training.contact_phone;
+        }
+        if (this.training.id != null) {
+          console.log(this.training);
+          this.max_member = this.training.max_member;
+          this.min_member = this.training.min_member;
+          this.create = false;
         }
       },
       (error) => console.log(error)
@@ -117,53 +127,81 @@ export class CreateTrainingPageComponent implements OnInit {
       (error) => console.log(error)
     );
   }
-
   save() {
     this.errorCheck();
-
-    if (this.otherPhoneNumber == true) {
-      if (this.otherPhoneNumberInput != null) {
+    if (this.create) {
+      if (this.otherPhoneNumber == true) {
+        if (this.otherPhoneNumberInput != null) {
+          this.training.id = 0;
+          this.training.trainer_id = this.user.id;
+          this.training.min_member = Number(this.min_member);
+          this.training.max_member = Number(this.max_member);
+          this.training.contact_phone = this.otherPhoneNumberInput;
+          this.trainingService.newTraining(this.training).subscribe(
+            (result) => {
+              if (result.category_id != null || result.category_id != 0) {
+                this.messageTitle = 'Siker';
+                this.messageBox = 'Edzése sikeresen létrehozva!';
+              }
+            },
+            (error) => console.log(error)
+          );
+        }
+      } else {
         this.training.id = 0;
         this.training.trainer_id = this.user.id;
         this.training.min_member = Number(this.min_member);
         this.training.max_member = Number(this.max_member);
-        this.training.contact_phone = this.otherPhoneNumberInput;
+        this.training.contact_phone = this.user.phone_number;
+
         this.trainingService.newTraining(this.training).subscribe(
-          (result) => {},
+          (result) => {
+            if (result.category_id != null || result.category_id != 0) {
+              this.messageTitle = 'Siker';
+              this.messageBox = 'Edzése sikeresen létrehozva!';
+            }
+
+            this.training.id = result.id;
+            this.tagTraining.id = 0;
+            this.tagTraining.training_id = this.training.id;
+
+            for (const item of this.selectedTags) {
+              for (const tag of this.tags) {
+                if (item == tag.name) {
+                  this.tagTraining.tag_id = tag.id;
+                }
+              }
+              this.tagTrainingService
+                .newTagTraining(this.tagTraining)
+                .subscribe(
+                  (result) => {},
+                  (error) => console.log(error)
+                );
+            }
+            this.tagTrainingService.newTagTraining(this.tagTraining);
+          },
           (error) => console.log(error)
         );
       }
     } else {
-      this.training.id = 0;
-      this.training.trainer_id = this.user.id;
       this.training.min_member = Number(this.min_member);
       this.training.max_member = Number(this.max_member);
-      this.training.contact_phone = this.user.phone_number;
+      if (this.otherPhoneNumber) {
+        this.training.contact_phone = this.otherPhoneNumberInput;
+      }
+      else{
+        this.training.contact_phone = this.user.phone_number;
 
-      this.trainingService.newTraining(this.training).subscribe(
+      }
+      this.trainingService.modifyTraining(this.training).subscribe(
         (result) => {
-          this.training.id = result.id;
-          this.tagTraining.id = 0;
-          this.tagTraining.training_id = this.training.id;
-
-          for (const item of this.selectedTags) {
-            for (const tag of this.tags) {
-              if (item == tag.name) {
-                this.tagTraining.tag_id = tag.id;
-              }
-            }
-            this.tagTrainingService.newTagTraining(this.tagTraining).subscribe(
-              (result) => {},
-              (error) => console.log(error)
-            );
-          }
-          this.tagTrainingService.newTagTraining(this.tagTraining);
+          this.messageTitle = 'Siker';
+          this.messageBox = 'Edzése siekresen frissítve!';
+          console.log(result);
         },
         (error) => console.log(error)
       );
     }
-
-    //TODO edit or create
   }
   errorCheck() {
     this.messageTitle = 'Hiba';
@@ -184,9 +222,6 @@ export class CreateTrainingPageComponent implements OnInit {
       this.otherPhoneNumberInput == null
     ) {
       this.messageBox = 'Kérem adja meg a másodlagos telefonszámot!';
-    } else {
-      this.messageTitle = 'Siker';
-      this.messageBox = 'Edzése sikeresen létrehozva!';
     }
   }
   phone() {
@@ -200,7 +235,6 @@ export class CreateTrainingPageComponent implements OnInit {
       if (item.name == value) {
         this.training.category_id = item.id;
         this.selectedCat = item.name;
-        console.log(this.selectedCat);
       } else if (value == '') {
         this.training.category_id = null;
       } else if (value == item.id) {
@@ -208,7 +242,7 @@ export class CreateTrainingPageComponent implements OnInit {
       }
     }
   }
-  checkTags(value){
+  checkTags(value) {
     if (this.selectedTags.includes(value)) {
       return true;
     }
