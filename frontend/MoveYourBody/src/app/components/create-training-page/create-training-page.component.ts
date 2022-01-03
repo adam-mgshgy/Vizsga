@@ -37,7 +37,7 @@ export class CreateTrainingPageComponent implements OnInit {
     email: 'elekgmail',
     full_name: 'Teszt Elek',
     trainer: true,
-    phone_number: '+36301112233',
+    phone_number: '+36301112',
     location_id: 348,
     password: 'pwd',
   };
@@ -95,6 +95,11 @@ export class CreateTrainingPageComponent implements OnInit {
           },
           (error) => console.log(error)
         );
+
+        if (this.training.contact_phone != this.user.phone_number) {
+          this.otherPhoneNumber = true;
+          this.otherPhoneNumberInput = this.training.contact_phone;
+        }
       },
       (error) => console.log(error)
     );

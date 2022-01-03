@@ -44,12 +44,12 @@
         </div>
 
         <div class="mb-3">
-            <input class="form-check-input" type="radio" name="phone" id="phone" (change)="phone()" checked>
+            <input class="form-check-input" type="radio" name="phone" id="phone" (change)="phone()" [checked]="!otherPhoneNumber">
             <label type="text" class="form-check-label ms-2" for="phone">
                 A saját telefonszámom szeretném használni ({{user.phone_number}})
             </label>
             <br>
-            <input class="form-check-input" type="radio" name="phone"  id="otherPhone" (change)="otherPhone()"/>
+            <input class="form-check-input" type="radio" name="phone"  id="otherPhone" (change)="otherPhone()" [checked]="otherPhoneNumber">
             <label type="text" class="form-check-label ms-2 me-2" for="otherPhone" >
                 Másik telefonszámot adok meg:
                 <input type="text" id="otherPhoneNumber" name="otherPhoneNumber" [(ngModel)]="otherPhoneNumberInput">
