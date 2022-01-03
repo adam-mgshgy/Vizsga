@@ -162,6 +162,7 @@ export class CategoryPageComponent implements OnInit {
       email: 'tesztelek@gmail.com',
       full_name: 'Tesztelek Károlyné Elekfalvi Károly',
       trainer: true,
+      password: "pwd",
       phone_number: '+36701234678',
       location_id: 1
     },
@@ -170,6 +171,7 @@ export class CategoryPageComponent implements OnInit {
       email: 'tesztelek@gmail.com',
       full_name: 'Tóth Sándor',
       trainer: true,
+      password: "pwd",
       phone_number: '+36701234678',
       location_id: 1
     },
@@ -178,6 +180,7 @@ export class CategoryPageComponent implements OnInit {
       email: 'tesztelek@gmail.com',
       full_name: 'Kandisz Nóra',
       trainer: true,
+      password: "pwd",
       phone_number: '+36701234678',
       location_id: 1
     },
@@ -187,6 +190,7 @@ export class CategoryPageComponent implements OnInit {
       full_name: 'Kovács Ákos',
       trainer: true,
       phone_number: '+36701234678',
+      password: "pwd",
       location_id: 1
     },
     {
@@ -194,12 +198,14 @@ export class CategoryPageComponent implements OnInit {
       email: 'tesztelek@gmail.com',
       full_name: 'Futty Imre',
       trainer: true,
+      password: "pwd",
       phone_number: '+36701234678',
       location_id: 1
     },
     {
       id: 6,
       email: 'tesztelek@gmail.com',
+      password: "pwd",
       full_name: 'Mittomen Karoly',
       trainer: true,
       phone_number: '+36701234678',
@@ -210,11 +216,13 @@ export class CategoryPageComponent implements OnInit {
       email: 'tesztelek@gmail.com',
       full_name: 'Teszt Elek',
       trainer: true,
+      password: "pwd",
       phone_number: '+36701234678',
       location_id: 1
     },
     {
       id: 8,
+      password: "pwd",
       email: 'tesztelek@gmail.com',
       full_name: 'Teszt Elek',
       trainer: true,
@@ -223,6 +231,7 @@ export class CategoryPageComponent implements OnInit {
     },
     {
       id: 9,
+      password: "pwd",
       email: 'tesztelek@gmail.com',
       full_name: 'Teszt Elek',
       trainer: true,
@@ -231,6 +240,7 @@ export class CategoryPageComponent implements OnInit {
     },
     {
       id: 10,
+      password: "pwd",
       email: 'tesztelek@gmail.com',
       full_name: 'Teszt Elek',
       trainer: true,
@@ -242,6 +252,7 @@ export class CategoryPageComponent implements OnInit {
       email: 'tesztelek@gmail.com',
       full_name: 'Teszt Elek',
       trainer: true,
+      password: "pwd",
       phone_number: '+36701234678',
       location_id: 1
     },

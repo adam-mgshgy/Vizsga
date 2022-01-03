@@ -4,10 +4,10 @@
             <h3>Bejelentkezés</h3>
             <form>
                 <div class="form-label">
-                    <input type="text" class="form-control" placeholder="E-mail cím" value="" />
+                    <input type="text" name="email" [(ngModel)]="email" class="form-control" placeholder="E-mail cím" value="" />
                 </div>
                 <div class="mb-3 form-label">
-                    <input type="password" class="form-control" placeholder="Jelszó" value="" />
+                    <input type="password" name="password" [(ngModel)]="password" class="form-control" placeholder="Jelszó" value="" />
                 </div>
                 <div class="mb-3 form-label">
                     <a href="#" class="ForgetPwd">Elfelejtettem a jelszavam</a>
@@ -16,7 +16,7 @@
                     <a class="nav-link active" routerLink="/register" class="ForgetPwd">Regisztrálni szeretnék!</a>
                 </div>
                 <div class="form-label">
-                    <input type="submit" class="btnSubmit" value="Bejelentkezés" />
+                    <input (click)="Login()" routerLink="{{link}}"  type="submit" class="btnSubmit" value="Bejelentkezés" />
                 </div>
             </form>
         </div>

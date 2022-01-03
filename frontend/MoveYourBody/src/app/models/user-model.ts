@@ -1,6 +1,7 @@
 export class UserModel {
     public id: number | null = null;
     public email = '';
+    public password = '';
     public full_name = '';
     public phone_number = '';
     public trainer = false;

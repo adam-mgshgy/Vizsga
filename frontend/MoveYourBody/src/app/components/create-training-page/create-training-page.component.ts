@@ -17,7 +17,8 @@ export class CreateTrainingPageComponent implements OnInit {
     id: 1,
     email: 'tesztelek@gmail.com',
     full_name: 'Teszt Elek',
-    trainer: true,
+      password: "pwd",
+      trainer: true,
     phone_number: '+36701234678',
     location_id: 1
   }
