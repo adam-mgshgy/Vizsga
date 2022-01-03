@@ -17,7 +17,7 @@
         </div>
         <div class="mb-3">
             <label for="category" class="form-control-label me-3">Kategória:</label>
-            <select [ngStyle]="{'width.%': mobile ? '50' : '40'}" type="text" id="category" name="category" [(ngModel)]="selectedCat" (ngModelChange)="onChange($event)">
+            <select [ngStyle]="{'width.%': mobile ? '50' : '40'}" type="text" id="category" name="category" [(ngModel)]="selectedCat" (ngModelChange)="selectCategory($event)">
                 <option value=""></option>
                 <option *ngFor="let cat of categories" [value]="cat.name" >{{cat.name}}</option>
             </select>
@@ -35,7 +35,7 @@
             <div class="form-control-label me-2">Címkék:</div>
             <ul>
                 <li *ngFor="let tag of tags" class="checks">
-                    <input [value]="tag.name" class="form-check-input me-2" type="checkbox" (change)="onTagChange(tag.name)" value="{{tag.name}}" id="{{tag.name}}">
+                    <input [value]="tag.name" class="form-check-input me-2" type="checkbox" (change)="onTagChange(tag.name)" value="{{tag.name}}" id="{{tag.name}}" [checked]="checkTags(tag.name)" >
                     <label class="form-check-label" for="{{tag.name}}">
                         {{tag.name}}
                     </label>

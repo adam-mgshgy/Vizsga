@@ -66,8 +66,8 @@ namespace MoveYourBody.WebAPI.Controllers
                 var tagTraining = dbContext.Set<TagTraining>().Where(t => t.Training_id == id).Select(t => new
                 {
                     Id = t.Id,
-                    Training = t.Training_id,
-                    Tag = t.Tag_id
+                    Training_id = t.Training_id,
+                    Tag_id = t.Tag_id
                 });
                 return Ok(tagTraining);
             });

@@ -69,8 +69,8 @@ export class TagTrainingService {
   }
 
   getByTraining(id: any): Observable<TagTrainingModel[]> {
-    return this.http.get<TagTrainingModel[]>(`${environment.ApiURL}/tagTraining/tag?id=${id}`, ).pipe(
-      map((data: TagTrainingModel[]) => {
+    return this.http.get<TagTrainingModel[]>(`${environment.ApiURL}/tagTraining/training?id=${id}`, ).pipe(
+      map((data: TagTrainingModel[]) => {        
         return data;
       }),
       catchError(err => {
