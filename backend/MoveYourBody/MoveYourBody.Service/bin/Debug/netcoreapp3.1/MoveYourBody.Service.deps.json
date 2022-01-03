@@ -9,6 +9,7 @@
       "MoveYourBody.Service/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.21",
+          "Microsoft.EntityFrameworkCore": "3.1.19",
           "Microsoft.EntityFrameworkCore.Tools": "3.1.19",
           "Pomelo.EntityFrameworkCore.MySql": "3.2.7",
           "System.IdentityModel.Tokens.Jwt": "6.15.0"

@@ -25,3 +25,17 @@ D:\Programozas\Szakdolgozat\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj
 C:\Users\HP\Desktop\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\cities.csv
 D:\Programozas\Szakdolgozat\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\cities.csv
 C:\Users\HP\Desktop\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.csproj.CoreCompileInputs.cache
+D:\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\cities.csv
+D:\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\MoveYourBody.Service.deps.json
+D:\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\MoveYourBody.Service.runtimeconfig.json
+D:\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\MoveYourBody.Service.runtimeconfig.dev.json
+D:\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\MoveYourBody.Service.dll
+D:\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\MoveYourBody.Service.pdb
+D:\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.csproj.AssemblyReference.cache
+D:\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.GeneratedMSBuildEditorConfig.editorconfig
+D:\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.AssemblyInfoInputs.cache
+D:\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.AssemblyInfo.cs
+D:\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.csproj.CoreCompileInputs.cache
+D:\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.dll
+D:\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.pdb
+D:\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.genruntimeconfig.cache

@@ -25,7 +25,6 @@ namespace MoveYourBody.WebAPI.Controllers
             return this.Run(() =>
             {
                 var user = dbContext.Set<User>()
-                                            .Include(u => u.Location)
                                             .Where(u => u.Id == id)
                                             .Select(u => new
                                             {
@@ -35,7 +34,7 @@ namespace MoveYourBody.WebAPI.Controllers
                                                 password = u.Password,
                                                 phone_number = u.Phone_number,
                                                 trainer = u.Trainer,
-                                                location = u.Location
+                                                location_id = u.Location_id
                                             })
                                             .FirstOrDefault();
 
@@ -58,7 +57,7 @@ namespace MoveYourBody.WebAPI.Controllers
                     ErrorMessage = "A megadott e-mail címmel már történt korábban regisztráció"
                 });
                 User register = null;
-                var location = dbContext.Set<Location>().FirstOrDefault(l => l.City_name == user.Location.City_name);
+                var location = dbContext.Set<Location>().FirstOrDefault(l => l.Id == user.Location_id);
                 if (location == null)
                 {
                     return BadRequest(new
@@ -76,7 +75,7 @@ namespace MoveYourBody.WebAPI.Controllers
                         Password = user.Password,
                         Phone_number = user.Phone_number,
                         Trainer = user.Trainer,
-                        Location = dbContext.Set<Location>().FirstOrDefault(l => l.City_name == user.Location.City_name)
+                        Location_id = dbContext.Set<Location>().FirstOrDefault(l => l.Id == user.Location_id).Id
                     };
                 }
                 
@@ -90,7 +89,7 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var user = dbContext.Set<User>().Include(u => u.Location)
+                var user = dbContext.Set<User>()
                             .FirstOrDefault(u => u.Email == email && u.Password == password);
                 if (user == null)
                 {
@@ -117,7 +116,7 @@ namespace MoveYourBody.WebAPI.Controllers
             return this.Run(() =>
             {
                 dbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                dbContext.Entry(user.Location).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                //dbContext.Entry(user.Location).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 dbContext.SaveChanges();
 
                 return Ok(user);

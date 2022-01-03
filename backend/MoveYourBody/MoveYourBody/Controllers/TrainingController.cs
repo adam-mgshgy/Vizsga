@@ -36,7 +36,7 @@ namespace MoveYourBody.WebAPI.Controllers
                     Description = training.Description,
                     Contact_phone = training.Contact_phone,
                 };
-                newTraining.Trainer.Location = dbContext.Set<Location>().FirstOrDefault(l => l.Id == training.Trainer.Location.Id);
+                newTraining.Trainer.Location_id = dbContext.Set<Location>().FirstOrDefault(l => l.Id == training.Trainer.Location_id).Id;
                 dbContext.Set<Training>().Add(newTraining);
                 dbContext.SaveChanges();
                 return Ok(newTraining);

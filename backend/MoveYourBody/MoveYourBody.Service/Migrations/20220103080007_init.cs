@@ -59,17 +59,11 @@ namespace MoveYourBody.Service.Migrations
                     Password = table.Column<string>(maxLength: 255, nullable: false),
                     Phone_number = table.Column<string>(maxLength: 12, nullable: false),
                     Trainer = table.Column<bool>(nullable: false),
-                    LocationId = table.Column<int>(nullable: false)
+                    Location_id = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_User_Location_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "Location",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -618,11 +612,6 @@ namespace MoveYourBody.Service.Migrations
                 name: "IX_TrainingSession_TrainingId",
                 table: "TrainingSession",
                 column: "TrainingId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_User_LocationId",
-                table: "User",
-                column: "LocationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -640,6 +629,9 @@ namespace MoveYourBody.Service.Migrations
                 name: "Tag");
 
             migrationBuilder.DropTable(
+                name: "Location");
+
+            migrationBuilder.DropTable(
                 name: "Training");
 
             migrationBuilder.DropTable(
@@ -647,9 +639,6 @@ namespace MoveYourBody.Service.Migrations
 
             migrationBuilder.DropTable(
                 name: "User");
-
-            migrationBuilder.DropTable(
-                name: "Location");
         }
     }
 }

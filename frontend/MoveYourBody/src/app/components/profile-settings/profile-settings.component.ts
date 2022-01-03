@@ -11,10 +11,10 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./profile-settings.component.css']
 })
 export class ProfileSettingsComponent implements OnInit {
-  
+
   user: UserModel;
   subscription: Subscription;
-  constructor(private loginService: LoginService, private locationService: LocationService) {  }
+  constructor(private loginService: LoginService, private locationService: LocationService) { }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
@@ -37,15 +37,25 @@ export class ProfileSettingsComponent implements OnInit {
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
     this.subscription = this.loginService.currentUser.subscribe(user => this.user = user)
     this.locationService.getLocations().subscribe(
-      result => this.locations = result,
+      result => {this.locations = result; },
       error => console.log(error)
-      );
-      this.locationService.getCounties().subscribe(
-        result => this.counties = result,
-        error => console.log(error)
+    );
+    this.locationService.getCounties().subscribe(
+      result => {
+        this.counties = result;
+        this.selectedCounty = this.locations[this.user.location_id- 1].county_name;
+        this.locationService.getCities(this.selectedCounty).subscribe(
+          result => {
+            this.cities = result;
+            this.selectedCity = this.locations[this.user.location_id-1].city_name;},
+          error => console.log(error)
         );
-        this.selectedCounty = this.locations[this.user.location_id].county_name;
-        this.selectedCity = this.locations[this.user.location_id].city_name;
-      }
+      },
+      error => console.log(error)
+    );
+   
+    
+    
+  }
 
 }
