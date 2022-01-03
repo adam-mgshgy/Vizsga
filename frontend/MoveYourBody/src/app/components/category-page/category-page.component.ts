@@ -8,6 +8,7 @@ import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
 import { CategoriesService } from 'src/app/services/categories.service';
+import { TrainingService } from 'src/app/services/training.service';
 
 @Component({
   selector: 'app-category-page',
@@ -20,7 +21,8 @@ export class CategoryPageComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
+    private trainingService: TrainingService
   ) {}
   imgSrc = './assets/images/categoryPageImages/profile_rock.png';
   imgBckgSrc = './assets/images/categoryPageImages/index.jpg';
@@ -31,137 +33,137 @@ export class CategoryPageComponent implements OnInit {
   public categories: CategoryModel[] = [];
   public trainings: TrainingModel[] = [];
   public allTrainings: TrainingModel[] = [
-    {
-      name: 'Nagyon hosszú nevű edzés',
-      description: 'Zenés TRX edzés Bana city központjában',
-      category_id: 1,
-      id: 0,
-      min_member: 6,
-      max_member: 8,
-      trainer_id: 0,
-      contact_phone: '06701234567',
-    },
-    {
-      name: 'Teri trx',
-      description: 'Zenés TRX edzés Bana city központjában',
-      category_id: 1,
-      id: 0,
-      min_member: 6,
-      max_member: 8,
-      trainer_id: 0,
-      contact_phone: '06701234567',
-    },
-    {
-      name: 'Teri trx',
-      description: 'Zenés TRX edzés Bana city központjában',
-      category_id: 1,
-      id: 0,
-      min_member: 6,
-      max_member: 8,
-      trainer_id: 0,
-      contact_phone: '06701234567',
-    },
-    {
-      name: 'Kiütünk mindenkit',
-      description: 'Box edzés Pistivel',
-      category_id: 2,
-      id: 0,
-      min_member: 6,
-      max_member: 8,
-      trainer_id: 0,
-      contact_phone: '06701234567',
-    },
-    {
-      name: 'Lovaglás nagyoknak',
-      description: 'Zenés TRX edzés Bana city központjában',
-      category_id: 3,
-      id: 0,
-      min_member: 6,
-      max_member: 8,
-      trainer_id: 0,
-      contact_phone: '06701234567',
-    },
-    {
-      name: 'Légy hal',
-      description: 'Ússz a víz alatt',
-      category_id: 4,
-      id: 0,
-      min_member: 6,
-      max_member: 8,
-      trainer_id: 0,
-      contact_phone: '06701234567',
-    },
-    {
-      name: '300 helyett 8an spartan edzés',
-      description: 'Thermöpula helyett Bana city központjában',
-      category_id: 5,
-      id: 0,
-      min_member: 6,
-      max_member: 8,
-      trainer_id: 0,
-      contact_phone: '06701234567',
-    },
-    {
-      name: 'Foci Ferivel',
-      description: 'Kígyós edzés',
-      category_id: 61,
-      id: 0,
-      min_member: 6,
-      max_member: 8,
-      trainer_id: 0,
-      contact_phone: '06701234567',
-    },
-    {
-      name: 'Ripi röpi Rebekával',
-      description: 'Röplabda antireptetése',
-      category_id: 6,
-      id: 0,
-      min_member: 6,
-      max_member: 8,
-      trainer_id: 0,
-      contact_phone: '06701234567',
-    },
-    {
-      name: 'Crossfit edzés',
-      description: 'Crossmotor helyett rendes edzés',
-      category_id: 6,
-      id: 0,
-      min_member: 6,
-      max_member: 8,
-      trainer_id: 0,
-      contact_phone: '06701234567',
-    },
-    {
-      name: 'Foci Viktorral',
-      description: 'Minden edzés után GYŐZÜNK!',
-      category_id: 7,
-      id: 0,
-      min_member: 6,
-      max_member: 8,
-      trainer_id: 0,
-      contact_phone: '06701234567',
-    },
-    {
-      name: 'Tenisz a salgótarjáni Federerrel',
-      description: 'Fejleszd magad az új lyukas hálós ütőkkel!!',
-      category_id: 8,
-      id: 0,
-      min_member: 6,
-      max_member: 8,
-      trainer_id: 0,
-      contact_phone: '06701234567',
-    },
-    {
-      name: 'Kosárlabda focilabdával',
-      description:
-        'Nincs pénz kosárlabdára, gyakorolni jó lesz focilabdával is.',
-      category_id: 8,
-      id: 0,
-      min_member: 6,
-      max_member: 8,
-      trainer_id: 0,
-      contact_phone: '06701234567',
-    },
+    // {
+    //   name: 'Nagyon hosszú nevű edzés',
+    //   description: 'Zenés TRX edzés Bana city központjában',
+    //   category_id: 1,
+    //   id: 0,
+    //   min_member: 6,
+    //   max_member: 8,
+    //   trainer_id: 0,
+    //   contact_phone: '06701234567',
+    // },
+    // {
+    //   name: 'Teri trx',
+    //   description: 'Zenés TRX edzés Bana city központjában',
+    //   category_id: 1,
+    //   id: 0,
+    //   min_member: 6,
+    //   max_member: 8,
+    //   trainer_id: 0,
+    //   contact_phone: '06701234567',
+    // },
+    // {
+    //   name: 'Teri trx',
+    //   description: 'Zenés TRX edzés Bana city központjában',
+    //   category_id: 1,
+    //   id: 0,
+    //   min_member: 6,
+    //   max_member: 8,
+    //   trainer_id: 0,
+    //   contact_phone: '06701234567',
+    // },
+    // {
+    //   name: 'Kiütünk mindenkit',
+    //   description: 'Box edzés Pistivel',
+    //   category_id: 2,
+    //   id: 0,
+    //   min_member: 6,
+    //   max_member: 8,
+    //   trainer_id: 0,
+    //   contact_phone: '06701234567',
+    // },
+    // {
+    //   name: 'Lovaglás nagyoknak',
+    //   description: 'Zenés TRX edzés Bana city központjában',
+    //   category_id: 3,
+    //   id: 0,
+    //   min_member: 6,
+    //   max_member: 8,
+    //   trainer_id: 0,
+    //   contact_phone: '06701234567',
+    // },
+    // {
+    //   name: 'Légy hal',
+    //   description: 'Ússz a víz alatt',
+    //   category_id: 4,
+    //   id: 0,
+    //   min_member: 6,
+    //   max_member: 8,
+    //   trainer_id: 0,
+    //   contact_phone: '06701234567',
+    // },
+    // {
+    //   name: '300 helyett 8an spartan edzés',
+    //   description: 'Thermöpula helyett Bana city központjában',
+    //   category_id: 5,
+    //   id: 0,
+    //   min_member: 6,
+    //   max_member: 8,
+    //   trainer_id: 0,
+    //   contact_phone: '06701234567',
+    // },
+    // {
+    //   name: 'Foci Ferivel',
+    //   description: 'Kígyós edzés',
+    //   category_id: 61,
+    //   id: 0,
+    //   min_member: 6,
+    //   max_member: 8,
+    //   trainer_id: 0,
+    //   contact_phone: '06701234567',
+    // },
+    // {
+    //   name: 'Ripi röpi Rebekával',
+    //   description: 'Röplabda antireptetése',
+    //   category_id: 6,
+    //   id: 0,
+    //   min_member: 6,
+    //   max_member: 8,
+    //   trainer_id: 0,
+    //   contact_phone: '06701234567',
+    // },
+    // {
+    //   name: 'Crossfit edzés',
+    //   description: 'Crossmotor helyett rendes edzés',
+    //   category_id: 6,
+    //   id: 0,
+    //   min_member: 6,
+    //   max_member: 8,
+    //   trainer_id: 0,
+    //   contact_phone: '06701234567',
+    // },
+    // {
+    //   name: 'Foci Viktorral',
+    //   description: 'Minden edzés után GYŐZÜNK!',
+    //   category_id: 7,
+    //   id: 0,
+    //   min_member: 6,
+    //   max_member: 8,
+    //   trainer_id: 0,
+    //   contact_phone: '06701234567',
+    // },
+    // {
+    //   name: 'Tenisz a salgótarjáni Federerrel',
+    //   description: 'Fejleszd magad az új lyukas hálós ütőkkel!!',
+    //   category_id: 8,
+    //   id: 0,
+    //   min_member: 6,
+    //   max_member: 8,
+    //   trainer_id: 0,
+    //   contact_phone: '06701234567',
+    // },
+    // {
+    //   name: 'Kosárlabda focilabdával',
+    //   description:
+    //     'Nincs pénz kosárlabdára, gyakorolni jó lesz focilabdával is.',
+    //   category_id: 8,
+    //   id: 0,
+    //   min_member: 6,
+    //   max_member: 8,
+    //   trainer_id: 0,
+    //   contact_phone: '06701234567',
+    // },
   ];
   public users: UserModel[] = [
     {
@@ -306,17 +308,28 @@ export class CategoryPageComponent implements OnInit {
           for (const item of this.categories) {
             if (item.name == this.category_name) {
               this.category_id = item.id;
+              
             }
-          }
-          this.trainings = this.allTrainings.filter(
-            (t) => t.category_id == this.category_id
+          };
+          this.trainingService.getByCategory(this.category_id).subscribe(
+            result => {
+              this.allTrainings = result;
+              this.trainings = this.allTrainings.filter(
+                (t) => t.category_id == this.category_id
+              );
+            },
+            error => console.log(error)
           );
+          
+          
         });
       },
-      //Túl lassan tölt be a tömbbe
+      
       
       (error) => console.log(error)
-    );            
+    );
+
+      
   }
   onResized(event: ResizedEvent) {
     this.tagsOnMobile();    

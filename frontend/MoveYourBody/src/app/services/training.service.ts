@@ -106,7 +106,7 @@ export class TrainingService {
   getByCategory(id: any): Observable<TrainingModel[]> {
     return this.http
       .get<TrainingModel[]>(
-        `${environment.ApiURL}/training/category?catName=${id}`
+        `${environment.ApiURL}/training/category?id=${id}`
       )
       .pipe(
         map((data: TrainingModel[]) => {

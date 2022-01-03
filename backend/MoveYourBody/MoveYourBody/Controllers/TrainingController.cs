@@ -126,21 +126,21 @@ namespace MoveYourBody.WebAPI.Controllers
         public ActionResult GetByCategory([FromQuery] int id)
         {
             return this.Run(() =>
-            {                
+            {
                 var training = dbContext.Set<Training>()
                                             .Where(t => t.Category_id == id)
                                             .Select(t => new
                                             {
                                                 Id = t.Id,
                                                 Name = t.Name,
-                                                Trainer_id= t.Trainer_id,
+                                                Trainer_id = t.Trainer_id,
                                                 Category_id = t.Category_id,
                                                 Min_member = t.Min_member,
                                                 Max_member = t.Max_member,
                                                 Description = t.Description,
                                                 Contact_phone = t.Contact_phone
-                                            })
-                                            .FirstOrDefault();
+                                            });
+                                            
 
                 if (training == null)
                     return BadRequest(new
