@@ -9,7 +9,7 @@ using MoveYourBody.Service;
 namespace MoveYourBody.Service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211226102212_init")]
+    [Migration("20211227111736_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,77 +42,94 @@ namespace MoveYourBody.Service.Migrations
 
             modelBuilder.Entity("MoveYourBody.Service.Models.Category", b =>
                 {
-                    b.Property<string>("Name")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<string>("Img_src")
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.HasKey("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Category");
 
                     b.HasData(
                         new
                         {
-                            Name = "Box",
-                            Img_src = "box.jpg"
+                            Id = 1,
+                            Img_src = "box.jpg",
+                            Name = "Box"
                         },
                         new
                         {
-                            Name = "Crossfit",
-                            Img_src = "crossFitt.jpg"
+                            Id = 2,
+                            Img_src = "crossFitt.jpg",
+                            Name = "Crossfit"
                         },
                         new
                         {
-                            Name = "Labdarúgás",
-                            Img_src = "football.jpg"
+                            Id = 3,
+                            Img_src = "football.jpg",
+                            Name = "Labdarúgás"
                         },
                         new
                         {
-                            Name = "Kosárlabda",
-                            Img_src = "basketball.jpg"
+                            Id = 4,
+                            Img_src = "basketball.jpg",
+                            Name = "Kosárlabda"
                         },
                         new
                         {
-                            Name = "Kézilabda",
-                            Img_src = "handball.jpg"
+                            Id = 5,
+                            Img_src = "handball.jpg",
+                            Name = "Kézilabda"
                         },
                         new
                         {
-                            Name = "Röplabda",
-                            Img_src = "volleyball.jpg"
+                            Id = 6,
+                            Img_src = "volleyball.jpg",
+                            Name = "Röplabda"
                         },
                         new
                         {
-                            Name = "Spartan",
-                            Img_src = "spartan.jpg"
+                            Id = 7,
+                            Img_src = "spartan.jpg",
+                            Name = "Spartan"
                         },
                         new
                         {
-                            Name = "Tenisz",
-                            Img_src = "tennis.jpg"
+                            Id = 8,
+                            Img_src = "tennis.jpg",
+                            Name = "Tenisz"
                         },
                         new
                         {
-                            Name = "TRX",
-                            Img_src = "trx.jpg"
+                            Id = 9,
+                            Img_src = "trx.jpg",
+                            Name = "TRX"
                         },
                         new
                         {
-                            Name = "Úszás",
-                            Img_src = "swimming.jpg"
+                            Id = 10,
+                            Img_src = "swimming.jpg",
+                            Name = "Úszás"
                         },
                         new
                         {
-                            Name = "Lovaglás",
-                            Img_src = "riding.jpg"
+                            Id = 11,
+                            Img_src = "riding.jpg",
+                            Name = "Lovaglás"
                         },
                         new
                         {
-                            Name = "Jóga",
-                            Img_src = "yoga.jpg"
+                            Id = 12,
+                            Img_src = "yoga.jpg",
+                            Name = "Jóga"
                         });
                 });
 
@@ -2327,17 +2344,13 @@ namespace MoveYourBody.Service.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("TagId")
+                    b.Property<int>("Tag_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("TrainingId")
+                    b.Property<int>("Training_id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TagId");
-
-                    b.HasIndex("TrainingId");
 
                     b.ToTable("TagTraining");
                 });
@@ -2348,9 +2361,8 @@ namespace MoveYourBody.Service.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                    b.Property<int>("Category_id")
+                        .HasColumnType("int");
 
                     b.Property<string>("Contact_phone")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -2371,14 +2383,10 @@ namespace MoveYourBody.Service.Migrations
                         .HasColumnType("varchar(50) CHARACTER SET utf8mb4")
                         .HasMaxLength(50);
 
-                    b.Property<int>("TrainerId")
+                    b.Property<int>("Trainer_id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryName");
-
-                    b.HasIndex("TrainerId");
 
                     b.ToTable("Training");
                 });
@@ -2473,36 +2481,6 @@ namespace MoveYourBody.Service.Migrations
                     b.HasOne("MoveYourBody.Service.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MoveYourBody.Service.Models.TagTraining", b =>
-                {
-                    b.HasOne("MoveYourBody.Service.Models.Tag", "Tag")
-                        .WithMany()
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MoveYourBody.Service.Models.Training", "Training")
-                        .WithMany()
-                        .HasForeignKey("TrainingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MoveYourBody.Service.Models.Training", b =>
-                {
-                    b.HasOne("MoveYourBody.Service.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryName")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MoveYourBody.Service.Models.User", "Trainer")
-                        .WithMany()
-                        .HasForeignKey("TrainerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -8,6 +8,8 @@ namespace MoveYourBody.Service.Models
     public class Category
     {
         [Required, Key]
+        public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
         [Required]
         public string Img_src { get; set; }

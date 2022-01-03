@@ -23,7 +23,7 @@ export class TrainingPageComponent implements OnInit {
     {
       id: 0,
       name: 'Nagyon hosszú nevű edzés',
-      category: 'TRX',
+      category_id: 4,
       trainer_id: 0,
       min_member: 6,
       max_member: 8,
@@ -85,6 +85,7 @@ export class TrainingPageComponent implements OnInit {
       email: 'tesztelek@gmail.com',
       full_name: 'Teszt Elek',
       trainer: true,
+      password: "pwd",
       phone_number: '+36701234678',
       location_id: 1, 
   }

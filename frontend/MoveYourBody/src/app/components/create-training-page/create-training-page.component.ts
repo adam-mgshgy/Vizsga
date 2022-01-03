@@ -2,100 +2,248 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryModel } from 'src/app/models/category-model';
 import { TagModel } from 'src/app/models/tag-model';
+import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
+import { CategoriesService } from 'src/app/services/categories.service';
+import { TagTrainingService } from 'src/app/services/tag-training.service';
+import { TagService } from 'src/app/services/tag.service';
+import { TrainingService } from 'src/app/services/training.service';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-create-training-page',
   templateUrl: './create-training-page.component.html',
-  styleUrls: ['./create-training-page.component.css']
+  styleUrls: ['./create-training-page.component.css'],
 })
 export class CreateTrainingPageComponent implements OnInit {
   id: string | null = null;
   isChecked = false;
+
+  selectedCat = '';
+  public min_member: number;
+  public max_member: number;
+  otherPhoneNumber = false;
+  otherPhoneNumberInput: string;
+
+  mobile: boolean = false;
+
+  public messageBox = '';
+  public messageTitle = '';
+
   user: UserModel = {
+    //TODO user from backend
     id: 1,
-    email: 'tesztelek@gmail.com',
+    email: 'elekgmail',
     full_name: 'Teszt Elek',
     trainer: true,
-    phone_number: '+36701234678',
-    location_id: 1
-  }
-  public categories: CategoryModel[] = [
-    { name: 'Box', imgSrc: 'box.jpg' },
-    { name: 'Crossfit', imgSrc: 'crossFitt.jpg' },
-    { name: 'Labdarúgás', imgSrc: 'football.jpg' },
-    { name: 'Kosárlabda', imgSrc: 'basketball.jpg' },
-    { name: 'Kézilabda', imgSrc: 'handball.jpg' },
-    { name: 'Röplabda', imgSrc: 'volleyball.jpg' },
-    { name: 'Spartan', imgSrc: 'spartan.jpg' },
-    { name: 'Tenisz', imgSrc: 'tennis.jpg' },
-    { name: 'TRX', imgSrc: 'trx.jpg' },
-    { name: 'Úszás', imgSrc: 'swimming.jpg' },
-    { name: 'Lovaglás', imgSrc: 'riding.jpg' },
-    { name: 'Jóga', imgSrc: 'yoga.jpg' },
-  ];
-  public tags: TagModel[] = [
-    { id: 0, name: 'csoportos', colour: '#6610f2' },
-    { id: 1, name: 'erőnléti', colour: 'black' },
-    { id: 2, name: 'saját testsúlyos', colour: '#fd7e14' },
-    { id: 3, name: 'edzőterem', colour: 'red' },
-    { id: 4, name: 'zsírégető', colour: '#0dcaf0' },
-    { id: 5, name: 'személyi edzés', colour: '#0dcaf0' }
-
-  ];
+    phone_number: '+36301112',
+    location_id: 348,
+    password: 'pwd',
+  };
+  public categories: CategoryModel[] = [];
+  public tags: TagModel[] = [];
   public training: TrainingModel = new TrainingModel();
-  public selectedTags: TagModel[] = [];
-  public myTrainings: TrainingModel[] = [
-    {
-      name: 'Nagyon hosszú nevű edzés',
-      description: 'Zenés TRX edzés Bana city központjában',
-      category: 'TRX',
-      id: 1,
-      min_member: 3,
-      max_member: 8,
-      trainer_id: 0,
-      contact_phone: '06701234567'
-    },
-    {
-      name: 'Egyéni Teri trx',
-      description: 'Zenés TRX edzés személyi edzés keretein belül',
-      category: 'TRX',
-      id: 2,
-      min_member: 1,
-      max_member: 1,
-      trainer_id: 0,
-      contact_phone: '06701234567'
+  public myTrainings: TrainingModel[] = [];
+  public selectedTags: string[] = [];
+  public tagTraining: TagTrainingModel = new TagTrainingModel();
 
-    }
-  ];
-  public OnSelect(tag: TagModel): void {
-    console.log("tag");
-    this.selectedTags.push(tag);
-  }
-  mobile: boolean = false;
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute,
+    private categoryService: CategoriesService,
+    private trainingService: TrainingService,
+    private tagService: TagService,
+    private tagTrainingService: TagTrainingService,
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit(): void {
     if (window.innerWidth <= 800) {
       this.mobile = true;
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
-    this.route.paramMap.subscribe((params) => {
-      this.id = params.get('id');
-      if (this.id) {
-        const filteredTrainings = this.myTrainings.filter(
-          (t) => t.id == Number(this.id));
-        if (filteredTrainings.length == 1) {
-          this.training = filteredTrainings[0];
+
+    this.trainingService.getByTrainerId(this.user.id).subscribe(
+      (result) => {
+        this.myTrainings = result;
+
+        this.route.paramMap.subscribe((params) => {
+          this.id = params.get('id');
+          if (this.id) {
+            const filteredTrainings = this.myTrainings.filter(
+              (t) => t.id == Number(this.id)
+            );
+            if (filteredTrainings.length == 1) {
+              this.training = filteredTrainings[0];
+            } else {
+              this.training = new TrainingModel();
+            }
+          } else {
+            this.training = new TrainingModel();
+          }
+        });
+
+        this.tagTrainingService.getByTraining(this.training.id).subscribe(
+          (tagtraining) => {
+            for (const item of tagtraining) {
+              for (const tag of this.tags) {
+                if (tag.id == item.tag_id) {
+                  this.selectedTags.push(tag.name);
+                }
+              }
+            }
+          },
+          (error) => console.log(error)
+        );
+
+        if (this.training.contact_phone != this.user.phone_number) {
+          this.otherPhoneNumber = true;
+          this.otherPhoneNumberInput = this.training.contact_phone;
         }
-        else {
-          this.training = new TrainingModel();
-        }
-      } else {
-        this.training = new TrainingModel();
-      }
-    });
+      },
+      (error) => console.log(error)
+    );
+
+    this.categoryService.getCategories().subscribe(
+      (result) => {
+        this.categories = result;
+        this.selectCategory(this.training.category_id);
+      },
+      (error) => console.log(error)
+    );
+
+    this.tagService.getTags().subscribe(
+      (result) => (this.tags = result),
+      (error) => console.log(error)
+    );
   }
 
+  save() {
+    this.errorCheck();
+
+    if (this.otherPhoneNumber == true) {
+      if (this.otherPhoneNumberInput != null) {
+        this.training.id = 0;
+        this.training.trainer_id = this.user.id;
+        this.training.min_member = Number(this.min_member);
+        this.training.max_member = Number(this.max_member);
+        this.training.contact_phone = this.otherPhoneNumberInput;
+        this.trainingService.newTraining(this.training).subscribe(
+          (result) => {},
+          (error) => console.log(error)
+        );
+      }
+    } else {
+      this.training.id = 0;
+      this.training.trainer_id = this.user.id;
+      this.training.min_member = Number(this.min_member);
+      this.training.max_member = Number(this.max_member);
+      this.training.contact_phone = this.user.phone_number;
+
+      this.trainingService.newTraining(this.training).subscribe(
+        (result) => {
+          this.training.id = result.id;
+          this.tagTraining.id = 0;
+          this.tagTraining.training_id = this.training.id;
+
+          for (const item of this.selectedTags) {
+            for (const tag of this.tags) {
+              if (item == tag.name) {
+                this.tagTraining.tag_id = tag.id;
+              }
+            }
+            this.tagTrainingService.newTagTraining(this.tagTraining).subscribe(
+              (result) => {},
+              (error) => console.log(error)
+            );
+          }
+          this.tagTrainingService.newTagTraining(this.tagTraining);
+        },
+        (error) => console.log(error)
+      );
+    }
+
+    //TODO edit or create
+  }
+  errorCheck() {
+    this.messageTitle = 'Hiba';
+    if (this.training.name == '') {
+      this.messageBox = 'Kérem adja meg az edzés nevét!';
+    } else if (this.training.category_id == null) {
+      this.messageBox = 'Kérem adja meg az edzéshez tartozó kategóriát!';
+    } else if (this.training.description == '') {
+      this.messageBox =
+        'Kérem adjon meg az edzéshez egy rövid tájékoztató leírást!';
+    } else if (this.training.max_member == 0) {
+      this.messageBox = 'Kérem adja meg az edzés résztvevőinek maximum számát!';
+    } else if (this.training.min_member > this.max_member) {
+      this.messageBox =
+        'Az edzéshez tartozó minimum résztvevők száma nagyobb mint a maximum!'; //TODO az inputból kikattintva menti csak el a résztvevők számát
+    } else if (
+      this.otherPhoneNumber == true &&
+      this.otherPhoneNumberInput == null
+    ) {
+      this.messageBox = 'Kérem adja meg a másodlagos telefonszámot!';
+    } else {
+      this.messageTitle = 'Siker';
+      this.messageBox = 'Edzése sikeresen létrehozva!';
+    }
+  }
+  phone() {
+    this.otherPhoneNumber = false;
+  }
+  otherPhone() {
+    this.otherPhoneNumber = true;
+  }
+  selectCategory(value) {
+    for (const item of this.categories) {
+      if (item.name == value) {
+        this.training.category_id = item.id;
+        this.selectedCat = item.name;
+        console.log(this.selectedCat);
+      } else if (value == '') {
+        this.training.category_id = null;
+      } else if (value == item.id) {
+        this.selectedCat = item.name;
+      }
+    }
+  }
+  checkTags(value){
+    if (this.selectedTags.includes(value)) {
+      return true;
+    }
+    return false;
+  }
+  onTagChange(value) {
+    if (!this.selectedTags.includes(value)) {
+      this.selectedTags.push(value);
+    } else {
+      const index: number = this.selectedTags.indexOf(value);
+      this.selectedTags.splice(index, 1);
+    }
+  }
+  closeResult = '';
+  open(content: any) {
+    this.modalService.open(content).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
+    );
+  }
+  close() {
+    this.modalService.dismissAll();
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 }

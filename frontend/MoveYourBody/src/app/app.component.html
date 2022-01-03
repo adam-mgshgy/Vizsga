@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark mb-2">
   <div class="container-fluid">
-    <a  id="logoLink" routerLink="/home"><img id="logoImage" src="./assets/images/mainPageImages/logoWhite.png" alt="logo"></a>
+    <a id="logoLink" routerLink="/home"><img id="logoImage" src="./assets/images/mainPageImages/logoWhite.png" alt="logo"></a>
     <!-- <a class="navbar-brand" routerLink="/home">{{title}}</a> -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
@@ -15,7 +15,7 @@
             Kategóriák
           </a>
           <ul class="dropdown-menu">
-            <li *ngFor="let cat of categories">
+            <li *ngFor="let cat of categories | slice:0:5">
               <a class="dropdown-item" [routerLink]="'/category/' +  cat.name">{{cat.name}}</a>
             </li>
             <li>
@@ -25,22 +25,21 @@
           </ul>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!user.id">
           <a class="nav-link active" routerLink="/register">Regisztráció</a> <!-- nem így lesz -->
         </li>
-        <li class="nav-item">
+        <li *ngIf="!user.id" class="nav-item">
           <a class="nav-link active" routerLink="/login">Bejelentkezés</a> <!-- nem így lesz -->
         </li>
       </ul>
-
-      <ul id="userDropdown" class="navbar-nav mr-auto mb-2 mb-lg-0">
+      <ul *ngIf="user.id" id="userDropdown" class="navbar-nav mr-auto mb-2 mb-lg-0">
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button id="searchBtn" class="btn" type="submit">Search</button>
         </form>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-            {{users[0].full_name}}
+            {{user.full_name}}
             <!--TODO aktuálisan bejelentkezett user neve-->
           </a>
           <ul class="dropdown-menu">
@@ -57,5 +56,6 @@
   </div>
 </nav>
 <div>
-  <router-outlet></router-outlet>
+  <!-- <app-loginpage *ngIf="!user" (userEvent)="getUser($event)" ></app-loginpage> -->
+  <router-outlet *ngIf="user"></router-outlet>
 </div>

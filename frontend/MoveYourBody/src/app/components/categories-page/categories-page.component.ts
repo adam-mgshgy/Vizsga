@@ -10,15 +10,15 @@ import { CategoriesService } from 'src/app/services/categories.service';
 })
 export class CategoriesPageComponent implements OnInit {
   constructor(private categoryService: CategoriesService) {}
-  imgPrefix = './assets/images/';
+  imgPrefix = './assets/images/categoriesPageImages/';
 
 
-  public categories: CategoryModel[] = [];  
+  public categories: CategoryModel[] = [];
 
   ngOnInit(): void {
     this.categoryService.getCategories().subscribe(
-      result => this.categories = result,
-      error => console.log(error)
+      (result) => this.categories = result,
+      (error) => console.log(error)
     );
   }
 }

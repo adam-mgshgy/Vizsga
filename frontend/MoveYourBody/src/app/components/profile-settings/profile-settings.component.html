@@ -20,14 +20,23 @@
             <div id="phoneNumberNelp" class="form-text">Kérjük ezt a formátumot használd: +36123456789</div>
         </div>
         <div class="mb-3">
-            <label for="county" class="form-label fs-5">
-                Megye
-            </label>
-            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-control" id="county" name="county" value="{{location.county_name}}">
-            <label for="city" class="form-label fs-5">
-                Város
-            </label>
-            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-control" id="city" name="city" value="{{location.city_name}}">
+            <div class="mb-3">
+                <label for="county" class="form-label fs-5">
+                    Megye*
+                </label>
+                <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="county" name="county" required (change)="CountyChanged()" [(ngModel)]="selectedCounty">
+                    <option *ngFor="let county of counties" [value]="county.county_name">{{county.county_name}}</option>
+                </select>
+            </div>
+            <div *ngIf="selectedCounty" class="mb-3">
+                <label for="city" class="form-label fs-5">
+                    Város*
+                </label>
+                <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="city" name="city" required [(ngModel)]="selectedCity">
+                    <option value=""></option>
+                    <option *ngFor="let city of cities" [value]="city.city_name">{{city.city_name}}</option>
+                </select>
+            </div>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label fs-5">Jelszó</label>

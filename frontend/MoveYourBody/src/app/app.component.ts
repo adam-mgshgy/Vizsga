@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { CategoryModel } from './models/category-model';
 import { UserModel } from './models/user-model';
+import { Subscription } from 'rxjs';
+import { LoginService } from './services/login.service';
+import { CategoriesService } from './services/categories.service';
 
 @Component({
   selector: 'app-root',
@@ -8,28 +11,36 @@ import { UserModel } from './models/user-model';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'MoveYourBody';
+  user: UserModel;
+  subscription: Subscription;
+  constructor(private loginService: LoginService, private categoryService: CategoriesService) {  }
+  ngOnInit() {
+    this.subscription = this.loginService.currentUser.subscribe(user => this.user = user);
 
-  public categories: CategoryModel[] = [
-    { name: 'Box', imgSrc: 'box.jpg' },
-    { name: 'Crossfit', imgSrc: 'crossFitt.jpg' },
-    { name: 'Jóga', imgSrc: 'yoga.jpg' },
-    { name: 'Spartan', imgSrc: 'spartan.jpg' },
-    { name: 'Tenisz', imgSrc: 'tennis.jpg' },
-    { name: 'TRX', imgSrc: 'trx.jpg' },
-  ];
+    this.categoryService.getCategories().subscribe(
+      (result) => this.categories = result,
+      (error) => console.log(error)
+    );
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+  title = 'MoveYourBody';
+  public categories: CategoryModel[] = [];
   public users: UserModel[] = [
     {
       id: 1,
       email: 'tesztelek@gmail.com',
       full_name: 'Tesztelek Károlyné Elekfalvi Károly',
       trainer: true,
+      password: "pwd",
       phone_number: '+36701234678',
       location_id: 1
     },
     {
       id: 2,
       email: 'tesztelek@gmail.com',
+      password: "pwd",
       full_name: 'Tóth Sándor',
       trainer: true,
       phone_number: '+36701234678',
@@ -39,6 +50,7 @@ export class AppComponent {
       id: 3,
       email: 'tesztelek@gmail.com',
       full_name: 'Kandisz Nóra',
+      password: "pwd",
       trainer: true,
       phone_number: '+36701234678',
       location_id: 1
@@ -48,6 +60,7 @@ export class AppComponent {
       email: 'tesztelek@gmail.com',
       full_name: 'Kovács Ákos',
       trainer: true,
+      password: "pwd",
       phone_number: '+36701234678',
       location_id: 1
     },
@@ -55,6 +68,7 @@ export class AppComponent {
       id: 5,
       email: 'tesztelek@gmail.com',
       full_name: 'Futty Imre',
+      password: "pwd",
       trainer: true,
       phone_number: '+36701234678',
       location_id: 1
@@ -64,6 +78,7 @@ export class AppComponent {
       email: 'tesztelek@gmail.com',
       full_name: 'Mittomen Karoly',
       trainer: true,
+      password: "pwd",
       phone_number: '+36701234678',
       location_id: 1
     },
@@ -71,6 +86,7 @@ export class AppComponent {
       id: 7,
       email: 'tesztelek@gmail.com',
       full_name: 'Teszt Elek',
+      password: "pwd",
       trainer: true,
       phone_number: '+36701234678',
       location_id: 1
@@ -78,6 +94,7 @@ export class AppComponent {
     {
       id: 8,
       email: 'tesztelek@gmail.com',
+      password: "pwd",
       full_name: 'Teszt Elek',
       trainer: true,
       phone_number: '+36701234678',
@@ -88,6 +105,7 @@ export class AppComponent {
       email: 'tesztelek@gmail.com',
       full_name: 'Teszt Elek',
       trainer: true,
+      password: "pwd",
       phone_number: '+36701234678',
       location_id: 1
     },
@@ -95,6 +113,7 @@ export class AppComponent {
       id: 10,
       email: 'tesztelek@gmail.com',
       full_name: 'Teszt Elek',
+      password: "pwd",
       trainer: true,
       phone_number: '+36701234678',
       location_id: 1
@@ -103,6 +122,7 @@ export class AppComponent {
       id: 11,
       email: 'tesztelek@gmail.com',
       full_name: 'Teszt Elek',
+      password: "pwd",
       trainer: true,
       phone_number: '+36701234678',
       location_id: 1

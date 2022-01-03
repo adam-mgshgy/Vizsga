@@ -85,13 +85,13 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(register);
             });
         }
-        [HttpPost("login")]
-        public ActionResult Login(Login login) 
+        [HttpGet("login")]
+        public ActionResult Login([FromQuery] string email, string password) 
         {
             return this.Run(() =>
             {
                 var user = dbContext.Set<User>().Include(u => u.Location)
-                            .FirstOrDefault(u => u.Email == login.Email && u.Password == login.Password);
+                            .FirstOrDefault(u => u.Email == email && u.Password == password);
                 if (user == null)
                 {
                     return Unauthorized(new

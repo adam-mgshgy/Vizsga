@@ -29,14 +29,14 @@ namespace MoveYourBody.WebAPI.Controllers
                 {
                     Id = training.Id,
                     Name = training.Name,
-                    Category = dbContext.Set<Category>().FirstOrDefault(c => c.Name == training.Category.Name),
-                    Trainer = dbContext.Set<User>().FirstOrDefault(u => u.Id == training.Trainer.Id),
+                    Category_id = training.Category_id,
+                    Trainer_id = training.Trainer_id,
                     Min_member = training.Min_member,
                     Max_member = training.Max_member,
                     Description = training.Description,
                     Contact_phone = training.Contact_phone,
                 };
-                newTraining.Trainer.Location = dbContext.Set<Location>().FirstOrDefault(l => l.Id == training.Trainer.Location.Id);
+                
                 dbContext.Set<Training>().Add(newTraining);
                 dbContext.SaveChanges();
                 return Ok(newTraining);
@@ -47,14 +47,8 @@ namespace MoveYourBody.WebAPI.Controllers
         public ActionResult Modify(Training training)
         {
             return this.Run(() =>
-            {
-
-                //TODO category value doesn't change
-                dbContext.Entry(training).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                dbContext.Entry(training.Category).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                dbContext.Entry(training).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-
-
+            {                
+                dbContext.Entry(training).State = Microsoft.EntityFrameworkCore.EntityState.Modified;                
                 dbContext.SaveChanges();
 
                 return Ok(training);
@@ -83,8 +77,8 @@ namespace MoveYourBody.WebAPI.Controllers
                                             {
                                                 Id = t.Id,
                                                 Name = t.Name,
-                                                Trainer = dbContext.Set<User>().FirstOrDefault(u => u.Id == t.Trainer.Id),
-                                                Category = dbContext.Set<Category>().FirstOrDefault(c => c.Name == t.Category.Name),
+                                                Trainer_id = t.Trainer_id,
+                                                Category_id = t.Category_id,
                                                 Min_member = t.Min_member,
                                                 Max_member = t.Max_member,
                                                 Description = t.Description,
@@ -100,19 +94,47 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(training);
             });
         }
-        [HttpGet("category")]
-        public ActionResult GetByCategory([FromQuery] string catName)
+        [HttpGet("TrainerId/{trainerId}")]
+        public ActionResult GetByTrainerId(int trainerId)
         {
             return this.Run(() =>
             {
+                var user = dbContext.Set<User>().Where(u => u.Id == trainerId).FirstOrDefault();
                 var training = dbContext.Set<Training>()
-                                            .Where(t => t.Category.Name == catName)
+                                            .Where(t => t.Trainer_id == user.Id)
                                             .Select(t => new
                                             {
                                                 Id = t.Id,
                                                 Name = t.Name,
-                                                Trainer = dbContext.Set<User>().FirstOrDefault(u => u.Id == t.Trainer.Id),
-                                                Category = t.Category.Name,
+                                                Trainer_id = t.Trainer_id,
+                                                Category_id = t.Category_id,
+                                                Min_member = t.Min_member,
+                                                Max_member = t.Max_member,
+                                                Description = t.Description,
+                                                Contact_phone = t.Contact_phone
+                                            });
+
+                if (training == null)
+                    return BadRequest(new
+                    {
+                        ErrorMessage = "Nem létező edzés ehhez a felhasználóhoz"
+                    });
+                return Ok(training);
+            });
+        }
+        [HttpGet("category")]
+        public ActionResult GetByCategory([FromQuery] int id)
+        {
+            return this.Run(() =>
+            {                
+                var training = dbContext.Set<Training>()
+                                            .Where(t => t.Category_id == id)
+                                            .Select(t => new
+                                            {
+                                                Id = t.Id,
+                                                Name = t.Name,
+                                                Trainer_id= t.Trainer_id,
+                                                Category_id = t.Category_id,
                                                 Min_member = t.Min_member,
                                                 Max_member = t.Max_member,
                                                 Description = t.Description,
