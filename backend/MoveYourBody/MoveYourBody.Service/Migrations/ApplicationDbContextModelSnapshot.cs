@@ -14,7 +14,7 @@ namespace MoveYourBody.Service.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.19")
+                .HasAnnotation("ProductVersion", "3.1.20")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("MoveYourBody.Service.Models.Applicant", b =>
@@ -2445,7 +2445,7 @@ namespace MoveYourBody.Service.Migrations
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
                         .HasMaxLength(255);
 
-                    b.Property<int>("LocationId")
+                    b.Property<int>("Location_id")
                         .HasColumnType("int");
 
                     b.Property<string>("Password")
@@ -2462,8 +2462,6 @@ namespace MoveYourBody.Service.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LocationId");
 
                     b.ToTable("User");
                 });
@@ -2494,15 +2492,6 @@ namespace MoveYourBody.Service.Migrations
                     b.HasOne("MoveYourBody.Service.Models.Training", "Training")
                         .WithMany()
                         .HasForeignKey("TrainingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MoveYourBody.Service.Models.User", b =>
-                {
-                    b.HasOne("MoveYourBody.Service.Models.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
