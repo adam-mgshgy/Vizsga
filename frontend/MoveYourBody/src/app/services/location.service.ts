@@ -54,4 +54,18 @@ export class LocationService {
       })
     );
   }
+  getLocationId(county: string, city: string): Observable<number> {
+    return this.http.get<LocationModel[]>(`${environment.ApiURL}/locations/field?field=${county}&field=${city}`).pipe(
+      map((data: LocationModel[]) => {
+        return data;
+      }),
+      catchError(err => {
+        if (!environment.production && err.status == 404) {
+          return of(err);
+        } 
+        else 
+          throw err;
+      })
+    );
+  }
 }
