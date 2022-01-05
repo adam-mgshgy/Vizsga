@@ -57,16 +57,15 @@ namespace MoveYourBody.WebAPI.Controllers
                     ErrorMessage = "A megadott e-mail címmel már történt korábban regisztráció"
                 });
                 User register = null;
-                var location = dbContext.Set<Location>().FirstOrDefault(l => l.Id == user.Location_id);
-                if (location == null)
-                {
-                    return BadRequest(new
-                    {
-                        ErrorMessage = "A megadott város nem létezik"
-                    });
-                }
-                else
-                {
+                //var location = dbContext.Set<Location>().FirstOrDefault(l => l.Id == user.Location_id);
+                //if (location == null)
+                //{
+                //    return BadRequest(new
+                //    {
+                //        ErrorMessage = "A megadott város nem létezik"
+                //    });
+                //}
+                
                     register = new User()
                     {
                         Id = user.Id,
@@ -75,9 +74,9 @@ namespace MoveYourBody.WebAPI.Controllers
                         Password = user.Password,
                         Phone_number = user.Phone_number,
                         Trainer = user.Trainer,
-                        Location_id = dbContext.Set<Location>().FirstOrDefault(l => l.Id == user.Location_id).Id
+                        Location_id = user.Location_id
                     };
-                }
+                
                 
                 dbContext.Set<User>().Add(register);
                 dbContext.SaveChanges();

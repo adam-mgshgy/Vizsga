@@ -186,7 +186,17 @@ export class CategoryPageComponent implements OnInit {
               );
               for (const item of this.trainings) {
                 this.tagTrainingService.getByTraining(item.id).subscribe(
-                  result => this.tagTraining = result,
+                  result => {
+                    this.tagTraining = result;
+                    for (const tag of this.tags) {
+                      for (const tagTr of this.tagTraining) {
+                        if (tagTr.tag_id == tag.id) {
+                          this.selectedTags.push(tag);
+                          console.log(this.selectedTags);
+                        }
+                      }
+                    }
+                  },
                   error => console.log(error)
                 );
               }

@@ -49,6 +49,8 @@ export class CreateTrainingPageComponent implements OnInit {
   public myTrainings: TrainingModel[] = [];
   public selectedTags: string[] = [];
   public tagTraining: TagTrainingModel = new TagTrainingModel();
+  public notDeleteTagTraining: TagTrainingModel[] = [];
+  
 
   constructor(
     private route: ActivatedRoute,
@@ -91,6 +93,7 @@ export class CreateTrainingPageComponent implements OnInit {
               for (const tag of this.tags) {
                 if (tag.id == item.tag_id) {
                   this.selectedTags.push(tag.name);
+                  this.notDeleteTagTraining = tagtraining;
                 }
               }
             }
@@ -197,7 +200,18 @@ export class CreateTrainingPageComponent implements OnInit {
         (result) => {
           this.messageTitle = 'Siker';
           this.messageBox = 'Edzése siekresen frissítve!';
-          console.log(result);
+
+
+          for (const item of this.selectedTags) {            
+            for (const tag of this.tags) {
+              
+              if (item == tag.name) {
+                this.tagTraining.tag_id = tag.id;
+              }
+            }                              
+          }
+          console.log(this.notDeleteTagTraining)
+          //this.tagTrainingService.getByTraining
         },
         (error) => console.log(error)
       );
@@ -248,6 +262,7 @@ export class CreateTrainingPageComponent implements OnInit {
     }
     return false;
   }
+
   onTagChange(value) {
     if (!this.selectedTags.includes(value)) {
       this.selectedTags.push(value);
