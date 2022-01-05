@@ -5,9 +5,12 @@ import { map, shareReplay } from 'rxjs';
 import { CategoryModel } from 'src/app/models/category-model';
 import { LocationModel } from 'src/app/models/location-model';
 import { TagModel } from 'src/app/models/tag-model';
+import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
 import { CategoriesService } from 'src/app/services/categories.service';
+import { TagTrainingService } from 'src/app/services/tag-training.service';
+import { TagService } from 'src/app/services/tag.service';
 import { TrainingService } from 'src/app/services/training.service';
 
 @Component({
@@ -22,7 +25,9 @@ export class CategoryPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private categoriesService: CategoriesService,
-    private trainingService: TrainingService
+    private trainingService: TrainingService,
+    private tagService: TagService,
+    private tagTrainingService: TagTrainingService
   ) {}
   imgSrc = './assets/images/categoryPageImages/profile_rock.png';
   imgBckgSrc = './assets/images/categoryPageImages/index.jpg';
@@ -32,139 +37,7 @@ export class CategoryPageComponent implements OnInit {
   counter = 0;
   public categories: CategoryModel[] = [];
   public trainings: TrainingModel[] = [];
-  public allTrainings: TrainingModel[] = [
-    // {
-    //   name: 'Nagyon hosszú nevű edzés',
-    //   description: 'Zenés TRX edzés Bana city központjában',
-    //   category_id: 1,
-    //   id: 0,
-    //   min_member: 6,
-    //   max_member: 8,
-    //   trainer_id: 0,
-    //   contact_phone: '06701234567',
-    // },
-    // {
-    //   name: 'Teri trx',
-    //   description: 'Zenés TRX edzés Bana city központjában',
-    //   category_id: 1,
-    //   id: 0,
-    //   min_member: 6,
-    //   max_member: 8,
-    //   trainer_id: 0,
-    //   contact_phone: '06701234567',
-    // },
-    // {
-    //   name: 'Teri trx',
-    //   description: 'Zenés TRX edzés Bana city központjában',
-    //   category_id: 1,
-    //   id: 0,
-    //   min_member: 6,
-    //   max_member: 8,
-    //   trainer_id: 0,
-    //   contact_phone: '06701234567',
-    // },
-    // {
-    //   name: 'Kiütünk mindenkit',
-    //   description: 'Box edzés Pistivel',
-    //   category_id: 2,
-    //   id: 0,
-    //   min_member: 6,
-    //   max_member: 8,
-    //   trainer_id: 0,
-    //   contact_phone: '06701234567',
-    // },
-    // {
-    //   name: 'Lovaglás nagyoknak',
-    //   description: 'Zenés TRX edzés Bana city központjában',
-    //   category_id: 3,
-    //   id: 0,
-    //   min_member: 6,
-    //   max_member: 8,
-    //   trainer_id: 0,
-    //   contact_phone: '06701234567',
-    // },
-    // {
-    //   name: 'Légy hal',
-    //   description: 'Ússz a víz alatt',
-    //   category_id: 4,
-    //   id: 0,
-    //   min_member: 6,
-    //   max_member: 8,
-    //   trainer_id: 0,
-    //   contact_phone: '06701234567',
-    // },
-    // {
-    //   name: '300 helyett 8an spartan edzés',
-    //   description: 'Thermöpula helyett Bana city központjában',
-    //   category_id: 5,
-    //   id: 0,
-    //   min_member: 6,
-    //   max_member: 8,
-    //   trainer_id: 0,
-    //   contact_phone: '06701234567',
-    // },
-    // {
-    //   name: 'Foci Ferivel',
-    //   description: 'Kígyós edzés',
-    //   category_id: 61,
-    //   id: 0,
-    //   min_member: 6,
-    //   max_member: 8,
-    //   trainer_id: 0,
-    //   contact_phone: '06701234567',
-    // },
-    // {
-    //   name: 'Ripi röpi Rebekával',
-    //   description: 'Röplabda antireptetése',
-    //   category_id: 6,
-    //   id: 0,
-    //   min_member: 6,
-    //   max_member: 8,
-    //   trainer_id: 0,
-    //   contact_phone: '06701234567',
-    // },
-    // {
-    //   name: 'Crossfit edzés',
-    //   description: 'Crossmotor helyett rendes edzés',
-    //   category_id: 6,
-    //   id: 0,
-    //   min_member: 6,
-    //   max_member: 8,
-    //   trainer_id: 0,
-    //   contact_phone: '06701234567',
-    // },
-    // {
-    //   name: 'Foci Viktorral',
-    //   description: 'Minden edzés után GYŐZÜNK!',
-    //   category_id: 7,
-    //   id: 0,
-    //   min_member: 6,
-    //   max_member: 8,
-    //   trainer_id: 0,
-    //   contact_phone: '06701234567',
-    // },
-    // {
-    //   name: 'Tenisz a salgótarjáni Federerrel',
-    //   description: 'Fejleszd magad az új lyukas hálós ütőkkel!!',
-    //   category_id: 8,
-    //   id: 0,
-    //   min_member: 6,
-    //   max_member: 8,
-    //   trainer_id: 0,
-    //   contact_phone: '06701234567',
-    // },
-    // {
-    //   name: 'Kosárlabda focilabdával',
-    //   description:
-    //     'Nincs pénz kosárlabdára, gyakorolni jó lesz focilabdával is.',
-    //   category_id: 8,
-    //   id: 0,
-    //   min_member: 6,
-    //   max_member: 8,
-    //   trainer_id: 0,
-    //   contact_phone: '06701234567',
-    // },
-  ];
+  public allTrainings: TrainingModel[] = [];
   public users: UserModel[] = [
     {
       id: 1,
@@ -266,14 +139,9 @@ export class CategoryPageComponent implements OnInit {
       location_id: 1,
     },
   ];
-  public allTags: TagModel[] = [
-    { id: 0, name: 'csoportos', colour: '#6610f2' },
-    { id: 1, name: 'erőnléti', colour: 'black' },
-    { id: 2, name: 'saját testsúlyos', colour: '#fd7e14' },
-    { id: 3, name: 'edzőterem', colour: 'red' },
-    { id: 4, name: 'zsírégető', colour: '#0dcaf0' },
-    { id: 5, name: 'személyi edzés', colour: 'green' },
-  ];
+  public tagTraining: TagTrainingModel[] = [];
+  public tags: TagModel[] = [];
+  public selectedTags: TagModel[] = [];
   public locations: LocationModel[] = [
     {
       id: 1,
@@ -297,43 +165,52 @@ export class CategoryPageComponent implements OnInit {
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
 
-    this.tagsOnMobile();     
-    
+    this.tagsOnMobile();
   }
-  upload(){
+  upload() {
     this.categoriesService.getCategories().subscribe(
-      (result) =>{this.categories = result;
+      (result) => {
+        this.categories = result;
         this.route.paramMap.subscribe((params) => {
-          this.category_name = params.get('category');      
+          this.category_name = params.get('category');
           for (const item of this.categories) {
             if (item.name == this.category_name) {
               this.category_id = item.id;
-              
             }
-          };
+          }
           this.trainingService.getByCategory(this.category_id).subscribe(
-            result => {
+            (result) => {
               this.allTrainings = result;
               this.trainings = this.allTrainings.filter(
                 (t) => t.category_id == this.category_id
               );
+              for (const item of this.trainings) {
+                this.tagTrainingService.getByTraining(item.id).subscribe(
+                  result => this.tagTraining = result,
+                  error => console.log(error)
+                );
+              }
             },
-            error => console.log(error)
+            (error) => console.log(error)
           );
-          
-          
         });
+       
       },
-      
       
       (error) => console.log(error)
     );
-
-      
+    this.tagService.getTags().subscribe(
+      result=> this.tags = result,
+      error=> console.log(error)
+    );
+    
+   
+  }
+  getTags(trainingId: number){
+    console.log(trainingId);
   }
   onResized(event: ResizedEvent) {
-    this.tagsOnMobile();    
-   
+    this.tagsOnMobile();
   }
   tagsOnMobile() {
     if (window.innerWidth < 2250 && window.innerWidth > 1950) {
