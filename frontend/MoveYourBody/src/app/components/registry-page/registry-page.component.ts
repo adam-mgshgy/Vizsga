@@ -3,7 +3,7 @@ import { LocationModel } from 'src/app/models/location-model';
 import { UserModel } from 'src/app/models/user-model';
 import { LocationService } from 'src/app/services/location.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { resourceUsage } from 'process';
+//import { resourceUsage } from 'process';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -12,14 +12,12 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./registry-page.component.css']
 })
 export class RegistryPageComponent implements OnInit {
-
   mobile: boolean = false;
   locations: LocationModel[] = [];
   counties: LocationModel[] = [];
   cities: LocationModel[] = [];
-  selectedCounty: '';
-  selectedCity: '';
-  isTrainer: boolean;
+  selectedCounty: string;
+  selectedCity: string;
   newUser: UserModel = new UserModel();
   public messageBox = '';
   public messageTitle = '';
@@ -28,31 +26,59 @@ export class RegistryPageComponent implements OnInit {
     private modalService: NgbModal,
     private userService: UserService
     ) {}
-  CountyChanged() {
+
+  TrainerChecked(event: any) {
+    this.newUser.trainer = event.target.checked;
+  }
+
+  CountyChanged(value) {
+    for (const item of this.counties) {
+      if (item.county_name == value) {
+        this.newUser.location_id = item.id;
+        this.selectedCounty = item.county_name;
+        console.log(this.selectedCounty);
+      } else if (value == '') {
+        this.newUser.location_id = null;
+      } else if (value == item.id) {
+        this.selectedCounty = item.county_name;
+      }
+    }
     this.locationService.getCities(this.selectedCounty).subscribe(
       result => this.cities = result,
       error => console.log(error)
     );
+  }
+  CityChanged(value) {
+    for (const item of this.cities) {
+      if (item.city_name == value) {
+        this.newUser.location_id = item.id;
+        this.selectedCity = item.city_name;
+        console.log(this.selectedCity);
+      } else if (value == '') {
+        this.newUser.location_id = null;
+      } else if (value == item.id) {
+        this.selectedCity = item.city_name;
+      }
+    }
   }
   Register() {
     this.locationService.getLocationId(this.selectedCounty, this.selectedCity).subscribe(
       result => this.newUser.location_id = result,
       error => console.log(error)
     )
-    this.newUser.trainer = this.isTrainer;
+    this.newUser.id = 0;
     this.errorCheck();
     this.userService.Register(this.newUser).subscribe(
       (result) => {
-        this.newUser.id = result.id;
-        this.newUser.email = result.email;
-        this.newUser.full_name = result.full_name;
-        this.newUser.location_id = result.location_id;
-        this.newUser.password = result.password;
-        this.newUser.phone_number = result.phone_number;
-        this.newUser.trainer = result.trainer;
+        console.log(this.newUser)
       },
       (error) => console.log(error)
     )
+  }
+  Cancel() {
+    this.newUser = new UserModel;
+    this.selectedCounty = "";
+    this.selectedCity = "";
   }
   ngOnInit(): void {
     if (window.innerWidth <= 800) {
@@ -67,7 +93,6 @@ export class RegistryPageComponent implements OnInit {
       result => this.counties = result,
       error => console.log(error)
     );
-
   }
 
   errorCheck() {
@@ -80,8 +105,10 @@ export class RegistryPageComponent implements OnInit {
       this.messageBox = 'Kérem adjon meg egy jelszót!';
     } else if (this.newUser.phone_number == '') {
       this.messageBox = 'Kérem adja meg telefonszámát!';
-    } else if (this.newUser.location_id == null) {
-      this.messageBox = 'Kérem válasszon megyét és várost!';
+    } else if (this.selectedCounty == null) {
+      this.messageBox = 'Kérem válasszon megyét!';
+    } else if (this.selectedCity == null) {
+      this.messageBox = 'Kérem válasszon várost!';
     } else {
       this.messageTitle = 'Siker';
       this.messageBox = 'Sikeres regisztráció!';

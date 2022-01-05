@@ -10,7 +10,7 @@
         </div>
         <div class="mb-3">
             <label for="email" class="form-label fs-5">E-mail cím*</label>
-            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="email" class="form-control" id="email" required [(ngModel)]="newUser.email">
+            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="email" class="form-control" id="email" name="email" required [(ngModel)]="newUser.email">
             <div [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" id="emailHelp" class="form-text">Az e-mail cím regisztráció után nem változtatható meg!</div>
         </div>
         <div class="mb-3">
@@ -21,7 +21,7 @@
             <div id="phoneNumberNelp" class="form-text">Kérjük ezt a formátumot használd: +36123456789</div>
         </div>
         <div class="mb-3">
-            <label class="form-label fs-5"> Helyszín:</label>
+            <label class="form-label fs-4"> Helyszín:</label>
             <div [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" id="cityHelp" class="form-text">Kérjük add meg a várost és megyét, ahol szívesen edzenél, hogy a megfelelő edzéseket mutathassuk!</div>
 
         </div>
@@ -29,7 +29,7 @@
             <label for="county" class="form-label fs-5">
                 Megye*
             </label>
-            <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="county" name="county" required (change)="CountyChanged()" [(ngModel)]="selectedCounty">
+            <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="county" name="county" required (ngModelChange)="CountyChanged($event)" [(ngModel)]="selectedCounty">
                 <option *ngFor="let county of counties" [value]="county.county_name">{{county.county_name}}</option>
             </select>
         </div>
@@ -37,19 +37,19 @@
             <label for="city" class="form-label fs-5">
                 Város*
             </label>
-            <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="city" name="city" required [(ngModel)]="selectedCity">
+            <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="city" name="city" required (ngModelChange)="CityChanged($event)" [(ngModel)]="selectedCity">
                 <option value=""></option>
                 <option *ngFor="let city of cities" [value]="city.city_name">{{city.city_name}}</option>
             </select>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label fs-5">Jelszó*</label>
-            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="password" class="form-control pwd" name="password" required > 
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label fs-5">Jelszó ismét*</label>
             <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="password" class="form-control pwd" name="password" required [(ngModel)]="newUser.password"> 
         </div>
+        <!-- <div class="mb-3">
+            <label for="password" class="form-label fs-5">Jelszó ismét*</label>
+            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="password" class="form-control pwd" name="password" required > 
+        </div> -->
         <!-- <div class="mb-3">
             <input class="form-check-input" type="checkbox" id="accept" name="accept" required>
             <label class="form-check-label ms-2" for="accept">
@@ -57,14 +57,14 @@
             </label>
         </div> -->
         <div class="mb-3">
-            <input class="form-check-input" type="checkbox" id="trainer" name="trainer" [(ngModel)]="isTrainer">
+            <input class="form-check-input" type="checkbox" id="trainer" name="trainer" (click)="TrainerChecked($event)" [checked]="newUser.trainer">
             <label class="form-check-label ms-2" for="trainer">
                 Edzőként szeretnék regisztrálni
             </label>
         </div>
         <div class="mb-3">
-            <button id="registerButton" type="submit" class="btn fs-5" (click)="Register()">Regisztráció</button>
-            <button class="btn btn-danger ms-2 fs-5">Mégsem</button>
+            <button id="registerButton" type="submit" class="btn fs-5" (click)="Register()" (click)="open(content)">Regisztráció</button>
+            <button class="btn btn-danger ms-2 fs-5" (click)="Cancel()">Mégsem</button>
         </div>
     </form>
 </div>
