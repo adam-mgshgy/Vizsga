@@ -48,9 +48,11 @@ export class CreateTrainingPageComponent implements OnInit {
   public training: TrainingModel = new TrainingModel();
   public myTrainings: TrainingModel[] = [];
   public selectedTags: string[] = [];
+  public selectedTagsFix: string[] = [];
   public tagTraining: TagTrainingModel = new TagTrainingModel();
-  public notDeleteTagTraining: TagTrainingModel[] = [];
-  
+  public tagTrainingFix: TagTrainingModel[] = [];
+  public deleteTag: string[] = [];
+  deleteTagTrainng: TagTrainingModel = new TagTrainingModel();
 
   constructor(
     private route: ActivatedRoute,
@@ -89,11 +91,12 @@ export class CreateTrainingPageComponent implements OnInit {
 
         this.tagTrainingService.getByTraining(this.training.id).subscribe(
           (tagtraining) => {
+            this.tagTrainingFix = tagtraining;
             for (const item of tagtraining) {
               for (const tag of this.tags) {
                 if (tag.id == item.tag_id) {
                   this.selectedTags.push(tag.name);
-                  this.notDeleteTagTraining = tagtraining;
+                  this.selectedTagsFix.push(tag.name);
                 }
               }
             }
@@ -181,7 +184,6 @@ export class CreateTrainingPageComponent implements OnInit {
                   (error) => console.log(error)
                 );
             }
-            this.tagTrainingService.newTagTraining(this.tagTraining);
           },
           (error) => console.log(error)
         );
@@ -191,30 +193,81 @@ export class CreateTrainingPageComponent implements OnInit {
       this.training.max_member = Number(this.max_member);
       if (this.otherPhoneNumber) {
         this.training.contact_phone = this.otherPhoneNumberInput;
-      }
-      else{
+      } else {
         this.training.contact_phone = this.user.phone_number;
-
       }
       this.trainingService.modifyTraining(this.training).subscribe(
         (result) => {
           this.messageTitle = 'Siker';
           this.messageBox = 'Edzése siekresen frissítve!';
 
-
-          for (const item of this.selectedTags) {            
+          for (const item of this.selectedTags) {
             for (const tag of this.tags) {
-              
               if (item == tag.name) {
                 this.tagTraining.tag_id = tag.id;
               }
-            }                              
+            }
           }
-          console.log(this.notDeleteTagTraining)
-          //this.tagTrainingService.getByTraining
         },
         (error) => console.log(error)
       );
+
+      let indexes: Number[] = [];
+      for (const item of this.deleteTag) {
+        for (const tag of this.tags) {
+          if (item == tag.name) {
+            indexes.push(tag.id);
+            const index: number = this.selectedTags.indexOf(item);
+            this.selectedTags.splice(index, 1);
+          }
+        }
+      }
+
+      for (const item of this.tagTrainingFix) {
+        for (const index of indexes) {
+          if (index == item.tag_id) {
+            this.deleteTagTrainng = item;
+            this.tagTrainingService
+              .deleteTagTraining(this.deleteTagTrainng)
+              .subscribe();
+          }
+        }
+      }
+      console.log(this.selectedTags)
+      this.tagTraining.id = 0;
+      this.tagTraining.training_id = this.training.id;
+      console.log(this.tagTraining);
+
+      this.tagTrainingService.getByTraining(this.training.id).subscribe(
+        (tagtraining) => {
+          this.tagTrainingFix = tagtraining;
+          for (const item of tagtraining) {
+            for (const tag of this.tags) {
+              if (tag.id == item.tag_id) {
+                this.selectedTags.push(tag.name);
+                this.selectedTagsFix.push(tag.name);
+              }
+            }
+          }
+        },
+        (error) => console.log(error)
+      );
+
+      console.log(this.tagTrainingFix);
+
+      for (const item of this.selectedTags) {
+        for (const tag of this.tags) {
+          if (item == tag.name) {
+            this.tagTraining.tag_id = tag.id;
+          }
+        }
+        this.tagTrainingService.newTagTraining(this.tagTraining).subscribe(
+          (result) => {},
+          (error) => console.log(error)
+        );
+      }
+
+      console.log(this.tagTraining);
     }
   }
   errorCheck() {
@@ -266,9 +319,16 @@ export class CreateTrainingPageComponent implements OnInit {
   onTagChange(value) {
     if (!this.selectedTags.includes(value)) {
       this.selectedTags.push(value);
+      if (this.selectedTagsFix.includes(value)) {
+        const index: number = this.deleteTag.indexOf(value);
+        this.deleteTag.splice(index, 1);
+      }
     } else {
       const index: number = this.selectedTags.indexOf(value);
-      this.selectedTags.splice(index, 1);
+      if (this.selectedTagsFix.includes(value)) {
+        this.selectedTags.splice(index, 1);
+        this.deleteTag.push(value);      
+      }
     }
   }
   closeResult = '';
