@@ -73,14 +73,53 @@ namespace MoveYourBody.WebAPI.Controllers
             });
         }
 
-        [HttpDelete]
-        public ActionResult Delete(TagTraining tagTraining)
+        [HttpGet("refresh")]
+        public ActionResult Refresh([FromQuery] int id)
         {
             return this.Run(() =>
-            {                
-                dbContext.Remove(tagTraining);
+            {
+                var delete = dbContext.Set<TagTraining>().Where(d => d.Id == id).Select(t => new
+                {
+                    Id = t.Id,
+                    Training_id = t.Training_id,
+                    Tag_id = t.Tag_id
+                }).FirstOrDefault();
+
+                dbContext.Remove(delete);
                 dbContext.SaveChanges();
-                return Ok(tagTraining);
+
+                
+                return Ok(delete);
+            });
+        }
+
+        [HttpDelete]
+        public ActionResult Delete(int id)
+        {
+            //return this.Run(() =>
+            //{                
+            //    dbContext.Remove(tagTraining);
+            //    dbContext.SaveChanges();
+            //    return Ok(tagTraining);
+            //});
+            return this.Run(() =>
+            {
+                var delete = dbContext.Set<TagTraining>().Where(d => d.Id == id).Select(t => new
+                {
+                    Id = t.Id,
+                    Training_id = t.Training_id,
+                    Tag_id = t.Tag_id,
+                });
+                return BadRequest(new
+                {
+                    ErrorMessage = delete
+                });
+
+                dbContext.Remove(delete);
+                dbContext.SaveChanges();
+
+                
+                return Ok(delete);
             });
         }
 

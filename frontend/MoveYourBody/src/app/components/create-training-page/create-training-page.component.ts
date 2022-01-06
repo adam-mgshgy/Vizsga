@@ -52,7 +52,7 @@ export class CreateTrainingPageComponent implements OnInit {
   public tagTraining: TagTrainingModel = new TagTrainingModel();
   public tagTrainingFix: TagTrainingModel[] = [];
   public deleteTag: string[] = [];
-  deleteTagTrainng: TagTrainingModel = new TagTrainingModel();
+  deleteTagTraining: TagTrainingModel = new TagTrainingModel();
 
   constructor(
     private route: ActivatedRoute,
@@ -131,7 +131,7 @@ export class CreateTrainingPageComponent implements OnInit {
     this.tagService.getTags().subscribe(
       (result) => (this.tags = result),
       (error) => console.log(error)
-    );
+    );    
   }
   save() {
     this.errorCheck();
@@ -152,8 +152,10 @@ export class CreateTrainingPageComponent implements OnInit {
             },
             (error) => console.log(error)
           );
+         
         }
       } else {
+       
         this.training.id = 0;
         this.training.trainer_id = this.user.id;
         this.training.min_member = Number(this.min_member);
@@ -177,6 +179,8 @@ export class CreateTrainingPageComponent implements OnInit {
                   this.tagTraining.tag_id = tag.id;
                 }
               }
+              
+
               this.tagTrainingService
                 .newTagTraining(this.tagTraining)
                 .subscribe(
@@ -200,18 +204,11 @@ export class CreateTrainingPageComponent implements OnInit {
         (result) => {
           this.messageTitle = 'Siker';
           this.messageBox = 'Edzése siekresen frissítve!';
-
-          for (const item of this.selectedTags) {
-            for (const tag of this.tags) {
-              if (item == tag.name) {
-                this.tagTraining.tag_id = tag.id;
-              }
-            }
-          }
+          
         },
         (error) => console.log(error)
       );
-
+//TAGTRAINING
       let indexes: Number[] = [];
       for (const item of this.deleteTag) {
         for (const tag of this.tags) {
@@ -223,53 +220,74 @@ export class CreateTrainingPageComponent implements OnInit {
         }
       }
 
-      for (const item of this.tagTrainingFix) {
-        for (const index of indexes) {
-          if (index == item.tag_id) {
-            this.deleteTagTrainng = item;
-            this.tagTrainingService
-              .deleteTagTraining(this.deleteTagTrainng)
-              .subscribe();
-          }
-        }
-      }
-      console.log(this.selectedTags)
-      this.tagTraining.id = 0;
-      this.tagTraining.training_id = this.training.id;
-      console.log(this.tagTraining);
-
+      
       this.tagTrainingService.getByTraining(this.training.id).subscribe(
-        (tagtraining) => {
-          this.tagTrainingFix = tagtraining;
-          for (const item of tagtraining) {
-            for (const tag of this.tags) {
-              if (tag.id == item.tag_id) {
-                this.selectedTags.push(tag.name);
-                this.selectedTagsFix.push(tag.name);
-              }
-            }
-          }
+        (result) => {
+         for (const item of result) {
+           for (const index of indexes) {
+             if (item.tag_id == index) {
+               this.deleteTagTraining.tag_id = item.tag_id;
+               this.deleteTagTraining.training_id = item.training_id;
+               console.log(this.deleteTagTraining.id = item.id)
+               this.tagTrainingService.deleteTagTraining(this.deleteTagTraining).subscribe(
+                 result =>{
+                  this.selectedTags = [];
+                  this.selectedTagsFix = [];
+                  this.tagTrainingFix = [];
+
+                  this.refreshTags();
+                  console.log(this.tagTraining)
+                 }
+               );
+               
+               
+             }
+           }
+         }
+          
         },
         (error) => console.log(error)
       );
-
-      console.log(this.tagTrainingFix);
-
+      console.log(this.selectedTags)
       for (const item of this.selectedTags) {
         for (const tag of this.tags) {
           if (item == tag.name) {
             this.tagTraining.tag_id = tag.id;
           }
         }
-        this.tagTrainingService.newTagTraining(this.tagTraining).subscribe(
-          (result) => {},
-          (error) => console.log(error)
-        );
+        this.tagTraining.id = 0;
+        this.tagTraining.training_id = this.training.id;
+        console.log(this.tagTraining)
+        this.tagTrainingService
+          .newTagTraining(this.tagTraining)
+          .subscribe(
+            (result) => {},
+            (error) => console.log(error)
+          );
       }
-
-      console.log(this.tagTraining);
+    
+  
+      
     }
   }
+
+  refreshTags(){
+    this.tagTrainingService.getByTraining(this.training.id).subscribe(
+      (tagtraining) => {
+        this.tagTrainingFix = tagtraining;
+        for (const item of tagtraining) {
+          for (const tag of this.tags) {
+            if (tag.id == item.tag_id) {
+              this.selectedTags.push(tag.name);
+              this.selectedTagsFix.push(tag.name);
+            }
+          }
+        }
+      },
+      (error) => console.log(error)
+    );
+  }
+
   errorCheck() {
     this.messageTitle = 'Hiba';
     if (this.training.name == '') {
@@ -311,8 +329,10 @@ export class CreateTrainingPageComponent implements OnInit {
   }
   checkTags(value) {
     if (this.selectedTags.includes(value)) {
+      
       return true;
     }
+    
     return false;
   }
 
@@ -329,7 +349,7 @@ export class CreateTrainingPageComponent implements OnInit {
         this.selectedTags.splice(index, 1);
         this.deleteTag.push(value);      
       }
-    }
+    }    
   }
   closeResult = '';
   open(content: any) {
