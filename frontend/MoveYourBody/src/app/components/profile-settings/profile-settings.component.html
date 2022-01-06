@@ -5,7 +5,7 @@
             <label for="username" class="form-label fs-5">
                 Teljes név
             </label>
-            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-control" id="username" name="username" value="{{user.full_name}}">
+            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-control" id="username" name="username" value="{{userModify.full_name}}" [(ngModel)]="userModify.full_name">
         </div>
         <div class="mb-3">
             <label for="email" class="form-label fs-5">E-mail cím</label>
@@ -16,7 +16,7 @@
             <label for="phoneNumber" class="form-label fs-5">
                 Telefonszám
             </label>
-            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="{{user.phone_number}}">
+            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="{{userModify.phone_number}}" [(ngModel)]="userModify.phone_number">
             <div id="phoneNumberNelp" class="form-text">Kérjük ezt a formátumot használd: +36123456789</div>
         </div>
         <div class="mb-3">
@@ -39,23 +39,37 @@
         </div>
         <div class="mb-3">
             <label for="password" class="form-label fs-5">Jelszó</label>
-            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="password" class="form-control pwd" name="password">
+            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="password" class="form-control pwd" name="password" [(ngModel)]="userModify.password">
         </div>
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             <label for="password" class="form-label fs-5">Jelszó ismét</label>
             <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="password" class="form-control pwd" name="password">
-        </div>
+        </div> -->
         <div class="mb-3">
-            <button id="subscribeButton" [ngClass]="user.trainer ? 'd-none' : 'd-inline-block'" type="button" class="btn btn-info fs-5" data-bs-toggle="tooltip" data-bs-html="true" title="Ha szeretnél edzővé válni és feltölteni edzéseid, nézd meg ajánlatainkat a gombra kattinva!">
+            <button id="subscribeButton" (click)="ChangeTrainerValue()" [ngClass]="userModify.trainer ? 'd-none' : 'd-inline-block'" type="button" class="btn btn-info fs-5" data-bs-toggle="tooltip" data-bs-html="true" title="Ha szeretnél edzővé válni és feltölteni edzéseid, nézd meg ajánlatainkat a gombra kattinva!">
                 Edzővé válok!
             </button>
-            <button id="cancelSubscriptionButton" [ngClass]="user.trainer ? 'd-inline-block' : 'd-none'" type="button" class="btn btn-info fs-5" data-bs-toggle="tooltip" data-bs-html="true" title="Ha szeretnéd lemondani edzői előfizetésed, kattints a gombra!">
+            <button id="cancelSubscriptionButton" (click)="ChangeTrainerValue()" [ngClass]="userModify.trainer ? 'd-inline-block' : 'd-none'" type="button" class="btn btn-info fs-5" data-bs-toggle="tooltip" data-bs-html="true" title="Ha szeretnéd lemondani edzői előfizetésed, kattints a gombra!">
                 Előfizetés lemondása
             </button>
         </div>
         <div class="mb-3">
-            <button id="modifyButton" type="submit" class="btn btn-primary fs-5">Módosítás</button>
+            <button id="modifyButton" type="submit" class="btn btn-primary fs-5" (click)="save()" (click)="open(content)">Módosítás</button>
             <button class="btn btn-danger ms-2 fs-5">Mégsem</button>
         </div>
     </form>
 </div>
+<!--Modal popup-->
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">{{messageTitle}}</h4>        
+        <mat-icon id="close" class="close-icon" color="warn" class="close" (click)="close()">close</mat-icon>
+      </div>
+      <div class="modal-body">
+        {{messageBox}}
+      </div>
+      <div class="modal-footer">
+          
+        <button type="button" class="btn btn-outline-dark" (click)="close()">Ok</button>
+      </div>
+  </ng-template>

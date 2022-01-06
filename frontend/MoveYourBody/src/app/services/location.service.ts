@@ -54,8 +54,8 @@ export class LocationService {
       })
     );
   }
-  getLocationId(county: string, city: string): Observable<number> {
-    return this.http.get<LocationModel[]>(`${environment.ApiURL}/locations/field?field=${county}&field=${city}`).pipe(
+  getLocationId(field: string): Observable<number> {
+    return this.http.get<LocationModel[]>(`${environment.ApiURL}/locations/field?field=${field}`).pipe(
       map((data: LocationModel[]) => {
         return data;
       }),

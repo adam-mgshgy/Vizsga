@@ -17,7 +17,7 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             this.dbContext = dbContext;
         }
-        [HttpGet("list")]
+        [HttpGet("list/session")]
         public ActionResult ListBySessionId([FromQuery] int trainingSessionId)
         {
             return this.Run(() =>
@@ -29,7 +29,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(applicants);
             });
         }
-        [HttpGet("list")]
+        [HttpGet("list/user")]
         public ActionResult ListByUserId([FromQuery] int userId)
         {
             return this.Run(() =>

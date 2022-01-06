@@ -35,7 +35,7 @@ namespace MoveYourBody.WebAPI.Controllers
                                                 phone_number = u.Phone_number,
                                                 trainer = u.Trainer,
                                                 location_id = dbContext.Set<Location>().FirstOrDefault(l => l.Id == u.Location_id).Id
-            })
+                                            })
                                             .FirstOrDefault();
 
                 if (user == null)
@@ -116,7 +116,7 @@ namespace MoveYourBody.WebAPI.Controllers
             return this.Run(() =>
             {
                 dbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                //dbContext.Entry(user.Location).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                //dbContext.Entry(user.Location_id).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 dbContext.SaveChanges();
 
                 return Ok(user);
