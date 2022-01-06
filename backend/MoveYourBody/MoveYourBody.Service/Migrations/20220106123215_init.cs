@@ -9,6 +9,20 @@ namespace MoveYourBody.Service.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Applicant",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Training_session_id = table.Column<int>(nullable: false),
+                    User_id = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Applicant", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Category",
                 columns: table => new
                 {
@@ -118,32 +132,6 @@ namespace MoveYourBody.Service.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Applicant",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Training_sessionId = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Applicant", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Applicant_TrainingSession_Training_sessionId",
-                        column: x => x.Training_sessionId,
-                        principalTable: "TrainingSession",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Applicant_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -538,16 +526,6 @@ namespace MoveYourBody.Service.Migrations
                     { 5, "#0dcaf0", "Zsírégető" },
                     { 12, "#3A405A", "Flexibilitás" }
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Applicant_Training_sessionId",
-                table: "Applicant",
-                column: "Training_sessionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Applicant_UserId",
-                table: "Applicant",
-                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
