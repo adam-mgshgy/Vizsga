@@ -4,6 +4,8 @@ import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { catchError, map } from 'rxjs/operators';
 import { ApplicantModel } from '../models/applicant-model';
+import { TrainingSessionModel } from '../models/training-session-model';
+import { UserModel } from '../models/user-model';
 
 @Injectable({
   providedIn: 'root'
@@ -48,9 +50,9 @@ export class ApplicantService {
       })
     );
   }
-  listByUserId(userId: any): Observable<ApplicantModel[]> {
-    return this.http.get<ApplicantModel[]>(`${environment.ApiURL}/applicants/list?userId=${userId}`, ).pipe(
-      map((data: ApplicantModel[]) => {        
+  listByUserId(userId: any): Observable<TrainingSessionModel[]> {
+    return this.http.get<TrainingSessionModel[]>(`${environment.ApiURL}/applicants/list?userId=${userId}`, ).pipe(
+      map((data: TrainingSessionModel[]) => {        
         return data;
       }),
       catchError(err => {
@@ -62,9 +64,9 @@ export class ApplicantService {
       })
     );
   }
-  listBySessionId(sessionId: any): Observable<ApplicantModel[]> {
-    return this.http.get<ApplicantModel[]>(`${environment.ApiURL}/applicants/list?trainingSessionId=${sessionId}`, ).pipe(
-      map((data: ApplicantModel[]) => {        
+  listBySessionId(sessionId: any): Observable<UserModel[]> {
+    return this.http.get<UserModel[]>(`${environment.ApiURL}/applicants/list?trainingSessionId=${sessionId}`, ).pipe(
+      map((data: UserModel[]) => {        
         return data;
       }),
       catchError(err => {

@@ -63,25 +63,23 @@ export class ProfileSettingsComponent implements OnInit {
   save() {
     this.locationService.getLocationId(this.selectedCity).subscribe(
       result => {
-        this.userModify.location_id = result[0].id; 
-        console.log(this.userModify.location_id);
-      },
-      error => console.log(error)
-    )
-    this.userModify.id = this.user.id;
-    this.errorCheck();
-    this.userService.modifyUser(this.userModify).subscribe(
-      (result) => {
-        console.log(result);
-        this.user = this.userModify;
-        console.log(this.user.location_id);
-        console.log(this.userModify.location_id);
-
-      },
-      (error) => console.log(error)
-    )
-  }
-  ngOnInit(): void {
+          this.userModify.location_id = result[0].id; 
+          console.log(this.userModify.location_id);
+          this.userModify.id = this.user.id;
+          this.errorCheck();
+          this.userService.modifyUser(this.userModify).subscribe(
+        (result) => {
+          console.log(result);
+          this.user = this.userModify;
+          console.log(this.user.location_id);
+          console.log(this.userModify.location_id);
+        },
+        (error) => console.log(error)
+      )},
+    error => console.log(error)
+  )
+    }
+    ngOnInit(): void {
     if (window.innerWidth <= 800) {
       this.mobile = true;
     }

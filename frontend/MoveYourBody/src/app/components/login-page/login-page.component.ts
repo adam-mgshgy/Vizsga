@@ -35,7 +35,7 @@ export class LoginpageComponent implements OnInit {
         this.link = "home";
         this.router.navigate(['/', this.link])
         console.log(this.link);
-        // this.userEvent.emit(this.user);
+        //this.userEvent.emit(this.user);
       },
       error => console.log(error)
     );

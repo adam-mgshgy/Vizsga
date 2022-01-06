@@ -11,7 +11,7 @@ import { TrainingSessionModel } from '../models/training-session-model';
 export class TrainingSessionService {
   constructor(private http: HttpClient) { }
 
-  CreateTrainingSession(model: TrainingSessionModel): Observable<TrainingSessionModel> {
+  createTrainingSession(model: TrainingSessionModel): Observable<TrainingSessionModel> {
     return this.http
       .put<TrainingSessionModel>(`${environment.ApiURL}/sessions/create`, model)
       .pipe(
