@@ -62,7 +62,7 @@ export class RegistryPageComponent implements OnInit {
     }
   }
   Register() {
-    this.locationService.getLocationId(this.selectedCounty, this.selectedCity).subscribe(
+    this.locationService.getLocationId(this.selectedCity).subscribe(
       result => this.newUser.location_id = result,
       error => console.log(error)
     )
