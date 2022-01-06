@@ -23,17 +23,13 @@ namespace MoveYourBody.Service.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Training_sessionId")
+                    b.Property<int>("Training_session_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("User_id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Training_sessionId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Applicant");
                 });
@@ -2460,21 +2456,6 @@ namespace MoveYourBody.Service.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("MoveYourBody.Service.Models.Applicant", b =>
-                {
-                    b.HasOne("MoveYourBody.Service.Models.TrainingSession", "Training_session")
-                        .WithMany()
-                        .HasForeignKey("Training_sessionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MoveYourBody.Service.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
