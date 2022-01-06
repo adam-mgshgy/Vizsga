@@ -2403,7 +2403,7 @@ namespace MoveYourBody.Service.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("LocationId")
+                    b.Property<int>("Location_id")
                         .HasColumnType("int");
 
                     b.Property<int>("Minutes")
@@ -2417,14 +2417,10 @@ namespace MoveYourBody.Service.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("double");
 
-                    b.Property<int>("TrainingId")
+                    b.Property<int>("Training_id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LocationId");
-
-                    b.HasIndex("TrainingId");
 
                     b.ToTable("TrainingSession");
                 });
@@ -2477,21 +2473,6 @@ namespace MoveYourBody.Service.Migrations
                     b.HasOne("MoveYourBody.Service.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MoveYourBody.Service.Models.TrainingSession", b =>
-                {
-                    b.HasOne("MoveYourBody.Service.Models.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MoveYourBody.Service.Models.Training", "Training")
-                        .WithMany()
-                        .HasForeignKey("TrainingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

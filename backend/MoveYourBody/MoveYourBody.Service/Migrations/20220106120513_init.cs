@@ -84,6 +84,25 @@ namespace MoveYourBody.Service.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TrainingSession",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Training_id = table.Column<int>(nullable: false),
+                    Location_id = table.Column<int>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    Price = table.Column<double>(nullable: false),
+                    Minutes = table.Column<int>(nullable: false),
+                    Address_name = table.Column<string>(maxLength: 255, nullable: false),
+                    Place_name = table.Column<string>(maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TrainingSession", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -99,37 +118,6 @@ namespace MoveYourBody.Service.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TrainingSession",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    TrainingId = table.Column<int>(nullable: false),
-                    LocationId = table.Column<int>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false),
-                    Price = table.Column<double>(nullable: false),
-                    Minutes = table.Column<int>(nullable: false),
-                    Address_name = table.Column<string>(maxLength: 255, nullable: false),
-                    Place_name = table.Column<string>(maxLength: 255, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TrainingSession", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TrainingSession_Location_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "Location",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TrainingSession_Training_TrainingId",
-                        column: x => x.TrainingId,
-                        principalTable: "Training",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -560,16 +548,6 @@ namespace MoveYourBody.Service.Migrations
                 name: "IX_Applicant_UserId",
                 table: "Applicant",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TrainingSession_LocationId",
-                table: "TrainingSession",
-                column: "LocationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TrainingSession_TrainingId",
-                table: "TrainingSession",
-                column: "TrainingId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -581,22 +559,22 @@ namespace MoveYourBody.Service.Migrations
                 name: "Category");
 
             migrationBuilder.DropTable(
+                name: "Location");
+
+            migrationBuilder.DropTable(
                 name: "Tag");
 
             migrationBuilder.DropTable(
                 name: "TagTraining");
 
             migrationBuilder.DropTable(
+                name: "Training");
+
+            migrationBuilder.DropTable(
                 name: "TrainingSession");
 
             migrationBuilder.DropTable(
                 name: "User");
-
-            migrationBuilder.DropTable(
-                name: "Location");
-
-            migrationBuilder.DropTable(
-                name: "Training");
         }
     }
 }
