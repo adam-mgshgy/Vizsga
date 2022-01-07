@@ -37,10 +37,11 @@ export class TagTrainingService {
       }),
       body: model
     }
+    console.log(options)
     
     return this.http.delete<any>(`${environment.ApiURL}/tagTraining`, options)
     .pipe(
-      map((data: any) => {
+      map((data: any) => {                
         return data;
       }),
       catchError(err => {

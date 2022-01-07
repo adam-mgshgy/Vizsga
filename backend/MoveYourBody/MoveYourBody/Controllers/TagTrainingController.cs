@@ -94,7 +94,7 @@ namespace MoveYourBody.WebAPI.Controllers
         }
 
         [HttpDelete]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(TagTraining tagTraining)
         {
             //return this.Run(() =>
             //{                
@@ -104,16 +104,11 @@ namespace MoveYourBody.WebAPI.Controllers
             //});
             return this.Run(() =>
             {
-                var delete = dbContext.Set<TagTraining>().Where(d => d.Id == id).Select(t => new
-                {
-                    Id = t.Id,
-                    Training_id = t.Training_id,
-                    Tag_id = t.Tag_id,
-                });
-                return BadRequest(new
-                {
-                    ErrorMessage = delete
-                });
+                var delete = dbContext.Set<TagTraining>().Where(d => d.Tag_id == tagTraining.Tag_id && d.Training_id == tagTraining.Training_id).FirstOrDefault();
+                //return BadRequest(new
+                //{                    
+                //    ErrorMessage = delete
+                //});
 
                 dbContext.Remove(delete);
                 dbContext.SaveChanges();
