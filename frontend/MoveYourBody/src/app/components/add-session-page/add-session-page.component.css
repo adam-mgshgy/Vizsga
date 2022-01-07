@@ -3,11 +3,7 @@
     text-align: center;
     font-size: large;
 }
-input[type=number] {
-    margin: auto;
-    text-align: center;
-}
-input[type=text] {
+input[type=number], input[type=text], select {
     margin: auto;
     text-align: center;
 }
