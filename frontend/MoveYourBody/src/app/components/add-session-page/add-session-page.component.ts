@@ -86,7 +86,11 @@ export class AddSessionPageComponent implements OnInit {
     )
   }
   Cancel() {
-    
+    this.newSession = new TrainingSessionModel();
+    this.selectedCity = '';
+    this.selectedCounty = '';
+    this.date = null;
+    this.time = null;
   }
   ngOnInit(): void {
     if (window.innerWidth <= 800) {
@@ -106,11 +110,13 @@ export class AddSessionPageComponent implements OnInit {
   errorCheck() {
     this.messageTitle = 'Hiba';
     if (this.newSession.date == null) {
-      this.messageBox = 'Kérem adjon meg dátumot!';
+      this.messageBox = 'Kérem adjon meg dátumot!'; //TODO hogyan ellenőrizzem, hogy múltbeli-e?
     } else if (this.newSession.minutes == null) {
-      this.messageBox = 'Kérem adja meg az alkalom hosszát percben!'; //TODO ellenőrzések
+      this.messageBox = 'Kérem adja meg az alkalom hosszát percben!'; 
     } else if (this.newSession.price == null) {
       this.messageBox = 'Kérem adja meg az alkalom árát!';
+    }else if (this.newSession.price  < 0 || this.newSession.minutes < 0) {
+      this.messageBox = 'Az érték nem lehet negatív';
     } else if (this.selectedCounty == null) {
       this.messageBox = 'Kérem válasszon megyét!';
     } else if (this.selectedCity == null) {
