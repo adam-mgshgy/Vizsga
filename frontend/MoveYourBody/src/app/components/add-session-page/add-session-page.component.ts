@@ -5,7 +5,7 @@ import { LocationService } from 'src/app/services/location.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TrainingSessionService } from 'src/app/services/training-session.service';
 import { Time } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-session-page',
@@ -32,6 +32,7 @@ export class AddSessionPageComponent implements OnInit {
     private modalService: NgbModal,
     private trainingSessionService: TrainingSessionService,
     private route: ActivatedRoute,
+    private router: Router
 
   ) { }
   TimeChanged(){
@@ -91,6 +92,7 @@ export class AddSessionPageComponent implements OnInit {
     this.selectedCounty = '';
     this.date = null;
     this.time = null;
+    this.router.navigateByUrl('/mytrainings');
   }
   ngOnInit(): void {
     if (window.innerWidth <= 800) {
