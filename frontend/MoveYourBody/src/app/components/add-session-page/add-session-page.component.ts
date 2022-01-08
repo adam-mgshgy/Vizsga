@@ -3,6 +3,9 @@ import { LocationModel } from 'src/app/models/location-model';
 import { TrainingSessionModel } from 'src/app/models/training-session-model';
 import { LocationService } from 'src/app/services/location.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TrainingSessionService } from 'src/app/services/training-session.service';
+import { Time } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-session-page',
@@ -10,6 +13,8 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./add-session-page.component.css']
 })
 export class AddSessionPageComponent implements OnInit {
+  trainingId: number;
+
   mobile: boolean = false;
   locations: LocationModel[] = [];
   counties: LocationModel[] = [];
@@ -17,13 +22,22 @@ export class AddSessionPageComponent implements OnInit {
   selectedCounty: string;
   selectedCity: string;
   newSession: TrainingSessionModel = new TrainingSessionModel();
+  date: Date;
+  time: Time;
   
   public messageBox = '';
   public messageTitle = '';
   constructor(
     private locationService: LocationService,
     private modalService: NgbModal,
+    private trainingSessionService: TrainingSessionService,
+    private route: ActivatedRoute,
+
   ) { }
+  TimeChanged(){
+    this.newSession.date = new Date(this.date + ' ' + this.time).toISOString();
+    //console.log("iso:" +this.newSession.date.toISOString());
+  }
   CountyChanged(value) {
     for (const item of this.counties) {
       if (item.county_name == value) {
@@ -55,7 +69,21 @@ export class AddSessionPageComponent implements OnInit {
     }
   }
   SaveSession() {
+    this.errorCheck();
+    this.locationService.getLocationId(this.selectedCity).subscribe(
+      result => this.newSession.location_id = result,
+      error => console.log(error)
+    )
+    this.newSession.id = 0;
+    this.newSession.training_id = this.trainingId;
+    this.errorCheck();
+    this.trainingSessionService.createTrainingSession(this.newSession).subscribe(
+      (result) => {
+        console.log(this.newSession)
+      },
+      (error) => console.log(error)
 
+    )
   }
   Cancel() {
     
@@ -69,20 +97,30 @@ export class AddSessionPageComponent implements OnInit {
       result => this.counties = result,
       error => console.log(error)
     );
+    this.route.paramMap.subscribe((params) => {
+      this.trainingId = Number(params.get('id'));
+      console.log(this.trainingId);
+    }
+    );
   }
   errorCheck() {
     this.messageTitle = 'Hiba';
-    if (this.newSession.date == '') {
+    if (this.newSession.date == null) {
       this.messageBox = 'Kérem adjon meg dátumot!';
     } else if (this.newSession.minutes == null) {
-      this.messageBox = 'Kérem adja meg az alkalom hosszát percben!';
+      this.messageBox = 'Kérem adja meg az alkalom hosszát percben!'; //TODO ellenőrzések
     } else if (this.newSession.price == null) {
       this.messageBox = 'Kérem adja meg az alkalom árát!';
     } else if (this.selectedCounty == null) {
       this.messageBox = 'Kérem válasszon megyét!';
     } else if (this.selectedCity == null) {
       this.messageBox = 'Kérem válasszon várost!';
-    } else {
+    } else if (this.newSession.address_name == '') {
+      this.messageBox = 'Kérem adja meg az alkalom címét!';
+    } else if (this.newSession.place_name == '') {
+      this.messageBox = 'Kérem adja meg a létesítmény nevét!';
+    }
+     else {
       this.messageTitle = 'Siker';
       this.messageBox = 'Sikeres mentés!';
     }

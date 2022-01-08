@@ -141,6 +141,8 @@ export class MyTrainingsPageComponent implements OnInit {
       price: 4000,
       minutes: 60,
       location_id: 1,
+      address_name: '',
+      place_name: '',
       training_id: 1
     },
     {
@@ -149,6 +151,8 @@ export class MyTrainingsPageComponent implements OnInit {
       price: 5000,
       minutes: 70,
       location_id: 1,
+      address_name: '',
+      place_name: '',
       training_id: 1
     },
     {
@@ -157,6 +161,8 @@ export class MyTrainingsPageComponent implements OnInit {
       price: 5000,
       minutes: 70,
       location_id: 1,
+      address_name: '',
+      place_name: '',
       training_id: 1
     },
     {
@@ -165,6 +171,8 @@ export class MyTrainingsPageComponent implements OnInit {
       price: 5000,
       minutes: 70,
       location_id: 1,
+      address_name: '',
+      place_name: '',
       training_id: 1
     },
   ];

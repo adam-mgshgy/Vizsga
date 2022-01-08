@@ -21,7 +21,7 @@
               <button id="modify" *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3" [routerLink]="'/createtraining/' + training.id">
                 Szerkesztés
               </button>
-              <button id="newSession" *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3" routerLink="/addsession">
+              <button id="newSession" *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3" [routerLink]="'/addsession/'  + training.id">
                 Új alkalom
               </button>
               <button id="cancel" *ngIf="users[0].trainer == false" class="btn btn-danger mb-3">

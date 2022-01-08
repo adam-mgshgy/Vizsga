@@ -1,13 +1,14 @@
 <div [ngStyle]="{'width.%': mobile ? '100' : '80'}" class="container-fluid">
     <form>
+        <!-- <h1 *ngIf="trainingId">Alkalom szerkesztése</h1> -->
         <h1>Új alkalom hozzáadása</h1>
         <div class="mb-3">
             <label for="date" class="form-label">
                 Dátum:
             </label>
             <br>
-            <input type="date" class="datepicker" data-date-format="mm/dd/yyyy" id="date" name="date" required>
-            <input type="time" name="time" id="time">
+            <input type="date" class="datepicker" data-date-format="dd/mm/yyyy" id="date" name="date" required [(ngModel)]="date">
+            <input *ngIf="date" type="time" name="time" id="time" required [(ngModel)]="time" (ngModelChange)="TimeChanged()">
         </div>
         <div class="mb-3">
             <label class="form-label fs-4"> Helyszín:</label>
