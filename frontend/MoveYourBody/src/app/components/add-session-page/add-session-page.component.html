@@ -6,46 +6,71 @@
                 Dátum:
             </label>
             <br>
-            <input type="date" class="datepicker" data-date-format="mm/dd/yyyy" id="date" name="date" required>
-            <input type="time" name="time" id="time">
+            <input type="date" class="datepicker" data-date-format="dd/mm/yyyy" id="date" name="date" required [(ngModel)]="date">
+            <input *ngIf="date" type="time" name="time" id="time" required [(ngModel)]="time" (ngModelChange)="TimeChanged()">
         </div>
-            <div class="mb-3">
-               Helyszín:
-            </div>
-            <div class="mb-3">
-                <label for="county" class="form-label">
-                    Megye:
-                </label>
-                <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-control" id="county" name="county" required>
-            </div>
-            <div class="mb-3">
-                <label for="city" class="form-label">
-                    Város:
-                </label>
-                <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-control" id="city" name="city" required>
-            </div>
-            <div class="mb-3">
-                <label for="address" class="form-label">
-                    Közterület neve, száma:
-                </label>
-                <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-control" id="address" name="address" required>
-            </div>
+        <div class="mb-3">
+            <label class="form-label fs-4"> Helyszín:</label>
+        </div>
+        <div class="mb-3">
+            <label for="county" class="form-label fs-5">
+                Megye*
+            </label>
+            <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="county" name="county" required (ngModelChange)="CountyChanged($event)" [(ngModel)]="selectedCounty">
+                <option *ngFor="let county of counties" [value]="county.county_name">{{county.county_name}}</option>
+            </select>
+        </div>
+        <div *ngIf="selectedCounty" class="mb-3">
+            <label for="city" class="form-label fs-5">
+                Város*
+            </label>
+            <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="city" name="city" required (ngModelChange)="CityChanged($event)" [(ngModel)]="selectedCity">
+                <option value=""></option>
+                <option *ngFor="let city of cities" [value]="city.city_name">{{city.city_name}}</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">
+                Közterület neve, száma:
+            </label>
+            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-control" id="address" name="address" required [(ngModel)]="newSession.address_name">
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">
+                Létesítmény neve:
+            </label>
+            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-control" id="place" name="place" required [(ngModel)]="newSession.place_name">
+        </div>
 
         <div class="mb-3">
             <label for="price" class="form-label">
                 Edzés ára forintban:
             </label>
-            <input [ngStyle]="{'width.%': mobile ? '30' : '20'}" type="number" class="form-control" id="price" name="price" required>
+            <input [ngStyle]="{'width.%': mobile ? '30' : '20'}" type="number" class="form-control" id="price" name="price" required [(ngModel)]="newSession.price">
         </div>
         <div class="mb-3">
             <label for="minutes" class="form-label">
                 Hossz percben:
             </label>
-            <input [ngStyle]="{'width.%': mobile ? '30' : '20'}" type="number" class="form-control" id="minutes" name="minutes" required>
+            <input [ngStyle]="{'width.%': mobile ? '30' : '20'}" type="number" class="form-control" id="minutes" name="minutes" required [(ngModel)]="newSession.minutes">
         </div>
         <div class="mb-3">
-            <button id="createButton" type="submit" class="btn btn-success fs-5">Alkalom mentése</button>
-            <button class="btn btn-danger ms-2 fs-5">Mégsem</button>
+            <button id="createButton" type="submit" class="btn btn-success fs-5" (click)="SaveSession()" (click)="open(content)">Alkalom mentése</button>
+            <button class="btn btn-danger ms-2 fs-5" (click)="Cancel()">Mégsem</button>
         </div>
     </form>
 </div>
+<!--Modal popup-->
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">{{messageTitle}}</h4>
+        <mat-icon id="close" class="close-icon" color="warn" class="close" (click)="close()">close</mat-icon>
+    </div>
+    <div class="modal-body">
+        {{messageBox}}
+    </div>
+    <div class="modal-footer">
+
+        <button type="button" class="btn btn-outline-dark" (click)="close()">Ok</button>
+    </div>
+</ng-template>
