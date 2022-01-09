@@ -94,6 +94,9 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(training);
             });
         }
+
+        
+
         [HttpGet("TrainerId/{trainerId}")]
         public ActionResult GetByTrainerId(int trainerId)
         {

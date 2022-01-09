@@ -178,47 +178,52 @@ export class CategoryPageComponent implements OnInit {
               this.category_id = item.id;
             }
           }
+          //
+
+
+          
+          this.tagTrainingService.getTags(this.category_id).subscribe(
+            result => console.log(result),
+            error => console.log(error)
+          );
+         
           this.trainingService.getByCategory(this.category_id).subscribe(
             (result) => {
-              this.allTrainings = result;
-              this.trainings = this.allTrainings.filter(
-                (t) => t.category_id == this.category_id
-              );
-              for (const item of this.trainings) {
-                this.tagTrainingService.getByTraining(item.id).subscribe(
-                  result => {
-                    this.tagTraining = result;
-                    for (const tag of this.tags) {
-                      for (const tagTr of this.tagTraining) {
-                        if (tagTr.tag_id == tag.id) {
-                          this.selectedTags.push(tag);
-                          console.log(this.selectedTags);
-                        }
-                      }
-                    }
-                  },
-                  error => console.log(error)
-                );
-              }
+              this.trainings = result;
+              // this.trainings = this.allTrainings.filter(
+              //   (t) => t.category_id == this.category_id
+              // );
+              // for (const item of this.trainings) {
+              //   this.tagTrainingService.getByTraining(item.id).subscribe(
+              //     (result) => {
+              //       //this.tagTraining = result;
+              //       console.log(this.tagTraining);
+              //       for (const tag of this.tags) {
+              //         for (const tagTr of this.tagTraining) {
+              //           if (tagTr.tag_id == tag.id) {
+              //             this.selectedTags.push(tag);
+              //           }
+              //         }
+              //       }
+              //     },
+              //     (error) => console.log(error)
+              //   );
+              // }
             },
             (error) => console.log(error)
           );
         });
-       
       },
-      
+
       (error) => console.log(error)
     );
     this.tagService.getTags().subscribe(
-      result=> this.tags = result,
-      error=> console.log(error)
+      (result) => (this.tags = result),
+      (error) => console.log(error)
     );
-    
-   
   }
-  getTags(trainingId: number){
-    console.log(trainingId);
-  }
+  actualtags: TagModel[] = [];
+  actualTags(training_id: number) {}
   onResized(event: ResizedEvent) {
     this.tagsOnMobile();
   }
