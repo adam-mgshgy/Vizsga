@@ -67,3 +67,17 @@ D:\magashegyi_adam\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\ne
 D:\magashegyi_adam\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.dll
 D:\magashegyi_adam\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.pdb
 D:\magashegyi_adam\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.genruntimeconfig.cache
+D:\Magashegyi Ádám\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\cities.csv
+D:\Magashegyi Ádám\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\MoveYourBody.Service.deps.json
+D:\Magashegyi Ádám\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\MoveYourBody.Service.runtimeconfig.json
+D:\Magashegyi Ádám\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\MoveYourBody.Service.runtimeconfig.dev.json
+D:\Magashegyi Ádám\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\MoveYourBody.Service.dll
+D:\Magashegyi Ádám\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\MoveYourBody.Service.pdb
+D:\Magashegyi Ádám\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.csproj.AssemblyReference.cache
+D:\Magashegyi Ádám\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.GeneratedMSBuildEditorConfig.editorconfig
+D:\Magashegyi Ádám\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.AssemblyInfoInputs.cache
+D:\Magashegyi Ádám\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.AssemblyInfo.cs
+D:\Magashegyi Ádám\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.csproj.CoreCompileInputs.cache
+D:\Magashegyi Ádám\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.dll
+D:\Magashegyi Ádám\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.pdb
+D:\Magashegyi Ádám\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.genruntimeconfig.cache

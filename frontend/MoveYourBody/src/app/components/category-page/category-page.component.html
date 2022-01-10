@@ -30,10 +30,11 @@
 
               <p class="card-text">{{training.description}}</p>
 
-             <span *ngFor="let tag of tagTraining | slice:0:this.counter">
-                <button id="tag"  [ngStyle]="{'background-color':'black', 'border-color':'white'}"
-                   class="btn fw-bold me-1 mb-1" [textContent]="training.id == tag.training_id ? tag.tag_id : ''"></button></span>
-                <select  *ngIf="selectedTags.length > 4" id="moreTag" class="btn fw-bold me-1 mb-1">
+             <span *ngFor="let tag of tagTraining; let t = index">
+                <button *ngIf="training.id == tag.training_id && tag.tag_id == tags[tag.tag_id-1].id ? 'true' : ''" id="tag"  [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}"
+                   class="btn fw-bold me-1 mb-1" >{{tags[tag.tag_id-1].name}}</button>
+              </span>
+                <select  *ngIf=" " id="moreTag" class="btn fw-bold me-1 mb-1">
                   <option value="">...</option>
                   <option *ngFor="let tag of selectedTags" value="">{{tag.name}}</option>
                 </select>

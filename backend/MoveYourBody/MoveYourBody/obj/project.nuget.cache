@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "azxSeULRBx2agyObz0Oh2DJQ8d2WeaTIW8upteWXXXIaNFn1crNYtPLMka5a7+e9ZXLpoFWM8/JcJ4eBy8imbQ==",
+  "dgSpecHash": "wI6eDQ1/9QN4eMZqLYsMq/jr2eDAwHaK2CTWXOF1MoKDyhgwDBa2V78+Hf7fqGE12f54WHEu1CYFfJOH8CbWIQ==",
   "success": true,
-  "projectFilePath": "D:\\Magashegyi_Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\MoveYourBody.WebAPI.csproj",
+  "projectFilePath": "D:\\Magashegyi Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\MoveYourBody.WebAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\magashegyi.adam\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.21\\microsoft.aspnetcore.authentication.jwtbearer.3.1.21.nupkg.sha512",
     "C:\\Users\\magashegyi.adam\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",

@@ -35,6 +35,8 @@ export class CategoryPageComponent implements OnInit {
   mobile: boolean = false;
 
   counter = 0;
+  index: number = 4;
+  tagCounter = [];  
   public categories: CategoryModel[] = [];
   public trainings: TrainingModel[] = [];
   public allTrainings: TrainingModel[] = [];
@@ -166,6 +168,7 @@ export class CategoryPageComponent implements OnInit {
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
 
     this.tagsOnMobile();
+    console.log(this.index);
   }
   upload() {
     this.categoriesService.getCategories().subscribe(
@@ -180,16 +183,24 @@ export class CategoryPageComponent implements OnInit {
           }
           //
 
-
-          
           this.tagTrainingService.getTags(this.category_id).subscribe(
-            result => console.log(result),
-            error => console.log(error)
+            (result) => {
+              this.tagTraining = result;
+            },
+            (error) => console.log(error)
           );
-         
+
           this.trainingService.getByCategory(this.category_id).subscribe(
             (result) => {
               this.trainings = result;
+              for (const item of this.trainings) {
+                this.tagCounter.push({
+                  training_id: item.id,
+                  count: 0,
+              });
+              }
+
+              console.log(this.tagCounter[0].count)
               // this.trainings = this.allTrainings.filter(
               //   (t) => t.category_id == this.category_id
               // );

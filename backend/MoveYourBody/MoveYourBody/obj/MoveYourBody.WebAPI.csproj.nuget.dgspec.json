@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Magashegyi_Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\MoveYourBody.WebAPI.csproj": {}
+    "D:\\Magashegyi Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\MoveYourBody.WebAPI.csproj": {}
   },
   "projects": {
-    "D:\\Magashegyi_Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody.Service\\MoveYourBody.Service.csproj": {
+    "D:\\Magashegyi Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody.Service\\MoveYourBody.Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Magashegyi_Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody.Service\\MoveYourBody.Service.csproj",
+        "projectUniqueName": "D:\\Magashegyi Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody.Service\\MoveYourBody.Service.csproj",
         "projectName": "MoveYourBody.Service",
-        "projectPath": "D:\\Magashegyi_Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody.Service\\MoveYourBody.Service.csproj",
+        "projectPath": "D:\\Magashegyi Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody.Service\\MoveYourBody.Service.csproj",
         "packagesPath": "C:\\Users\\magashegyi.adam\\.nuget\\packages\\",
-        "outputPath": "D:\\Magashegyi_Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody.Service\\obj\\",
+        "outputPath": "D:\\Magashegyi Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody.Service\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
@@ -86,14 +86,14 @@
         }
       }
     },
-    "D:\\Magashegyi_Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\MoveYourBody.WebAPI.csproj": {
+    "D:\\Magashegyi Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\MoveYourBody.WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Magashegyi_Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\MoveYourBody.WebAPI.csproj",
+        "projectUniqueName": "D:\\Magashegyi Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\MoveYourBody.WebAPI.csproj",
         "projectName": "MoveYourBody.WebAPI",
-        "projectPath": "D:\\Magashegyi_Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\MoveYourBody.WebAPI.csproj",
+        "projectPath": "D:\\Magashegyi Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\MoveYourBody.WebAPI.csproj",
         "packagesPath": "C:\\Users\\magashegyi.adam\\.nuget\\packages\\",
-        "outputPath": "D:\\Magashegyi_Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\obj\\",
+        "outputPath": "D:\\Magashegyi Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
@@ -114,8 +114,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\Magashegyi_Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody.Service\\MoveYourBody.Service.csproj": {
-                "projectPath": "D:\\Magashegyi_Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody.Service\\MoveYourBody.Service.csproj"
+              "D:\\Magashegyi Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody.Service\\MoveYourBody.Service.csproj": {
+                "projectPath": "D:\\Magashegyi Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody.Service\\MoveYourBody.Service.csproj"
               }
             }
           }
