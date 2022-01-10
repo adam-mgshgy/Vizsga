@@ -124,13 +124,10 @@ namespace MoveYourBody.WebAPI.Controllers
                 foreach (var item in lista)
                 {
                     tagTraining.Add(dbContext.Set<TagTraining>().Where(t => t.Training_id == Convert.ToInt32(item)).FirstOrDefault());
-                }
+                }                
 
 
-
-
-
-                return Ok(tagTraining);
+                return Ok(tagTraining.OrderBy(t => t.Training_id));
             });
         }
 

@@ -239,30 +239,43 @@ export class CategoryPageComponent implements OnInit {
     this.tagsOnMobile();
   }
   tagsOnMobile() {
-    if (window.innerWidth < 2250 && window.innerWidth > 1950) {
-      this.counter = 5;
-    } else if (window.innerWidth <= 1950 && window.innerWidth > 1700) {
-      this.counter = 4;
-    } else if (window.innerWidth <= 1700 && window.innerWidth > 1399) {
-      this.counter = 3;
-    } else if (window.innerWidth <= 1399 && window.innerWidth > 1300) {
-      this.counter = 5;
-    } else if (window.innerWidth <= 1300 && window.innerWidth > 1150) {
-      this.counter = 4;
-    } else if (window.innerWidth <= 1150 && window.innerWidth > 950) {
-      this.counter = 3;
-    } else if (window.innerWidth <= 950 && window.innerWidth > 767) {
-      this.counter = 2;
-    } else if (window.innerWidth <= 767 && window.innerWidth > 650) {
-      this.counter = 5;
-    } else if (window.innerWidth <= 650 && window.innerWidth > 580) {
-      this.counter = 4;
-    } else if (window.innerWidth <= 580 && window.innerWidth > 480) {
-      this.counter = 3;
-    } else if (window.innerWidth <= 480) {
-      this.counter = 2;
+    if (window.innerWidth < 2250 && window.innerWidth > 1950) {//5
+      this.tagCounter[0].count = 5;
+    } else if (window.innerWidth <= 1950 && window.innerWidth > 1700) {//4
+      this.tagCounter[0].count = 5;
+
+    } else if (window.innerWidth <= 1700 && window.innerWidth > 1399) {//3
+      this.tagCounter[0].count = 5;
+
+    } else if (window.innerWidth <= 1399 && window.innerWidth > 1300) {//5
+      this.tagCounter[0].count = 5;
+
+    } else if (window.innerWidth <= 1300 && window.innerWidth > 1150) {//4
+      this.tagCounter[0].count = 5;
+
+    } else if (window.innerWidth <= 1150 && window.innerWidth > 950) {//3
+      this.tagCounter[0].count = 12;
+      this.tagCounter[1].count = 4;
+//kivonni az elozo traininghez tartozo tageket
+
+    } else if (window.innerWidth <= 950 && window.innerWidth > 767) {//2
+      this.tagCounter[0].count = 5;
+
+    } else if (window.innerWidth <= 767 && window.innerWidth > 650) {//5
+      this.tagCounter[0].count = 5;
+
+    } else if (window.innerWidth <= 650 && window.innerWidth > 580) {//4
+      this.tagCounter[0].count = 5;
+
+    } else if (window.innerWidth <= 580 && window.innerWidth > 480) {//3
+      this.tagCounter[0].count = 5;
+
+    } else if (window.innerWidth <= 480) {//2
+      this.tagCounter[0].count = 5;
+
     } else {
-      this.counter = 6;
+      this.tagCounter[0].count = 5;
+
     }
   }
 }
