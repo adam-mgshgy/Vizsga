@@ -36,7 +36,7 @@ export class CategoryPageComponent implements OnInit {
 
   counter = 0;
   index: number = 4;
-  tagCounter = [];  
+  tagCounter = [];
   public categories: CategoryModel[] = [];
   public trainings: TrainingModel[] = [];
   public allTrainings: TrainingModel[] = [];
@@ -168,7 +168,32 @@ export class CategoryPageComponent implements OnInit {
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
 
     this.tagsOnMobile();
+
     console.log(this.index);
+  }
+  moreTag(training_id: number): boolean {
+    let index = 0;    
+
+    for (const item of this.tagTraining) {
+      if (item.training_id == training_id) {
+        
+        if (this.tagCounter.includes(training_id)) {
+          this.tagCounter.push(item, index)
+        }
+        else{          
+          this.tagCounter[this.tagCounter.indexOf(item)]++;
+        }                        
+        console.log(item, training_id, index);
+      }          
+    }
+    
+    // if (this.tagCounter[] >= 2) {
+    //   console.log(index)
+    //   return true;
+    // }
+    console.log(this.tagCounter)
+    
+    return false;
   }
   upload() {
     this.categoriesService.getCategories().subscribe(
@@ -186,6 +211,7 @@ export class CategoryPageComponent implements OnInit {
           this.tagTrainingService.getTags(this.category_id).subscribe(
             (result) => {
               this.tagTraining = result;
+              
             },
             (error) => console.log(error)
           );
@@ -197,10 +223,10 @@ export class CategoryPageComponent implements OnInit {
                 this.tagCounter.push({
                   training_id: item.id,
                   count: 0,
-              });
+                });
               }
 
-              console.log(this.tagCounter[0].count)
+              console.log(this.tagCounter[0].count);
               // this.trainings = this.allTrainings.filter(
               //   (t) => t.category_id == this.category_id
               // );
@@ -239,43 +265,43 @@ export class CategoryPageComponent implements OnInit {
     this.tagsOnMobile();
   }
   tagsOnMobile() {
-    if (window.innerWidth < 2250 && window.innerWidth > 1950) {//5
+    if (window.innerWidth < 2250 && window.innerWidth > 1950) {
+      //5
       this.tagCounter[0].count = 5;
-    } else if (window.innerWidth <= 1950 && window.innerWidth > 1700) {//4
+    } else if (window.innerWidth <= 1950 && window.innerWidth > 1700) {
+      //4
       this.tagCounter[0].count = 5;
-
-    } else if (window.innerWidth <= 1700 && window.innerWidth > 1399) {//3
+    } else if (window.innerWidth <= 1700 && window.innerWidth > 1399) {
+      //3
       this.tagCounter[0].count = 5;
-
-    } else if (window.innerWidth <= 1399 && window.innerWidth > 1300) {//5
+    } else if (window.innerWidth <= 1399 && window.innerWidth > 1300) {
+      //5
       this.tagCounter[0].count = 5;
-
-    } else if (window.innerWidth <= 1300 && window.innerWidth > 1150) {//4
+    } else if (window.innerWidth <= 1300 && window.innerWidth > 1150) {
+      //4
       this.tagCounter[0].count = 5;
-
-    } else if (window.innerWidth <= 1150 && window.innerWidth > 950) {//3
-      this.tagCounter[0].count = 12;
-      this.tagCounter[1].count = 4;
-//kivonni az elozo traininghez tartozo tageket
-
-    } else if (window.innerWidth <= 950 && window.innerWidth > 767) {//2
+    } else if (window.innerWidth <= 1150 && window.innerWidth > 950) {
+      //3
+      // this.tagCounter[0].count = 12;
+      // this.tagCounter[1].count = 4;
+      //kivonni az elozo traininghez tartozo tageket
+    } else if (window.innerWidth <= 950 && window.innerWidth > 767) {
+      //2
       this.tagCounter[0].count = 5;
-
-    } else if (window.innerWidth <= 767 && window.innerWidth > 650) {//5
+    } else if (window.innerWidth <= 767 && window.innerWidth > 650) {
+      //5
       this.tagCounter[0].count = 5;
-
-    } else if (window.innerWidth <= 650 && window.innerWidth > 580) {//4
+    } else if (window.innerWidth <= 650 && window.innerWidth > 580) {
+      //4
       this.tagCounter[0].count = 5;
-
-    } else if (window.innerWidth <= 580 && window.innerWidth > 480) {//3
+    } else if (window.innerWidth <= 580 && window.innerWidth > 480) {
+      //3
       this.tagCounter[0].count = 5;
-
-    } else if (window.innerWidth <= 480) {//2
+    } else if (window.innerWidth <= 480) {
+      //2
       this.tagCounter[0].count = 5;
-
     } else {
       this.tagCounter[0].count = 5;
-
     }
   }
 }
