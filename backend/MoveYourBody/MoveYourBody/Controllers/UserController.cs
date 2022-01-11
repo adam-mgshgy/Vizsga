@@ -83,6 +83,28 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(register);
             });
         }
+        [HttpGet("getTrainer")]
+        public ActionResult GetTrainer(int training_id)
+        {
+            return this.Run(() =>
+            {
+                var training = dbContext.Set<Training>().Where(t => t.Id == training_id).FirstOrDefault();
+
+                var trainer = dbContext.Set<User>().Where(t => t.Id == training.Trainer_id).Select(t => new { 
+                
+                    Id = t.Id,
+                    Full_name = t.Full_name,
+                    Email = "",
+                    Location_id = "",
+                    Password = "",
+                    Phone_number = "",
+                    Trainer = true
+                }).FirstOrDefault();
+
+                return Ok(trainer);
+            });
+        }
+
         [HttpGet("login")]
         public ActionResult Login([FromQuery] string email, string password) 
         {
