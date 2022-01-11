@@ -29,9 +29,9 @@ export class UserService {
       })
     );
   }
-  getUserById(id: any): Observable<UserModel[]> {
-    return this.http.get<UserModel[]>(`${environment.ApiURL}/user/${id}`).pipe(
-      map((data: UserModel[]) => {
+  getUserById(id: any): Observable<UserModel> {
+    return this.http.get<UserModel>(`${environment.ApiURL}/user/${id}`).pipe(
+      map((data: UserModel) => {
         return data;
       }),
       catchError(err => {
@@ -43,6 +43,21 @@ export class UserService {
       })
     );
   }
+  getTrainer(training_id: any): Observable<UserModel> {
+    return this.http.get<UserModel>(`${environment.ApiURL}/user/getTrainer?training_id=${training_id}`).pipe(
+      map((data: any) => {
+        return data;
+      }),
+      catchError(err => {
+        if (!environment.production && err.status == 404) {
+          return of(err);
+        } 
+        else 
+          throw err;
+      })
+    );
+  }
+
   Login(email, password): Observable<UserModel> {
     return this.http.get<UserModel>(`${environment.ApiURL}/user/login?email=${email}&password=${password}`).pipe(
       map((data: UserModel) => {

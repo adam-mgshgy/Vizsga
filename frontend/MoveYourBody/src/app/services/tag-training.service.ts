@@ -37,10 +37,11 @@ export class TagTrainingService {
       }),
       body: model
     }
+    console.log(options)
     
     return this.http.delete<any>(`${environment.ApiURL}/tagTraining`, options)
     .pipe(
-      map((data: any) => {
+      map((data: any) => {                
         return data;
       }),
       catchError(err => {
@@ -82,4 +83,20 @@ export class TagTrainingService {
       })
     );
   }
+
+  getTags(id: any): Observable<TagTrainingModel[]> {
+    return this.http.get<TagTrainingModel[]>(`${environment.ApiURL}/tagTraining/GetTags?training_id=${id}`, ).pipe(
+      map((data: TagTrainingModel[]) => {        
+        return data;
+      }),
+      catchError(err => {
+        if (!environment.production && err.status == 404) {
+          return of(err);
+        } 
+        else 
+          throw err;
+      })
+    );
+  }
+
 }

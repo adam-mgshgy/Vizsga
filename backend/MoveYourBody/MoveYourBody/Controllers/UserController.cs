@@ -57,16 +57,15 @@ namespace MoveYourBody.WebAPI.Controllers
                     ErrorMessage = "A megadott e-mail címmel már történt korábban regisztráció"
                 });
                 User register = null;
-                var location = dbContext.Set<Location>().FirstOrDefault(l => l.Id == user.Location_id);
-                if (location == null)
-                {
-                    return BadRequest(new
-                    {
-                        ErrorMessage = "A megadott város nem létezik"
-                    });
-                }
-                else
-                {
+                //var location = dbContext.Set<Location>().FirstOrDefault(l => l.Id == user.Location_id);
+                //if (location == null)
+                //{
+                //    return BadRequest(new
+                //    {
+                //        ErrorMessage = "A megadott város nem létezik"
+                //    });
+                //}
+                
                     register = new User()
                     {
                         Id = user.Id,
@@ -75,15 +74,37 @@ namespace MoveYourBody.WebAPI.Controllers
                         Password = user.Password,
                         Phone_number = user.Phone_number,
                         Trainer = user.Trainer,
-                        Location_id = dbContext.Set<Location>().FirstOrDefault(l => l.Id == user.Location_id).Id
+                        Location_id = user.Location_id
                     };
-                }
+                
                 
                 dbContext.Set<User>().Add(register);
                 dbContext.SaveChanges();
                 return Ok(register);
             });
         }
+        [HttpGet("getTrainer")]
+        public ActionResult GetTrainer(int training_id)
+        {
+            return this.Run(() =>
+            {
+                var training = dbContext.Set<Training>().Where(t => t.Id == training_id).FirstOrDefault();
+
+                var trainer = dbContext.Set<User>().Where(t => t.Id == training.Trainer_id).Select(t => new { 
+                
+                    Id = t.Id,
+                    Full_name = t.Full_name,
+                    Email = "",
+                    Location_id = "",
+                    Password = "",
+                    Phone_number = "",
+                    Trainer = true
+                }).FirstOrDefault();
+
+                return Ok(trainer);
+            });
+        }
+
         [HttpGet("login")]
         public ActionResult Login([FromQuery] string email, string password) 
         {
