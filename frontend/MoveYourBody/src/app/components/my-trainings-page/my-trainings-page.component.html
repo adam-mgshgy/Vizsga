@@ -18,33 +18,34 @@
               </h4>
             </div>
             <div class="col-12">
-              <button id="modify" *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3" [routerLink]="'/createtraining/' + training.id">
+              <button id="modify" *ngIf="user.trainer" class="btn btn-primary mb-3 me-3" [routerLink]="'/createtraining/' + training.id">
                 Szerkesztés
               </button>
-              <button id="newSession" *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3" [routerLink]="'/addsession/'  + training.id">
+              <button id="newSession" *ngIf="user.trainer" class="btn btn-primary mb-3 me-3" [routerLink]="'/addsession/'  + training.id">
                 Új alkalom
               </button>
-              <button id="cancel" *ngIf="users[0].trainer == false" class="btn btn-danger mb-3">
+              <button id="cancel" *ngIf="user.trainer == false" class="btn btn-danger mb-3">
                 Lemondás
               </button>
-              <button id="sessions" *ngIf="users[0].trainer" class="btn btn-primary mb-3 me-3" (click)="open(content)">
+              <button id="sessions" *ngIf="user.trainer" class="btn btn-primary mb-3 me-3" (click)="open(content)">
                 Alkalmak
-              </button>
-              <button id="delete" *ngIf="users[0].trainer" class="btn btn-danger mb-3 ">
-                Törlés
-              </button>
+              </button>              
             </div>
-            <h6 class="card-title text-white">{{ users[0].full_name }}</h6>
+            <h6 class="card-title text-white">{{ user.full_name }}</h6>
           </div>
           <div class="col-md-12" id="lightBckg">
             <div class="card-body">
               <p class="card-text">{{training.description}}</p>
-              <button id="tag" [ngStyle]="{'background-color':tag.colour, 'border-color':'tag.colour'}" *ngFor="let tag of allTags | slice:0:this.counter" class="btn fw-bold me-1 mb-1">{{tag.name}}</button>
-              <select *ngIf="allTags.length > 4" id="moreTag" class="btn fw-bold me-1 mb-1">
-                <option value="">...</option>
-                <option *ngFor="let tag of allTags" value="tag.name">{{tag.name}}</option>
-              </select>
-              <p class="card-text fw-bold"><a class="text-decoration-none text-black" routerLink="">{{locations[users[i].location_id-1].city_name}}</a></p>
+
+              <span *ngFor="let tag of tagTraining">
+                <button *ngIf="training.id == tag.training_id && tag.tag_id == tags[tag.tag_id-1].id  ? 'true' : ''" id="tag"  [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}"
+                   class="btn fw-bold me-1 mb-1" >{{tags[tag.tag_id-1].name}}</button>
+              </span>
+                <select  *ngIf=" " id="moreTag" class="btn fw-bold me-1 mb-1">
+                  <option value="">...</option>
+                  <option *ngFor="let tag of tags" value="">{{tag.name}}</option>
+                </select>
+              <!-- <p class="card-text fw-bold"><a class="text-decoration-none text-black" routerLink="">{{locations[users[i].location_id-1].city_name}}</a></p> -->
             </div>
           </div>
         </div>
