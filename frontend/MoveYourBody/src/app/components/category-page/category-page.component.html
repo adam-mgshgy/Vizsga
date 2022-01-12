@@ -18,7 +18,7 @@
               <h4 class="card-title text-white mb-3 me-3">{{training.name}}</h4>
             </div>
             <div class="col">
-              <button class="btn btn-primary mb-3" routerLink="/training" >Megnézem</button>
+              <button class="btn btn-primary mb-3" [routerLink]="'/training/' + training.id" >Megnézem</button>
 
             </div>
             
@@ -30,7 +30,7 @@
 
               <p class="card-text">{{training.description}}</p>
 
-             <span *ngFor="let tag of tagTraining; let t = index">
+              <span *ngFor="let tag of tagTraining; let t = index">
                 <button *ngIf="training.id == tag.training_id && tag.tag_id == tags[tag.tag_id-1].id  ? 'true' : ''" id="tag"  [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}"
                    class="btn fw-bold me-1 mb-1" >{{tags[tag.tag_id-1].name}}</button>
               </span>
