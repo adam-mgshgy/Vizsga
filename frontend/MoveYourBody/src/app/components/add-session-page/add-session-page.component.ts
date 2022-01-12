@@ -37,7 +37,6 @@ export class AddSessionPageComponent implements OnInit {
   ) { }
   TimeChanged(){
     this.newSession.date = new Date(this.date + ' ' + this.time).toISOString();
-    //console.log("iso:" +this.newSession.date.toISOString());
   }
   CountyChanged(value) {
     for (const item of this.counties) {
@@ -147,7 +146,6 @@ export class AddSessionPageComponent implements OnInit {
   close() {
     this.modalService.dismissAll();
   }
-
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';

@@ -1,6 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { CategoryModel } from 'src/app/models/category-model';
-
+import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-mainpage',
   templateUrl: './main-page.component.html',

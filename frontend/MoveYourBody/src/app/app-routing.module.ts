@@ -12,6 +12,7 @@ import { TrainingPageComponent } from './components/training-page/training-page.
 import { MyTrainingsPageComponent } from './components/my-trainings-page/my-trainings-page.component';
 
 const routes: Routes = [
+  {path: '', redirectTo:'home', pathMatch: 'full'},
   {path: 'home', component: MainpageComponent},
   {path: 'login', component: LoginpageComponent},
   {path: 'categories', component: CategoriesPageComponent},

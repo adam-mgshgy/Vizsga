@@ -1,7 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark mb-2">
   <div class="container-fluid">
     <a id="logoLink" routerLink="/home"><img id="logoImage" src="./assets/images/mainPageImages/logoWhite.png" alt="logo"></a>
-    <!-- <a class="navbar-brand" routerLink="/home">{{title}}</a> -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -40,7 +39,6 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
             {{user.full_name}}
-            <!--TODO aktuálisan bejelentkezett user neve-->
           </a>
           <ul class="dropdown-menu">
             <li><a class=" dropdown-item" routerLink="/profile">Fiókbeállítások</a></li>
@@ -56,6 +54,5 @@
   </div>
 </nav>
 <div>
-  <!-- <app-loginpage *ngIf="!user" (userEvent)="getUser($event)" ></app-loginpage> -->
   <router-outlet *ngIf="user"></router-outlet>
 </div>

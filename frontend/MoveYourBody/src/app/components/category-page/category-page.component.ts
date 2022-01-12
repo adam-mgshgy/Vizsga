@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ResizedEvent } from 'angular-resize-event';
-import { map, shareReplay, Subscription } from 'rxjs';
 import { CategoryModel } from 'src/app/models/category-model';
-import { LocationModel } from 'src/app/models/location-model';
 import { TagModel } from 'src/app/models/tag-model';
 import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
 import { CategoriesService } from 'src/app/services/categories.service';
-import { LoginService } from 'src/app/services/login.service';
 import { TagTrainingService } from 'src/app/services/tag-training.service';
 import { TagService } from 'src/app/services/tag.service';
 import { TrainingService } from 'src/app/services/training.service';
@@ -33,10 +30,6 @@ export class CategoryPageComponent implements OnInit {
     private userService: UserService
   ) {}
 
-  subscription: Subscription;
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
   imgSrc = './assets/images/categoryPageImages/profile_rock.png';
   imgBckgSrc = './assets/images/categoryPageImages/index.jpg';
 
@@ -47,26 +40,11 @@ export class CategoryPageComponent implements OnInit {
   public trainings: TrainingModel[] = [];
   public allTrainings: TrainingModel[] = [];
 
-  user: UserModel;
   trainers: UserModel[] = [];
   public tagTraining: TagTrainingModel[] = [];
   public tags: TagModel[] = [];
   public selectedTags: TagModel[] = [];
-  public locations: LocationModel[] = [
-    {
-      id: 1,
-      county_name: 'Komárom-Esztergom megye',
-      city_name: 'Bana',
-      address_name: 'Kis Károly utca 11.',
-    },
-    {
-      id: 2,
-      county_name: 'Komárom-Esztergom megye',
-      city_name: 'Bana',
-      address_name: 'Kis Károly utca 12.',
-    },
-  ];
-
+ 
   ngOnInit(): void {
     this.upload();
 
@@ -113,25 +91,6 @@ export class CategoryPageComponent implements OnInit {
                   );
               }
 
-              // this.trainings = this.allTrainings.filter(
-              //   (t) => t.category_id == this.category_id
-              // );
-              // for (const item of this.trainings) {
-              //   this.tagTrainingService.getByTraining(item.id).subscribe(
-              //     (result) => {
-              //       //this.tagTraining = result;
-              //       console.log(this.tagTraining);
-              //       for (const tag of this.tags) {
-              //         for (const tagTr of this.tagTraining) {
-              //           if (tagTr.tag_id == tag.id) {
-              //             this.selectedTags.push(tag);
-              //           }
-              //         }
-              //       }
-              //     },
-              //     (error) => console.log(error)
-              //   );
-              // }
             },
             (error) => console.log(error)
           );
