@@ -73,7 +73,7 @@ export class TrainingSessionService {
   }
   listByTrainingId(trainingId: any): Observable<TrainingSessionModel[]> {
     return this.http
-      .get<TrainingSessionModel[]>(`${environment.ApiURL}/sessions/list/${trainingId}`)
+      .get<TrainingSessionModel[]>(`${environment.ApiURL}/sessions/list?trainingId=${trainingId}`)
       .pipe(
         map((data: TrainingSessionModel[]) => {
           return data;

@@ -26,7 +26,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 {
                     id = s.Id,
                     training_id = dbContext.Set<Training>().FirstOrDefault(t => t.Id == s.Training_id).Id,
-                    location = dbContext.Set<Location>().FirstOrDefault(l => l.Id == s.Location_id).Id,
+                    location_id = dbContext.Set<Location>().FirstOrDefault(l => l.Id == s.Location_id).Id,
                     date = s.Date,//.ToString("yyyy.MM.dd. hh:mm"), //??
                     price = s.Price,
                     minutes = s.Minutes,
