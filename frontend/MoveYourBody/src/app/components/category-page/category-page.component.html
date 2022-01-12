@@ -30,7 +30,7 @@
 
               <p class="card-text">{{training.description}}</p>
 
-             <span *ngFor="let tag of tagTraining; let t = index">
+             <span *ngFor="let tag of tagTraining">
                 <button *ngIf="training.id == tag.training_id && tag.tag_id == tags[tag.tag_id-1].id  ? 'true' : ''" id="tag"  [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}"
                    class="btn fw-bold me-1 mb-1" >{{tags[tag.tag_id-1].name}}</button>
               </span>

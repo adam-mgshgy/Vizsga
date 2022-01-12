@@ -73,11 +73,11 @@ export class TrainingService {
       );
   }
 
-  getById(id: any): Observable<TrainingModel[]> {
+  getById(id: any): Observable<TrainingModel> {
     return this.http
-      .get<TrainingModel[]>(`${environment.ApiURL}/training/${id}`)
+      .get<TrainingModel>(`${environment.ApiURL}/training/${id}`)
       .pipe(
-        map((data: TrainingModel[]) => {
+        map((data: TrainingModel) => {
           return data;
         }),
         catchError((err) => {

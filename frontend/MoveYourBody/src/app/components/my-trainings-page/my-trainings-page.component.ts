@@ -10,6 +10,12 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TrainingSessionModel } from 'src/app/models/training-session-model';
 import { TrainingService } from 'src/app/services/training.service';
+import { Subscription } from 'rxjs';
+import { UserService } from 'src/app/services/user.service';
+import { LoginService } from 'src/app/services/login.service';
+import { TagTrainingService } from 'src/app/services/tag-training.service';
+import { TagTrainingModel } from 'src/app/models/tag-training-model';
+import { TagService } from 'src/app/services/tag.service';
 
 @Component({
   selector: 'app-my-trainings-page',
@@ -17,8 +23,18 @@ import { TrainingService } from 'src/app/services/training.service';
   styleUrls: ['./my-trainings-page.component.css'],
 })
 export class MyTrainingsPageComponent implements OnInit {
-  constructor(private route: ActivatedRoute, private trainingService: TrainingService ,private modalService: NgbModal) {
-    this.ordered_session = Object.values(this.groupByDate(this.training_session, 'date'));//date alapján rendez
+  constructor(
+    private route: ActivatedRoute,
+    private trainingService: TrainingService,
+    private userService: UserService,
+    private modalService: NgbModal,
+    private loginService: LoginService,
+    private tagTrainingService: TagTrainingService,
+    private tagService: TagService
+  ) {
+    this.ordered_session = Object.values(
+      this.groupByDate(this.training_session, 'date')
+    ); //date alapján rendez
   }
   closeResult = '';
 
@@ -54,14 +70,23 @@ export class MyTrainingsPageComponent implements OnInit {
     //   contact_phone: '06701234567'
     // },
   ];
-  public users: UserModel[] = [//TODO from backend
+  public tagTraining: TagTrainingModel[] = [];
+
+  user: UserModel;
+  subscription: Subscription;
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  public users: UserModel[] = [
+    //TODO from backend
     {
       id: 1,
       email: 'elekgmail',
       full_name: 'Teszt Elek',
       trainer: true,
       phone_number: '+36301234678',
-      password: "pwd",
+      password: 'pwd',
       location_id: 2,
     },
     {
@@ -70,13 +95,13 @@ export class MyTrainingsPageComponent implements OnInit {
       full_name: 'Jelentkező Elek',
       trainer: false,
       phone_number: '+36301234678',
-      password: "pwd",
+      password: 'pwd',
       location_id: 2,
     },
     {
       id: 3,
       email: 'jelentelek@gmail.com',
-      password: "pwd",
+      password: 'pwd',
       full_name: 'Jelentkező Károly',
       trainer: false,
       phone_number: '+36301234678',
@@ -86,7 +111,7 @@ export class MyTrainingsPageComponent implements OnInit {
       id: 4,
       email: 'jelentelek@gmail.com',
       full_name: 'Jelentkező Erika',
-      password: "pwd",
+      password: 'pwd',
       trainer: false,
       phone_number: '+36301234678',
       location_id: 1,
@@ -94,40 +119,16 @@ export class MyTrainingsPageComponent implements OnInit {
     {
       id: 5,
       email: 'jelentelek@gmail.com',
-      password: "pwd",
+      password: 'pwd',
       full_name: 'Jelentkező Zsolt',
       trainer: false,
       phone_number: '+36301234678',
       location_id: 2,
     },
   ];
-  public locations: LocationModel[] = [
-  {
-    id: 1,
-    county_name: "Komárom-Esztergom megye",
-    city_name: "Bana",
-    address_name: "Kis Károly utca 11."
-  }, 
-  {
-    id: 2,
-    county_name: "Komárom-Esztergom megye",
-    city_name: "Bana",
-    address_name: "Kis Károly utca 12."
-  },
-  {
-    id: 348,
-    county_name: "Pest",
-    city_name: "Zsámbék",
-    address_name: "Kis Károly utca 12."
-  }];
-  public allTags: TagModel[] = [
-    { id: 0, name: 'csoportos', colour: '#6610f2' },
-    { id: 1, name: 'erőnléti', colour: 'black' },
-    { id: 2, name: 'saját testsúlyos', colour: '#fd7e14' },
-    { id: 3, name: 'edzőterem', colour: 'red' },
-    { id: 4, name: 'zsírégető', colour: '#0dcaf0' },
-    { id: 5, name: 'személyi edzés', colour: 'green' },
-  ];
+
+  public tags: TagModel[] = [];
+
   public applicant = [
     {
       training_session_id: 1,
@@ -136,14 +137,15 @@ export class MyTrainingsPageComponent implements OnInit {
   ];
 
   public training_session: TrainingSessionModel[] = [
-    { id: 1,
+    {
+      id: 1,
       date: '2021.12.23 09:00',
       price: 4000,
       minutes: 60,
       location_id: 1,
       address_name: '',
       place_name: '',
-      training_id: 1
+      training_id: 1,
     },
     {
       id: 2,
@@ -153,7 +155,7 @@ export class MyTrainingsPageComponent implements OnInit {
       location_id: 1,
       address_name: '',
       place_name: '',
-      training_id: 1
+      training_id: 1,
     },
     {
       id: 3,
@@ -163,7 +165,7 @@ export class MyTrainingsPageComponent implements OnInit {
       location_id: 1,
       address_name: '',
       place_name: '',
-      training_id: 1
+      training_id: 1,
     },
     {
       id: 4,
@@ -173,39 +175,42 @@ export class MyTrainingsPageComponent implements OnInit {
       location_id: 1,
       address_name: '',
       place_name: '',
-      training_id: 1
+      training_id: 1,
     },
   ];
 
-  public statuses = [
-    "4/8",
-    "8/8 Betelt",
-    "2/8 Kevés jelentkező",
-    "5/8"
-  ];
+  public statuses = ['4/8', '8/8 Betelt', '2/8 Kevés jelentkező', '5/8'];
 
-  public ordered_session:any[] = [];
-  
+  public ordered_session: any[] = [];
+
   groupByDate(array, property) {
-    
-    
     var hash = {},
       props = property.split('.');
     for (var i = 0; i < array.length; i++) {
       var key = props.reduce(function (acc, prop) {
-        return acc && acc[prop].substr(0,10);
-        
+        return acc && acc[prop].substr(0, 10);
       }, array[i]);
       if (!hash[key]) hash[key] = [];
       hash[key].push(array[i]);
     }
     return hash;
   }
-  
 
-  ngOnInit(): void {    
-    this.trainingService.getByTrainerId(this.users[0].id).subscribe(
-      (result) => (this.myTrainings = result),
+  ngOnInit(): void {
+    this.subscription = this.loginService.currentUser.subscribe(
+      (user) => (this.user = user)
+    );
+
+    this.trainingService.getByTrainerId(this.user.id).subscribe(
+      (result) => {
+        this.myTrainings = result;
+
+        for (const item of this.myTrainings) {
+          this.tagTrainingService.getByTraining(item.id).subscribe((result) => {
+            this.tagTraining.push.apply(this.tagTraining, result);            
+          });
+        }
+      },
       (error) => console.log(error)
     );
 
@@ -214,13 +219,15 @@ export class MyTrainingsPageComponent implements OnInit {
       this.mobile = true;
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
-    
 
     this.tagsOnMobile();
 
-    //Lekérdezés a back-end-ről
+    this.tagService.getTags().subscribe(
+      (result) => (this.tags = result),
+      (error) => console.log(error)
+    );
 
-   
+    //Lekérdezés a back-end-ről
   }
 
   usersList() {}
