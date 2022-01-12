@@ -10,6 +10,8 @@ import { TagTrainingService } from 'src/app/services/tag-training.service';
 import { TagService } from 'src/app/services/tag.service';
 import { TrainingService } from 'src/app/services/training.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-create-training-page',
@@ -33,16 +35,9 @@ export class CreateTrainingPageComponent implements OnInit {
   public messageBox = '';
   public messageTitle = '';
 
-  user: UserModel = {
-    //TODO user from backend
-    id: 1,
-    email: 'elekgmail',
-    full_name: 'Teszt Elek',
-    trainer: true,
-    phone_number: '+36301112233',
-    location_id: 348,
-    password: 'pwd',
-  };
+  subscription: Subscription;
+  user: UserModel;
+
   public categories: CategoryModel[] = [];
   public tags: TagModel[] = [];
   public training: TrainingModel = new TrainingModel();
@@ -60,14 +55,19 @@ export class CreateTrainingPageComponent implements OnInit {
     private trainingService: TrainingService,
     private tagService: TagService,
     private tagTrainingService: TagTrainingService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private loginService: LoginService, 
   ) {}
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
   ngOnInit(): void {
     if (window.innerWidth <= 800) {
       this.mobile = true;
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
+    this.subscription = this.loginService.currentUser.subscribe(user => this.user = user)
 
     this.trainingService.getByTrainerId(this.user.id).subscribe(
       (result) => {
@@ -200,7 +200,7 @@ export class CreateTrainingPageComponent implements OnInit {
       this.trainingService.modifyTraining(this.training).subscribe(
         (result) => {
           this.messageTitle = 'Siker';
-          this.messageBox = 'Edzése siekresen frissítve!';
+          this.messageBox = 'Edzése sikeresen frissítve!';
         },
         (error) => console.log(error)
       );
