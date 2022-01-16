@@ -20,8 +20,37 @@
         <div class="row">
         </div>
     </div>
-    <div class="row g-0">
-        <div *ngFor="let session of sessions" class="col-lg-4 col-md-5 col-sm-12 sessions">
+    <div class="row g-0 mx-5">
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>Város</th>
+                <th>Pontos cím</th>
+                <th>Időpont</th>
+                <th>Ár(Ft)</th>
+                <th>Hossz(Perc)</th>
+            </tr>
+            <tr *ngFor="let session of sessions" >
+                <td>
+                    <span *ngFor="let location of locations" class="locations">
+                        <span *ngIf="location.id == session.location_id" >{{location.city_name}}</span>
+                    </span>
+                </td>
+                <td>
+                    {{session.address_name}}
+                    {{session.place_name}}
+                </td>
+                <td>{{session.date | date: 'yyyy.MM.dd. HH:mm'}}</td>
+                <td>{{session.price}}</td>
+                <td>{{session.minutes}}</td>
+                <td><button class="btn fw-bold mb-2 mt-2" (click)="Apply()">Jelentkezek!</button>
+                    {{session.numberOfApplicants}}
+                </td>
+            </tr>
+        </table>
+
+
+
+        <!-- <div *ngFor="let session of sessions" class="col-lg-4 col-md-5 col-sm-12 sessions">
             <h3 class="mb-2"><u>Helyszín:</u></h3>
             <h3>
                 <span *ngFor="let location of locations">
@@ -32,6 +61,6 @@
             <h3 class="mb-2"><u>Időpont:</u> {{session.date | date: 'yyyy.MM.dd. HH:mm'}}</h3>
             <h3 class="mb-2"><u>Időtartam:</u> {{session.minutes}} perc</h3>
             <button class="btn fw-bold btn-success mb-2">Jelentkezek!</button>
-        </div>
+        </div> -->
     </div>
 </div>

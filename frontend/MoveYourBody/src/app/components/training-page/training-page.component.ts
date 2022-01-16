@@ -16,6 +16,7 @@ import { CategoryModel } from 'src/app/models/category-model';
 import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { TrainingSessionService } from 'src/app/services/training-session.service';
 import { LocationService } from 'src/app/services/location.service';
+import { ApplicantService } from 'src/app/services/applicant.service';
 
 @Component({
   selector: 'app-training-page',
@@ -47,6 +48,7 @@ export class TrainingPageComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private locationService: LocationService,
+    private applicantService: ApplicantService,
   ) { }
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -77,6 +79,15 @@ export class TrainingPageComponent implements OnInit {
                   },
                   error => console.log(error)
                 );
+                this.sessions.forEach(session => {
+                  this.applicantService.listBySessionId(session.id).subscribe(
+                    result => {
+                      session.numberOfApplicants = result.length;
+                    },
+                    error => console.log(error)
+                  );
+                  
+                });
               },
               (error) => console.log(error)
             );
@@ -112,5 +123,9 @@ export class TrainingPageComponent implements OnInit {
       (result) => (this.tags = result),
       (error) => console.log(error)
     );
+  }
+
+  Apply() {
+
   }
 }
