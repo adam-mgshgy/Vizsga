@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,8 +19,9 @@ namespace MoveYourBody.WebAPI.Controllers
         public UserController(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
-        }
-        [HttpGet("{id}")]                                     // http://localhost:5000/user/12
+        }        
+
+        [HttpGet("{id}"), Authorize]                                     // http://localhost:5000/user/12
         public ActionResult GetById(int id)
         {
             return this.Run(() =>

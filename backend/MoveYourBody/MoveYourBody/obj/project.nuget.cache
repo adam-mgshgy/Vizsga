@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JUabZhMaT+Ia+nyzo8Z+BIHMYm/mb5K0okyc1uYIbIKS7YNUh/3JmQlNNOqQ1uy18Zv4c5Vl6bF3/pRwr+oa2Q==",
+  "dgSpecHash": "lZC73V3mnAKxeYLCyZyqOMdQy1UfUGuAu8I7Y1CsK6nymhYtN6pxeRGUtWKfB5lUndNokhNa9LgrWYL1K2J6bA==",
   "success": true,
-  "projectFilePath": "D:\\Programozas\\Szakdolgozat\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\MoveYourBody.WebAPI.csproj",
+  "projectFilePath": "C:\\Users\\magas\\Documents\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\MoveYourBody.WebAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\magas\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.21\\microsoft.aspnetcore.authentication.jwtbearer.3.1.21.nupkg.sha512",
     "C:\\Users\\magas\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
@@ -143,7 +143,8 @@
     "C:\\Users\\magas\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.3\\system.threading.tasks.extensions.4.5.3.nupkg.sha512",
     "C:\\Users\\magas\\.nuget\\packages\\system.threading.timer\\4.3.0\\system.threading.timer.4.3.0.nupkg.sha512",
     "C:\\Users\\magas\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
-    "C:\\Users\\magas\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
+    "C:\\Users\\magas\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
+    "C:\\Users\\magas\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.22\\microsoft.netcore.app.host.win-x64.3.1.22.nupkg.sha512"
   ],
   "logs": []
 }

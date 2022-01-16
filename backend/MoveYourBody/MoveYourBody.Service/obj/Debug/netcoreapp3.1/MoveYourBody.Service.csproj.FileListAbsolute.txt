@@ -39,3 +39,17 @@ D:\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\Move
 D:\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.dll
 D:\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.pdb
 D:\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.genruntimeconfig.cache
+C:\Users\magas\Documents\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\cities.csv
+C:\Users\magas\Documents\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\MoveYourBody.Service.deps.json
+C:\Users\magas\Documents\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\MoveYourBody.Service.runtimeconfig.json
+C:\Users\magas\Documents\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\MoveYourBody.Service.runtimeconfig.dev.json
+C:\Users\magas\Documents\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\MoveYourBody.Service.dll
+C:\Users\magas\Documents\Vizsga\backend\MoveYourBody\MoveYourBody.Service\bin\Debug\netcoreapp3.1\MoveYourBody.Service.pdb
+C:\Users\magas\Documents\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.csproj.AssemblyReference.cache
+C:\Users\magas\Documents\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\magas\Documents\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.AssemblyInfoInputs.cache
+C:\Users\magas\Documents\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.AssemblyInfo.cs
+C:\Users\magas\Documents\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.csproj.CoreCompileInputs.cache
+C:\Users\magas\Documents\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.dll
+C:\Users\magas\Documents\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.pdb
+C:\Users\magas\Documents\Vizsga\backend\MoveYourBody\MoveYourBody.Service\obj\Debug\netcoreapp3.1\MoveYourBody.Service.genruntimeconfig.cache
