@@ -7227,23 +7227,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\magas\\.nuget\\packages\\": {},
+    "C:\\Users\\magashegyi.adam\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\magas\\Documents\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\MoveYourBody.WebAPI.csproj",
+      "projectUniqueName": "D:\\Magashegyi_Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\MoveYourBody.WebAPI.csproj",
       "projectName": "MoveYourBody.WebAPI",
-      "projectPath": "C:\\Users\\magas\\Documents\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\MoveYourBody.WebAPI.csproj",
-      "packagesPath": "C:\\Users\\magas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\magas\\Documents\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\obj\\",
+      "projectPath": "D:\\Magashegyi_Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\MoveYourBody.WebAPI.csproj",
+      "packagesPath": "C:\\Users\\magashegyi.adam\\.nuget\\packages\\",
+      "outputPath": "D:\\Magashegyi_Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\magas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\magashegyi.adam\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -7258,8 +7258,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\magas\\Documents\\Vizsga\\backend\\MoveYourBody\\MoveYourBody.Service\\MoveYourBody.Service.csproj": {
-              "projectPath": "C:\\Users\\magas\\Documents\\Vizsga\\backend\\MoveYourBody\\MoveYourBody.Service\\MoveYourBody.Service.csproj"
+            "D:\\Magashegyi_Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody.Service\\MoveYourBody.Service.csproj": {
+              "projectPath": "D:\\Magashegyi_Ádám\\Vizsga\\backend\\MoveYourBody\\MoveYourBody.Service\\MoveYourBody.Service.csproj"
             }
           }
         }
@@ -7293,12 +7293,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[3.1.22, 3.1.22]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -7307,7 +7301,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

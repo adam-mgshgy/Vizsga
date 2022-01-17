@@ -35,25 +35,28 @@ namespace MoveYourBody
                 option.UseMySql(Configuration.GetConnectionString("moveyourbody"));
             });
 
-            var key = "This is my first Test Key";
+            var secret = "asdasdasd";
+
+            var key = Encoding.ASCII.GetBytes(secret);
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x =>
+            })
+            .AddJwtBearer(x =>
             {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuerSigningKey = true,
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key))
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidIssuer = "Jedlik",
+                    ValidAudience = "NyitottKapuk",
+                    RequireExpirationTime = true
                 };
             });
-            services.AddSingleton<IJwtAuth>(new Auth(key));
 
+            
 #if DEBUG
             services.AddCors(option =>
             {
