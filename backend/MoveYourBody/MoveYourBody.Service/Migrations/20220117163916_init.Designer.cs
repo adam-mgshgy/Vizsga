@@ -9,7 +9,7 @@ using MoveYourBody.Service;
 namespace MoveYourBody.Service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220117082213_init")]
+    [Migration("20220117163916_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

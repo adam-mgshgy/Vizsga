@@ -59,7 +59,7 @@ namespace MoveYourBody.WebAPI.Controllers
 
 
             var jwt = new JwtService(config);
-            var token = jwt.GenerateSecurityToken(model.Email, new List<Claim>() { new Claim("RegistrationId", registration.Id.ToString()) });
+            var token = jwt.GenerateSecurityToken(model.Email, registration.Role, new List<Claim>() { new Claim("RegistrationId", registration.Id.ToString()) });
 
             return Ok(new
             {

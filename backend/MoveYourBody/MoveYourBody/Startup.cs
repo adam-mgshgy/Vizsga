@@ -35,7 +35,7 @@ namespace MoveYourBody
                 option.UseMySql(Configuration.GetConnectionString("moveyourbody"));
             });
 
-            var secret = "asdasdasd";
+            var secret = "uqMSgheawJFWEFMFcGhkKxnEsdzPSmVVhbhitlEB";
 
             var key = Encoding.ASCII.GetBytes(secret);
             services.AddAuthentication(x =>
@@ -52,7 +52,7 @@ namespace MoveYourBody
                     ValidateAudience = true,
                     ValidIssuer = "Jedlik",
                     ValidAudience = "NyitottKapuk",
-                    RequireExpirationTime = true
+                    RequireExpirationTime = true,
                 };
             });
 

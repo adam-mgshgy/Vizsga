@@ -19,12 +19,13 @@ namespace MoveYourBody.Service.Auth
             _expDate = config.GetSection("JwtConfig").GetSection("expirationInMinutes").Value;
         }
 
-        public string GenerateSecurityToken(string email, List<Claim> extraClaims = null)
-        {
+        public string GenerateSecurityToken(string email, string role, List<Claim> extraClaims = null)
+        {            
             var key = Encoding.ASCII.GetBytes(_secret);
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Email, email)
+                new Claim(ClaimTypes.Email, email),
+                new Claim(ClaimTypes.Role, role)
             };
 
             if (extraClaims != null && extraClaims.Count != 0)

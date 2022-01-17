@@ -19,9 +19,10 @@ namespace MoveYourBody.WebAPI.Controllers
         public UserController(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
-        }        
+        }
 
-        [HttpGet("{id}"), Authorize(Roles = "Trainer")]                                     // http://localhost:5000/user/12
+        [Authorize(Roles = "Trainer")]
+        [HttpGet("{id}")]                                     // http://localhost:5000/user/12
         public ActionResult GetById(int id)
         {
             return this.Run(() =>
@@ -53,11 +54,11 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-            if (dbContext.Set<User>().Any(u => u.Email == user.Email))
-                return BadRequest(new
-                {
-                    ErrorMessage = "A megadott e-mail címmel már történt korábban regisztráció"
-                });
+                if (dbContext.Set<User>().Any(u => u.Email == user.Email))
+                    return BadRequest(new
+                    {
+                        ErrorMessage = "A megadott e-mail címmel már történt korábban regisztráció"
+                    });
                 User register = null;
                 //var location = dbContext.Set<Location>().FirstOrDefault(l => l.Id == user.Location_id);
                 //if (location == null)
@@ -67,20 +68,20 @@ namespace MoveYourBody.WebAPI.Controllers
                 //        ErrorMessage = "A megadott város nem létezik"
                 //    });
                 //}
-                
-                    register = new User()
-                    {
-                        Id = user.Id,
-                        Full_name = user.Full_name,
-                        Email = user.Email,
-                        Password = user.Password,
-                        Phone_number = user.Phone_number,
-                        Trainer = user.Trainer,
-                        Location_id = user.Location_id,
-                        Role = user.Role
-                    };
-                
-                
+
+                register = new User()
+                {
+                    Id = user.Id,
+                    Full_name = user.Full_name,
+                    Email = user.Email,
+                    Password = user.Password,
+                    Phone_number = user.Phone_number,
+                    Trainer = user.Trainer,
+                    Location_id = user.Location_id,
+                    Role = user.Role
+                };
+
+
                 dbContext.Set<User>().Add(register);
                 dbContext.SaveChanges();
                 return Ok(register);
@@ -93,8 +94,8 @@ namespace MoveYourBody.WebAPI.Controllers
             {
                 var training = dbContext.Set<Training>().Where(t => t.Id == training_id).FirstOrDefault();
 
-                var trainer = dbContext.Set<User>().Where(t => t.Id == training.Trainer_id).Select(t => new { 
-                
+                var trainer = dbContext.Set<User>().Where(t => t.Id == training.Trainer_id).Select(t => new {
+
                     Id = t.Id,
                     Full_name = t.Full_name,
                     Email = "",
@@ -108,8 +109,8 @@ namespace MoveYourBody.WebAPI.Controllers
             });
         }
 
-        [HttpGet("login")]
-        public ActionResult Login([FromQuery] string email, string password) 
+        [HttpGet("login"), Authorize(Roles = "Admin, Trainer, User")]
+        public ActionResult Login([FromQuery] string email, string password)
         {
             return this.Run(() =>
             {
@@ -134,7 +135,7 @@ namespace MoveYourBody.WebAPI.Controllers
             //});
         }
 
-        [HttpPost("modify")]
+        [HttpPost("modify"), Authorize(Roles = "Admin, Trainer, User")]
         public ActionResult Modify(User user)
         {
             return this.Run(() =>
@@ -146,7 +147,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(user);
             });
         }
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Admin, Trainer, User")]
         public ActionResult Delete(User user)
         {
             return this.Run(() =>
