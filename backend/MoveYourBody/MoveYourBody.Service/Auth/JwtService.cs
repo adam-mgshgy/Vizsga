@@ -33,8 +33,8 @@ namespace MoveYourBody.Service.Auth
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var jwt = new JwtSecurityToken(
-                issuer: "Jedlik",
-                audience: "NyitottKapuk",
+                issuer: "MoveYourBody",
+                audience: "MoveYourBody",
                 expires: DateTime.UtcNow.AddMinutes(double.Parse(_expDate)),
                 claims: claims,
                 signingCredentials: new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

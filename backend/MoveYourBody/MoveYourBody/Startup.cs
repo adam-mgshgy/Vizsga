@@ -50,8 +50,8 @@ namespace MoveYourBody
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidIssuer = "Jedlik",
-                    ValidAudience = "NyitottKapuk",
+                    ValidIssuer = "MoveYourBody",
+                    ValidAudience = "MoveYourBody",
                     RequireExpirationTime = true,
                 };
             });

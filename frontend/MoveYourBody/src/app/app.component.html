@@ -24,14 +24,14 @@
           </ul>
         </li>
 
-        <li class="nav-item" *ngIf="!user.id">
+        <li class="nav-item" *ngIf="!user">
           <a class="nav-link active" routerLink="/register">Regisztráció</a> <!-- nem így lesz -->
         </li>
-        <li *ngIf="!user.id" class="nav-item">
+        <li *ngIf="!user" class="nav-item">
           <a class="nav-link active" routerLink="/login">Bejelentkezés</a> <!-- nem így lesz -->
         </li>
       </ul>
-      <ul *ngIf="user.id" id="userDropdown" class="navbar-nav mr-auto mb-2 mb-lg-0">
+      <ul  id="userDropdown" class="navbar-nav mr-auto mb-2 mb-lg-0">
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button id="searchBtn" class="btn" type="submit">Search</button>
@@ -45,8 +45,8 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a *ngIf="users[0].trainer == true" class="dropdown-item" routerLink="/mytrainings">Edzéseim</a></li>
-            <li><a class=" dropdown-item">Kijelentkezés</a></li>
+            <li><a *ngIf="user.trainer == true" class="dropdown-item" routerLink="/mytrainings">Edzéseim</a></li>
+            <li><a class=" dropdown-item" (click)="Logout()">Kijelentkezés</a></li>
           </ul>
         </li>
       </ul>
@@ -54,5 +54,5 @@
   </div>
 </nav>
 <div>
-  <router-outlet *ngIf="user"></router-outlet>
+  <router-outlet ></router-outlet>
 </div>

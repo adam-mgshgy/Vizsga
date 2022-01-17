@@ -6,4 +6,7 @@ export class UserModel {
     public phone_number = '';
     public trainer = false;
     public location_id: number | null = null;
+    public role = '';
+    public token = '';
+
 }

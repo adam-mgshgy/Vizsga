@@ -88,6 +88,8 @@ export class MyTrainingsPageComponent implements OnInit {
       phone_number: '+36301234678',
       password: 'pwd',
       location_id: 2,
+      role:'Trainer',
+      token : ''
     },
     {
       id: 2,
@@ -97,6 +99,8 @@ export class MyTrainingsPageComponent implements OnInit {
       phone_number: '+36301234678',
       password: 'pwd',
       location_id: 2,
+      role:'Trainer',
+      token : ''
     },
     {
       id: 3,
@@ -106,6 +110,8 @@ export class MyTrainingsPageComponent implements OnInit {
       trainer: false,
       phone_number: '+36301234678',
       location_id: 1,
+      role:'Trainer',
+      token : ''
     },
     {
       id: 4,
@@ -115,6 +121,8 @@ export class MyTrainingsPageComponent implements OnInit {
       trainer: false,
       phone_number: '+36301234678',
       location_id: 1,
+      role:'Trainer',
+      token : ''
     },
     {
       id: 5,
@@ -124,6 +132,8 @@ export class MyTrainingsPageComponent implements OnInit {
       trainer: false,
       phone_number: '+36301234678',
       location_id: 2,
+      role:'Trainer',
+      token : ''
     },
   ];
 
