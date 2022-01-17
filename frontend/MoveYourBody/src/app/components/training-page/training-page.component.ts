@@ -17,6 +17,7 @@ import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { TrainingSessionService } from 'src/app/services/training-session.service';
 import { LocationService } from 'src/app/services/location.service';
 import { ApplicantService } from 'src/app/services/applicant.service';
+import { ApplicantModel } from 'src/app/models/applicant-model';
 
 @Component({
   selector: 'app-training-page',
@@ -30,12 +31,13 @@ export class TrainingPageComponent implements OnInit {
   public training: TrainingModel;
   public trainer: UserModel;
   public category: CategoryModel;
-  public sessions: TrainingSessionModel[];
+  public sessions: TrainingSessionModel[] = [];
 
   categories: CategoryModel[];
   locations: LocationModel[];
   tagTraining: TagTrainingModel[] = [];
   tags: TagModel[] = [];
+  usersSessions: number[];
   subscription: Subscription;
   mobile: boolean = false;
   constructor(
@@ -63,6 +65,7 @@ export class TrainingPageComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
     });
+    
     this.trainingService.getById(this.id).subscribe(
       (result) => {
         this.training = result;
@@ -72,7 +75,6 @@ export class TrainingPageComponent implements OnInit {
             this.trainingSessionService.listByTrainingId(this.training.id).subscribe(
               (result) => {
                 this.sessions = result;
-                console.log(this.sessions);
                 this.locationService.getLocations().subscribe(
                   result => {
                     this.locations = result;
@@ -81,10 +83,12 @@ export class TrainingPageComponent implements OnInit {
                 );
                 this.sessions.forEach(session => {
                   this.applicantService.listBySessionId(session.id).subscribe(
-                    result => {
+                    (result) => {
                       session.numberOfApplicants = result.length;
+                      console.log(session.numberOfApplicants);
+                      
                     },
-                    error => console.log(error)
+                    (error) => console.log(error)
                   );
                   
                 });
@@ -123,9 +127,29 @@ export class TrainingPageComponent implements OnInit {
       (result) => (this.tags = result),
       (error) => console.log(error)
     );
+    console.log(this.user.id);
+    this.applicantService.listByUserId(this.user.id).subscribe(
+      (result) => {
+        result.forEach(r => {
+          this.usersSessions.push(r.id);
+        });
+        console.log(this.usersSessions);
+
+      },
+      (error) => console.log(error)
+    );
   }
 
-  Apply() {
-
+  Apply(sessionId: number) {
+    var newApplicant = new ApplicantModel();
+    newApplicant.training_session_id = sessionId;
+    newApplicant.user_id = this.user.id;
+    
+    
+    this.applicantService.newApplicant(newApplicant).subscribe(
+      (result) => {},
+      (error) => console.error(error)
+      
+    )
   }
 }

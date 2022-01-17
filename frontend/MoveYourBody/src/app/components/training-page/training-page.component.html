@@ -42,7 +42,7 @@
                 <td>{{session.date | date: 'yyyy.MM.dd. HH:mm'}}</td>
                 <td>{{session.price}}</td>
                 <td>{{session.minutes}}</td>
-                <td><button class="btn fw-bold mb-2 mt-2" (click)="Apply()">Jelentkezek!</button>
+                <td><button class="btn fw-bold mb-2 mt-2" (click)="Apply(session.id)" [disabled]="usersSessions.includes(session.id)" >Jelentkezek!</button>
                     {{session.numberOfApplicants}}
                 </td>
             </tr>
