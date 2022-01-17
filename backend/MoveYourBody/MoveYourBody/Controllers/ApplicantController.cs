@@ -22,10 +22,11 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var applicants = dbContext.Set<Applicant>().Where(t => t.Training_session_id == trainingSessionId).Select(s => new 
-                    {
-                        user = dbContext.Set<User>().Where(u => u.Id == s.User_id)
-                });
+                var applicants = dbContext.Set<Applicant>().Where(t => t.Training_session_id == trainingSessionId).Select(s => new
+                {
+                    user_id = s.Id, //dbContext.Set<User>().Where(u => u.Id == s.User_id).FirstOrDefault().Id,
+                    session_id = trainingSessionId
+                }); ;
                 return Ok(applicants);
             });
         }
@@ -36,7 +37,8 @@ namespace MoveYourBody.WebAPI.Controllers
             {
                 var sessions = dbContext.Set<Applicant>().Where(u => u.User_id == userId).Select(s => new
                 {
-                    session = dbContext.Set<TrainingSession>().Where(t => t.Id == s.Training_session_id)
+                    user_id = userId,
+                    session_id = s.Training_session_id
                 });
                 return Ok(sessions);
             });
@@ -50,7 +52,7 @@ namespace MoveYourBody.WebAPI.Controllers
 
                 var newApplicant = new Applicant
                 {
-                    Id = 1,
+                    Id = 0,
                     Training_session_id = dbContext.Set<TrainingSession>().FirstOrDefault(s => s.Id == trainingSessionId).Id,
                     User_id = dbContext.Set<User>().FirstOrDefault(u => u.Id == userId).Id
                 };
