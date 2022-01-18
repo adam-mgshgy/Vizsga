@@ -6,6 +6,8 @@ import { LoginService } from './services/login.service';
 import { CategoriesService } from './services/categories.service';
 import { AuthenticationService } from './services/authentication.service';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +23,9 @@ export class AppComponent {
     private router: Router,
     private loginService: LoginService,
     private categoryService: CategoriesService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private jwtHelper: JwtHelperService,
+    private userService: UserService
   ) {
     this.authenticationService.currentUser.subscribe(
       (x) => (this.user = x)
@@ -31,6 +35,8 @@ export class AppComponent {
     // this.subscription = this.loginService.currentUser.subscribe(
     //   (user) => (this.user = user)
     // );
+
+
     console.log(this.user)
     this.categoryService.getCategories().subscribe(
       (result) => (this.categories = result),
@@ -42,6 +48,16 @@ export class AppComponent {
   // }
   title = 'MoveYourBody';
   public categories: CategoryModel[] = [];
+
+  isUserAuthenticated() {
+    const token: string = localStorage.getItem("jwt");
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 
   Logout(){
     this.authenticationService.logout();

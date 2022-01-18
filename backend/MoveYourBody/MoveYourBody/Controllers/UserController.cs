@@ -21,7 +21,7 @@ namespace MoveYourBody.WebAPI.Controllers
             this.dbContext = dbContext;
         }
 
-        [Authorize(Roles = "Trainer")]
+        
         [HttpGet("{id}")]                                     // http://localhost:5000/user/12
         public ActionResult GetById(int id)
         {

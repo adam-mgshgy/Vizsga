@@ -37,10 +37,10 @@ namespace MoveYourBody.WebAPI.Controllers
 
         private ActionResult VisitorLoginByEmail(LoginModel model)
         {
-            var registration = dbContext.Set<User>()
+            var user = dbContext.Set<User>()
                             .FirstOrDefault(r => r.Email == model.Email && r.Password == model.Password);
             
-            if (registration == null)
+            if (user == null)
             {
                 return Unauthorized(new
                 {
@@ -52,18 +52,19 @@ namespace MoveYourBody.WebAPI.Controllers
                 model.Email),                        
 		    
             // Add the ClaimType Role which carries the Role of the user
-            new Claim (ClaimTypes.Role, registration.Role)
+            new Claim (ClaimTypes.Role, user.Role)
         };
 
 
 
 
             var jwt = new JwtService(config);
-            var token = jwt.GenerateSecurityToken(model.Email, registration.Role, new List<Claim>() { new Claim("RegistrationId", registration.Id.ToString()) });
+            var token = jwt.GenerateSecurityToken(model.Email, user.Role, new List<Claim>() { new Claim("RegistrationId", user.Id.ToString()) });
 
             return Ok(new
             {
-                token = token
+                token = token,
+                userId = user.Id
             });
         }
 

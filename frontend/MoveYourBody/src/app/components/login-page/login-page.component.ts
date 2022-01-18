@@ -13,34 +13,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./login-page.component.css'],
 })
 export class LoginpageComponent implements OnInit {
-  // constructor(private userService: UserService, private loginService: LoginService, private router: Router) { }
   user: UserModel;
-  // subscription: Subscription;
-  // @Output() userEvent = new EventEmitter<UserModel>();
 
-  email = '';
-  password = '';
-  link = 'login';
-  // ngOnInit(): void {
-  //   this.subscription = this.loginService.currentUser.subscribe(user => this.user = user)
-  // }
-  // ngOnDestroy() {
-  //   this.subscription.unsubscribe();
-  // }
-  // Login() {
-  //   this.userService.Login(this.email, this.password).subscribe(
-  //     result => {
-  //       this.user = result;
-  //       console.log(this.user);
-  //       this.loginService.changeUser(this.user);
-  //       this.link = "home";
-  //       this.router.navigate(['/', this.link])
-  //       console.log(this.link);
-  //       //this.userEvent.emit(this.user);
-  //     },
-  //     error => console.log(error)
-  //   );
-  // }
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -52,14 +26,14 @@ export class LoginpageComponent implements OnInit {
     // }
   }
 
-  ngOnInit():void {    
+  ngOnInit(): void {
+    this.Login();
   }
+  public email = '';
+  public password = '';
+  link = 'login';
 
-  Login() {
-    console.log(this.email)
-    this.email = "string",
-    this.password = "string",//todo Visszaadni backendrol a usert
-
+  Login() {    
     this.authenticationService
       .login(this.email, this.password)
       .pipe(first())
@@ -67,12 +41,11 @@ export class LoginpageComponent implements OnInit {
         (result) => {
           this.authenticationService.currentUser.subscribe(
             (x) => (this.user = x)
-          );          
-          console.log(this.user)
+          );
+          console.log(this.user);
         },
         (error) => {
           console.log(error);
-         
         }
       );
   }
