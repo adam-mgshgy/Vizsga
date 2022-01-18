@@ -28,7 +28,9 @@ export class TrainingPageComponent implements OnInit {
   id: Number;
   user: UserModel;
 
+  errorText = '';
   public training: TrainingModel;
+  // public trainerName: '';
   public trainer: UserModel;
   public category: CategoryModel;
   public sessions: TrainingSessionModel[] = [];
@@ -37,7 +39,7 @@ export class TrainingPageComponent implements OnInit {
   locations: LocationModel[];
   tagTraining: TagTrainingModel[] = [];
   tags: TagModel[] = [];
-  usersSessions: number[];
+  usersSessions: ApplicantModel[] = [];
   subscription: Subscription;
   mobile: boolean = false;
   constructor(
@@ -65,7 +67,11 @@ export class TrainingPageComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
     });
-    
+    // this.trainingSessionService.listByTrainingId(this.id).subscribe(
+    //   (result) => {
+    //       console.log(result);
+    //   }, (error) => console.log(error)
+    // )
     this.trainingService.getById(this.id).subscribe(
       (result) => {
         this.training = result;
@@ -75,31 +81,25 @@ export class TrainingPageComponent implements OnInit {
             this.trainingSessionService.listByTrainingId(this.training.id).subscribe(
               (result) => {
                 this.sessions = result;
-                this.locationService.getLocations().subscribe(
-                  result => {
-                    this.locations = result;
-                  },
-                  error => console.log(error)
-                );
                 this.sessions.forEach(session => {
                   this.applicantService.listBySessionId(session.id).subscribe(
                     (result) => {
                       session.numberOfApplicants = result.length;
                       console.log(session.numberOfApplicants);
-                      
-                    },
-                    (error) => console.log(error)
+                    }, (error) => console.log(error)
                   );
-                  
                 });
-              },
-              (error) => console.log(error)
+                this.applicantService.listByUserId(this.user.id).subscribe(
+                  (result) => {
+                    this.usersSessions = result;
+                    console.log(this.usersSessions);
+                  }, (error) => console.log(error)
+                );
+              }, (error) => console.log(error)
             );
-          },
-          (error) => console.log(error)
+          }, (error) => console.log(error)
         );
-      },
-      (error) => console.log(error)
+      }, (error) => console.log(error)
     );
     
     this.categoriesService.getCategories().subscribe(
@@ -127,29 +127,36 @@ export class TrainingPageComponent implements OnInit {
       (result) => (this.tags = result),
       (error) => console.log(error)
     );
-    console.log(this.user.id);
-    this.applicantService.listByUserId(this.user.id).subscribe(
-      (result) => {
-        result.forEach(r => {
-          this.usersSessions.push(r.id);
-        });
-        console.log(this.usersSessions);
-
-      },
-      (error) => console.log(error)
+    
+    this.locationService.getLocations().subscribe(
+      result => {
+        this.locations = result;
+      }, error => console.log(error)
     );
   }
 
   Apply(sessionId: number) {
     var newApplicant = new ApplicantModel();
-    newApplicant.training_session_id = sessionId;
     newApplicant.user_id = this.user.id;
+    newApplicant.id = 1;
+    if (this.usersSessions.find(x => x.training_session_id == sessionId) == undefined) {
+      newApplicant.training_session_id = sessionId;
+      this.applicantService.newApplicant(newApplicant).subscribe(
+        (result) => {
+          this.sessions.find(x => x.id == sessionId).numberOfApplicants++;
+          this.applicantService.listByUserId(this.user.id).subscribe(
+            (result) => {
+              this.usersSessions = result;
+            }, (error) => console.log(error)
+          );
+          console.log(this.usersSessions);
+        }, (error) => {this.errorText = error.message }
+      )
+    }
+    else {
+      this.errorText = "Erre az edzésre már jelentkezett!"
+    }
     
     
-    this.applicantService.newApplicant(newApplicant).subscribe(
-      (result) => {},
-      (error) => console.error(error)
-      
-    )
   }
 }
