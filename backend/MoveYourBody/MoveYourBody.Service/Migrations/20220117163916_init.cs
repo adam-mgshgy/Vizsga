@@ -127,7 +127,8 @@ namespace MoveYourBody.Service.Migrations
                     Password = table.Column<string>(maxLength: 255, nullable: false),
                     Phone_number = table.Column<string>(maxLength: 12, nullable: false),
                     Trainer = table.Column<bool>(nullable: false),
-                    Location_id = table.Column<int>(nullable: false)
+                    Location_id = table.Column<int>(nullable: false),
+                    Role = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

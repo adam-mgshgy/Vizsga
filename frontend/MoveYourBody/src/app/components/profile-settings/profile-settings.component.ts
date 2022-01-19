@@ -6,6 +6,7 @@ import { LocationService } from 'src/app/services/location.service';
 import { LoginService } from 'src/app/services/login.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/services/user.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-profile-settings',
@@ -17,16 +18,17 @@ export class ProfileSettingsComponent implements OnInit {
   public messageTitle = '';
   user: UserModel;
   userModify: UserModel;
-  subscription: Subscription;
+  
   constructor(
     private loginService: LoginService, 
     private modalService: NgbModal,
     private locationService: LocationService,
-    private userService: UserService
-    ) { }
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+    private userService: UserService,
+    private authenticationService: AuthenticationService
+    ) { this.authenticationService.currentUser.subscribe(
+      (x) => (this.user = x)
+    );}
+  
   public locations: LocationModel[] = [];
   counties: LocationModel[] = [];
   cities: LocationModel[] = [];
@@ -41,6 +43,7 @@ export class ProfileSettingsComponent implements OnInit {
   }
   ChangeTrainerValue() {
       this.userModify.trainer = !this.userModify.trainer;
+      this.userModify.role = "Trainer";
     
   }
   errorCheck() {
@@ -63,6 +66,7 @@ export class ProfileSettingsComponent implements OnInit {
   save() {
     this.locationService.getLocationId(this.selectedCity).subscribe(
       result => {
+        
           this.userModify.location_id = result[0].id; 
           console.log(this.userModify.location_id);
           this.userModify.id = this.user.id;
@@ -84,7 +88,7 @@ export class ProfileSettingsComponent implements OnInit {
       this.mobile = true;
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
-    this.subscription = this.loginService.currentUser.subscribe(user => this.user = user)
+    
     this.userModify = this.user;
     this.locationService.getLocations().subscribe(
       result => {this.locations = result; },
@@ -92,7 +96,7 @@ export class ProfileSettingsComponent implements OnInit {
     );
     this.locationService.getCounties().subscribe(
       result => {
-        this.counties = result;
+        this.counties = result;        
         this.selectedCounty = this.locations[this.user.location_id- 1].county_name;
         this.locationService.getCities(this.selectedCounty).subscribe(
           result => {

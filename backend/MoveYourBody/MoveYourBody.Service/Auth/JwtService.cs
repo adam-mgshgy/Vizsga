@@ -1,10 +1,10 @@
-﻿using System;
-using System.Text;
-using System.Security.Claims;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace MoveYourBody.Service.Auth
 {
@@ -19,12 +19,13 @@ namespace MoveYourBody.Service.Auth
             _expDate = config.GetSection("JwtConfig").GetSection("expirationInMinutes").Value;
         }
 
-        public string GenerateSecurityToken(string email, List<Claim> extraClaims = null)
-        {
+        public string GenerateSecurityToken(string email, string role, List<Claim> extraClaims = null)
+        {            
             var key = Encoding.ASCII.GetBytes(_secret);
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Email, email)
+                new Claim(ClaimTypes.Email, email),
+                new Claim(ClaimTypes.Role, role)
             };
 
             if (extraClaims != null && extraClaims.Count != 0)
@@ -32,7 +33,7 @@ namespace MoveYourBody.Service.Auth
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var jwt = new JwtSecurityToken(
-                issuer: "User",
+                issuer: "MoveYourBody",
                 audience: "MoveYourBody",
                 expires: DateTime.UtcNow.AddMinutes(double.Parse(_expDate)),
                 claims: claims,

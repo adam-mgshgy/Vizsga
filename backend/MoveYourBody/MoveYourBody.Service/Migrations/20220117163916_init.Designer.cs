@@ -9,7 +9,7 @@ using MoveYourBody.Service;
 namespace MoveYourBody.Service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220106123215_init")]
+    [Migration("20220117163916_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -2451,6 +2451,9 @@ namespace MoveYourBody.Service.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(12) CHARACTER SET utf8mb4")
                         .HasMaxLength(12);
+
+                    b.Property<string>("Role")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<bool>("Trainer")
                         .HasColumnType("tinyint(1)");

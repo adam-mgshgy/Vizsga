@@ -1,8 +1,10 @@
-﻿using System.Text;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace MoveYourBody.Service.Auth
 {
@@ -25,8 +27,8 @@ namespace MoveYourBody.Service.Auth
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidIssuer = "User",
-                    ValidAudience = "MoveYourBody",
+                    ValidIssuer = "Jedlik",
+                    ValidAudience = "NyitottKapuk",
                     RequireExpirationTime = true
                 };
             });

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "a2OG6VAgmL8mun/XRAYunhM9SaQrnjrd639PaaGJlrckeU0MPtg7GpSRnkOAOc1EmvQliB49/uuYZ0NxnRQiSA==",
+  "dgSpecHash": "nUHtIwhQP5D+ofNZ8qwJmPOtN2kbE1b6wju4iJ4FzgYuQs43tkKKcASNNUmwtmHxaS/IOh+n4NGnPnWYwtSOGw==",
   "success": true,
-  "projectFilePath": "D:\\Programozas\\Szakdolgozat\\Vizsga\\backend\\MoveYourBody\\MoveYourBody.Service\\MoveYourBody.Service.csproj",
+  "projectFilePath": "C:\\Users\\magas\\Documents\\Vizsga\\backend\\MoveYourBody\\MoveYourBody.Service\\MoveYourBody.Service.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\magas\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.21\\microsoft.aspnetcore.authentication.jwtbearer.3.1.21.nupkg.sha512",
     "C:\\Users\\magas\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
