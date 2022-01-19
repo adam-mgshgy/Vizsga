@@ -16,6 +16,7 @@ import { CategoryModel } from 'src/app/models/category-model';
 import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { TrainingSessionService } from 'src/app/services/training-session.service';
 import { LocationService } from 'src/app/services/location.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-training-page',
@@ -35,7 +36,7 @@ export class TrainingPageComponent implements OnInit {
   locations: LocationModel[];
   tagTraining: TagTrainingModel[] = [];
   tags: TagModel[] = [];
-  subscription: Subscription;
+  
   mobile: boolean = false;
   constructor(
     private categoriesService: CategoriesService,
@@ -47,16 +48,16 @@ export class TrainingPageComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private locationService: LocationService,
-  ) { }
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+    private authenticationService: AuthenticationService
+  ) {this.authenticationService.currentUser.subscribe(
+    (x) => (this.user = x)
+  ); }
+ 
   ngOnInit(): void {
     if (window.innerWidth <= 800) {
       this.mobile = true;
     }
-    window.onresize = () => (this.mobile = window.innerWidth <= 991);
-    this.subscription = this.loginService.currentUser.subscribe(user => this.user = user)
+    window.onresize = () => (this.mobile = window.innerWidth <= 991);    
 
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));

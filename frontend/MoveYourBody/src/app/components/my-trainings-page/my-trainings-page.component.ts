@@ -16,6 +16,7 @@ import { LoginService } from 'src/app/services/login.service';
 import { TagTrainingService } from 'src/app/services/tag-training.service';
 import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { TagService } from 'src/app/services/tag.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-my-trainings-page',
@@ -30,8 +31,12 @@ export class MyTrainingsPageComponent implements OnInit {
     private modalService: NgbModal,
     private loginService: LoginService,
     private tagTrainingService: TagTrainingService,
-    private tagService: TagService
+    private tagService: TagService,
+    private authenticationService: AuthenticationService
   ) {
+    this.authenticationService.currentUser.subscribe(
+      (x) => (this.user = x)
+    );
     this.ordered_session = Object.values(
       this.groupByDate(this.training_session, 'date')
     ); //date alapján rendez
@@ -73,10 +78,7 @@ export class MyTrainingsPageComponent implements OnInit {
   public tagTraining: TagTrainingModel[] = [];
 
   user: UserModel;
-  subscription: Subscription;
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+
 
   public users: UserModel[] = [
     //TODO from backend
@@ -207,9 +209,7 @@ export class MyTrainingsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subscription = this.loginService.currentUser.subscribe(
-      (user) => (this.user = user)
-    );
+   
 
     this.trainingService.getByTrainerId(this.user.id).subscribe(
       (result) => {

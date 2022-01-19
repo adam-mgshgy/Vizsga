@@ -18,7 +18,7 @@ export class ProfileSettingsComponent implements OnInit {
   public messageTitle = '';
   user: UserModel;
   userModify: UserModel;
-  subscription: Subscription;
+  
   constructor(
     private loginService: LoginService, 
     private modalService: NgbModal,
@@ -28,9 +28,7 @@ export class ProfileSettingsComponent implements OnInit {
     ) { this.authenticationService.currentUser.subscribe(
       (x) => (this.user = x)
     );}
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+  
   public locations: LocationModel[] = [];
   counties: LocationModel[] = [];
   cities: LocationModel[] = [];
@@ -90,7 +88,7 @@ export class ProfileSettingsComponent implements OnInit {
       this.mobile = true;
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
-    //this.subscription = this.loginService.currentUser.subscribe(user => this.user = user)
+    
     this.userModify = this.user;
     this.locationService.getLocations().subscribe(
       result => {this.locations = result; },
