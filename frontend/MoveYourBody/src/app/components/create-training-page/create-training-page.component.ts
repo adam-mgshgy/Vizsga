@@ -12,6 +12,7 @@ import { TrainingService } from 'src/app/services/training.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-create-training-page',
@@ -35,7 +36,6 @@ export class CreateTrainingPageComponent implements OnInit {
   public messageBox = '';
   public messageTitle = '';
 
-  subscription: Subscription;
   user: UserModel;
 
   public categories: CategoryModel[] = [];
@@ -56,19 +56,19 @@ export class CreateTrainingPageComponent implements OnInit {
     private tagService: TagService,
     private tagTrainingService: TagTrainingService,
     private modalService: NgbModal,
-    private loginService: LoginService, 
-  ) {}
+    private loginService: LoginService,
+    private authenticationService: AuthenticationService
+  ) {this.authenticationService.currentUser.subscribe(
+    (x) => (this.user = x)
+  );}
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+  
   ngOnInit(): void {
     if (window.innerWidth <= 800) {
       this.mobile = true;
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
-    this.subscription = this.loginService.currentUser.subscribe(user => this.user = user)
-
+    
     this.trainingService.getByTrainerId(this.user.id).subscribe(
       (result) => {
         this.myTrainings = result;

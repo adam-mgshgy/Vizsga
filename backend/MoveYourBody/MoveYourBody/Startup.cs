@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -5,10 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using MoveYourBody.Service;
+using MoveYourBody.Service.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MoveYourBody
@@ -30,6 +34,29 @@ namespace MoveYourBody
             {
                 option.UseMySql(Configuration.GetConnectionString("moveyourbody"));
             });
+
+            var secret = "uqMSgheawJFWEFMFcGhkKxnEsdzPSmVVhbhitlEB";
+
+            var key = Encoding.ASCII.GetBytes(secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidIssuer = "MoveYourBody",
+                    ValidAudience = "MoveYourBody",
+                    RequireExpirationTime = true,
+                };
+            });
+
+            
 #if DEBUG
             services.AddCors(option =>
             {
@@ -63,6 +90,8 @@ namespace MoveYourBody
 #endif
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

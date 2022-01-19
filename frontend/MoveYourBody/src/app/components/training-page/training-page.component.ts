@@ -10,14 +10,13 @@ import { TagService } from 'src/app/services/tag.service';
 import { TagTrainingService } from 'src/app/services/tag-training.service';
 import { UserService } from 'src/app/services/user.service';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { LoginService } from 'src/app/services/login.service';
 import { CategoryModel } from 'src/app/models/category-model';
 import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { TrainingSessionService } from 'src/app/services/training-session.service';
 import { LocationService } from 'src/app/services/location.service';
-import { ApplicantService } from 'src/app/services/applicant.service';
 import { ApplicantModel } from 'src/app/models/applicant-model';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ApplicantService } from 'src/app/services/applicant.service';
 
 @Component({
   selector: 'app-training-page',
@@ -26,27 +25,27 @@ import { ApplicantModel } from 'src/app/models/applicant-model';
 })
 export class TrainingPageComponent implements OnInit {
   id: Number;
-  user: UserModel = {
-    email: '',
-    full_name: '',
-    id: 0,
-    location_id: 0,
-    password: '',
-    phone_number: '',
-    trainer: false
-  };
+  user: UserModel; // = {
+  //   email: '',
+  //   full_name: '',
+  //   id: 0,
+  //   location_id: 0,
+  //   password: '',
+  //   phone_number: '',
+  //   trainer: false
+  // };
 
   errorText = '';
-  training: TrainingModel = {
-    category_id: 0,
-    contact_phone: '',
-    description:'',
-    id: 0,
-    max_member: 0,
-    min_member: 0,
-    name: '',
-    trainer_id: 0
-  };
+  training: TrainingModel; // = {
+  //   category_id: 0,
+  //   contact_phone: '',
+  //   description:'',
+  //   id: 0,
+  //   max_member: 0,
+  //   min_member: 0,
+  //   name: '',
+  //   trainer_id: 0
+  // };
   // public trainerName: '';
   public trainer: UserModel;
   public category: CategoryModel;
@@ -56,30 +55,29 @@ export class TrainingPageComponent implements OnInit {
   locations: LocationModel[];
   tagTraining: TagTrainingModel[] = [];
   tags: TagModel[] = [];
+
   usersSessions: ApplicantModel[] = [];
-  subscription: Subscription;
   mobile: boolean = false;
   constructor(
     private categoriesService: CategoriesService,
     private trainingService: TrainingService,
     private trainingSessionService: TrainingSessionService,
-    private loginService: LoginService, 
     private tagService: TagService,
     private tagTrainingService: TagTrainingService,
     private userService: UserService,
     private route: ActivatedRoute,
     private locationService: LocationService,
     private applicantService: ApplicantService,
-  ) { }
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+    private authenticationService: AuthenticationService
+  ) {this.authenticationService.currentUser.subscribe(
+    (x) => (this.user = x)
+  ); }
+ 
   ngOnInit(): void {
     if (window.innerWidth <= 800) {
       this.mobile = true;
     }
-    window.onresize = () => (this.mobile = window.innerWidth <= 991);
-    this.subscription = this.loginService.currentUser.subscribe(user => this.user = user)
+    window.onresize = () => (this.mobile = window.innerWidth <= 991);    
 
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));

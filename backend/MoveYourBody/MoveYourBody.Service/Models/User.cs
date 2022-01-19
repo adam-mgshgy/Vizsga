@@ -22,6 +22,8 @@ namespace MoveYourBody.Service.Models
         [Required]
         //public Location Location { get; set; }
         public int Location_id { get; set; }
+        public string Role { get; set; }
+
 
     }
 }

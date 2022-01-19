@@ -2450,6 +2450,9 @@ namespace MoveYourBody.Service.Migrations
                         .HasColumnType("varchar(12) CHARACTER SET utf8mb4")
                         .HasMaxLength(12);
 
+                    b.Property<string>("Role")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<bool>("Trainer")
                         .HasColumnType("tinyint(1)");
 

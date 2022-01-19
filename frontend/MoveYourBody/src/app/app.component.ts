@@ -4,6 +4,10 @@ import { UserModel } from './models/user-model';
 import { Subscription } from 'rxjs';
 import { LoginService } from './services/login.service';
 import { CategoriesService } from './services/categories.service';
+import { AuthenticationService } from './services/authentication.service';
+import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -11,123 +15,53 @@ import { CategoriesService } from './services/categories.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  user: UserModel;
-  subscription: Subscription;
-  constructor(private loginService: LoginService, private categoryService: CategoriesService) {  }
-  ngOnInit() {
-    this.subscription = this.loginService.currentUser.subscribe(user => this.user = user);
+  //user: UserModel;
+  //subscription: Subscription;
 
+  user: UserModel;
+  constructor(
+    private router: Router,
+    private loginService: LoginService,
+    private categoryService: CategoriesService,
+    private authenticationService: AuthenticationService,
+    private jwtHelper: JwtHelperService,
+    private userService: UserService
+  ) {
+    this.authenticationService.currentUser.subscribe(
+      (x) => (this.user = x)
+    );
+  }
+  ngOnInit() {
+    // this.subscription = this.loginService.currentUser.subscribe(
+    //   (user) => (this.user = user)
+    // );
+
+
+    console.log(this.user)
     this.categoryService.getCategories().subscribe(
-      (result) => this.categories = result,
+      (result) => (this.categories = result),
       (error) => console.log(error)
     );
   }
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+  // ngOnDestroy() {
+  //   this.subscription.unsubscribe();
+  // }
   title = 'MoveYourBody';
   public categories: CategoryModel[] = [];
-  public users: UserModel[] = [
-    {
-      id: 1,
-      email: 'tesztelek@gmail.com',
-      full_name: 'Tesztelek Károlyné Elekfalvi Károly',
-      trainer: true,
-      password: "pwd",
-      phone_number: '+36701234678',
-      location_id: 1
-    },
-    {
-      id: 2,
-      email: 'tesztelek@gmail.com',
-      password: "pwd",
-      full_name: 'Tóth Sándor',
-      trainer: true,
-      phone_number: '+36701234678',
-      location_id: 1
-    },
-    {
-      id: 3,
-      email: 'tesztelek@gmail.com',
-      full_name: 'Kandisz Nóra',
-      password: "pwd",
-      trainer: true,
-      phone_number: '+36701234678',
-      location_id: 1
-    },
-    {
-      id: 4,
-      email: 'tesztelek@gmail.com',
-      full_name: 'Kovács Ákos',
-      trainer: true,
-      password: "pwd",
-      phone_number: '+36701234678',
-      location_id: 1
-    },
-    {
-      id: 5,
-      email: 'tesztelek@gmail.com',
-      full_name: 'Futty Imre',
-      password: "pwd",
-      trainer: true,
-      phone_number: '+36701234678',
-      location_id: 1
-    },
-    {
-      id: 6,
-      email: 'tesztelek@gmail.com',
-      full_name: 'Mittomen Karoly',
-      trainer: true,
-      password: "pwd",
-      phone_number: '+36701234678',
-      location_id: 1
-    },
-    {
-      id: 7,
-      email: 'tesztelek@gmail.com',
-      full_name: 'Teszt Elek',
-      password: "pwd",
-      trainer: true,
-      phone_number: '+36701234678',
-      location_id: 1
-    },
-    {
-      id: 8,
-      email: 'tesztelek@gmail.com',
-      password: "pwd",
-      full_name: 'Teszt Elek',
-      trainer: true,
-      phone_number: '+36701234678',
-      location_id: 1
-    },
-    {
-      id: 9,
-      email: 'tesztelek@gmail.com',
-      full_name: 'Teszt Elek',
-      trainer: true,
-      password: "pwd",
-      phone_number: '+36701234678',
-      location_id: 1
-    },
-    {
-      id: 10,
-      email: 'tesztelek@gmail.com',
-      full_name: 'Teszt Elek',
-      password: "pwd",
-      trainer: true,
-      phone_number: '+36701234678',
-      location_id: 1
-    },
-    {
-      id: 11,
-      email: 'tesztelek@gmail.com',
-      full_name: 'Teszt Elek',
-      password: "pwd",
-      trainer: true,
-      phone_number: '+36701234678',
-      location_id: 1
-    },
-  ];
 
+  isUserAuthenticated() {
+    const token: string = localStorage.getItem("jwt");
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  Logout(){
+    this.authenticationService.logout();
+        this.router.navigate(['/login']);
+  }
   
 }
