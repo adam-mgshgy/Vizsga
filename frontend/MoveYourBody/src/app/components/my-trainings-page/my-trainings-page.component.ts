@@ -146,6 +146,7 @@ export class MyTrainingsPageComponent implements OnInit {
       address_name: '',
       place_name: '',
       training_id: 1,
+      numberOfApplicants: 0,
     },
     {
       id: 2,
@@ -155,6 +156,7 @@ export class MyTrainingsPageComponent implements OnInit {
       location_id: 1,
       address_name: '',
       place_name: '',
+      numberOfApplicants: 0,
       training_id: 1,
     },
     {
@@ -163,6 +165,7 @@ export class MyTrainingsPageComponent implements OnInit {
       price: 5000,
       minutes: 70,
       location_id: 1,
+      numberOfApplicants: 0,
       address_name: '',
       place_name: '',
       training_id: 1,
@@ -173,6 +176,7 @@ export class MyTrainingsPageComponent implements OnInit {
       price: 5000,
       minutes: 70,
       location_id: 1,
+      numberOfApplicants: 0,
       address_name: '',
       place_name: '',
       training_id: 1,

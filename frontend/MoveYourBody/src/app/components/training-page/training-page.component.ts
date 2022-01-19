@@ -16,6 +16,8 @@ import { CategoryModel } from 'src/app/models/category-model';
 import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { TrainingSessionService } from 'src/app/services/training-session.service';
 import { LocationService } from 'src/app/services/location.service';
+import { ApplicantService } from 'src/app/services/applicant.service';
+import { ApplicantModel } from 'src/app/models/applicant-model';
 
 @Component({
   selector: 'app-training-page',
@@ -24,17 +26,37 @@ import { LocationService } from 'src/app/services/location.service';
 })
 export class TrainingPageComponent implements OnInit {
   id: Number;
-  user: UserModel;
+  user: UserModel = {
+    email: '',
+    full_name: '',
+    id: 0,
+    location_id: 0,
+    password: '',
+    phone_number: '',
+    trainer: false
+  };
 
-  public training: TrainingModel;
+  errorText = '';
+  training: TrainingModel = {
+    category_id: 0,
+    contact_phone: '',
+    description:'',
+    id: 0,
+    max_member: 0,
+    min_member: 0,
+    name: '',
+    trainer_id: 0
+  };
+  // public trainerName: '';
   public trainer: UserModel;
   public category: CategoryModel;
-  public sessions: TrainingSessionModel[];
+  public sessions: TrainingSessionModel[] = [];
 
   categories: CategoryModel[];
   locations: LocationModel[];
   tagTraining: TagTrainingModel[] = [];
   tags: TagModel[] = [];
+  usersSessions: ApplicantModel[] = [];
   subscription: Subscription;
   mobile: boolean = false;
   constructor(
@@ -47,6 +69,7 @@ export class TrainingPageComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private locationService: LocationService,
+    private applicantService: ApplicantService,
   ) { }
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -61,6 +84,11 @@ export class TrainingPageComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
     });
+    // this.trainingSessionService.listByTrainingId(this.id).subscribe(
+    //   (result) => {
+    //       console.log(result);
+    //   }, (error) => console.log(error)
+    // )
     this.trainingService.getById(this.id).subscribe(
       (result) => {
         this.training = result;
@@ -70,21 +98,24 @@ export class TrainingPageComponent implements OnInit {
             this.trainingSessionService.listByTrainingId(this.training.id).subscribe(
               (result) => {
                 this.sessions = result;
-                console.log(this.sessions);
-                this.locationService.getLocations().subscribe(
-                  result => {
-                    this.locations = result;
-                  },
-                  error => console.log(error)
+                this.sessions.forEach(session => {
+                  this.applicantService.listBySessionId(session.id).subscribe(
+                    (result) => {
+                      session.numberOfApplicants = result.length;
+                      //console.log(session.numberOfApplicants);
+                    }, (error) => console.log(error)
+                  );
+                });
+                this.applicantService.listByUserId(this.user.id).subscribe(
+                  (result) => {
+                    this.usersSessions = result;
+                  }, (error) => console.log(error)
                 );
-              },
-              (error) => console.log(error)
+              }, (error) => console.log(error)
             );
-          },
-          (error) => console.log(error)
+          }, (error) => console.log(error)
         );
-      },
-      (error) => console.log(error)
+      }, (error) => console.log(error)
     );
     
     this.categoriesService.getCategories().subscribe(
@@ -100,11 +131,11 @@ export class TrainingPageComponent implements OnInit {
         this.tagTrainingService.getTags(this.category.id).subscribe(
           (result) => {
             this.tagTraining = result;
-            console.log(result);
+            //console.log(result);
           },
           (error) => console.log(error)
         );
-        console.log(result)
+        //console.log(result)
       },
       (error) => console.log(error)
     );
@@ -112,5 +143,34 @@ export class TrainingPageComponent implements OnInit {
       (result) => (this.tags = result),
       (error) => console.log(error)
     );
+    
+    this.locationService.getLocations().subscribe(
+      result => {
+        this.locations = result;
+      }, error => console.log(error)
+    );
+  }
+
+  Apply(sessionId: number) {
+    var newApplicant = new ApplicantModel();
+    newApplicant.user_id = this.user.id;
+    newApplicant.id = 1;
+    console.log(this.usersSessions);
+    console.log(this.sessions);
+    console.log(sessionId);
+    console.log(this.usersSessions.find(x => x.training_session_id == sessionId));
+    if (this.usersSessions.find(x => x.training_session_id == sessionId) == undefined) {
+      newApplicant.training_session_id = sessionId;
+      this.applicantService.newApplicant(newApplicant).subscribe(
+        (result) => {
+          this.sessions.find(x => x.id == sessionId).numberOfApplicants++;
+          this.usersSessions.push(newApplicant);
+          console.log(this.usersSessions);
+        }, (error) => {this.errorText = error.message }
+      )
+    }
+    else {
+      this.errorText = "Erre az edzésre már jelentkezett!"
+    }
   }
 }
