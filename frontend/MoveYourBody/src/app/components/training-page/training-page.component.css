@@ -15,17 +15,9 @@ img {
 .trainer {
     text-align: center;
 }
-.sessions {
-    border: solid 2px gray;
-    border-radius: 5%;
-    padding: 1%;
-}
 .center {
     margin-left: 30%;
     width: 40%;
-}
-.sessions button {
-    width: 100%;
 }
 h2 {
     width: 90%;
@@ -46,4 +38,8 @@ table button {
     color: #216869;
     background-color: white;
     border: 1px solid #216869;
+}
+table {
+    text-align: center;
+    vertical-align: middle;
 }

@@ -26,10 +26,27 @@ import { ApplicantModel } from 'src/app/models/applicant-model';
 })
 export class TrainingPageComponent implements OnInit {
   id: Number;
-  user: UserModel;
+  user: UserModel = {
+    email: '',
+    full_name: '',
+    id: 0,
+    location_id: 0,
+    password: '',
+    phone_number: '',
+    trainer: false
+  };
 
   errorText = '';
-  public training: TrainingModel;
+  training: TrainingModel = {
+    category_id: 0,
+    contact_phone: '',
+    description:'',
+    id: 0,
+    max_member: 0,
+    min_member: 0,
+    name: '',
+    trainer_id: 0
+  };
   // public trainerName: '';
   public trainer: UserModel;
   public category: CategoryModel;
@@ -85,14 +102,13 @@ export class TrainingPageComponent implements OnInit {
                   this.applicantService.listBySessionId(session.id).subscribe(
                     (result) => {
                       session.numberOfApplicants = result.length;
-                      console.log(session.numberOfApplicants);
+                      //console.log(session.numberOfApplicants);
                     }, (error) => console.log(error)
                   );
                 });
                 this.applicantService.listByUserId(this.user.id).subscribe(
                   (result) => {
                     this.usersSessions = result;
-                    console.log(this.usersSessions);
                   }, (error) => console.log(error)
                 );
               }, (error) => console.log(error)
@@ -115,11 +131,11 @@ export class TrainingPageComponent implements OnInit {
         this.tagTrainingService.getTags(this.category.id).subscribe(
           (result) => {
             this.tagTraining = result;
-            console.log(result);
+            //console.log(result);
           },
           (error) => console.log(error)
         );
-        console.log(result)
+        //console.log(result)
       },
       (error) => console.log(error)
     );
@@ -139,16 +155,16 @@ export class TrainingPageComponent implements OnInit {
     var newApplicant = new ApplicantModel();
     newApplicant.user_id = this.user.id;
     newApplicant.id = 1;
+    console.log(this.usersSessions);
+    console.log(this.sessions);
+    console.log(sessionId);
+    console.log(this.usersSessions.find(x => x.training_session_id == sessionId));
     if (this.usersSessions.find(x => x.training_session_id == sessionId) == undefined) {
       newApplicant.training_session_id = sessionId;
       this.applicantService.newApplicant(newApplicant).subscribe(
         (result) => {
           this.sessions.find(x => x.id == sessionId).numberOfApplicants++;
-          this.applicantService.listByUserId(this.user.id).subscribe(
-            (result) => {
-              this.usersSessions = result;
-            }, (error) => console.log(error)
-          );
+          this.usersSessions.push(newApplicant);
           console.log(this.usersSessions);
         }, (error) => {this.errorText = error.message }
       )
@@ -156,7 +172,5 @@ export class TrainingPageComponent implements OnInit {
     else {
       this.errorText = "Erre az edzésre már jelentkezett!"
     }
-    
-    
   }
 }
