@@ -3,8 +3,6 @@ export class TrainingModel{
     public name = '';
     public category_id: number | null = null;
     public trainer_id: number | null = null;
-    public min_member: number | null = null;
-    public max_member: number | null = null;
     public description = '';
     public contact_phone = '';
 }

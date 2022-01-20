@@ -76,6 +76,8 @@ export class AddSessionPageComponent implements OnInit {
     )
     this.newSession.id = 0;
     this.newSession.training_id = this.trainingId;
+    this.newSession.min_member = Number(this.newSession.min_member);
+    this.newSession.max_member = Number(this.newSession.max_member);
     this.errorCheck();
     this.trainingSessionService.createTrainingSession(this.newSession).subscribe(
       (result) => {
@@ -118,6 +120,11 @@ export class AddSessionPageComponent implements OnInit {
       this.messageBox = 'Kérem adja meg az alkalom árát!';
     }else if (this.newSession.price  < 0 || this.newSession.minutes < 0) {
       this.messageBox = 'Az érték nem lehet negatív';
+    } else if (this.newSession.max_member == 0) {
+      this.messageBox = 'Kérem adja meg az edzés résztvevőinek maximum számát!';
+    } else if (Number(this.newSession.min_member) > Number(this.newSession.max_member)) {
+      this.messageBox =
+        'Az edzéshez tartozó minimum résztvevők száma nagyobb mint a maximum!'; //TODO az inputból kikattintva menti csak el a résztvevők számát
     } else if (this.selectedCounty == null) {
       this.messageBox = 'Kérem válasszon megyét!';
     } else if (this.selectedCity == null) {

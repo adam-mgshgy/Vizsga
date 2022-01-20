@@ -2366,12 +2366,6 @@ namespace MoveYourBody.Service.Migrations
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4")
                         .HasMaxLength(255);
 
-                    b.Property<int>("Max_member")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Min_member")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(50) CHARACTER SET utf8mb4")
@@ -2400,6 +2394,12 @@ namespace MoveYourBody.Service.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("Location_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Max_member")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Min_member")
                         .HasColumnType("int");
 
                     b.Property<int>("Minutes")

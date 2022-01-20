@@ -10,7 +10,7 @@
             <h2 class="mb-4">Az edzés leírása: </h2>
             <h2 class="mb-4">{{training.description}}</h2>
             <h3 class="mb-4">Kategória: <a [routerLink]="'/category/' + category.name">{{category.name}}</a></h3>
-            <h3 class="mb-4">Résztvevők száma: {{training.min_member}} - {{training.max_member}} fő</h3>
+            
             <h3 class="mb-4">Címkék:</h3>
             <span *ngFor="let tag of tagTraining">
                 <button *ngIf="training.id == tag.training_id && tag.tag_id == tags[tag.tag_id-1].id  ? 'true' : ''" id="tag"  [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}"
@@ -29,7 +29,7 @@
                     <th>Időpont</th>
                     <th>Ár(Ft)</th>
                     <th>Hossz(Perc)</th>
-                    <th>Jelentkezők száma</th> <!-- TODO: szabad helyek -->
+                    <th>Jelentkezők száma</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,7 +46,7 @@
                     <td>{{session.date | date: 'yyyy.MM.dd. HH:mm'}}</td>
                     <td>{{session.price}}</td>
                     <td>{{session.minutes}}</td>
-                    <td>{{session.numberOfApplicants}}</td> <!-- TODO -->
+                    <td>{{session.numberOfApplicants + '/' + session.max_member}}</td> 
                     <td><button class="btn fw-bold mb-2 mt-2" (click)="Apply(session.id)">Jelentkezek!</button></td>
                 </tr>
             </tbody>

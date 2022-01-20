@@ -22,10 +22,7 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var applicants = dbContext.Set<Applicant>().Where(t => t.Training_session_id == trainingSessionId).Select(s => new 
-                    {
-                        user = dbContext.Set<User>().Where(u => u.Id == s.User_id)
-                });
+                var applicants = dbContext.Set<Applicant>().Where(t => t.Training_session_id == trainingSessionId);
                 return Ok(applicants);
             });
         }
@@ -34,25 +31,21 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var sessions = dbContext.Set<Applicant>().Where(u => u.User_id == userId).Select(s => new
-                {
-                    session = dbContext.Set<TrainingSession>().Where(t => t.Id == s.Training_session_id)
-                });
+                var sessions = dbContext.Set<Applicant>().Where(u => u.User_id == userId);
                 return Ok(sessions);
             });
         }
 
         [HttpPut("add")]
-        public ActionResult AddApplicant([FromQuery] int trainingSessionId, int userId)
+        public ActionResult AddApplicant(Applicant applicant)
         {
             return this.Run(() =>
             {
-
                 var newApplicant = new Applicant
                 {
-                    Id = 1,
-                    Training_session_id = dbContext.Set<TrainingSession>().FirstOrDefault(s => s.Id == trainingSessionId).Id,
-                    User_id = dbContext.Set<User>().FirstOrDefault(u => u.Id == userId).Id
+                    Id = 0,
+                    Training_session_id = applicant.Training_session_id,
+                    User_id = applicant.User_id
                 };
                 //newApplicant.Training_session.Training.Trainer = dbContext.Set<User>().FirstOrDefault(trainer => trainer.Id == newApplicant.Training_session.Training.Trainer.Id);
                 //newApplicant.Training_session.Training.Trainer.Location = dbContext.Set<Location>().FirstOrDefault(tLoc => tLoc.Id == newApplicant.Training_session.Training.Trainer.Location.Id);

@@ -15,10 +15,7 @@ namespace MoveYourBody.Service.Models
         public int Category_id { get; set; }
         [Required]
         public int Trainer_id { get; set; }
-        [Required]
-        public int Min_member { get; set; }
-        [Required]
-        public int Max_member { get; set; }
+
         [Required, StringLength(255)]
         public string Description { get; set; }
         public string Contact_phone { get; set; }

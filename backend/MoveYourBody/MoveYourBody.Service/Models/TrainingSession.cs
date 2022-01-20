@@ -18,6 +18,10 @@ namespace MoveYourBody.Service.Models
         [Required]
         public double Price { get; set; }
         [Required]
+        public int Min_member { get; set; }
+        [Required]
+        public int Max_member { get; set; }
+        [Required]
         public int Minutes { get; set; }
         [Required, StringLength(255)]
         public string Address_name { get; set; }

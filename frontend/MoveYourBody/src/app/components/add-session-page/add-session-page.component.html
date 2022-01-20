@@ -43,6 +43,11 @@
         </div>
 
         <div class="mb-3">
+            <label class="form-control-label d-block">Résztvevők száma:</label>
+            <input [ngStyle]="{'width.%': mobile ? '15' : '8'}" type="text" type="number" name="minMemberNumber" id="minMemberNumber" [(ngModel)]="newSession.min_member" > -
+            <input [ngStyle]="{'width.%': mobile ? '15' : '8'}" type="text" type="number" name="maxMemberNumber" id="maxMemberNumber" [(ngModel)]="newSession.max_member" >
+        </div>
+        <div class="mb-3">
             <label for="price" class="form-label">
                 Edzés ára forintban:
             </label>

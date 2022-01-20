@@ -29,6 +29,8 @@ namespace MoveYourBody.WebAPI.Controllers
                     location_id = dbContext.Set<Location>().FirstOrDefault(l => l.Id == s.Location_id).Id,
                     date = s.Date,//.ToString("yyyy.MM.dd. hh:mm"), //??
                     price = s.Price,
+                    min_member = s.Min_member,
+                    max_member = s.Max_member,
                     minutes = s.Minutes,
                     address_name = s.Address_name,
                     place_name = s.Place_name,
@@ -49,6 +51,8 @@ namespace MoveYourBody.WebAPI.Controllers
                     Location_id = dbContext.Set<Location>().FirstOrDefault(l => l.Id == session.Location_id).Id,
                     Date = session.Date,
                     Price = session.Price,
+                    Min_member = session.Min_member,
+                    Max_member = session.Max_member,
                     Minutes = session.Minutes,
                     Address_name = session.Address_name,
                     Place_name = session.Place_name,
