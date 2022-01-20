@@ -25,29 +25,39 @@ import { ApplicantService } from 'src/app/services/applicant.service';
 })
 export class TrainingPageComponent implements OnInit {
   id: Number;
-  user: UserModel; // = {
-  //   email: '',
-  //   full_name: '',
-  //   id: 0,
-  //   location_id: 0,
-  //   password: '',
-  //   phone_number: '',
-  //   trainer: false
-  // };
+  user: UserModel = {
+    email: '',
+    full_name: '',
+    id: 0,
+    location_id: 0,
+    password: '',
+    phone_number: '',
+    trainer: false,
+    role: '',
+    token: ''
+  };
 
   errorText = '';
-  training: TrainingModel; // = {
-  //   category_id: 0,
-  //   contact_phone: '',
-  //   description:'',
-  //   id: 0,
-  //   max_member: 0,
-  //   min_member: 0,
-  //   name: '',
-  //   trainer_id: 0
-  // };
+  training: TrainingModel = {
+    category_id: 0,
+    contact_phone: '',
+    description:'',
+    id: 0,
+    name: '',
+    trainer_id: 0
+  };
   // public trainerName: '';
-  public trainer: UserModel;
+  public trainer: UserModel = {
+    email: '',
+    full_name: '',
+    id: 0,
+    location_id: 0,
+    password: '',
+    phone_number: '',
+    trainer: false,
+    role: '',
+    token: ''
+  };
   public category: CategoryModel;
   public sessions: TrainingSessionModel[] = [];
 

@@ -27,9 +27,9 @@
               <button id="cancel" *ngIf="user.trainer == false" class="btn btn-danger mb-3">
                 Lemondás
               </button>
-              <button id="sessions" *ngIf="user.trainer" class="btn btn-primary mb-3 me-3" (click)="open(content)">
+              <button id="sessions" *ngIf="user.trainer" class="btn btn-primary mb-3 me-3" (click)="open(content, training.id)">
                 Alkalmak
-              </button>              
+              </button>
             </div>
             <h6 class="card-title text-white">{{ user.full_name }}</h6>
           </div>
@@ -38,13 +38,12 @@
               <p class="card-text">{{training.description}}</p>
 
               <span *ngFor="let tag of tagTraining">
-                <button *ngIf="training.id == tag.training_id && tag.tag_id == tags[tag.tag_id-1].id  ? 'true' : ''" id="tag"  [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}"
-                   class="btn fw-bold me-1 mb-1" >{{tags[tag.tag_id-1].name}}</button>
+                <button *ngIf="training.id == tag.training_id && tag.tag_id == tags[tag.tag_id-1].id  ? 'true' : ''" id="tag" [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}" class="btn fw-bold me-1 mb-1">{{tags[tag.tag_id-1].name}}</button>
               </span>
-                <select  *ngIf=" " id="moreTag" class="btn fw-bold me-1 mb-1">
-                  <option value="">...</option>
-                  <option *ngFor="let tag of tags" value="">{{tag.name}}</option>
-                </select>
+              <select *ngIf=" " id="moreTag" class="btn fw-bold me-1 mb-1">
+                <option value="">...</option>
+                <option *ngFor="let tag of tags" value="">{{tag.name}}</option>
+              </select>
               <!-- <p class="card-text fw-bold"><a class="text-decoration-none text-black" routerLink="">{{locations[users[i].location_id-1].city_name}}</a></p> -->
             </div>
           </div>
@@ -97,12 +96,12 @@
             {{statuses[i]}}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div class="row" *ngFor="let user of users">
+        <div class="row" *ngFor="let applicant of applicantUsers">
           <div class="col-6">
-            <div *ngIf="user.trainer == false">{{user.full_name}}</div>
+            <div *ngIf="applicant.trainer == false">{{applicant.full_name}}</div>
           </div>
           <div class="col-6">
-            <div *ngIf="user.trainer == false">{{user.phone_number}}</div>
+            <div *ngIf="applicant.trainer == false">{{applicant.phone_number}}</div>
           </div>
           <hr>
         </div>
