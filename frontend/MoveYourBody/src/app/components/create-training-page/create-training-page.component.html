@@ -26,11 +26,6 @@
             <label for="description" class="form-control-label d-block">Edzés leírása:</label>
             <textarea [ngStyle]="{'width.%': mobile ? '70' : '50'}" type="text" name="description" id="description" cols="50" rows="8" [(ngModel)]="training.description" value="{{training.description}}"></textarea>
         </div>
-        <div class="mb-3">
-            <label class="form-control-label d-block">Résztvevők száma:</label>
-            <input [ngStyle]="{'width.%': mobile ? '15' : '8'}" type="text" type="number" name="minMemberNumber" id="minMemberNumber" [(ngModel)]="min_member" value="{{training.min_member}}"> -
-            <input [ngStyle]="{'width.%': mobile ? '15' : '8'}" type="text" type="number" name="maxMemberNumber" id="maxMemberNumber" [(ngModel)]="max_member" value="{{training.max_member}}">
-        </div>
         <div class="mb-3 checks">
             <div class="form-control-label me-2">Címkék:</div>
             <ul>

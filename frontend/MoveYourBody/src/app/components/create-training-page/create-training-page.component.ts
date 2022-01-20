@@ -24,8 +24,6 @@ export class CreateTrainingPageComponent implements OnInit {
   isChecked = false;
 
   selectedCat = '';
-  public min_member: number;
-  public max_member: number;
   otherPhoneNumber = false;
   otherPhoneNumberInput: string;
 
@@ -112,8 +110,6 @@ export class CreateTrainingPageComponent implements OnInit {
         }
         if (this.training.id != null) {
           console.log(this.training);
-          this.max_member = this.training.max_member;
-          this.min_member = this.training.min_member;
           this.create = false;
         }
       },
@@ -140,8 +136,6 @@ export class CreateTrainingPageComponent implements OnInit {
         if (this.otherPhoneNumberInput != null) {
           this.training.id = 0;
           this.training.trainer_id = this.user.id;
-          this.training.min_member = Number(this.min_member);
-          this.training.max_member = Number(this.max_member);
           this.training.contact_phone = this.otherPhoneNumberInput;
           this.trainingService.newTraining(this.training).subscribe(
             (result) => {
@@ -156,8 +150,6 @@ export class CreateTrainingPageComponent implements OnInit {
       } else {
         this.training.id = 0;
         this.training.trainer_id = this.user.id;
-        this.training.min_member = Number(this.min_member);
-        this.training.max_member = Number(this.max_member);
         this.training.contact_phone = this.user.phone_number;
 
         this.trainingService.newTraining(this.training).subscribe(
@@ -190,8 +182,6 @@ export class CreateTrainingPageComponent implements OnInit {
         );
       }
     } else {
-      this.training.min_member = Number(this.min_member);
-      this.training.max_member = Number(this.max_member);
       if (this.otherPhoneNumber) {
         this.training.contact_phone = this.otherPhoneNumberInput;
       } else {
@@ -319,11 +309,6 @@ export class CreateTrainingPageComponent implements OnInit {
     } else if (this.training.description == '') {
       this.messageBox =
         'Kérem adjon meg az edzéshez egy rövid tájékoztató leírást!';
-    } else if (this.training.max_member == 0) {
-      this.messageBox = 'Kérem adja meg az edzés résztvevőinek maximum számát!';
-    } else if (this.training.min_member > this.max_member) {
-      this.messageBox =
-        'Az edzéshez tartozó minimum résztvevők száma nagyobb mint a maximum!'; //TODO az inputból kikattintva menti csak el a résztvevők számát
     } else if (
       this.otherPhoneNumber == true &&
       this.otherPhoneNumberInput == null

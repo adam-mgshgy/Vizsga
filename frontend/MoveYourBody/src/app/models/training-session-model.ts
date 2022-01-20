@@ -5,6 +5,8 @@ export class TrainingSessionModel {
     public date = '';
     public price: number | null = null;
     public minutes: number | null = null;
+    public min_member: number | null = null;
+    public max_member: number | null = null;
     public numberOfApplicants: number| null  = null;
     public address_name = '';
     public place_name = '';
