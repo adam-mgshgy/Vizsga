@@ -22,20 +22,14 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var sessions = dbContext.Set<TrainingSession>().Where(t => t.Training_id == trainingId).Select(s => new //nincs include
-                {
-                    id = s.Id,
-                    training_id = dbContext.Set<Training>().FirstOrDefault(t => t.Id == s.Training_id).Id,
-                    location_id = dbContext.Set<Location>().FirstOrDefault(l => l.Id == s.Location_id).Id,
-                    date = s.Date,//.ToString("yyyy.MM.dd. hh:mm"), //??
-                    price = s.Price,
-                    min_member = s.Min_member,
-                    max_member = s.Max_member,
-                    minutes = s.Minutes,
-                    address_name = s.Address_name,
-                    place_name = s.Place_name,
+                var sessions = dbContext.Set<TrainingSession>().Where(s => s.Training_id == trainingId);
+                Training training = dbContext.Set<Training>().Where(t => t.Id == trainingId).FirstOrDefault();
+                var trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault().Full_name;
+                return Ok(new { 
+                    session = sessions,
+                    trainer = trainer,
+                    training = training
                 });
-                return Ok(sessions);
             });
 
         }

@@ -4,13 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
-import { LocationModel } from 'src/app/models/location-model';
-import { isNull } from '@angular/compiler/src/output/output_ast';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { TrainingSessionModel } from 'src/app/models/training-session-model';
 import { TrainingService } from 'src/app/services/training.service';
-import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { LoginService } from 'src/app/services/login.service';
 import { TagTrainingService } from 'src/app/services/tag-training.service';
@@ -35,14 +31,9 @@ export class MyTrainingsPageComponent implements OnInit {
     private tagTrainingService: TagTrainingService,
     private tagService: TagService,
     private authenticationService: AuthenticationService,
-    private route: ActivatedRoute,
     private userService: UserService,
-    private loginService: LoginService,
-
   ) {
-    this.authenticationService.currentUser.subscribe(
-      (x) => (this.user = x)
-    );
+    this.authenticationService.currentUser.subscribe((x) => (this.user = x));
     this.ordered_session = Object.values(
       this.groupByDate(this.sessions, 'date')
     ); //date alapján rendez
@@ -57,15 +48,11 @@ export class MyTrainingsPageComponent implements OnInit {
   public myTrainings: TrainingModel[] = [];
   public tagTraining: TagTrainingModel[] = [];
   user: UserModel;
-  public applicants: ApplicantModel[] = [ ];
-  public applicantUsers: UserModel[] = [ ];
-  currentTraining : TrainingModel;
+  public applicants: ApplicantModel[] = [];
+  public applicantUsers: UserModel[] = [];
+  currentTraining: TrainingModel;
   public tags: TagModel[] = [];
-
   public sessions: TrainingSessionModel[] = [];
-
-  public statuses = ['4/8', '8/8 Betelt', '2/8 Kevés jelentkező', '5/8'];
-
   public ordered_session: any[] = [];
 
   groupByDate(array, property) {
@@ -88,7 +75,7 @@ export class MyTrainingsPageComponent implements OnInit {
 
         for (const item of this.myTrainings) {
           this.tagTrainingService.getByTraining(item.id).subscribe((result) => {
-            this.tagTraining.push.apply(this.tagTraining, result);            
+            this.tagTraining.push.apply(this.tagTraining, result);
           });
         }
       },
@@ -137,42 +124,46 @@ export class MyTrainingsPageComponent implements OnInit {
     }
   }
   open(content: any, trainingId: number) {
+    this.trainingSessionService.listByTrainingId(trainingId).subscribe(
+      (result) => {
+        console.log(content)
+        this.sessions = result.session;
+        this.currentTraining = result.training;
+        this.sessions.forEach((session) => {
+          this.applicantService.listBySessionId(session.id).subscribe(
+            (result) => {
+              session.numberOfApplicants = result.length;
+              this.applicants = result;
+              console.log(this.sessions);
+              console.log(this.applicants);
+              this.applicants.forEach((applicant) => {
+                this.userService.getUserById(applicant.user_id).subscribe(
+                  (result) => {
+                    this.applicantUsers.push(result);
+                  },
+                  (error) => console.log(error)
+                );
+              });
+            },
+            (error) => console.log(error)
+          );
+        });
+      },
+      (error) => console.log(error)
+    );
+    
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
         (result) => {
           this.closeResult = `Closed with: ${result}`;
-          this.trainingService.getById(trainingId).subscribe(
-            (result) => {
-            this.currentTraining = result;
-              this.trainingSessionService.listByTrainingId(this.currentTraining.id).subscribe(
-                (result) => {
-                  this.sessions = result;
-                  this.sessions.forEach(session => {
-                    this.applicantService.listBySessionId(session.id).subscribe(
-                      (result) => {
-                        session.numberOfApplicants = result.length;
-                        this.applicants = result;
-                        this.applicants.forEach(applicant => {
-                          this.userService.getUserById(applicant.user_id).subscribe(
-                            (result) => {
-                              this.applicantUsers.push(result);
-                            }, (error) => console.log(error)
-                          )
-                        });
-                      }, (error) => console.log(error)
-                    );
-                  });
-                }, (error) => console.log(error)
-              );
-            }, (error) => console.log(error)
-          );
         },
         (reason) => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         }
       );
   }
+  
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
