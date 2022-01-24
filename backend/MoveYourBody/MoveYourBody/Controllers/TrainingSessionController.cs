@@ -33,6 +33,16 @@ namespace MoveYourBody.WebAPI.Controllers
             });
 
         }
+        [HttpGet("list")]
+        public ActionResult GetById([FromQuery] int sessionId)
+        {
+            return this.Run(() =>
+            {
+                TrainingSession session = dbContext.Set<TrainingSession>().Where(s => s.Id == sessionId).FirstOrDefault();
+                return Ok(session);
+            });
+
+        }
         [HttpPut("create")]
         public ActionResult CreateSession(TrainingSession session)
         {

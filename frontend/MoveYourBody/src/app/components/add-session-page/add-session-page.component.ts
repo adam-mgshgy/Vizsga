@@ -10,10 +10,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-add-session-page',
   templateUrl: './add-session-page.component.html',
-  styleUrls: ['./add-session-page.component.css']
+  styleUrls: ['./add-session-page.component.css'],
 })
 export class AddSessionPageComponent implements OnInit {
   trainingId: number;
+  sessionId: number;
 
   mobile: boolean = false;
   locations: LocationModel[] = [];
@@ -24,7 +25,7 @@ export class AddSessionPageComponent implements OnInit {
   newSession: TrainingSessionModel = new TrainingSessionModel();
   date: Date;
   time: Time;
-  
+
   public messageBox = '';
   public messageTitle = '';
   constructor(
@@ -33,9 +34,8 @@ export class AddSessionPageComponent implements OnInit {
     private trainingSessionService: TrainingSessionService,
     private route: ActivatedRoute,
     private router: Router
-
-  ) { }
-  TimeChanged(){
+  ) {}
+  TimeChanged() {
     this.newSession.date = new Date(this.date + ' ' + this.time).toISOString();
   }
   CountyChanged(value) {
@@ -50,9 +50,10 @@ export class AddSessionPageComponent implements OnInit {
         this.selectedCounty = item.county_name;
       }
     }
+
     this.locationService.getCities(this.selectedCounty).subscribe(
-      result => this.cities = result,
-      error => console.log(error)
+      (result) => (this.cities = result),
+      (error) => console.log(error)
     );
   }
   CityChanged(value) {
@@ -71,21 +72,22 @@ export class AddSessionPageComponent implements OnInit {
   SaveSession() {
     this.errorCheck();
     this.locationService.getLocationId(this.selectedCity).subscribe(
-      result => this.newSession.location_id = result,
-      error => console.log(error)
-    )
+      (result) => (this.newSession.location_id = result),
+      (error) => console.log(error)
+    );
     this.newSession.id = 0;
     this.newSession.training_id = this.trainingId;
     this.newSession.min_member = Number(this.newSession.min_member);
     this.newSession.max_member = Number(this.newSession.max_member);
     this.errorCheck();
-    this.trainingSessionService.createTrainingSession(this.newSession).subscribe(
-      (result) => {
-        console.log(this.newSession)
-      },
-      (error) => console.log(error)
-
-    )
+    this.trainingSessionService
+      .createTrainingSession(this.newSession)
+      .subscribe(
+        (result) => {
+          console.log(this.newSession);
+        },
+        (error) => console.log(error)
+      );
   }
   Cancel() {
     this.newSession = new TrainingSessionModel();
@@ -101,28 +103,34 @@ export class AddSessionPageComponent implements OnInit {
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
     this.locationService.getCounties().subscribe(
-      result => this.counties = result,
-      error => console.log(error)
+      (result) => (this.counties = result),
+      (error) => console.log(error)
     );
     this.route.paramMap.subscribe((params) => {
-      this.trainingId = Number(params.get('id'));
+      this.trainingId = Number(params.get('trainingId'));
+      this.sessionId = Number(params.get('sessionId'));
       console.log(this.trainingId);
-    }
-    );
+      console.log(this.sessionId);
+      if (this.sessionId > 0) {
+        //getbyid adatbetöltés -> előtte api és service
+      }
+    });
   }
   errorCheck() {
     this.messageTitle = 'Hiba';
     if (this.newSession.date == null) {
       this.messageBox = 'Kérem adjon meg dátumot!'; //TODO hogyan ellenőrizzem, hogy múltbeli-e?
     } else if (this.newSession.minutes == null) {
-      this.messageBox = 'Kérem adja meg az alkalom hosszát percben!'; 
+      this.messageBox = 'Kérem adja meg az alkalom hosszát percben!';
     } else if (this.newSession.price == null) {
       this.messageBox = 'Kérem adja meg az alkalom árát!';
-    }else if (this.newSession.price  < 0 || this.newSession.minutes < 0) {
+    } else if (this.newSession.price < 0 || this.newSession.minutes < 0) {
       this.messageBox = 'Az érték nem lehet negatív';
     } else if (this.newSession.max_member == 0) {
       this.messageBox = 'Kérem adja meg az edzés résztvevőinek maximum számát!';
-    } else if (Number(this.newSession.min_member) > Number(this.newSession.max_member)) {
+    } else if (
+      Number(this.newSession.min_member) > Number(this.newSession.max_member)
+    ) {
       this.messageBox =
         'Az edzéshez tartozó minimum résztvevők száma nagyobb mint a maximum!'; //TODO az inputból kikattintva menti csak el a résztvevők számát
     } else if (this.selectedCounty == null) {
@@ -133,8 +141,7 @@ export class AddSessionPageComponent implements OnInit {
       this.messageBox = 'Kérem adja meg az alkalom címét!';
     } else if (this.newSession.place_name == '') {
       this.messageBox = 'Kérem adja meg a létesítmény nevét!';
-    }
-     else {
+    } else {
       this.messageTitle = 'Siker';
       this.messageBox = 'Sikeres mentés!';
     }
@@ -162,5 +169,4 @@ export class AddSessionPageComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-
 }

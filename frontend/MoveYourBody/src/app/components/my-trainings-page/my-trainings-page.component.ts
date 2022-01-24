@@ -140,8 +140,8 @@ export class MyTrainingsPageComponent implements OnInit {
         }
       );
   }
-  openSession(sessionId: number) {
-
+  close() {
+    this.modalService.dismissAll();
   }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {

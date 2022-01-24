@@ -22,7 +22,7 @@ const routes: Routes = [
   {path: 'createtraining', component: CreateTrainingPageComponent},
   {path: 'createtraining/:id', component: CreateTrainingPageComponent},
   {path: 'addsession', component: AddSessionPageComponent},
-  {path: 'addsession/:id', component: AddSessionPageComponent},
+  {path: 'addsession/:trainingId/:sessionId', component: AddSessionPageComponent},
   {path: 'training/:id', component: TrainingPageComponent},
   {path: 'mytrainings', component: MyTrainingsPageComponent}
 ];

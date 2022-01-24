@@ -21,7 +21,7 @@
               <button id="modify" *ngIf="user.trainer" class="btn btn-primary mb-3 me-3" [routerLink]="'/createtraining/' + training.id">
                 Szerkesztés
               </button>
-              <button id="newSession" *ngIf="user.trainer" class="btn btn-primary mb-3 me-3" [routerLink]="'/addsession/'  + training.id">
+              <button id="newSession" *ngIf="user.trainer" class="btn btn-primary mb-3 me-3" [routerLink]="'/addsession/'  + training.id + '/' + 0">
                 Új alkalom
               </button>
               <button id="cancel" *ngIf="user.trainer == false" class="btn btn-danger mb-3">
@@ -80,7 +80,7 @@
           <mat-divider></mat-divider>
         </mat-panel-title>
         <mat-panel-description>
-          <button class="btn btn-primary me-3">Duplikálás</button>
+          <button class="btn btn-primary me-3" [routerLink]="'/addsession/'  +  currentTraining.id + '/' + session.id" (click)="close()" >Duplikálás</button>
           <button class="btn btn-danger">Törlés</button>
         </mat-panel-description>
       </mat-expansion-panel-header>
