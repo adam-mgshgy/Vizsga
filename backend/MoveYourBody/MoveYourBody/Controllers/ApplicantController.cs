@@ -47,11 +47,6 @@ namespace MoveYourBody.WebAPI.Controllers
                     Training_session_id = applicant.Training_session_id,
                     User_id = applicant.User_id
                 };
-                //newApplicant.Training_session.Training.Trainer = dbContext.Set<User>().FirstOrDefault(trainer => trainer.Id == newApplicant.Training_session.Training.Trainer.Id);
-                //newApplicant.Training_session.Training.Trainer.Location = dbContext.Set<Location>().FirstOrDefault(tLoc => tLoc.Id == newApplicant.Training_session.Training.Trainer.Location.Id);
-                //newApplicant.Training_session.Training = dbContext.Set<Training>().FirstOrDefault(training => training.Id == newApplicant.Training_session.Training.Id);
-                //newApplicant.Training_session.Location = dbContext.Set<Location>().FirstOrDefault(loc => loc.Id == newApplicant.Training_session.Location.Id);
-                //newApplicant.Training_session.Training.Category = dbContext.Set<Category>().FirstOrDefault(c => c.Name == newApplicant.Training_session.Training.Category.Name);
                 dbContext.Set<Applicant>().Add(newApplicant);
                 dbContext.SaveChanges();
                 return Ok(newApplicant);

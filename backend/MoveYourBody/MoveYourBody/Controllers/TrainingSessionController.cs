@@ -31,9 +31,8 @@ namespace MoveYourBody.WebAPI.Controllers
                     training = training
                 });
             });
-
         }
-        [HttpGet("list")]
+        [HttpGet("get")]
         public ActionResult GetById([FromQuery] int sessionId)
         {
             return this.Run(() =>
@@ -48,11 +47,11 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var newSession = new TrainingSession
+                TrainingSession newSession = new TrainingSession
                 {
-                    Id = session.Id,
-                    Training_id = dbContext.Set<Training>().FirstOrDefault(t => t.Id == session.Training_id).Id,
-                    Location_id = dbContext.Set<Location>().FirstOrDefault(l => l.Id == session.Location_id).Id,
+                    Id = 0, /// !!!
+                    Training_id = session.Training_id,
+                    Location_id = session.Location_id,
                     Date = session.Date,
                     Price = session.Price,
                     Min_member = session.Min_member,
@@ -61,8 +60,6 @@ namespace MoveYourBody.WebAPI.Controllers
                     Address_name = session.Address_name,
                     Place_name = session.Place_name,
                 };
-                //newSession.Training.Trainer_id = session.Training.Trainer_id;
-                //newSession.Training.Category_id = session.Training.Category_id;
                 dbContext.Set<TrainingSession>().Add(newSession);
                 dbContext.SaveChanges();
                 return Ok(newSession);

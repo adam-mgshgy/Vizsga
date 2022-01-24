@@ -76,7 +76,20 @@ export class TrainingSessionService {
       .get<any>(`${environment.ApiURL}/sessions/list?trainingId=${trainingId}`)
       .pipe(
         map((data) => {
-          
+          return data;
+        }),
+        catchError((err) => {
+          if (!environment.production && err.status == 404) {
+            return of(err);
+          } else throw err;
+        })
+      );
+  }
+  getById(sessionId: number): Observable<TrainingSessionModel> {
+    return this.http
+      .get<TrainingSessionModel>(`${environment.ApiURL}/sessions/get?sessionId=${sessionId}`)
+      .pipe(
+        map((data: TrainingSessionModel) => {
           return data;
         }),
         catchError((err) => {

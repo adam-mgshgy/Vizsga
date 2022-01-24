@@ -122,7 +122,6 @@ export class MyTrainingsPageComponent implements OnInit {
   open(content: any, trainingId: number) {
     this.trainingSessionService.listByTrainingId(trainingId).subscribe(
       (result) => {
-        console.log(content)
         this.sessions = result.session;
         this.currentTraining = result.training;
       },

@@ -6,6 +6,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TrainingSessionService } from 'src/app/services/training-session.service';
 import { Time } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TrainingService } from 'src/app/services/training.service';
 
 @Component({
   selector: 'app-add-session-page',
@@ -17,7 +18,6 @@ export class AddSessionPageComponent implements OnInit {
   sessionId: number;
 
   mobile: boolean = false;
-  locations: LocationModel[] = [];
   counties: LocationModel[] = [];
   cities: LocationModel[] = [];
   selectedCounty: string;
@@ -30,13 +30,16 @@ export class AddSessionPageComponent implements OnInit {
   public messageTitle = '';
   constructor(
     private locationService: LocationService,
+    private trainingService: TrainingService,
     private modalService: NgbModal,
     private trainingSessionService: TrainingSessionService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
   TimeChanged() {
-    this.newSession.date = new Date(this.date + ' ' + this.time).toISOString();
+    this.newSession.date = new Date(
+      this.date + ' ' + this.time + 1
+    ).toISOString(); //TODO kevesebb több
   }
   CountyChanged(value) {
     for (const item of this.counties) {
@@ -50,7 +53,6 @@ export class AddSessionPageComponent implements OnInit {
         this.selectedCounty = item.county_name;
       }
     }
-
     this.locationService.getCities(this.selectedCounty).subscribe(
       (result) => (this.cities = result),
       (error) => console.log(error)
@@ -72,22 +74,26 @@ export class AddSessionPageComponent implements OnInit {
   SaveSession() {
     this.errorCheck();
     this.locationService.getLocationId(this.selectedCity).subscribe(
-      (result) => (this.newSession.location_id = result),
+      (result) => {
+        console.log(result[0].id);
+        this.newSession.location_id = result[0].id;
+        this.newSession.id = 1;
+        this.newSession.training_id = this.trainingId;
+        this.newSession.min_member = Number(this.newSession.min_member);
+        this.newSession.max_member = Number(this.newSession.max_member);
+        this.errorCheck();
+        console.log(this.newSession);
+        this.trainingSessionService
+          .createTrainingSession(this.newSession)
+          .subscribe(
+            (result) => {
+              console.log(result);
+            },
+            (error) => console.log(error)
+          );
+      },
       (error) => console.log(error)
     );
-    this.newSession.id = 0;
-    this.newSession.training_id = this.trainingId;
-    this.newSession.min_member = Number(this.newSession.min_member);
-    this.newSession.max_member = Number(this.newSession.max_member);
-    this.errorCheck();
-    this.trainingSessionService
-      .createTrainingSession(this.newSession)
-      .subscribe(
-        (result) => {
-          console.log(this.newSession);
-        },
-        (error) => console.log(error)
-      );
   }
   Cancel() {
     this.newSession = new TrainingSessionModel();
@@ -103,16 +109,42 @@ export class AddSessionPageComponent implements OnInit {
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
     this.locationService.getCounties().subscribe(
-      (result) => (this.counties = result),
+      (result) => {
+        this.counties = result;
+      },
       (error) => console.log(error)
     );
+
     this.route.paramMap.subscribe((params) => {
       this.trainingId = Number(params.get('trainingId'));
       this.sessionId = Number(params.get('sessionId'));
       console.log(this.trainingId);
       console.log(this.sessionId);
-      if (this.sessionId > 0) {
-        //getbyid adatbetöltés -> előtte api és service
+      if (this.sessionId) {
+        this.trainingSessionService.getById(this.sessionId).subscribe(
+          (result) => {
+            this.newSession = result;
+            this.locationService.getById(this.newSession.location_id).subscribe(
+              (result) => {
+                this.selectedCounty = result[0].county_name;
+                this.CountyChanged(this.selectedCounty);
+                this.selectedCity = result[0].city_name;
+              },
+              (error) => console.log(error)
+            );
+          },
+          (error) => console.log(error)
+        );
+      } else {
+        this.newSession.id = 1;
+        this.trainingService.listByTrainingId(this.trainingId).subscribe(
+          (result) => {
+            this.selectedCounty = result.location.county_name;
+            this.CountyChanged(this.selectedCounty);
+            this.selectedCity = result.location.city_name;
+          },
+          (error) => console.log(error)
+        );
       }
     });
   }

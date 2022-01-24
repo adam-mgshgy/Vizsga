@@ -90,8 +90,23 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(training);
             });
         }
+        [HttpGet("data")]
+        public ActionResult ListDataById([FromQuery] int trainingId)
+        {
+            return this.Run(() =>
+            {
+                Training training = dbContext.Set<Training>().Where(t => t.Id == trainingId).FirstOrDefault();
+                User trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault();
+                Location location = dbContext.Set<Location>().Where(l => l.Id == trainer.Location_id).FirstOrDefault();
+                return Ok(new
+                {
+                    trainer = trainer,
+                    training = training,
+                    location = location
+                });
+            });
+        }
 
-        
 
         [HttpGet("TrainerId/{trainerId}")]
         public ActionResult GetByTrainerId(int trainerId)

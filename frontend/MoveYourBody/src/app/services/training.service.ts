@@ -119,4 +119,18 @@ export class TrainingService {
         })
       );
   }
+  listByTrainingId(trainingId: any): Observable<any> {
+    return this.http
+      .get<any>(`${environment.ApiURL}/training/data?trainingId=${trainingId}`)
+      .pipe(
+        map((data) => {
+          return data;
+        }),
+        catchError((err) => {
+          if (!environment.production && err.status == 404) {
+            return of(err);
+          } else throw err;
+        })
+      );
+  }
 }
