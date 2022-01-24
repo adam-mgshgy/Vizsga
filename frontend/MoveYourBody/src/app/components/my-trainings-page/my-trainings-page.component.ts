@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ResizedEvent } from 'angular-resize-event';
 import { ActivatedRoute } from '@angular/router';
 import { TagModel } from 'src/app/models/tag-model';
@@ -25,13 +25,11 @@ import { ApplicantModel } from 'src/app/models/applicant-model';
 export class MyTrainingsPageComponent implements OnInit {
   constructor(
     private trainingService: TrainingService,
-    private applicantService: ApplicantService,
     private trainingSessionService: TrainingSessionService,
     private modalService: NgbModal,
     private tagTrainingService: TagTrainingService,
     private tagService: TagService,
     private authenticationService: AuthenticationService,
-    private userService: UserService,
   ) {
     this.authenticationService.currentUser.subscribe((x) => (this.user = x));
     this.ordered_session = Object.values(
@@ -48,8 +46,6 @@ export class MyTrainingsPageComponent implements OnInit {
   public myTrainings: TrainingModel[] = [];
   public tagTraining: TagTrainingModel[] = [];
   user: UserModel;
-  public applicants: ApplicantModel[] = [];
-  public applicantUsers: UserModel[] = [];
   currentTraining: TrainingModel;
   public tags: TagModel[] = [];
   public sessions: TrainingSessionModel[] = [];
@@ -129,25 +125,6 @@ export class MyTrainingsPageComponent implements OnInit {
         console.log(content)
         this.sessions = result.session;
         this.currentTraining = result.training;
-        this.sessions.forEach((session) => {
-          this.applicantService.listBySessionId(session.id).subscribe(
-            (result) => {
-              session.numberOfApplicants = result.length;
-              this.applicants = result;
-              console.log(this.sessions);
-              console.log(this.applicants);
-              this.applicants.forEach((applicant) => {
-                this.userService.getUserById(applicant.user_id).subscribe(
-                  (result) => {
-                    this.applicantUsers.push(result);
-                  },
-                  (error) => console.log(error)
-                );
-              });
-            },
-            (error) => console.log(error)
-          );
-        });
       },
       (error) => console.log(error)
     );
@@ -163,7 +140,9 @@ export class MyTrainingsPageComponent implements OnInit {
         }
       );
   }
-  
+  openSession(sessionId: number) {
+
+  }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';

@@ -74,7 +74,7 @@
     <mat-divider></mat-divider>
 
     <mat-expansion-panel *ngFor="let session of sessions;let i = index">
-      <mat-expansion-panel-header>
+      <mat-expansion-panel-header onclick="openSession(session.id)">
         <mat-panel-title>
           {{ session.date | date: 'yyyy.MM.dd. HH:mm'}}
           <mat-divider></mat-divider>
@@ -84,29 +84,7 @@
           <button class="btn btn-danger">Törlés</button>
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Jelentkezők
-            <mat-divider></mat-divider>
-          </mat-panel-title>
-          <mat-panel-description [ngStyle]="{'color': session.numberOfApplicants < session.min_member ? 'red' : 'green'}">
-            {{ session.numberOfApplicants + "/" + session.max_member }}
-            <span class="ms-2" *ngIf="session.numberOfApplicants < session.min_member"> Kevés jelentkező</span>
-            <span class="ms-2" *ngIf="session.numberOfApplicants == session.max_member"> Betelt</span>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div class="row" *ngFor="let applicant of applicants;let j = index">
-          <div class="col-6">
-            <div *ngIf="applicant.training_session_id == session.id">{{applicant.user_id}}</div>
-          </div>
-          <div class="col-6">
-            <div *ngIf="applicant.training_session_id == session.id">{{applicantUsers[j].phone_number}}</div>
-          </div>
-          <hr>
-        </div>
-
-      </mat-expansion-panel>
+      <app-session-modal [session]="session" ></app-session-modal>
     </mat-expansion-panel>
 
   </mat-accordion>

@@ -26,6 +26,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { JwtInterceptor } from './JWT/JwtInterceptor';
 import { ErrorInterceptor } from './JWT/ErrorInterceptor';
+import { SessionModalComponent } from './components/session-modal/session-modal.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -42,7 +43,8 @@ export function tokenGetter() {
     CreateTrainingPageComponent,
     AddSessionPageComponent,
     TrainingPageComponent,
-    MyTrainingsPageComponent
+    MyTrainingsPageComponent,
+    SessionModalComponent
   ],
   imports: [
     BrowserModule,
