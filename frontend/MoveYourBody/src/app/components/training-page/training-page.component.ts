@@ -25,29 +25,39 @@ import { ApplicantService } from 'src/app/services/applicant.service';
 })
 export class TrainingPageComponent implements OnInit {
   id: Number;
-  user: UserModel; // = {
-  //   email: '',
-  //   full_name: '',
-  //   id: 0,
-  //   location_id: 0,
-  //   password: '',
-  //   phone_number: '',
-  //   trainer: false
-  // };
+  user: UserModel = {
+    email: '',
+    full_name: '',
+    id: 0,
+    location_id: 0,
+    password: '',
+    phone_number: '',
+    trainer: false,
+    role: '',
+    token: ''
+  };
 
   errorText = '';
-  training: TrainingModel; // = {
-  //   category_id: 0,
-  //   contact_phone: '',
-  //   description:'',
-  //   id: 0,
-  //   max_member: 0,
-  //   min_member: 0,
-  //   name: '',
-  //   trainer_id: 0
-  // };
-  // public trainerName: '';
-  public trainer: UserModel;
+  training: TrainingModel = {
+    category_id: 0,
+    contact_phone: '',
+    description:'',
+    id: 0,
+    name: '',
+    trainer_id: 0
+  };
+  public trainerName: '';
+  public trainer: UserModel = {
+    email: '',
+    full_name: '',
+    id: 0,
+    location_id: 0,
+    password: '',
+    phone_number: '',
+    trainer: false,
+    role: '',
+    token: ''
+  };
   public category: CategoryModel;
   public sessions: TrainingSessionModel[] = [];
 
@@ -82,39 +92,26 @@ export class TrainingPageComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
     });
-    // this.trainingSessionService.listByTrainingId(this.id).subscribe(
-    //   (result) => {
-    //       console.log(result);
-    //   }, (error) => console.log(error)
-    // )
-    this.trainingService.getById(this.id).subscribe(
+    this.trainingSessionService.listByTrainingId(this.id).subscribe(
       (result) => {
-        this.training = result;
-        this.userService.getUserById(this.training.trainer_id).subscribe(
-          (result) => {
-            this.trainer = result;
-            this.trainingSessionService.listByTrainingId(this.training.id).subscribe(
+          this.sessions = result.session;
+          this.training = result.training;
+          this.trainerName = result.trainerName;
+          this.sessions.forEach(session => {
+            this.applicantService.listBySessionId(session.id).subscribe(
               (result) => {
-                this.sessions = result;
-                this.sessions.forEach(session => {
-                  this.applicantService.listBySessionId(session.id).subscribe(
-                    (result) => {
-                      session.numberOfApplicants = result.length;
-                      //console.log(session.numberOfApplicants);
-                    }, (error) => console.log(error)
-                  );
-                });
-                this.applicantService.listByUserId(this.user.id).subscribe(
-                  (result) => {
-                    this.usersSessions = result;
-                  }, (error) => console.log(error)
-                );
+                session.numberOfApplicants = result.length;
               }, (error) => console.log(error)
             );
-          }, (error) => console.log(error)
-        );
+          });
+          this.applicantService.listByUserId(this.user.id).subscribe(
+            (result) => {
+              this.usersSessions = result;
+            }, (error) => console.log(error)
+          );
+
       }, (error) => console.log(error)
-    );
+    )
     
     this.categoriesService.getCategories().subscribe(
       (result) => {
@@ -129,11 +126,9 @@ export class TrainingPageComponent implements OnInit {
         this.tagTrainingService.getTags(this.category.id).subscribe(
           (result) => {
             this.tagTraining = result;
-            //console.log(result);
           },
           (error) => console.log(error)
         );
-        //console.log(result)
       },
       (error) => console.log(error)
     );

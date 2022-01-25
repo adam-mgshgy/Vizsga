@@ -22,20 +22,23 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var sessions = dbContext.Set<TrainingSession>().Where(t => t.Training_id == trainingId).Select(s => new //nincs include
-                {
-                    id = s.Id,
-                    training_id = dbContext.Set<Training>().FirstOrDefault(t => t.Id == s.Training_id).Id,
-                    location_id = dbContext.Set<Location>().FirstOrDefault(l => l.Id == s.Location_id).Id,
-                    date = s.Date,//.ToString("yyyy.MM.dd. hh:mm"), //??
-                    price = s.Price,
-                    min_member = s.Min_member,
-                    max_member = s.Max_member,
-                    minutes = s.Minutes,
-                    address_name = s.Address_name,
-                    place_name = s.Place_name,
+                var sessions = dbContext.Set<TrainingSession>().Where(s => s.Training_id == trainingId);
+                Training training = dbContext.Set<Training>().Where(t => t.Id == trainingId).FirstOrDefault();
+                var trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault().Full_name;
+                return Ok(new { 
+                    session = sessions,
+                    trainer = trainer,
+                    training = training
                 });
-                return Ok(sessions);
+            });
+        }
+        [HttpGet("get")]
+        public ActionResult GetById([FromQuery] int sessionId)
+        {
+            return this.Run(() =>
+            {
+                TrainingSession session = dbContext.Set<TrainingSession>().Where(s => s.Id == sessionId).FirstOrDefault();
+                return Ok(session);
             });
 
         }
@@ -44,11 +47,11 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var newSession = new TrainingSession
+                TrainingSession newSession = new TrainingSession
                 {
-                    Id = session.Id,
-                    Training_id = dbContext.Set<Training>().FirstOrDefault(t => t.Id == session.Training_id).Id,
-                    Location_id = dbContext.Set<Location>().FirstOrDefault(l => l.Id == session.Location_id).Id,
+                    Id = 0, /// !!!
+                    Training_id = session.Training_id,
+                    Location_id = session.Location_id,
                     Date = session.Date,
                     Price = session.Price,
                     Min_member = session.Min_member,
@@ -57,8 +60,7 @@ namespace MoveYourBody.WebAPI.Controllers
                     Address_name = session.Address_name,
                     Place_name = session.Place_name,
                 };
-                //newSession.Training.Trainer_id = session.Training.Trainer_id;
-                //newSession.Training.Category_id = session.Training.Category_id;
+                newSession.Date = newSession.Date.AddHours(1);
                 dbContext.Set<TrainingSession>().Add(newSession);
                 dbContext.SaveChanges();
                 return Ok(newSession);
@@ -82,7 +84,14 @@ namespace MoveYourBody.WebAPI.Controllers
             return this.Run(() =>
             {
                 //var session = dbContext.Set<TrainingSession>().FirstOrDefault(t => t.Id == trainingSessionId);
+                var applicants = dbContext.Set<Applicant>().Where(a => a.Training_session_id == session.Id).ToList();
+                foreach (var applicant in applicants)
+                {
+                    dbContext.Remove(applicant); //TODO email kuldes pl
+
+                }
                 dbContext.Remove(session);
+
                 dbContext.SaveChanges();
                 return Ok(session);
             });

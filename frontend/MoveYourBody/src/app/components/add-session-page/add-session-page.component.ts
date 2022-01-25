@@ -6,17 +6,18 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TrainingSessionService } from 'src/app/services/training-session.service';
 import { Time } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TrainingService } from 'src/app/services/training.service';
 
 @Component({
   selector: 'app-add-session-page',
   templateUrl: './add-session-page.component.html',
-  styleUrls: ['./add-session-page.component.css']
+  styleUrls: ['./add-session-page.component.css'],
 })
 export class AddSessionPageComponent implements OnInit {
   trainingId: number;
+  sessionId: number;
 
   mobile: boolean = false;
-  locations: LocationModel[] = [];
   counties: LocationModel[] = [];
   cities: LocationModel[] = [];
   selectedCounty: string;
@@ -24,18 +25,18 @@ export class AddSessionPageComponent implements OnInit {
   newSession: TrainingSessionModel = new TrainingSessionModel();
   date: Date;
   time: Time;
-  
+
   public messageBox = '';
   public messageTitle = '';
   constructor(
     private locationService: LocationService,
+    private trainingService: TrainingService,
     private modalService: NgbModal,
     private trainingSessionService: TrainingSessionService,
     private route: ActivatedRoute,
     private router: Router
-
-  ) { }
-  TimeChanged(){
+  ) {}
+  TimeChanged() {
     this.newSession.date = new Date(this.date + ' ' + this.time).toISOString();
   }
   CountyChanged(value) {
@@ -51,8 +52,8 @@ export class AddSessionPageComponent implements OnInit {
       }
     }
     this.locationService.getCities(this.selectedCounty).subscribe(
-      result => this.cities = result,
-      error => console.log(error)
+      (result) => (this.cities = result),
+      (error) => console.log(error)
     );
   }
   CityChanged(value) {
@@ -71,21 +72,27 @@ export class AddSessionPageComponent implements OnInit {
   SaveSession() {
     this.errorCheck();
     this.locationService.getLocationId(this.selectedCity).subscribe(
-      result => this.newSession.location_id = result,
-      error => console.log(error)
-    )
-    this.newSession.id = 0;
-    this.newSession.training_id = this.trainingId;
-    this.newSession.min_member = Number(this.newSession.min_member);
-    this.newSession.max_member = Number(this.newSession.max_member);
-    this.errorCheck();
-    this.trainingSessionService.createTrainingSession(this.newSession).subscribe(
       (result) => {
-        console.log(this.newSession)
+        console.log(result[0].id);
+        this.newSession.location_id = result[0].id;
+        this.newSession.id = 1;
+        this.newSession.training_id = this.trainingId;
+        this.newSession.min_member = Number(this.newSession.min_member);
+        this.newSession.max_member = Number(this.newSession.max_member);
+        this.errorCheck();
+        console.log(this.newSession);
+        this.trainingSessionService
+          .createTrainingSession(this.newSession)
+          .subscribe(
+            (result) => {
+              console.log(result);
+            },
+            (error) => console.log(error)
+          );
       },
       (error) => console.log(error)
-
-    )
+    );
+    this.router.navigateByUrl('/mytrainings');
   }
   Cancel() {
     this.newSession = new TrainingSessionModel();
@@ -101,28 +108,60 @@ export class AddSessionPageComponent implements OnInit {
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
     this.locationService.getCounties().subscribe(
-      result => this.counties = result,
-      error => console.log(error)
+      (result) => {
+        this.counties = result;
+      },
+      (error) => console.log(error)
     );
+
     this.route.paramMap.subscribe((params) => {
-      this.trainingId = Number(params.get('id'));
+      this.trainingId = Number(params.get('trainingId'));
+      this.sessionId = Number(params.get('sessionId'));
       console.log(this.trainingId);
-    }
-    );
+      console.log(this.sessionId);
+      if (this.sessionId) {
+        this.trainingSessionService.getById(this.sessionId).subscribe(
+          (result) => {
+            this.newSession = result;
+            this.locationService.getById(this.newSession.location_id).subscribe(
+              (result) => {
+                this.selectedCounty = result[0].county_name;
+                this.CountyChanged(this.selectedCounty);
+                this.selectedCity = result[0].city_name;
+              },
+              (error) => console.log(error)
+            );
+          },
+          (error) => console.log(error)
+        );
+      } else {
+        this.newSession.id = 1;
+        this.trainingService.listByTrainingId(this.trainingId).subscribe(
+          (result) => {
+            this.selectedCounty = result.location.county_name;
+            this.CountyChanged(this.selectedCounty);
+            this.selectedCity = result.location.city_name;
+          },
+          (error) => console.log(error)
+        );
+      }
+    });
   }
   errorCheck() {
     this.messageTitle = 'Hiba';
     if (this.newSession.date == null) {
       this.messageBox = 'Kérem adjon meg dátumot!'; //TODO hogyan ellenőrizzem, hogy múltbeli-e?
     } else if (this.newSession.minutes == null) {
-      this.messageBox = 'Kérem adja meg az alkalom hosszát percben!'; 
+      this.messageBox = 'Kérem adja meg az alkalom hosszát percben!';
     } else if (this.newSession.price == null) {
       this.messageBox = 'Kérem adja meg az alkalom árát!';
-    }else if (this.newSession.price  < 0 || this.newSession.minutes < 0) {
-      this.messageBox = 'Az érték nem lehet negatív';
+    } else if (this.newSession.price < 0 || this.newSession.minutes < 0) {
+      this.messageBox = 'Az érték nem lehet negatív!';
     } else if (this.newSession.max_member == 0) {
       this.messageBox = 'Kérem adja meg az edzés résztvevőinek maximum számát!';
-    } else if (Number(this.newSession.min_member) > Number(this.newSession.max_member)) {
+    } else if (
+      Number(this.newSession.min_member) > Number(this.newSession.max_member)
+    ) {
       this.messageBox =
         'Az edzéshez tartozó minimum résztvevők száma nagyobb mint a maximum!'; //TODO az inputból kikattintva menti csak el a résztvevők számát
     } else if (this.selectedCounty == null) {
@@ -133,8 +172,7 @@ export class AddSessionPageComponent implements OnInit {
       this.messageBox = 'Kérem adja meg az alkalom címét!';
     } else if (this.newSession.place_name == '') {
       this.messageBox = 'Kérem adja meg a létesítmény nevét!';
-    }
-     else {
+    } else {
       this.messageTitle = 'Siker';
       this.messageBox = 'Sikeres mentés!';
     }
@@ -162,5 +200,4 @@ export class AddSessionPageComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-
 }

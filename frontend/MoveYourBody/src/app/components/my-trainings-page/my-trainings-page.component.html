@@ -6,11 +6,9 @@
           <div class="col-4 align-items-center">
             <img [src]="imgSrc" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
           </div>
-
           <div class="col-8" id="bckg">
             <img [src]="imgBckgSrc" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
           </div>
-
           <div class="card-body container-fluid row g-0" style="background-color: #343a40">
             <div class="col-auto">
               <h4 class="card-title text-white mb-3 me-3">
@@ -21,15 +19,15 @@
               <button id="modify" *ngIf="user.trainer" class="btn btn-primary mb-3 me-3" [routerLink]="'/createtraining/' + training.id">
                 Szerkesztés
               </button>
-              <button id="newSession" *ngIf="user.trainer" class="btn btn-primary mb-3 me-3" [routerLink]="'/addsession/'  + training.id">
+              <button id="newSession" *ngIf="user.trainer" class="btn btn-primary mb-3 me-3" [routerLink]="'/addsession/'  + training.id + '/' + 0">
                 Új alkalom
               </button>
               <button id="cancel" *ngIf="user.trainer == false" class="btn btn-danger mb-3">
                 Lemondás
               </button>
-              <button id="sessions" *ngIf="user.trainer" class="btn btn-primary mb-3 me-3" (click)="open(content)">
+              <button id="sessions" *ngIf="user.trainer" class="btn btn-primary mb-3 me-3" (click)="open(content, training.id)">
                 Alkalmak
-              </button>              
+              </button>
             </div>
             <h6 class="card-title text-white">{{ user.full_name }}</h6>
           </div>
@@ -38,14 +36,12 @@
               <p class="card-text">{{training.description}}</p>
 
               <span *ngFor="let tag of tagTraining">
-                <button *ngIf="training.id == tag.training_id && tag.tag_id == tags[tag.tag_id-1].id  ? 'true' : ''" id="tag"  [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}"
-                   class="btn fw-bold me-1 mb-1" >{{tags[tag.tag_id-1].name}}</button>
+                <button *ngIf="training.id == tag.training_id && tag.tag_id == tags[tag.tag_id-1].id  ? 'true' : ''" id="tag" [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}" class="btn fw-bold me-1 mb-1">{{tags[tag.tag_id-1].name}}</button>
               </span>
-                <select  *ngIf=" " id="moreTag" class="btn fw-bold me-1 mb-1">
-                  <option value="">...</option>
-                  <option *ngFor="let tag of tags" value="">{{tag.name}}</option>
-                </select>
-              <!-- <p class="card-text fw-bold"><a class="text-decoration-none text-black" routerLink="">{{locations[users[i].location_id-1].city_name}}</a></p> -->
+              <select *ngIf=" " id="moreTag" class="btn fw-bold me-1 mb-1">
+                <option value="">...</option>
+                <option *ngFor="let tag of tags" value="">{{tag.name}}</option>
+              </select>
             </div>
           </div>
         </div>
@@ -59,55 +55,33 @@
   </div>
 </div>
 
-<!--Modal popup-->
+
+<!-- Modal popup -->
 <ng-template #content let-modal>
   <mat-accordion>
     <mat-expansion-panel id="exPanel" hideToggle>
-      <!--TODO disable open-->
+
       <mat-expansion-panel-header>
         <mat-panel-title>
           Időpont
         </mat-panel-title>
-        <!-- <mat-panel-description>
-          Foglalás időpontja
-        </mat-panel-description> -->
       </mat-expansion-panel-header>
     </mat-expansion-panel>
 
     <mat-divider></mat-divider>
-    <!-- https://stackblitz.com/edit/angular-f86jqn-tspqn8?file=app%2Fexpansion-overview-example.ts -->
-    <mat-expansion-panel *ngFor="let item of ordered_session;let i = index">
-      <mat-expansion-panel-header>
+
+    <mat-expansion-panel *ngFor="let session of sessions;let i = index">
+      <mat-expansion-panel-header >
         <mat-panel-title>
-          {{ item[0].date.substr(0,10) }}
+          {{ session.date | date: 'yyyy.MM.dd. HH:mm'}}
           <mat-divider></mat-divider>
         </mat-panel-title>
         <mat-panel-description>
-          <!-- <button class="btn btn-primary me-3">Módosítás</button> -->
-          <button class="btn btn-danger">Törlés</button>
+          <button class="btn btn-primary me-3" [routerLink]="'/addsession/'  +  currentTraining.id + '/' + session.id" (click)="close()" >Duplikálás</button>
+          <button class="btn btn-danger" (click)="deleteSession(session)">Törlés</button>
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <mat-expansion-panel *ngFor="let obj of item ">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{ obj.date.substr(10) }}
-            <mat-divider></mat-divider>
-          </mat-panel-title>
-          <mat-panel-description [ngStyle]="{'color': statuses[i].includes('Betelt')|| statuses[i].includes('Kevés') ? 'red' : 'black'}">
-            {{statuses[i]}}
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div class="row" *ngFor="let user of users">
-          <div class="col-6">
-            <div *ngIf="user.trainer == false">{{user.full_name}}</div>
-          </div>
-          <div class="col-6">
-            <div *ngIf="user.trainer == false">{{user.phone_number}}</div>
-          </div>
-          <hr>
-        </div>
-
-      </mat-expansion-panel>
+      <app-session-modal [session]="session" ></app-session-modal>
     </mat-expansion-panel>
 
   </mat-accordion>

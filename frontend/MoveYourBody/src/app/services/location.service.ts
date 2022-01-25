@@ -54,6 +54,20 @@ export class LocationService {
       })
     );
   }
+  getById(id: number): Observable<LocationModel[]> {
+    return this.http.get<LocationModel[]>(`${environment.ApiURL}/locations/field?field=${id}`).pipe(
+      map((data: LocationModel[]) => {
+        return data;
+      }),
+      catchError(err => {
+        if (!environment.production && err.status == 404) {
+          return of(err);
+        } 
+        else 
+          throw err;
+      })
+    );
+  }
   getLocationId(field: string): Observable<number> {
     return this.http.get<LocationModel[]>(`${environment.ApiURL}/locations/field?field=${field}`).pipe(
       map((data: LocationModel[]) => {
