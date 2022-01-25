@@ -1,21 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ResizedEvent } from 'angular-resize-event';
-import { ActivatedRoute } from '@angular/router';
 import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { TrainingSessionModel } from 'src/app/models/training-session-model';
 import { TrainingService } from 'src/app/services/training.service';
-import { UserService } from 'src/app/services/user.service';
-import { LoginService } from 'src/app/services/login.service';
 import { TagTrainingService } from 'src/app/services/tag-training.service';
 import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { TagService } from 'src/app/services/tag.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { TrainingSessionService } from 'src/app/services/training-session.service';
-import { ApplicantService } from 'src/app/services/applicant.service';
-import { ApplicantModel } from 'src/app/models/applicant-model';
 
 @Component({
   selector: 'app-my-trainings-page',
@@ -29,12 +24,12 @@ export class MyTrainingsPageComponent implements OnInit {
     private modalService: NgbModal,
     private tagTrainingService: TagTrainingService,
     private tagService: TagService,
-    private authenticationService: AuthenticationService,
+    private authenticationService: AuthenticationService
   ) {
     this.authenticationService.currentUser.subscribe((x) => (this.user = x));
-    this.ordered_session = Object.values(
-      this.groupByDate(this.sessions, 'date')
-    ); //date alapján rendez
+    // this.ordered_session = Object.values(
+    //   this.groupByDate(this.sessions, 'date')
+    // ); //date alapján rendez
   }
   closeResult = '';
   category: string | null = null;
@@ -51,17 +46,33 @@ export class MyTrainingsPageComponent implements OnInit {
   public sessions: TrainingSessionModel[] = [];
   public ordered_session: any[] = [];
 
-  groupByDate(array, property) {
-    var hash = {},
-      props = property.split('.');
-    for (var i = 0; i < array.length; i++) {
-      var key = props.reduce(function (acc, prop) {
-        return acc && acc[prop].substr(0, 10);
-      }, array[i]);
-      if (!hash[key]) hash[key] = [];
-      hash[key].push(array[i]);
+  // groupByDate(array, property) {
+  //   var hash = {},
+  //     props = property.split('.');
+  //   for (var i = 0; i < array.length; i++) {
+  //     var key = props.reduce(function (acc, prop) {
+  //       return acc && acc[prop].substr(0, 10);
+  //     }, array[i]);
+  //     if (!hash[key]) hash[key] = [];
+  //     hash[key].push(array[i]);
+  //   }
+  //   return hash;
+  // }
+
+  deleteSession(session: TrainingSessionModel) {
+    if (session.numberOfApplicants > 0) {
+      alert('Figyelem, az alkalomra már vannak jelentkezők!');
     }
-    return hash;
+    this.trainingSessionService.deleteTrainingSession(session).subscribe(
+      (result) => {
+        console.log(result);
+        this.sessions.splice(
+          this.sessions.findIndex((x) => x.id == session.id),
+          1
+        );
+      },
+      (error) => console.log(error)
+    );
   }
 
   ngOnInit(): void {
@@ -88,7 +99,6 @@ export class MyTrainingsPageComponent implements OnInit {
     );
   }
 
-  usersList() {}
   onResized(event: ResizedEvent) {
     this.tagsOnMobile();
   }
@@ -127,7 +137,7 @@ export class MyTrainingsPageComponent implements OnInit {
       },
       (error) => console.log(error)
     );
-    
+
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(

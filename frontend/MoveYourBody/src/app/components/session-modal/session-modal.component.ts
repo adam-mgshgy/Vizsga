@@ -25,7 +25,6 @@ export class SessionModalComponent implements OnInit {
       (result) => {
         this.session.numberOfApplicants = result.length;
               this.applicants = result;
-              console.log(this.applicants);
               this.applicants.forEach((applicant) => {
                 this.userService.getUserById(applicant.user_id).subscribe(
                   (result) => {

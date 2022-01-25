@@ -60,6 +60,7 @@ namespace MoveYourBody.WebAPI.Controllers
                     Address_name = session.Address_name,
                     Place_name = session.Place_name,
                 };
+                newSession.Date = newSession.Date.AddHours(1);
                 dbContext.Set<TrainingSession>().Add(newSession);
                 dbContext.SaveChanges();
                 return Ok(newSession);
@@ -83,7 +84,14 @@ namespace MoveYourBody.WebAPI.Controllers
             return this.Run(() =>
             {
                 //var session = dbContext.Set<TrainingSession>().FirstOrDefault(t => t.Id == trainingSessionId);
+                var applicants = dbContext.Set<Applicant>().Where(a => a.Training_session_id == session.Id).ToList();
+                foreach (var applicant in applicants)
+                {
+                    dbContext.Remove(applicant); //TODO email kuldes pl
+
+                }
                 dbContext.Remove(session);
+
                 dbContext.SaveChanges();
                 return Ok(session);
             });

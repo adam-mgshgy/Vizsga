@@ -37,9 +37,7 @@ export class AddSessionPageComponent implements OnInit {
     private router: Router
   ) {}
   TimeChanged() {
-    this.newSession.date = new Date(
-      this.date + ' ' + this.time + 1
-    ).toISOString(); //TODO kevesebb több
+    this.newSession.date = new Date(this.date + ' ' + this.time).toISOString();
   }
   CountyChanged(value) {
     for (const item of this.counties) {
@@ -94,6 +92,7 @@ export class AddSessionPageComponent implements OnInit {
       },
       (error) => console.log(error)
     );
+    this.router.navigateByUrl('/mytrainings');
   }
   Cancel() {
     this.newSession = new TrainingSessionModel();
@@ -157,7 +156,7 @@ export class AddSessionPageComponent implements OnInit {
     } else if (this.newSession.price == null) {
       this.messageBox = 'Kérem adja meg az alkalom árát!';
     } else if (this.newSession.price < 0 || this.newSession.minutes < 0) {
-      this.messageBox = 'Az érték nem lehet negatív';
+      this.messageBox = 'Az érték nem lehet negatív!';
     } else if (this.newSession.max_member == 0) {
       this.messageBox = 'Kérem adja meg az edzés résztvevőinek maximum számát!';
     } else if (
