@@ -3,6 +3,7 @@ import { ApplicantModel } from 'src/app/models/applicant-model';
 import { TrainingSessionModel } from 'src/app/models/training-session-model';
 import { UserModel } from 'src/app/models/user-model';
 import { ApplicantService } from 'src/app/services/applicant.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -15,9 +16,11 @@ export class SessionModalComponent implements OnInit {
   constructor(
     private applicantService: ApplicantService,
     private userService: UserService,
-
-  ) { }
-
+    private authenticationService: AuthenticationService
+  ) {
+    this.authenticationService.currentUser.subscribe((x) => (this.user = x));
+   }
+  user: UserModel;
   public applicants: ApplicantModel[] = [];
   public applicantUsers: UserModel[] = [];
   ngOnInit(): void {

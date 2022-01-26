@@ -42,6 +42,7 @@ export class MyTrainingsPageComponent implements OnInit {
   public tagTraining: TagTrainingModel[] = [];
   user: UserModel;
   currentTraining: TrainingModel;
+  trainers: UserModel[] = [];
   public tags: TagModel[] = [];
   public sessions: TrainingSessionModel[] = [];
   public ordered_session: any[] = [];
@@ -76,18 +77,31 @@ export class MyTrainingsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.trainingService.getByTrainerId(this.user.id).subscribe(
-      (result) => {
-        this.myTrainings = result;
-
-        for (const item of this.myTrainings) {
-          this.tagTrainingService.getByTraining(item.id).subscribe((result) => {
-            this.tagTraining.push.apply(this.tagTraining, result);
-          });
-        }
-      },
-      (error) => console.log(error)
-    );
+    if (this.user.trainer) {
+      this.trainingService.getByTrainerId(this.user.id).subscribe(
+        (result) => {
+          this.myTrainings = result;
+          for (const item of this.myTrainings) {
+            this.tagTrainingService
+              .getByTraining(item.id)
+              .subscribe((result) => {
+                this.tagTraining.push.apply(this.tagTraining, result);
+              });
+          }
+        },
+        (error) => console.log(error)
+      );
+    } else {
+      this.trainingService.getByUserId(this.user.id).subscribe(
+        (result) => {
+          //this.sessions = result.sessions;
+          this.trainers = result.trainers;
+          this.myTrainings = result.trainings;
+          this.tagTraining.push.apply(this.tagTraining, result.tagTrainingList);
+        },
+        (error) => console.log(error)
+      );
+    }
     if (window.innerWidth <= 991) {
       this.mobile = true;
     }
@@ -130,14 +144,26 @@ export class MyTrainingsPageComponent implements OnInit {
     }
   }
   open(content: any, trainingId: number) {
-    this.trainingSessionService.listByTrainingId(trainingId).subscribe(
-      (result) => {
-        this.sessions = result.session;
-        this.currentTraining = result.training;
-      },
-      (error) => console.log(error)
-    );
-
+    if (this.user.trainer) {
+      this.trainingSessionService.listByTrainingId(trainingId).subscribe(
+        (result) => {
+          this.sessions = result.sessions;
+          this.currentTraining = result.training;
+        },
+        (error) => console.log(error)
+      );
+    } else {
+      this.trainingSessionService
+        .ListAppliedSessions(trainingId, this.user.id)
+        .subscribe(
+          (result) => {
+            this.sessions = result.sessions;
+            this.currentTraining = result.training;
+            console.log(result);
+          },
+          (error) => console.log(error)
+        );
+    }
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(

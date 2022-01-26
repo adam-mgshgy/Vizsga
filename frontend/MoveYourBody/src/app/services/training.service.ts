@@ -90,7 +90,9 @@ export class TrainingService {
 
   getByTrainerId(trainerId: any): Observable<TrainingModel[]> {
     return this.http
-      .get<TrainingModel[]>(`${environment.ApiURL}/training/TrainerId/${trainerId}`)
+      .get<TrainingModel[]>(
+        `${environment.ApiURL}/training/TrainerId/${trainerId}`
+      )
       .pipe(
         map((data: TrainingModel[]) => {
           return data;
@@ -102,12 +104,23 @@ export class TrainingService {
         })
       );
   }
-
+  getByUserId(userId: any): Observable<any> {
+    return this.http
+      .get<any>(`${environment.ApiURL}/training/UserId/${userId}`)
+      .pipe(
+        map((data) => {
+          return data;
+        }),
+        catchError((err) => {
+          if (!environment.production && err.status == 404) {
+            return of(err);
+          } else throw err;
+        })
+      );
+  }
   getByCategory(id: any): Observable<TrainingModel[]> {
     return this.http
-      .get<TrainingModel[]>(
-        `${environment.ApiURL}/training/category?id=${id}`
-      )
+      .get<TrainingModel[]>(`${environment.ApiURL}/training/category?id=${id}`)
       .pipe(
         map((data: TrainingModel[]) => {
           return data;

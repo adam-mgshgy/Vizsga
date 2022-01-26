@@ -22,14 +22,13 @@
               <button id="newSession" *ngIf="user.trainer" class="btn btn-primary mb-3 me-3" [routerLink]="'/addsession/'  + training.id + '/' + 0">
                 Új alkalom
               </button>
-              <button id="cancel" *ngIf="user.trainer == false" class="btn btn-danger mb-3">
-                Lemondás
-              </button>
-              <button id="sessions" *ngIf="user.trainer" class="btn btn-primary mb-3 me-3" (click)="open(content, training.id)">
+              <button id="sessions" class="btn btn-primary mb-3 me-3" (click)="open(content, training.id)">
                 Alkalmak
               </button>
             </div>
             <h6 class="card-title text-white">{{ user.full_name }}</h6>
+            <!-- <h6 *ngIf="user.trainer" class="card-title text-white">{{ user.full_name }}</h6> -->
+            <!-- <h6 *ngIf="!user.trainer" class="card-title text-white">{{ trainers[training.trainer_id-1].full_name }}</h6> -->
           </div>
           <div class="col-md-12" id="lightBckg">
             <div class="card-body">
@@ -48,7 +47,7 @@
       </div>
     </div>
     <div class="col">
-      <button id="newTraining" class="btn fw-bold mx-2" routerLink="/createtraining">
+      <button *ngIf="user.trainer" id="newTraining" class="btn fw-bold mx-2" routerLink="/createtraining">
         Új edzés
       </button>
     </div>
