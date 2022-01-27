@@ -34,9 +34,25 @@
       <div>Helyszín</div>
     </div>
     <div class="col-6">
-      <div>{{session.place_name}}</div>
-      <!-- TODO details -->
+      <div>{{location.city_name + ', ' + session.address_name}}</div>
     </div>
     <hr>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div>Hossz</div>
+    </div>
+    <div class="col-6">
+      <div>{{session.minutes}} perc</div>
+    </div>
+    <hr>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div>Ár</div>
+    </div>
+    <div class="col-6">
+      <div>{{session.price}} Ft</div>
+    </div>
   </div>
 </mat-expansion-panel>

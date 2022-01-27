@@ -11,6 +11,8 @@ import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { TagService } from 'src/app/services/tag.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { TrainingSessionService } from 'src/app/services/training-session.service';
+import { ApplicantService } from 'src/app/services/applicant.service';
+import { ApplicantModel } from 'src/app/models/applicant-model';
 
 @Component({
   selector: 'app-my-trainings-page',
@@ -21,6 +23,7 @@ export class MyTrainingsPageComponent implements OnInit {
   constructor(
     private trainingService: TrainingService,
     private trainingSessionService: TrainingSessionService,
+    private applicantService: ApplicantService,
     private modalService: NgbModal,
     private tagTrainingService: TagTrainingService,
     private tagService: TagService,
@@ -38,14 +41,14 @@ export class MyTrainingsPageComponent implements OnInit {
   mobile: boolean = false;
   counter = 0;
 
-  public myTrainings: TrainingModel[] = [];
-  public tagTraining: TagTrainingModel[] = [];
+  myTrainings: TrainingModel[] = [];
+  tagTraining: TagTrainingModel[] = [];
   user: UserModel;
   currentTraining: TrainingModel;
   trainers: UserModel[] = [];
-  public tags: TagModel[] = [];
-  public sessions: TrainingSessionModel[] = [];
-  public ordered_session: any[] = [];
+  tags: TagModel[] = [];
+  sessions: TrainingSessionModel[] = [];
+  ordered_session: any[] = [];
 
   // groupByDate(array, property) {
   //   var hash = {},
@@ -71,6 +74,20 @@ export class MyTrainingsPageComponent implements OnInit {
           this.sessions.findIndex((x) => x.id == session.id),
           1
         );
+      },
+      (error) => console.log(error)
+    );
+  }
+  deleteApplication(sessionId: number) {
+    this.applicantService.deleteApplicantByIds(this.user.id, sessionId).subscribe(
+      (result) => {
+        console.log(result);
+        this.sessions.splice(
+          this.sessions.findIndex((x) => x.id == sessionId), 1);
+        if (this.sessions.length == 0) {
+          this.myTrainings.splice(this.myTrainings.findIndex((x) => x.id == this.currentTraining.id), 1);
+          this.close();
+        }
       },
       (error) => console.log(error)
     );

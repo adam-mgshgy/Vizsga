@@ -35,8 +35,27 @@ export class ApplicantService {
       }),
       body: model
     }
-    
     return this.http.delete<any>(`${environment.ApiURL}/applicants`, options)
+    .pipe(
+      map((data: any) => {
+        return data;
+      }),
+      catchError(err => {
+        if (!environment.production && (err.status == 404 || err.status == 405)) {          
+          return of(true);
+        }
+        else
+          throw err;
+      })
+    );
+  }
+  deleteApplicantByIds(userId: any, sessionId: any): Observable<any> {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }
+    return this.http.delete<any>(`${environment.ApiURL}/applicants/delete?userId=${userId}&sessionId=${sessionId}`, options)
     .pipe(
       map((data: any) => {
         return data;
