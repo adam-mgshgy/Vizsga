@@ -6,12 +6,14 @@ import { catchError, map } from 'rxjs/operators';
 import { TrainingSessionModel } from '../models/training-session-model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TrainingSessionService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  createTrainingSession(model: TrainingSessionModel): Observable<TrainingSessionModel> {
+  createTrainingSession(
+    model: TrainingSessionModel
+  ): Observable<TrainingSessionModel> {
     return this.http
       .put<TrainingSessionModel>(`${environment.ApiURL}/sessions/create`, model)
       .pipe(
@@ -30,9 +32,14 @@ export class TrainingSessionService {
         })
       );
   }
-  modifyTrainingSession(model: TrainingSessionModel): Observable<TrainingSessionModel> {
+  modifyTrainingSession(
+    model: TrainingSessionModel
+  ): Observable<TrainingSessionModel> {
     return this.http
-      .post<TrainingSessionModel>(`${environment.ApiURL}/sessions/modify`, model)
+      .post<TrainingSessionModel>(
+        `${environment.ApiURL}/sessions/modify`,
+        model
+      )
       .pipe(
         map((data: TrainingSessionModel) => {
           return data;
@@ -85,9 +92,27 @@ export class TrainingSessionService {
         })
       );
   }
+  ListAppliedSessions(trainingId: any, userId: any): Observable<any> {
+    return this.http
+      .get<any>(
+        `${environment.ApiURL}/sessions/applied?trainingId=${trainingId}&userId=${userId}`
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        }),
+        catchError((err) => {
+          if (!environment.production && err.status == 404) {
+            return of(err);
+          } else throw err;
+        })
+      );
+  }
   getById(sessionId: number): Observable<TrainingSessionModel> {
     return this.http
-      .get<TrainingSessionModel>(`${environment.ApiURL}/sessions/get?sessionId=${sessionId}`)
+      .get<TrainingSessionModel>(
+        `${environment.ApiURL}/sessions/get?sessionId=${sessionId}`
+      )
       .pipe(
         map((data: TrainingSessionModel) => {
           return data;

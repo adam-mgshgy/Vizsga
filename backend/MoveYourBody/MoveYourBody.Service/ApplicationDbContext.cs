@@ -20,7 +20,7 @@ namespace MoveYourBody.Service
         public ApplicationDbContext()
         {
 #if DEBUG        
-            connectionString = "Server=localhost;Database=moveyourbody;Uid=root;Pwd=;";
+            connectionString = "Server=localhost;Database=moveyourbody;Uid=root;Pwd=;charset=utf8";
 #endif
         }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

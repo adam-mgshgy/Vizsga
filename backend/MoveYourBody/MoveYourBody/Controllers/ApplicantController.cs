@@ -65,5 +65,17 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(newApplicant);
             });
         }
+        [HttpDelete("delete")]
+        public ActionResult DeleteByIds([FromQuery] int userId, [FromQuery] int sessionId)
+        {
+            return this.Run(() =>
+            {
+                var newApplicant = dbContext.Set<Applicant>().FirstOrDefault(a => a.User_id == userId && a.Training_session_id == sessionId);
+                dbContext.Remove(newApplicant);
+                dbContext.SaveChanges();
+                //dbContext.Entry(applicant).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+                return Ok(newApplicant);
+            });
+        }
     }
 }

@@ -134,6 +134,49 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(training);
             });
         }
+        [HttpGet("UserId/{userId}")]
+        public ActionResult GetByUserId(int userId)
+        {
+            return this.Run(() =>
+            {
+                var applications = dbContext.Set<Applicant>().Where(a => a.User_id == userId).ToList();
+                var sessions = new List<TrainingSession>();
+                foreach (var application in applications)
+                {
+                    var sess = dbContext.Set<TrainingSession>().Where(s => s.Id == application.Training_session_id).FirstOrDefault();
+                    if (sess != null)
+                    {
+                        sessions.Add(sess);
+                    }
+                }
+                var trainings = new List<Training>();
+                foreach (var session in sessions)
+                {
+                    var training = dbContext.Set<Training>().Where(t => t.Id == session.Training_id).FirstOrDefault();
+                    if (!trainings.Contains(training))
+                        trainings.Add(training);
+                }
+                var trainers = new List<User>();
+                var tagTrainingList = new List<TagTraining>();
+                foreach (var training in trainings)
+                {
+                    var tagTraining = dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList();
+                    foreach (var tag in tagTraining)
+                    {
+                        tagTrainingList.Add(tag);
+                    }
+                    trainers.Add(dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault());
+                }
+                return Ok(new
+                {
+                    trainings,
+                    tagTrainingList,
+                    trainers,
+                    sessions,
+                    applications
+                });
+            });
+        }
         [HttpGet("category")]
         public ActionResult GetByCategory([FromQuery] int id)
         {
