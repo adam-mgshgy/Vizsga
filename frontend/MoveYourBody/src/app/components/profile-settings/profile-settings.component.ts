@@ -81,12 +81,29 @@ export class ProfileSettingsComponent implements OnInit {
               this.user = this.userModify;
               this.router.navigateByUrl('/home');
             },
-            (error) => this.errorMessage = error
+            (error) => (this.errorMessage = error)
           );
         },
-        (error) => this.errorMessage = error
+        (error) => (this.errorMessage = error)
       );
     }
+  }
+  deleteUser() {
+    if (confirm('Biztosan törölni szeretné a fiókját?')) {
+      this.userService.deleteUser(this.user).subscribe(
+        (result) => {
+          console.log(result);
+          this.user = new UserModel();
+          this.authenticationService.logout();
+          this.cancel();
+        },
+        (error) => console.log(error)
+      );
+    }
+  }
+  cancel() {
+    this.userModify = null;
+    this.router.navigateByUrl('/home');
   }
   ngOnInit(): void {
     if (window.innerWidth <= 800) {
@@ -94,7 +111,7 @@ export class ProfileSettingsComponent implements OnInit {
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
 
-    this.userModify = this.user;
+    this.userModify = JSON.parse(JSON.stringify(this.user));
     this.userModify.password = '';
     this.locationService.getLocations().subscribe(
       (result) => {
