@@ -147,13 +147,20 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(user);
             });
         }
-        [HttpDelete, Authorize(Roles = "Admin, Trainer, User")]
+        [HttpDelete]//, Authorize(Roles = "Admin, Trainer, User")]
         public ActionResult Delete(User user)
         {
+            var delUser = dbContext.Set<User>().FirstOrDefault(u => u.Id == user.Id);
             return this.Run(() =>
             {
-                //TODO cancel subscriptions before delete
-                dbContext.Remove(user);
+                var applications = dbContext.Set<Applicant>().Where(a => a.User_id == delUser.Id).ToList();
+                foreach (var application in applications)
+                {
+                    dbContext.Remove<Applicant>(application);
+                    //TODO email kuldes pl edzőnek
+
+                }
+                dbContext.Remove(delUser);
                 dbContext.SaveChanges();
                 return Ok(user);
             });

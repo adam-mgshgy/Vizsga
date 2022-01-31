@@ -55,7 +55,9 @@
         </div>
         <div class="mb-3">
             <button id="modifyButton" type="submit" class="btn btn-primary fs-5" (click)="save()">Módosítás</button>
-            <button class="btn btn-danger ms-2 fs-5" routerLink="/home">Mégsem</button>
+            <button class="btn btn-danger mx-2 fs-5" (click)="deleteUser()">Fiók törlése</button>
+            <br>
+            <button class="btn btn-warning mt-2 fs-5" type="button" (click)="cancel()">Mégsem</button>
         </div>
         <p class="text-danger font-weight-bold text-center" *ngIf="errorMessage" id="error">{{errorMessage}}</p>
 
