@@ -5,11 +5,12 @@ import { LocationService } from 'src/app/services/location.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 //import { resourceUsage } from 'process';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registry-page',
   templateUrl: './registry-page.component.html',
-  styleUrls: ['./registry-page.component.css']
+  styleUrls: ['./registry-page.component.css'],
 })
 export class RegistryPageComponent implements OnInit {
   mobile: boolean = false;
@@ -19,13 +20,13 @@ export class RegistryPageComponent implements OnInit {
   selectedCounty: string;
   selectedCity: string;
   newUser: UserModel = new UserModel();
-  public messageBox = '';
-  public messageTitle = '';
+  errorMessage = '';
   constructor(
     private locationService: LocationService,
     private modalService: NgbModal,
-    private userService: UserService
-    ) {}
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   TrainerChecked(event: any) {
     this.newUser.trainer = event.target.checked;
@@ -44,8 +45,8 @@ export class RegistryPageComponent implements OnInit {
       }
     }
     this.locationService.getCities(this.selectedCounty).subscribe(
-      result => this.cities = result,
-      error => console.log(error)
+      (result) => (this.cities = result),
+      (error) => console.log(error)
     );
   }
   CityChanged(value) {
@@ -62,23 +63,25 @@ export class RegistryPageComponent implements OnInit {
     }
   }
   Register() {
-    this.locationService.getLocationId(this.selectedCity).subscribe(
-      result => this.newUser.location_id = result,
-      error => console.log(error)
-    )
-    this.newUser.id = 0;
-    this.errorCheck();
-    this.userService.Register(this.newUser).subscribe(
-      (result) => {
-        console.log(this.newUser)
-      },
-      (error) => console.log(error)
-    )
+    if (this.errorCheck()) {
+      this.locationService.getLocationId(this.selectedCity).subscribe(
+        (result) => (this.newUser.location_id = result),
+        (error) => console.log(error)
+      );
+      this.newUser.id = 0;
+      this.userService.Register(this.newUser).subscribe(
+        (result) => {
+          console.log(this.newUser);
+          this.router.navigateByUrl('/login');
+        },
+        (error) => (this.errorMessage = error)
+      );
+    }
   }
   Cancel() {
-    this.newUser = new UserModel;
-    this.selectedCounty = "";
-    this.selectedCity = "";
+    this.newUser = new UserModel();
+    this.selectedCounty = '';
+    this.selectedCity = '';
   }
   ngOnInit(): void {
     if (window.innerWidth <= 800) {
@@ -86,57 +89,40 @@ export class RegistryPageComponent implements OnInit {
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
     this.locationService.getLocations().subscribe(
-      result => this.locations = result,
-      error => console.log(error)
+      (result) => (this.locations = result),
+      (error) => console.log(error)
     );
     this.locationService.getCounties().subscribe(
-      result => this.counties = result,
-      error => console.log(error)
+      (result) => (this.counties = result),
+      (error) => console.log(error)
     );
   }
 
-  errorCheck() {
-    this.messageTitle = 'Hiba';
+  errorCheck(): boolean {
     if (this.newUser.full_name == '') {
-      this.messageBox = 'Kérem adja meg a nevét!';
-    } else if (this.newUser.email == '') {
-      this.messageBox = 'Kérem adja meg az email-címét!';
-    } else if (this.newUser.password == '') {
-      this.messageBox = 'Kérem adjon meg egy jelszót!';
-    } else if (this.newUser.phone_number == '') {
-      this.messageBox = 'Kérem adja meg telefonszámát!';
-    } else if (this.selectedCounty == null) {
-      this.messageBox = 'Kérem válasszon megyét!';
-    } else if (this.selectedCity == null) {
-      this.messageBox = 'Kérem válasszon várost!';
-    } else {
-      this.messageTitle = 'Siker';
-      this.messageBox = 'Sikeres regisztráció!';
+      this.errorMessage = 'Kérem adja meg a nevét!';
+      return false;
     }
-  }
-  closeResult = '';
-  open(content: any) {
-    this.modalService.open(content).result.then(
-      (result) => {
-        this.closeResult = `Closed with: ${result}`;
-      },
-      (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      }
-    );
-  }
-  close() {
-    this.modalService.dismissAll();
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
+    if (this.newUser.email == '') {
+      this.errorMessage = 'Kérem adja meg az email-címét!';
+      return false;
     }
+    if (this.newUser.password == '') {
+      this.errorMessage = 'Kérem adjon meg egy jelszót!';
+      return false;
+    }
+    if (this.newUser.phone_number == '') {
+      this.errorMessage = 'Kérem adja meg telefonszámát!';
+      return false;
+    }
+    if (this.selectedCounty == null) {
+      this.errorMessage = 'Kérem válasszon megyét!';
+      return false;
+    }
+    if (this.selectedCity == null) {
+      this.errorMessage = 'Kérem válasszon várost!';
+      return false;
+    }
+    return true;
   }
-  
 }

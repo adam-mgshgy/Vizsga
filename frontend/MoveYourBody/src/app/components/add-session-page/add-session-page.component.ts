@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { LocationModel } from 'src/app/models/location-model';
 import { TrainingSessionModel } from 'src/app/models/training-session-model';
 import { LocationService } from 'src/app/services/location.service';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TrainingSessionService } from 'src/app/services/training-session.service';
 import { Time } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -26,12 +25,10 @@ export class AddSessionPageComponent implements OnInit {
   date: Date;
   time: Time;
 
-  public messageBox = '';
-  public messageTitle = '';
+  errorMessage = '';
   constructor(
     private locationService: LocationService,
     private trainingService: TrainingService,
-    private modalService: NgbModal,
     private trainingSessionService: TrainingSessionService,
     private route: ActivatedRoute,
     private router: Router
@@ -70,29 +67,29 @@ export class AddSessionPageComponent implements OnInit {
     }
   }
   SaveSession() {
-    this.errorCheck();
-    this.locationService.getLocationId(this.selectedCity).subscribe(
-      (result) => {
-        console.log(result[0].id);
-        this.newSession.location_id = result[0].id;
-        this.newSession.id = 1;
-        this.newSession.training_id = this.trainingId;
-        this.newSession.min_member = Number(this.newSession.min_member);
-        this.newSession.max_member = Number(this.newSession.max_member);
-        this.errorCheck();
-        console.log(this.newSession);
-        this.trainingSessionService
-          .createTrainingSession(this.newSession)
-          .subscribe(
-            (result) => {
-              console.log(result);
-            },
-            (error) => console.log(error)
-          );
-      },
-      (error) => console.log(error)
-    );
-    this.router.navigateByUrl('/mytrainings');
+    if (this.errorCheck()) {
+      this.locationService.getLocationId(this.selectedCity).subscribe(
+        (result) => {
+          this.newSession.location_id = result[0].id;
+          this.newSession.id = 1;
+          this.newSession.training_id = this.trainingId;
+          this.newSession.min_member = Number(this.newSession.min_member);
+          this.newSession.max_member = Number(this.newSession.max_member);
+          console.log(this.newSession);
+          this.trainingSessionService
+            .createTrainingSession(this.newSession)
+            .subscribe(
+              (result) => {
+                console.log(result);
+                this.errorMessage = 'Sikeres mentés!';
+                this.router.navigateByUrl('/mytrainings');
+              },
+              (error) => console.log(error)
+            );
+        },
+        (error) => console.log(error)
+      );
+    }
   }
   Cancel() {
     this.newSession = new TrainingSessionModel();
@@ -123,6 +120,7 @@ export class AddSessionPageComponent implements OnInit {
         this.trainingSessionService.getById(this.sessionId).subscribe(
           (result) => {
             this.newSession = result;
+            this.newSession.date = '';
             this.locationService.getById(this.newSession.location_id).subscribe(
               (result) => {
                 this.selectedCounty = result[0].county_name;
@@ -147,57 +145,56 @@ export class AddSessionPageComponent implements OnInit {
       }
     });
   }
-  errorCheck() {
-    this.messageTitle = 'Hiba';
-    if (this.newSession.date == null) {
-      this.messageBox = 'Kérem adjon meg dátumot!'; //TODO hogyan ellenőrizzem, hogy múltbeli-e?
-    } else if (this.newSession.minutes == null) {
-      this.messageBox = 'Kérem adja meg az alkalom hosszát percben!';
-    } else if (this.newSession.price == null) {
-      this.messageBox = 'Kérem adja meg az alkalom árát!';
-    } else if (this.newSession.price < 0 || this.newSession.minutes < 0) {
-      this.messageBox = 'Az érték nem lehet negatív!';
-    } else if (this.newSession.max_member == 0) {
-      this.messageBox = 'Kérem adja meg az edzés résztvevőinek maximum számát!';
-    } else if (
+  errorCheck(): boolean {
+    if (this.newSession.date == '') {
+      this.errorMessage = 'Kérem adjon meg dátumot!';
+      return false;
+    }
+    if (this.newSession.minutes == null) {
+      this.errorMessage = 'Kérem adja meg az alkalom hosszát percben!';
+      return false;
+    }
+    if (this.newSession.price == null) {
+      this.errorMessage = 'Kérem adja meg az alkalom árát!';
+      return false;
+    }
+    if (this.newSession.price < 0 || this.newSession.minutes < 0) {
+      this.errorMessage = 'Az érték nem lehet negatív!';
+      return false;
+    }
+    if (this.newSession.max_member == 0) {
+      this.errorMessage =
+        'Kérem adja meg az edzés résztvevőinek maximum számát!';
+      return false;
+    }
+    if (this.newSession.min_member == 0) {
+      this.errorMessage =
+        'Kérem adja meg az edzés résztvevőinek minimum számát!';
+      return false;
+    }
+    if (
       Number(this.newSession.min_member) > Number(this.newSession.max_member)
     ) {
-      this.messageBox =
-        'Az edzéshez tartozó minimum résztvevők száma nagyobb mint a maximum!'; //TODO az inputból kikattintva menti csak el a résztvevők számát
-    } else if (this.selectedCounty == null) {
-      this.messageBox = 'Kérem válasszon megyét!';
-    } else if (this.selectedCity == null) {
-      this.messageBox = 'Kérem válasszon várost!';
-    } else if (this.newSession.address_name == '') {
-      this.messageBox = 'Kérem adja meg az alkalom címét!';
-    } else if (this.newSession.place_name == '') {
-      this.messageBox = 'Kérem adja meg a létesítmény nevét!';
-    } else {
-      this.messageTitle = 'Siker';
-      this.messageBox = 'Sikeres mentés!';
+      this.errorMessage =
+        'Az edzéshez tartozó minimum résztvevők száma nagyobb, mint a maximum!'; //TODO az inputból kikattintva menti csak el a résztvevők számát
+      return false;
     }
-  }
-  closeResult = '';
-  open(content: any) {
-    this.modalService.open(content).result.then(
-      (result) => {
-        this.closeResult = `Closed with: ${result}`;
-      },
-      (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      }
-    );
-  }
-  close() {
-    this.modalService.dismissAll();
-  }
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
+    if (this.selectedCounty == null) {
+      this.errorMessage = 'Kérem válasszon megyét!';
+      return false;
     }
+    if (this.selectedCity == null) {
+      this.errorMessage = 'Kérem válasszon várost!';
+      return false;
+    }
+    if (this.newSession.address_name == '') {
+      this.errorMessage = 'Kérem adja meg az alkalom címét!';
+      return false;
+    }
+    if (this.newSession.place_name == '') {
+      this.errorMessage = 'Kérem adja meg a létesítmény nevét!';
+      return false;
+    }
+    return true;
   }
 }

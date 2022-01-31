@@ -1,10 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { LoginModel } from 'src/app/models/login-model';
 import { UserModel } from 'src/app/models/user-model';
-import { UserService } from 'src/app/services/user.service';
-import { first, Subscription } from 'rxjs';
-import { LoginService } from 'src/app/services/login.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { first } from 'rxjs';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
@@ -16,7 +13,6 @@ export class LoginpageComponent implements OnInit {
   user: UserModel;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService
   ) {
@@ -31,6 +27,7 @@ export class LoginpageComponent implements OnInit {
   }
   public email = '';
   public password = '';
+  errorMessage = '';
   link = 'login';
 
   Login() {    
@@ -42,10 +39,12 @@ export class LoginpageComponent implements OnInit {
           this.authenticationService.currentUser.subscribe(
             (x) => (this.user = x)
           );
+          this.router.navigateByUrl('/home');
           console.log(this.user);
         },
         (error) => {
           console.log(error);
+          this.errorMessage = error;
         }
       );
   }
