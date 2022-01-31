@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryModel } from 'src/app/models/category-model';
 import { TagModel } from 'src/app/models/tag-model';
 import { TagTrainingModel } from 'src/app/models/tag-training-model';
@@ -9,8 +9,6 @@ import { CategoriesService } from 'src/app/services/categories.service';
 import { TagTrainingService } from 'src/app/services/tag-training.service';
 import { TagService } from 'src/app/services/tag.service';
 import { TrainingService } from 'src/app/services/training.service';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
@@ -31,20 +29,19 @@ export class CreateTrainingPageComponent implements OnInit {
 
   mobile: boolean = false;
 
-  public messageBox = '';
-  public messageTitle = '';
+  errorMessage = '';
 
   user: UserModel;
 
-  public categories: CategoryModel[] = [];
-  public tags: TagModel[] = [];
-  public training: TrainingModel = new TrainingModel();
-  public myTrainings: TrainingModel[] = [];
-  public selectedTags: string[] = [];
-  public selectedTagsFix: string[] = [];
-  public tagTraining: TagTrainingModel = new TagTrainingModel();
-  public tagTrainingFix: TagTrainingModel[] = [];
-  public deleteTag: string[] = [];
+  categories: CategoryModel[] = [];
+  tags: TagModel[] = [];
+  training: TrainingModel = new TrainingModel();
+  myTrainings: TrainingModel[] = [];
+  selectedTags: string[] = [];
+  selectedTagsFix: string[] = [];
+  tagTraining: TagTrainingModel = new TagTrainingModel();
+  tagTrainingFix: TagTrainingModel[] = [];
+  deleteTag: string[] = [];
   deleteTagTraining: TagTrainingModel = new TagTrainingModel();
 
   constructor(
@@ -53,20 +50,19 @@ export class CreateTrainingPageComponent implements OnInit {
     private trainingService: TrainingService,
     private tagService: TagService,
     private tagTrainingService: TagTrainingService,
-    private modalService: NgbModal,
-    private loginService: LoginService,
-    private authenticationService: AuthenticationService
-  ) {this.authenticationService.currentUser.subscribe(
-    (x) => (this.user = x)
-  );}
+    private authenticationService: AuthenticationService,
+    private router: Router
 
-  
+  ) {
+    this.authenticationService.currentUser.subscribe((x) => (this.user = x));
+  }
+
   ngOnInit(): void {
     if (window.innerWidth <= 800) {
       this.mobile = true;
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
-    
+
     this.trainingService.getByTrainerId(this.user.id).subscribe(
       (result) => {
         this.myTrainings = result;
@@ -130,153 +126,158 @@ export class CreateTrainingPageComponent implements OnInit {
     );
   }
   save() {
-    this.errorCheck();
-    if (this.create) {
-      if (this.otherPhoneNumber == true) {
-        if (this.otherPhoneNumberInput != null) {
+    if (this.errorCheck()) {
+      if (this.create) {
+        if (this.otherPhoneNumber == true) {
+          if (this.otherPhoneNumberInput != null) {
+            this.training.id = 0;
+            this.training.trainer_id = this.user.id;
+            this.training.contact_phone = this.otherPhoneNumberInput;
+            this.trainingService.newTraining(this.training).subscribe(
+              (result) => {
+                if (result.category_id != null || result.category_id != 0) {
+                  this.errorMessage = 'Edzése sikeresen létrehozva!';
+                this.router.navigateByUrl('/mytrainings');
+
+                }
+              },
+              (error) => console.log(error)
+            );
+          }
+        } else {
           this.training.id = 0;
           this.training.trainer_id = this.user.id;
-          this.training.contact_phone = this.otherPhoneNumberInput;
+          this.training.contact_phone = this.user.phone_number;
+
           this.trainingService.newTraining(this.training).subscribe(
             (result) => {
               if (result.category_id != null || result.category_id != 0) {
-                this.messageTitle = 'Siker';
-                this.messageBox = 'Edzése sikeresen létrehozva!';
+                this.errorMessage = 'Edzése sikeresen létrehozva!';
+                this.router.navigateByUrl('/mytrainings');
+
+              }
+
+              this.training.id = result.id;
+              this.tagTraining.id = 0;
+              this.tagTraining.training_id = this.training.id;
+
+              for (const item of this.selectedTags) {
+                for (const tag of this.tags) {
+                  if (item == tag.name) {
+                    this.tagTraining.tag_id = tag.id;
+                  }
+                }
+
+                this.tagTrainingService
+                  .newTagTraining(this.tagTraining)
+                  .subscribe(
+                    (result) => {},
+                    (error) => console.log(error)
+                  );
               }
             },
             (error) => console.log(error)
           );
         }
       } else {
-        this.training.id = 0;
-        this.training.trainer_id = this.user.id;
-        this.training.contact_phone = this.user.phone_number;
-
-        this.trainingService.newTraining(this.training).subscribe(
+        if (this.otherPhoneNumber) {
+          this.training.contact_phone = this.otherPhoneNumberInput;
+        } else {
+          this.training.contact_phone = this.user.phone_number;
+        }
+        this.trainingService.modifyTraining(this.training).subscribe(
           (result) => {
-            if (result.category_id != null || result.category_id != 0) {
-              this.messageTitle = 'Siker';
-              this.messageBox = 'Edzése sikeresen létrehozva!';
-            }
+            this.errorMessage = 'Edzése sikeresen frissítve!';
+            this.router.navigateByUrl('/mytrainings');
 
-            this.training.id = result.id;
-            this.tagTraining.id = 0;
-            this.tagTraining.training_id = this.training.id;
-
-            for (const item of this.selectedTags) {
-              for (const tag of this.tags) {
-                if (item == tag.name) {
-                  this.tagTraining.tag_id = tag.id;
-                }
-              }
-
-              this.tagTrainingService
-                .newTagTraining(this.tagTraining)
-                .subscribe(
-                  (result) => {},
-                  (error) => console.log(error)
-                );
-            }
           },
           (error) => console.log(error)
         );
-      }
-    } else {
-      if (this.otherPhoneNumber) {
-        this.training.contact_phone = this.otherPhoneNumberInput;
-      } else {
-        this.training.contact_phone = this.user.phone_number;
-      }
-      this.trainingService.modifyTraining(this.training).subscribe(
-        (result) => {
-          this.messageTitle = 'Siker';
-          this.messageBox = 'Edzése sikeresen frissítve!';
-        },
-        (error) => console.log(error)
-      );
-      //TAGTRAINING
-      let indexes: Number[] = [];
-      for (const item of this.deleteTag) {
-        for (const tag of this.tags) {
-          if (item == tag.name) {
-            indexes.push(tag.id);
-            let index: number;            
-            for (const selectedTag of this.selectedTags) {
-              if (selectedTag == item) {
-                index = this.selectedTags[item];                
+        //TAGTRAINING
+        let indexes: Number[] = [];
+        for (const item of this.deleteTag) {
+          for (const tag of this.tags) {
+            if (item == tag.name) {
+              indexes.push(tag.id);
+              let index: number;
+              for (const selectedTag of this.selectedTags) {
+                if (selectedTag == item) {
+                  index = this.selectedTags[item];
+                }
               }
-            }            
-            this.selectedTags.splice(index, 1);           
+              this.selectedTags.splice(index, 1);
+            }
           }
         }
-      }
-      for (const item of indexes) {
-        let tagTr = new TagTrainingModel();
-        tagTr = { id: 0, tag_id: Number(item), training_id: this.training.id };
-        console.log(tagTr);
-        this.tagTrainingService.deleteTagTraining(tagTr).subscribe(
-          (result) => {
-            this.deleteTag = [];
-            this.tagTrainingService.getByTraining(this.training.id).subscribe(
-              (tagtraining) => {
-                this.deleteTag = [];
-                this.selectedTags = [];
-                this.selectedTagsFix = [];
-                this.tagTrainingFix = tagtraining;
-                for (const item of tagtraining) {
-                  for (const tag of this.tags) {
-                    if (tag.id == item.tag_id && !this.selectedTags.includes(tag.name)) {
-                      this.selectedTags.push(tag.name);
-                      this.selectedTagsFix.push(tag.name);
-                      
+        for (const item of indexes) {
+          let tagTr = new TagTrainingModel();
+          tagTr = {
+            id: 0,
+            tag_id: Number(item),
+            training_id: this.training.id,
+          };
+          console.log(tagTr);
+          this.tagTrainingService.deleteTagTraining(tagTr).subscribe(
+            (result) => {
+              this.deleteTag = [];
+              this.tagTrainingService.getByTraining(this.training.id).subscribe(
+                (tagtraining) => {
+                  this.deleteTag = [];
+                  this.selectedTags = [];
+                  this.selectedTagsFix = [];
+                  this.tagTrainingFix = tagtraining;
+                  for (const item of tagtraining) {
+                    for (const tag of this.tags) {
+                      if (
+                        tag.id == item.tag_id &&
+                        !this.selectedTags.includes(tag.name)
+                      ) {
+                        this.selectedTags.push(tag.name);
+                        this.selectedTagsFix.push(tag.name);
+                      }
                     }
                   }
-                }
-              },
-              (error) => console.log(error)
-            );
+                },
+                (error) => console.log(error)
+              );
+            },
+            (error) => console.log(error)
+          );
+        }
 
+        this.tagTrainingService.getByTraining(this.training.id).subscribe(
+          (tagtraining) => {
+            this.selectedTagsFix = [];
+            this.tagTrainingFix = tagtraining;
+            for (const item of tagtraining) {
+              for (const tag of this.tags) {
+                if (tag.id == item.tag_id) {
+                  this.selectedTagsFix.push(tag.name);
+                }
+              }
+            }
           },
           (error) => console.log(error)
         );
-      }
-      ///  
-      
-      this.tagTrainingService.getByTraining(this.training.id).subscribe(
-        (tagtraining) => {         
-          this.selectedTagsFix = [];
-          this.tagTrainingFix = tagtraining;
-          for (const item of tagtraining) {
-            for (const tag of this.tags) {
-              if (tag.id == item.tag_id ) {
-                //this.selectedTags.push(tag.name);
-                this.selectedTagsFix.push(tag.name);               
-              }
+
+        for (const item of this.selectedTags) {
+          let tagTr = new TagTrainingModel();
+          tagTr.id = 0;
+          tagTr.training_id = this.training.id;
+          for (const tag of this.tags) {
+            if (item == tag.name) {
+              tagTr.tag_id = tag.id;
+              this.tagTrainingService.newTagTraining(tagTr).subscribe(
+                (result) => {
+                  this.refreshTags();
+                },
+                (error) => console.log(error)
+              );
             }
           }
-        },
-        (error) => console.log(error)
-      );      
-       
-      for (const item of this.selectedTags) {
-        let tagTr = new TagTrainingModel();
-        tagTr.id = 0;
-        tagTr.training_id = this.training.id;
-        for (const tag of this.tags) {
-          if (item == tag.name) {
-            tagTr.tag_id = tag.id;
-            
-            this.tagTrainingService.newTagTraining(tagTr).subscribe(
-              result => {this.refreshTags()},
-              error => console.log(error)
-            );
-          }
         }
-        
       }
     }
-
-    //sometimes bugs
   }
 
   refreshTags() {
@@ -288,10 +289,9 @@ export class CreateTrainingPageComponent implements OnInit {
         this.tagTrainingFix = tagtraining;
         for (const item of tagtraining) {
           for (const tag of this.tags) {
-            if (tag.id == item.tag_id ) {
+            if (tag.id == item.tag_id) {
               this.selectedTags.push(tag.name);
               this.selectedTagsFix.push(tag.name);
-              
             }
           }
         }
@@ -300,21 +300,25 @@ export class CreateTrainingPageComponent implements OnInit {
     );
   }
 
-  errorCheck() {
-    this.messageTitle = 'Hiba';
+  errorCheck(): boolean {
     if (this.training.name == '') {
-      this.messageBox = 'Kérem adja meg az edzés nevét!';
-    } else if (this.training.category_id == null) {
-      this.messageBox = 'Kérem adja meg az edzéshez tartozó kategóriát!';
-    } else if (this.training.description == '') {
-      this.messageBox =
-        'Kérem adjon meg az edzéshez egy rövid tájékoztató leírást!';
-    } else if (
-      this.otherPhoneNumber == true &&
-      this.otherPhoneNumberInput == null
-    ) {
-      this.messageBox = 'Kérem adja meg a másodlagos telefonszámot!';
+      this.errorMessage = 'Kérem adja meg az edzés nevét!';
+      return false;
     }
+    if (this.training.category_id == null) {
+      this.errorMessage = 'Kérem adja meg az edzéshez tartozó kategóriát!';
+      return false;
+    }
+    if (this.training.description == '') {
+      this.errorMessage =
+        'Kérem adjon meg az edzéshez egy rövid tájékoztató leírást!';
+      return false;
+    }
+    if (this.otherPhoneNumber == true && this.otherPhoneNumberInput == null) {
+      this.errorMessage = 'Kérem adja meg a másodlagos telefonszámot!';
+      return false;
+    }
+    return true;
   }
   phone() {
     this.otherPhoneNumber = false;
@@ -338,7 +342,6 @@ export class CreateTrainingPageComponent implements OnInit {
     if (this.selectedTags.includes(value)) {
       return true;
     }
-
     return false;
   }
 
@@ -350,41 +353,14 @@ export class CreateTrainingPageComponent implements OnInit {
         this.deleteTag.splice(index, 1);
       }
     } else {
-      console.log(this.selectedTags.indexOf(value))
+      console.log(this.selectedTags.indexOf(value));
       const index: number = this.selectedTags.indexOf(value);
-      if (this.selectedTagsFix.includes(value)) {    
+      if (this.selectedTagsFix.includes(value)) {
         this.deleteTag.push(value);
-        console.log(value)
-
       }
       if (this.selectedTags.includes(value)) {
         this.selectedTags.splice(index, 1);
-        
       }
-    }  
-  }
-  closeResult = '';
-  open(content: any) {
-    this.modalService.open(content).result.then(
-      (result) => {
-        this.closeResult = `Closed with: ${result}`;
-      },
-      (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      }
-    );
-  }
-  close() {
-    this.modalService.dismissAll();
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
     }
   }
 }

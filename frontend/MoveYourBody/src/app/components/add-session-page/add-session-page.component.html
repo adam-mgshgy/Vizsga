@@ -60,22 +60,9 @@
             <input [ngStyle]="{'width.%': mobile ? '30' : '20'}" type="number" class="form-control" id="minutes" name="minutes" required [(ngModel)]="newSession.minutes">
         </div>
         <div class="mb-3">
-            <button id="createButton" type="submit" class="btn btn-success fs-5" (click)="SaveSession()" (click)="open(content)">Alkalom mentése</button>
+            <button id="createButton" type="submit" class="btn btn-success fs-5" (click)="SaveSession()" >Alkalom mentése</button>
             <button class="btn btn-danger ms-2 fs-5" (click)="Cancel()">Mégsem</button>
         </div>
     </form>
+    <p class="text-danger font-weight-bold text-center" *ngIf="errorMessage" id="error">{{errorMessage}}</p>
 </div>
-<!--Modal popup-->
-<ng-template #content let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title">{{messageTitle}}</h4>
-        <mat-icon id="close" class="close-icon" color="warn" class="close" (click)="close()">close</mat-icon>
-    </div>
-    <div class="modal-body">
-        {{messageBox}}
-    </div>
-    <div class="modal-footer">
-
-        <button type="button" class="btn btn-outline-dark" (click)="close()">Ok</button>
-    </div>
-</ng-template>

@@ -12,7 +12,6 @@ import { TagService } from 'src/app/services/tag.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { TrainingSessionService } from 'src/app/services/training-session.service';
 import { ApplicantService } from 'src/app/services/applicant.service';
-import { ApplicantModel } from 'src/app/models/applicant-model';
 
 @Component({
   selector: 'app-my-trainings-page',
@@ -111,7 +110,6 @@ export class MyTrainingsPageComponent implements OnInit {
     } else {
       this.trainingService.getByUserId(this.user.id).subscribe(
         (result) => {
-          //this.sessions = result.sessions;
           this.trainers = result.trainers;
           this.myTrainings = result.trainings;
           this.tagTraining.push.apply(this.tagTraining, result.tagTrainingList);
