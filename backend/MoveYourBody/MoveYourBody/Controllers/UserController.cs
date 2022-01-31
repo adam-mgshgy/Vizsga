@@ -36,8 +36,8 @@ namespace MoveYourBody.WebAPI.Controllers
                                                 email = u.Email,
                                                 password = u.Password,
                                                 phone_number = u.Phone_number,
-                                                trainer = u.Trainer,
-                                                location_id = dbContext.Set<Location>().FirstOrDefault(l => l.Id == u.Location_id).Id
+                                                location_id = dbContext.Set<Location>().FirstOrDefault(l => l.Id == u.Location_id).Id,
+                                                role = u.Role
                                             })
                                             .FirstOrDefault();
 
@@ -76,7 +76,6 @@ namespace MoveYourBody.WebAPI.Controllers
                     Email = user.Email,
                     Password = user.Password,
                     Phone_number = user.Phone_number,
-                    Trainer = user.Trainer,
                     Location_id = user.Location_id,
                     Role = user.Role
                 };
