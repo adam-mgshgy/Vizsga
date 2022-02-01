@@ -39,8 +39,13 @@ export class ProfileSettingsComponent implements OnInit {
     );
   }
   ChangeTrainerValue() {
-    this.userModify.trainer = !this.userModify.trainer;
-    this.userModify.role = 'Trainer';
+    if (this.userModify.role == 'Trainer') {
+      this.userModify.role = 'User';
+      this.user.role = 'User';
+    } else {
+      this.userModify.role = 'Trainer';
+      this.user.role = 'Trainer';
+    }
   }
   errorCheck(): boolean {
     if (this.userModify.full_name == '') {

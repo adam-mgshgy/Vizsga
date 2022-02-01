@@ -29,7 +29,11 @@ export class RegistryPageComponent implements OnInit {
   ) {}
 
   TrainerChecked(event: any) {
-    this.newUser.trainer = event.target.checked;
+    if (event.target.checked) {
+      this.newUser.role = 'Trainer';
+    } else {
+      this.newUser.role = 'User';
+    }
   }
 
   CountyChanged(value) {
@@ -63,6 +67,7 @@ export class RegistryPageComponent implements OnInit {
     }
   }
   Register() {
+    this.newUser.role = 'User';
     if (this.errorCheck()) {
       this.locationService.getLocationId(this.selectedCity).subscribe(
         (result) => (this.newUser.location_id = result),
