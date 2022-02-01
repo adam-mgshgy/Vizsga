@@ -16,21 +16,21 @@
               </h4>
             </div>
             <div class="col-12">
-              <button id="modify" *ngIf="user.trainer" class="btn btn-primary mb-3 me-3" [routerLink]="'/createtraining/' + training.id">
+              <button id="modify" *ngIf="user.role == 'Trainer'" class="btn btn-primary mb-3 me-3" [routerLink]="'/createtraining/' + training.id">
                 Szerkesztés
               </button>
-              <button id="newSession" *ngIf="user.trainer" class="btn btn-primary mb-3 me-3" [routerLink]="'/addsession/'  + training.id + '/' + 0">
+              <button id="newSession" *ngIf="user.role == 'Trainer'" class="btn btn-primary mb-3 me-3" [routerLink]="'/addsession/'  + training.id + '/' + 0">
                 Új alkalom
               </button>
-              <button *ngIf="user.trainer" id="sessions" class="btn btn-primary mb-3 me-3" (click)="open(content, training.id)">
+              <button *ngIf="user.role == 'Trainer'" id="sessions" class="btn btn-primary mb-3 me-3" (click)="open(content, training.id)">
                 Alkalmak
               </button>
-              <button *ngIf="!user.trainer" id="sessions" class="btn btn-primary mb-3 me-3" (click)="open(content, training.id)">
+              <button *ngIf="user.role == 'User'" id="sessions" class="btn btn-primary mb-3 me-3" (click)="open(content, training.id)">
                 Jelentkezések
               </button>
             </div>
-            <h6 *ngIf="user.trainer" class="card-title text-white">{{ user.full_name }}</h6>
-            <h6 *ngIf="!user.trainer" class="card-title text-white">{{ trainers[training.trainer_id-1].full_name }}</h6>
+            <h6 *ngIf="user.role == 'Trainer'" class="card-title text-white">{{ user.full_name }}</h6>
+            <h6 *ngIf="user.role == 'User'" class="card-title text-white">{{ trainers[training.trainer_id-1].full_name }}</h6>
           </div>
           <div class="col-md-12" id="lightBckg">
             <div class="card-body">
@@ -49,15 +49,15 @@
       </div>
     </div>
     <div class="col">
-      <button *ngIf="user.trainer" id="newTraining" class="btn fw-bold mx-2" routerLink="/createtraining">
+      <button *ngIf="user.role == 'Trainer'" id="newTraining" class="btn fw-bold mx-2" routerLink="/createtraining">
         Új edzés
       </button>
     </div>
   </div>
 </div>
 <div class="noApplications">
-  <h2 *ngIf="myTrainings.length == 0">Még nem jelentkezett egy edzésre sem!</h2>
-  <h2><a *ngIf="myTrainings.length == 0" routerLink="/categories">Megnézem az összes kategóriát!</a></h2>
+  <h2 *ngIf="myTrainings.length == 0 && this.user.role == 'User'">Még nem jelentkezett egy edzésre sem!</h2>
+  <h2><a *ngIf="myTrainings.length == 0 && this.user.role == 'User'" routerLink="/categories">Megnézem az összes kategóriát!</a></h2>
 </div>
 
 <!-- Modal popup -->
@@ -81,9 +81,9 @@
           <mat-divider></mat-divider>
         </mat-panel-title>
         <mat-panel-description>
-          <button *ngIf="user.trainer" class="btn btn-primary me-3" [routerLink]="'/addsession/'  +  currentTraining.id + '/' + session.id" (click)="close()">Duplikálás</button>
-          <button *ngIf="user.trainer" class="btn btn-danger" (click)="deleteSession(session)">Törlés</button>
-          <button *ngIf="!user.trainer" class="btn btn-danger" (click)="deleteApplication(session.id)">Lemondás</button>
+          <button *ngIf="user.role == 'Trainer'" class="btn btn-primary me-3" [routerLink]="'/addsession/'  +  currentTraining.id + '/' + session.id" (click)="close()">Duplikálás</button>
+          <button *ngIf="user.role == 'Trainer'" class="btn btn-danger" (click)="deleteSession(session)">Törlés</button>
+          <button *ngIf="user.role == 'User'" class="btn btn-danger" (click)="deleteApplication(session.id)">Lemondás</button>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <app-session-modal [session]="session"></app-session-modal>

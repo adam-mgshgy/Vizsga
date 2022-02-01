@@ -1,4 +1,4 @@
-<mat-expansion-panel *ngIf="this.user.trainer">
+<mat-expansion-panel *ngIf="this.user.role == 'Trainer'">
   <mat-expansion-panel-header>
     <mat-panel-title>
       Jelentkezők
@@ -20,7 +20,7 @@
     <hr>
   </div>
 </mat-expansion-panel>
-<mat-expansion-panel *ngIf="!this.user.trainer">
+<mat-expansion-panel *ngIf="this.user.role == 'User'">
   <mat-expansion-panel-header>
     <mat-panel-title>
       Részletek

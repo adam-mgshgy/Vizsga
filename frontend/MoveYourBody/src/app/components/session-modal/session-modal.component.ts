@@ -30,7 +30,7 @@ export class SessionModalComponent implements OnInit {
   public applicants: ApplicantModel[] = [];
   public applicantUsers: UserModel[] = [];
   ngOnInit(): void {
-    if (this.user.trainer) {
+    if (this.user.role == 'Trainer') {
       this.applicantService.listBySessionId(this.session.id).subscribe(
         (result) => {
           this.session.numberOfApplicants = result.length;

@@ -18,7 +18,6 @@ namespace MoveYourBody.Service.Models
         [Required, StringLength(12)]
         public string Phone_number { get; set; }
         [Required]
-        public bool Trainer { get; set; }
         public int Location_id { get; set; }
         public string Role { get; set; }
 

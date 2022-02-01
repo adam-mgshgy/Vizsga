@@ -31,9 +31,8 @@ export class TrainingPageComponent implements OnInit {
     id: 0,
     location_id: 0,
     password: '',
-    phone_number: '',
-    trainer: false,
-    role: '',
+    phone_number: '',    
+    role: 'User',
     token: '',
   };
 
@@ -53,9 +52,8 @@ export class TrainingPageComponent implements OnInit {
     id: 0,
     location_id: 0,
     password: '',
-    phone_number: '',
-    trainer: false,
-    role: '',
+    phone_number: '',    
+    role: 'User',
     token: '',
   };
   public category: CategoryModel;
@@ -94,7 +92,7 @@ export class TrainingPageComponent implements OnInit {
     });
     this.trainingSessionService.listByTrainingId(this.id).subscribe(
       (result) => {
-        this.sessions = result.session;
+        this.sessions = result.sessions;
         this.training = result.training;
         this.trainerName = result.trainerName;
         this.sessions.forEach((session) => {

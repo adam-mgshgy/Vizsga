@@ -46,10 +46,10 @@
             <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="password" class="form-control pwd" name="password2" [(ngModel)]="password2">
         </div>
         <div class="mb-3">
-            <button id="subscribeButton" (click)="ChangeTrainerValue()" [ngClass]="userModify.trainer ? 'd-none' : 'd-inline-block'" type="button" class="btn btn-info fs-5" data-bs-toggle="tooltip" data-bs-html="true" title="Ha szeretnél edzővé válni és feltölteni edzéseid, nézd meg ajánlatainkat a gombra kattinva!">
+            <button id="subscribeButton" (click)="ChangeTrainerValue()" [ngClass]="userModify.role == 'Trainer' ? 'd-none' : 'd-inline-block'" type="button" class="btn btn-info fs-5" data-bs-toggle="tooltip" data-bs-html="true" title="Ha szeretnél edzővé válni és feltölteni edzéseid, nézd meg ajánlatainkat a gombra kattinva!">
                 Edzővé válok!
             </button>
-            <button id="cancelSubscriptionButton" (click)="ChangeTrainerValue()" [ngClass]="userModify.trainer ? 'd-inline-block' : 'd-none'" type="button" class="btn btn-info fs-5" data-bs-toggle="tooltip" data-bs-html="true" title="Ha szeretnéd lemondani edzői előfizetésed, kattints a gombra!">
+            <button id="cancelSubscriptionButton" (click)="ChangeTrainerValue()" [ngClass]="userModify.role == 'Trainer' ? 'd-inline-block' : 'd-none'" type="button" class="btn btn-info fs-5" data-bs-toggle="tooltip" data-bs-html="true" title="Ha szeretnéd lemondani edzői előfizetésed, kattints a gombra!">
                 Előfizetés lemondása
             </button>
         </div>

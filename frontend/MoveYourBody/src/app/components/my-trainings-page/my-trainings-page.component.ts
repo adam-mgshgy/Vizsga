@@ -93,7 +93,7 @@ export class MyTrainingsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.user.trainer) {
+    if (this.user.role == "Trainer") {
       this.trainingService.getByTrainerId(this.user.id).subscribe(
         (result) => {
           this.myTrainings = result;
@@ -159,7 +159,7 @@ export class MyTrainingsPageComponent implements OnInit {
     }
   }
   open(content: any, trainingId: number) {
-    if (this.user.trainer) {
+    if (this.user.role == "Trainer") {
       this.trainingSessionService.listByTrainingId(trainingId).subscribe(
         (result) => {
           this.sessions = result.sessions;

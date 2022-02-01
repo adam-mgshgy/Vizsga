@@ -4,7 +4,6 @@ export class UserModel {
     public password = '';
     public full_name = '';
     public phone_number = '';
-    public trainer = false;
     public location_id: number | null = null;
     public role = '';
     public token = '';
