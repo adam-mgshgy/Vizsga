@@ -22,15 +22,13 @@ export class LoginpageComponent implements OnInit {
     // }
   }
 
-  ngOnInit(): void {
-    this.Login();
-  }
+  ngOnInit(): void {}
   public email = '';
   public password = '';
   errorMessage = '';
   link = 'login';
 
-  Login() {    
+  Login() {
     this.authenticationService
       .login(this.email, this.password)
       .pipe(first())

@@ -22,7 +22,7 @@
               <button id="newSession" *ngIf="user.role == 'Trainer'" class="btn btn-primary mb-3 me-3" [routerLink]="'/addsession/'  + training.id + '/' + 0">
                 Új alkalom
               </button>
-              <button *ngIf="user.role == 'Trainer'" id="sessions" class="btn btn-primary mb-3 me-3" (click)="open(content, training.id)">
+              <button *ngIf="user.role == 'Trainer'"  id="sessions" class="btn btn-primary mb-3 me-3" (click)="open(content, training.id)">
                 Alkalmak
               </button>
               <button *ngIf="user.role == 'User'" id="sessions" class="btn btn-primary mb-3 me-3" (click)="open(content, training.id)">
@@ -64,10 +64,12 @@
 <ng-template #content let-modal>
   <mat-accordion>
     <mat-expansion-panel id="exPanel" hideToggle>
-
       <mat-expansion-panel-header>
-        <mat-panel-title>
+        <mat-panel-title *ngIf="sessions.length > 0">
           Időpont
+        </mat-panel-title>
+        <mat-panel-title *ngIf="sessions.length == 0" >
+          Még nincsenek alkalmak létrehozva!
         </mat-panel-title>
       </mat-expansion-panel-header>
     </mat-expansion-panel>
