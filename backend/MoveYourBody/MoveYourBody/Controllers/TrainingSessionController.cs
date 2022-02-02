@@ -80,6 +80,7 @@ namespace MoveYourBody.WebAPI.Controllers
                     Min_member = session.Min_member,
                     Max_member = session.Max_member,
                     Minutes = session.Minutes,
+                    Number_of_applicants = 0,
                     Address_name = session.Address_name,
                     Place_name = session.Place_name,
                 };
@@ -111,7 +112,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 foreach (var applicant in applicants)
                 {
                     dbContext.Remove<Applicant>(applicant);
-                    //dbContext.Remove(applicant); //TODO email kuldes pl
+                    //TODO email kuldes pl
 
                 }
                 dbContext.Remove(session);

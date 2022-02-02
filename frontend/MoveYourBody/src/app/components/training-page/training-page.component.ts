@@ -31,7 +31,7 @@ export class TrainingPageComponent implements OnInit {
     id: 0,
     location_id: 0,
     password: '',
-    phone_number: '',    
+    phone_number: '',
     role: 'User',
     token: '',
   };
@@ -52,7 +52,7 @@ export class TrainingPageComponent implements OnInit {
     id: 0,
     location_id: 0,
     password: '',
-    phone_number: '',    
+    phone_number: '',
     role: 'User',
     token: '',
   };
@@ -80,7 +80,7 @@ export class TrainingPageComponent implements OnInit {
   ) {
     this.authenticationService.currentUser.subscribe((x) => (this.user = x));
   }
-
+  
   ngOnInit(): void {
     if (window.innerWidth <= 800) {
       this.mobile = true;
@@ -90,29 +90,21 @@ export class TrainingPageComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
     });
+    this.applicantService.listByUserId(this.user.id).subscribe(
+      (result) => {
+        this.usersSessions = result;
+      },
+      (error) => console.log(error)
+    );
     this.trainingSessionService.listByTrainingId(this.id).subscribe(
       (result) => {
         this.sessions = result.sessions;
         this.training = result.training;
         this.trainerName = result.trainerName;
-        this.sessions.forEach((session) => {
-          this.applicantService.listBySessionId(session.id).subscribe(
-            (result) => {
-              session.numberOfApplicants = result.length;
-            },
-            (error) => console.log(error)
-          );
-        });
-        this.applicantService.listByUserId(this.user.id).subscribe(
-          (result) => {
-            this.usersSessions = result;
-          },
-          (error) => console.log(error)
-        );
       },
       (error) => console.log(error)
     );
-
+    
     this.categoriesService.getCategories().subscribe(
       (result) => {
         this.categories = result;
@@ -152,22 +144,11 @@ export class TrainingPageComponent implements OnInit {
     var newApplicant = new ApplicantModel();
     newApplicant.user_id = this.user.id;
     newApplicant.id = 1;
-    console.log(this.usersSessions);
-    console.log(this.sessions);
-    console.log(sessionId);
-    console.log(
-      this.usersSessions.find((x) => x.training_session_id == sessionId)
-    );
-    if (
-      this.usersSessions.find((x) => x.training_session_id == sessionId) ==
-      undefined
-    ) {
+    if (this.usersSessions.find((x) => x.training_session_id == sessionId) == undefined) {
       newApplicant.training_session_id = sessionId;
       this.applicantService.newApplicant(newApplicant).subscribe(
         (result) => {
-          this.sessions.find((x) => x.id == sessionId).numberOfApplicants++;
           this.usersSessions.push(newApplicant);
-          console.log(this.usersSessions);
         },
         (error) => {
           this.errorMessage = error.message;

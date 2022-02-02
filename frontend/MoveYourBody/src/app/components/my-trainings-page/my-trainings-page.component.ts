@@ -63,7 +63,7 @@ export class MyTrainingsPageComponent implements OnInit {
   // }
 
   deleteSession(session: TrainingSessionModel) {
-    if (session.numberOfApplicants > 0) {
+    if (session.number_of_applicants > 0) {
       alert('Figyelem, az alkalomra már vannak jelentkezők!');
     }
     this.trainingSessionService.deleteTrainingSession(session).subscribe(
@@ -78,22 +78,31 @@ export class MyTrainingsPageComponent implements OnInit {
     );
   }
   deleteApplication(sessionId: number) {
-    this.applicantService.deleteApplicantByIds(this.user.id, sessionId).subscribe(
-      (result) => {
-        console.log(result);
-        this.sessions.splice(
-          this.sessions.findIndex((x) => x.id == sessionId), 1);
-        if (this.sessions.length == 0) {
-          this.myTrainings.splice(this.myTrainings.findIndex((x) => x.id == this.currentTraining.id), 1);
-          this.close();
-        }
-      },
-      (error) => console.log(error)
-    );
+    this.applicantService
+      .deleteApplicantByIds(this.user.id, sessionId)
+      .subscribe(
+        (result) => {
+          console.log(result);
+          this.sessions.splice(
+            this.sessions.findIndex((x) => x.id == sessionId),
+            1
+          );
+          if (this.sessions.length == 0) {
+            this.myTrainings.splice(
+              this.myTrainings.findIndex(
+                (x) => x.id == this.currentTraining.id
+              ),
+              1
+            );
+            this.close();
+          }
+        },
+        (error) => console.log(error)
+      );
   }
 
   ngOnInit(): void {
-    if (this.user.role == "Trainer") {
+    if (this.user.role == 'Trainer') {
       this.trainingService.getByTrainerId(this.user.id).subscribe(
         (result) => {
           this.myTrainings = result;
@@ -159,7 +168,7 @@ export class MyTrainingsPageComponent implements OnInit {
     }
   }
   open(content: any, trainingId: number) {
-    if (this.user.role == "Trainer") {
+    if (this.user.role == 'Trainer') {
       this.trainingSessionService.listByTrainingId(trainingId).subscribe(
         (result) => {
           this.sessions = result.sessions;

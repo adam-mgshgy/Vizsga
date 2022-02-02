@@ -46,7 +46,7 @@
                     <td>{{session.date | date: 'yyyy.MM.dd. HH:mm'}}</td>
                     <td>{{session.price}}</td>
                     <td>{{session.minutes}}</td>
-                    <td>{{session.numberOfApplicants + '/' + session.max_member}}</td> 
+                    <td>{{session.number_of_applicants + '/' + session.max_member}}</td> 
                     <td><button class="btn fw-bold mb-2 mt-2" (click)="Apply(session.id)">Jelentkezek!</button></td>
                 </tr>
             </tbody>

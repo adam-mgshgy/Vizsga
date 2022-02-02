@@ -38,11 +38,9 @@ export class AuthenticationService {
           this.userService.getUserById(data.userId).subscribe(
             result => {
               localStorage.setItem('currentUser', JSON.stringify(result));
-              
               this.currentUserSubject.next(result);
           }
-          );
-                    
+          );       
           return data;
         })
       );
