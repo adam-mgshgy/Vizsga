@@ -26,4 +26,19 @@ export class TagService {
       })
     );
   }
+  newTag(model: TagModel): Observable<TagModel> {
+    return this.http.put<TagModel>(`${environment.ApiURL}/tag/add`, model).pipe(
+      map((data: TagModel) => {
+        return data;
+      }),
+      catchError((err) => {
+        if (
+          !environment.production &&
+          (err.status == 404 || err.status == 405)
+        ) {         
+          return of(model);
+        } else throw err;
+      })
+    );
+  }
 }
