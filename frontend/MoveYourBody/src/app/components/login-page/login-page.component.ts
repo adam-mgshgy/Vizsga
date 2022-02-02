@@ -16,36 +16,38 @@ export class LoginpageComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService
   ) {
-    // redirect to home if already logged in
-    // if (this.authenticationService.currentUserValue) {
-    //   this.router.navigate(['/']);
-    // }
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
   }
 
-  ngOnInit(): void {
-    this.Login();
-  }
+  ngOnInit(): void {}
   public email = '';
   public password = '';
   errorMessage = '';
-  link = 'login';
 
-  Login() {    
-    this.authenticationService
-      .login(this.email, this.password)
-      .pipe(first())
-      .subscribe(
-        (result) => {
-          this.authenticationService.currentUser.subscribe(
-            (x) => (this.user = x)
-          );
-          this.router.navigateByUrl('/home');
-          console.log(this.user);
-        },
-        (error) => {
-          console.log(error);
-          this.errorMessage = error;
-        }
-      );
+  Login() {
+    if (this.email == '') {
+      this.errorMessage = 'Kérjük adja meg E-mail címét!';
+    } else if (this.password == '') {
+      this.errorMessage = 'Kérjük adja meg jelszavát!';
+    } else {
+      this.authenticationService
+        .login(this.email, this.password)
+        .pipe(first())
+        .subscribe(
+          (result) => {
+            this.authenticationService.currentUser.subscribe(
+              (x) => (this.user = x)
+            );
+            this.router.navigateByUrl('/home');
+            console.log(this.user);
+          },
+          (error) => {
+            console.log(error);
+            this.errorMessage = 'Hibás E-mail cím vagy jelszó!'; //TODO refreshes after wrong data
+          }
+        );
+    }
   }
 }
