@@ -49,6 +49,20 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(user);
             });
         }
+        [HttpGet("email")]                                     // http://localhost:5000/user/12
+        public ActionResult CheckEmail([FromQuery] string email)
+        {
+            return this.Run(() =>
+            {
+                var user = dbContext.Set<User>().Where(u => u.Email == email).FirstOrDefault();
+
+                if (user == null)
+                {
+                    return Ok(false);
+                }
+                return Ok(true);
+            });
+        }
         [HttpPut("register")]
         public ActionResult New(User user)
         {
