@@ -6,18 +6,18 @@
             <label for="username" class="form-label fs-5">
                 Teljes név*
             </label>
-            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="text" class="form-control" id="username" name="username" required [(ngModel)]="newUser.full_name">
+            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="text" maxlength="255" class="form-control" id="username" name="username" required [(ngModel)]="newUser.full_name">
         </div>
         <div class="mb-3">
             <label for="email" class="form-label fs-5">E-mail cím*</label>
-            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="email" class="form-control" id="email" name="email" required [(ngModel)]="newUser.email">
+            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="email" maxlength="320" class="form-control" id="email" name="email" required [(ngModel)]="newUser.email">
             <div [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" id="emailHelp" class="form-text">Az e-mail cím regisztráció után nem változtatható meg!</div>
         </div>
         <div class="mb-3">
             <label for="phoneNumber" class="form-label fs-5">
                 Telefonszám*
             </label>
-            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="text" class="form-control" id="phoneNumber" name="phoneNumber" required [(ngModel)]="newUser.phone_number">
+            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="text" maxlength="12" class="form-control" id="phoneNumber" name="phoneNumber" required [(ngModel)]="newUser.phone_number">
             <div id="phoneNumberNelp" class="form-text">Kérjük ezt a formátumot használd: +36123456789</div>
         </div>
         <div class="mb-3">
@@ -44,7 +44,7 @@
         </div>
         <div class="mb-3">
             <label for="password" class="form-label fs-5">Jelszó*</label>
-            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="password" class="form-control pwd" name="password" required [(ngModel)]="newUser.password"> 
+            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="password" maxlength="255" class="form-control pwd" name="password" required [(ngModel)]="newUser.password"> 
         </div>
         <!-- <div class="mb-3">
             <label for="password" class="form-label fs-5">Jelszó ismét*</label>

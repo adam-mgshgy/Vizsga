@@ -10,7 +10,7 @@
             <label for="name" class="form-label">
                 Edzés neve:
             </label>
-            <input [ngStyle]="{'width.%': mobile ? '70' : '50'}" type="text" class="form-control" id="name" name="name" [(ngModel)]="training.name" required value="{{training.name}}">
+            <input [ngStyle]="{'width.%': mobile ? '70' : '50'}" type="text" maxlength="50" class="form-control" id="name" name="name" [(ngModel)]="training.name" required value="{{training.name}}">
         </div>
         <div class="mb-3 fs-4">
             <label>Edző neve: {{user.full_name}}</label>
@@ -24,7 +24,7 @@
         </div>
         <div class="mb-3">
             <label for="description" class="form-control-label d-block">Edzés leírása:</label>
-            <textarea [ngStyle]="{'width.%': mobile ? '70' : '50'}" type="text" name="description" id="description" cols="50" rows="8" [(ngModel)]="training.description" value="{{training.description}}"></textarea>
+            <textarea [ngStyle]="{'width.%': mobile ? '70' : '50'}" type="text" maxlength="50" name="description" id="description" cols="50" rows="8" [(ngModel)]="training.description" value="{{training.description}}"></textarea>
         </div>
         <div class="mb-3 checks">
             <div class="form-control-label me-2">Címkék:</div>
@@ -47,7 +47,7 @@
             <input class="form-check-input" type="radio" name="phone"  id="otherPhone" (change)="otherPhone()" [checked]="otherPhoneNumber">
             <label type="text" class="form-check-label ms-2 me-2" for="otherPhone" >
                 Másik telefonszámot adok meg:
-                <input type="text" id="otherPhoneNumber" name="otherPhoneNumber" [disabled]="!otherPhoneNumber" [(ngModel)]="otherPhoneNumberInput">
+                <input type="text" id="otherPhoneNumber" name="otherPhoneNumber" maxlength="12" [disabled]="!otherPhoneNumber" [(ngModel)]="otherPhoneNumberInput">
             </label>                           
         </div>
 
