@@ -1,0 +1,14 @@
+.container-fluid {
+  align-content: center;
+  text-align: center;
+  font-size: large;
+}
+input[type="text"],
+input[type="color"],
+input[type="file"] {
+  margin: auto;
+  text-align: center;
+}
+#createButton {
+  background-color: #216869;
+}

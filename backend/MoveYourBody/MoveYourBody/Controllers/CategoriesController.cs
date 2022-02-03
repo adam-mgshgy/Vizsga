@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoveYourBody.Service;
 using MoveYourBody.Service.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MoveYourBody.WebAPI.Controllers
 {
@@ -34,9 +35,24 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(category);
             });
         }
+        [HttpPut("add"), Authorize(Roles = "Admin")]
+        public ActionResult AddCategory(Category category)
+        {
+            return this.Run(() =>
+            {
+                var newcategory = new Category
+                {
+                    Id = 0,
+                    Name = category.Name,
+                    Img_src = category.Img_src
+                };
+                dbContext.Set<Category>().Add(newcategory);
+                dbContext.SaveChanges();
+                return Ok(newcategory);
+            });
+        }
 
 
-        
 
 
     }
