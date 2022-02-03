@@ -57,7 +57,20 @@ export class UserService {
       })
     );
   }
-
+  checkEmail(email: string): Observable<boolean> {
+    return this.http.get<UserModel>(`${environment.ApiURL}/user/email?email=${email}`).pipe(
+      map((data: any) => {
+        return data;
+      }),
+      catchError(err => {
+        if (!environment.production && err.status == 404) {
+          return of(err);
+        } 
+        else 
+          throw err;
+      })
+    );
+  }
   Login(email, password): Observable<UserModel> {
     return this.http.get<UserModel>(`${environment.ApiURL}/user/login?email=${email}&password=${password}`).pipe(
       map((data: UserModel) => {

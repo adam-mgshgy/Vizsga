@@ -83,20 +83,20 @@ export class CreateTrainingPageComponent implements OnInit {
           }
         });
 
-        this.tagTrainingService.getByTraining(this.training.id).subscribe(
-          (tagtraining) => {
-            this.tagTrainingFix = tagtraining;
-            for (const item of tagtraining) {
-              for (const tag of this.tags) {
-                if (tag.id == item.tag_id) {
-                  this.selectedTags.push(tag.name);
-                  this.selectedTagsFix.push(tag.name);
-                }
-              }
-            }
-          },
-          (error) => console.log(error)
-        );
+        // this.tagTrainingService.getByTraining(this.training.id).subscribe(
+        //   (tagtraining) => {
+        //     this.tagTrainingFix = tagtraining;
+        //     for (const item of tagtraining) {
+        //       for (const tag of this.tags) {
+        //         if (tag.id == item.tag_id) {
+        //           this.selectedTags.push(tag.name);
+        //           this.selectedTagsFix.push(tag.name);
+        //         }
+        //       }
+        //     }
+        //   },
+        //   (error) => console.log(error)
+        // );     ????????????????????????????????????????????????????????????????
         if (
           this.training.contact_phone != this.user.phone_number &&
           this.training.contact_phone != ''

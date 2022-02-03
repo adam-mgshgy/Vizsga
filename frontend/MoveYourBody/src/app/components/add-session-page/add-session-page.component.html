@@ -33,13 +33,13 @@
             <label for="address" class="form-label">
                 Közterület neve, száma:
             </label>
-            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-control" id="address" name="address" required [(ngModel)]="newSession.address_name">
+            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" maxlength="255" class="form-control" id="address" name="address" required [(ngModel)]="newSession.address_name">
         </div>
         <div class="mb-3">
             <label for="address" class="form-label">
                 Létesítmény neve:
             </label>
-            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-control" id="place" name="place" required [(ngModel)]="newSession.place_name">
+            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" maxlength="255" class="form-control" id="place" name="place" required [(ngModel)]="newSession.place_name">
         </div>
 
         <div class="mb-3">
