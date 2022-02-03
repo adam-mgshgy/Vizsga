@@ -5,24 +5,27 @@
         <div class="mb-3" id="photo">
             <!-- <div>Fényképek feltöltése:</div>
             <input type="file" accept="image/png, image/jpeg" multiple> -->
-            <label>Upload Logo</label>
-                
-                <div class="custom-file fileInputProfileWrap">
-                    <input type="file" (change)="fileChangeEvent($event)" accept="image/png, image/jpeg" multiple class="fileInputProfile">
-                    <div class="img-space">
+            <label>Fényképek feltöltése</label>
 
-                        <ng-container *ngIf="isImageSaved; else elseTemplate">
-                            <img [src]="cardImageBase64" />
-                        </ng-container>
-                        <ng-template #elseTemplate>
+            <div class="custom-file fileInputProfileWrap">
+                <input type="file" (change)="fileChangeEvent($event)" accept="image/png, image/jpeg" class="fileInputProfile">
+                <div class="img-space">
 
-                            <!-- <img src="./../../assets/placeholder.png" class="img-responsive"> -->
-                        </ng-template>
+                    <ng-container *ngIf="isImageSaved" id="selectedImages">
 
-                    </div>
+                        <div class="row text-center text-lg-start">
+                            <div *ngFor="let image of images" class="col-lg-3 col-md-4 col-6">                                
+                                <img class="img-fluid img-thumbnail" [src]="image" alt="" (click)="selectedImage(image)">                                
+                              </div>                            
+                        </div>
+
+                    </ng-container>
 
                 </div>
-                <a class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">Remove</a>
+
+            </div>
+            <div *ngIf="imageError" [(ngModel)]="imageError">{{imageError}}</div>
+            <a class="btn btn-danger" (click)="imageError = 'Válassza ki a törlendő képet!'" *ngIf="isImageSaved">Eltávolítás</a>
         </div>
         <div class="mb-3">
             <label for="name" class="form-label">
@@ -37,7 +40,7 @@
             <label for="category" class="form-control-label me-3">Kategória:</label>
             <select [ngStyle]="{'width.%': mobile ? '50' : '40'}" type="text" id="category" name="category" [(ngModel)]="selectedCat" (ngModelChange)="selectCategory($event)">
                 <option value=""></option>
-                <option *ngFor="let cat of categories" [value]="cat.name" >{{cat.name}}</option>
+                <option *ngFor="let cat of categories" [value]="cat.name">{{cat.name}}</option>
             </select>
         </div>
         <div class="mb-3">
@@ -48,7 +51,7 @@
             <div class="form-control-label me-2">Címkék:</div>
             <ul>
                 <li *ngFor="let tag of tags" class="checks">
-                    <input [value]="tag.name" class="form-check-input me-2" type="checkbox" (change)="onTagChange(tag.name)" value="{{tag.name}}" id="{{tag.name}}" [checked]="checkTags(tag.name)" >
+                    <input [value]="tag.name" class="form-check-input me-2" type="checkbox" (change)="onTagChange(tag.name)" value="{{tag.name}}" id="{{tag.name}}" [checked]="checkTags(tag.name)">
                     <label class="form-check-label" for="{{tag.name}}">
                         {{tag.name}}
                     </label>
@@ -62,15 +65,15 @@
                 A saját telefonszámom szeretném használni ({{user.phone_number}})
             </label>
             <br>
-            <input class="form-check-input" type="radio" name="phone"  id="otherPhone" (change)="otherPhone()" [checked]="otherPhoneNumber">
-            <label type="text" class="form-check-label ms-2 me-2" for="otherPhone" >
+            <input class="form-check-input" type="radio" name="phone" id="otherPhone" (change)="otherPhone()" [checked]="otherPhoneNumber">
+            <label type="text" class="form-check-label ms-2 me-2" for="otherPhone">
                 Másik telefonszámot adok meg:
                 <input type="text" id="otherPhoneNumber" name="otherPhoneNumber" maxlength="12" [disabled]="!otherPhoneNumber" [(ngModel)]="otherPhoneNumberInput">
-            </label>                           
+            </label>
         </div>
 
         <div class="mb-3">
-            <button id="createButton" type="submit" class="btn btn-success fs-5" (click)="save()" >Edzés mentése</button>
+            <button id="createButton" type="submit" class="btn btn-success fs-5" (click)="save()">Edzés mentése</button>
             <button class="btn btn-danger ms-2 fs-5" routerLink="/mytrainings">Mégsem</button>
         </div>
     </form>
