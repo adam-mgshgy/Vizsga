@@ -45,7 +45,7 @@ export class LoginpageComponent implements OnInit {
           },
           (error) => {
             console.log(error);
-            this.errorMessage = 'Hibás E-mail cím vagy jelszó!'; //TODO refreshes after wrong data
+            this.errorMessage = 'Hibás E-mail cím vagy jelszó!';
           }
         );
     }

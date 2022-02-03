@@ -79,7 +79,7 @@ export class RegistryPageComponent implements OnInit {
           console.log(this.newUser);
           this.router.navigateByUrl('/login');
         },
-        (error) => (this.errorMessage = error)
+        (error) => (this.errorMessage = "Ezzel az E-mail címmel már létezik felhasználói fiók!")//!!!!
       );
     }
   }
@@ -128,15 +128,15 @@ export class RegistryPageComponent implements OnInit {
       this.errorMessage = 'Kérem válasszon várost!';
       return false;
     }
-    this.userService.checkEmail(this.newUser.email).subscribe((result) => {
-      if (result == true) {
-        this.errorMessage =
-          'Ezzel az E-mail címmel már létezik felhasználói fiók';
-        return false;
-      } else {
-        return true;
-      }
-    });
+    // this.userService.checkEmail(this.newUser.email).subscribe((result) => {
+    //   if (result == true) {
+    //     this.errorMessage =
+    //       'Ezzel az E-mail címmel már létezik felhasználói fiók';
+    //     return false;
+    //   } else {
+    //     return true;
+    //   }
+    // });
 
     return true;
   }

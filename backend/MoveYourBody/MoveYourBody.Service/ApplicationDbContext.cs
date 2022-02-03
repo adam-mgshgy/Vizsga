@@ -66,7 +66,75 @@ namespace MoveYourBody.Service
                 new Tag() { Id = 11, Name = "Bemelegítés", Colour = "#F17300" },
                 new Tag() { Id = 12, Name = "Flexibilitás", Colour = "#3A405A" }
                 );
-
+            modelBuilder.Entity<User>().HasData(
+                new User() { Email = "jozsiedzo@email.com", Full_name = "Edző József", Id = 1, Location_id = 58, Password = "jozsi", Phone_number = "+36701234567", Role = "Trainer" },
+                new User() { Email = "belaedzo@email.com", Full_name = "Edző Béla", Id = 2, Location_id = 59, Password = "bela", Phone_number = "+36701234566", Role = "Trainer" },
+                new User() { Email = "gezaedzo@email.com", Full_name = "Edző Géza", Id = 3, Location_id = 60, Password = "geza", Phone_number = "+36701234565", Role = "Trainer" },
+                new User() { Email = "jani@email.com", Full_name = "User János", Id = 4, Location_id = 61, Password = "jani", Phone_number = "+36701234564", Role = "User" },
+                new User() { Email = "dani@email.com", Full_name = "User Dániel", Id = 5, Location_id = 62, Password = "dani", Phone_number = "+36701234563", Role = "User" },
+                new User() { Email = "mari@email.com", Full_name = "User Mária", Id = 6, Location_id = 63, Password = "mari", Phone_number = "+36701234562", Role = "User" },
+                new User() { Email = "evi@email.com", Full_name = "User Éva", Id = 7, Location_id = 64, Password = "evi", Phone_number = "+36701234561", Role = "User" },
+                new User() { Email = "beni@email.com", Full_name = "User Benedek", Id = 8, Location_id = 65, Password = "beni", Phone_number = "+36701234560", Role = "User" },
+                new User() { Email = "gabi@email.com", Full_name = "User Gabriella", Id = 9, Location_id = 66, Password = "gabi", Phone_number = "+36701234568", Role = "User" },
+                new User() { Email = "admin@email.com", Full_name = "Admin", Id = 10, Location_id = 67, Password = "admin", Phone_number = "+36701234569", Role = "Admin" }
+                );
+            modelBuilder.Entity<Training>().HasData(
+                new Training() { Id = 1, Category_id = 1, Contact_phone = "+36701234567", Description = "Rövid leírás az edzésről", Name = "Edzés 1", Trainer_id = 1 },
+                new Training() { Id = 2, Category_id = 2, Contact_phone = "+36701234567", Description = "Rövid leírás az edzésről", Name = "Edzés 2", Trainer_id = 1 },
+                new Training() { Id = 3, Category_id = 3, Contact_phone = "+36701234566", Description = "Rövid leírás az edzésről", Name = "Edzés 3", Trainer_id = 2 },
+                new Training() { Id = 4, Category_id = 4, Contact_phone = "+36701234566", Description = "Rövid leírás az edzésről", Name = "Edzés 4", Trainer_id = 2 },
+                new Training() { Id = 5, Category_id = 5, Contact_phone = "+36701234565", Description = "Rövid leírás az edzésről", Name = "Edzés 5", Trainer_id = 3 },
+                new Training() { Id = 6, Category_id = 5, Contact_phone = "+36701234565", Description = "Rövid leírás az edzésről", Name = "Edzés 6", Trainer_id = 3 },
+                new Training() { Id = 7, Category_id = 2, Contact_phone = "+36701234565", Description = "Rövid leírás az edzésről", Name = "Edzés 7", Trainer_id = 3 }
+                );
+            modelBuilder.Entity<TrainingSession>().HasData(
+                new TrainingSession() { Address_name = "Virág utca 8.", Date = DateTime.Now, Id = 1, Location_id = 58, Max_member = 10, Min_member = 5, Minutes = 45, Number_of_applicants = 5, Place_name = "Sportközpont", Price = 1500, Training_id = 1 },
+                new TrainingSession() { Address_name = "Virág utca 9.", Date = DateTime.Now, Id = 2, Location_id = 58, Max_member = 10, Min_member = 2, Minutes = 45, Number_of_applicants = 1, Place_name = "Sportközpont", Price = 1500, Training_id = 1 },
+                new TrainingSession() { Address_name = "Virág utca 5.", Date = DateTime.Now, Id = 3, Location_id = 59, Max_member = 10, Min_member = 2, Minutes = 45, Number_of_applicants = 2, Place_name = "Sportközpont", Price = 1500, Training_id = 1 },
+                new TrainingSession() { Address_name = "Virág utca 6.", Date = DateTime.Now, Id = 4, Location_id = 59, Max_member = 10, Min_member = 4, Minutes = 45, Number_of_applicants = 2, Place_name = "Sportközpont", Price = 1500, Training_id = 2 },
+                new TrainingSession() { Address_name = "Virág utca 7.", Date = DateTime.Now, Id = 5, Location_id = 60, Max_member = 10, Min_member = 5, Minutes = 45, Number_of_applicants = 1, Place_name = "Sportközpont", Price = 1500, Training_id = 2 },
+                new TrainingSession() { Address_name = "Virág utca 8.", Date = DateTime.Now, Id = 6, Location_id = 59, Max_member = 4, Min_member = 1, Minutes = 45, Number_of_applicants = 1, Place_name = "Sportközpont", Price = 1500, Training_id = 3 },
+                new TrainingSession() { Address_name = "Virág utca 10.", Date = DateTime.Now, Id = 7, Location_id = 58, Max_member = 10, Min_member = 5, Minutes = 45, Number_of_applicants = 2, Place_name = "Sportközpont", Price = 1500, Training_id = 4 },
+                new TrainingSession() { Address_name = "Virág utca 1.", Date = DateTime.Now, Id = 8, Location_id = 60, Max_member = 12, Min_member = 3, Minutes = 45, Number_of_applicants = 1, Place_name = "Sportközpont", Price = 1500, Training_id = 5 },
+                new TrainingSession() { Address_name = "Virág utca 2.", Date = DateTime.Now, Id = 9, Location_id = 60, Max_member = 10, Min_member = 6, Minutes = 45, Number_of_applicants = 0, Place_name = "Sportközpont", Price = 1500, Training_id = 6 },
+                new TrainingSession() { Address_name = "Virág utca 3.", Date = DateTime.Now, Id = 10, Location_id = 60, Max_member = 10, Min_member = 5, Minutes = 45, Number_of_applicants = 1, Place_name = "Sportközpont", Price = 1500, Training_id = 7 },
+                new TrainingSession() { Address_name = "Virág utca 8.", Date = DateTime.Now, Id = 11, Location_id = 61, Max_member = 10, Min_member = 5, Minutes = 45, Number_of_applicants = 1, Place_name = "Sportközpont", Price = 1500, Training_id = 7 }
+                );
+            modelBuilder.Entity<Applicant>().HasData(
+                new Applicant() { Id = 1, Training_session_id = 1, User_id = 4 },
+                new Applicant() { Id = 2, Training_session_id = 2, User_id = 4 },
+                new Applicant() { Id = 3, Training_session_id = 1, User_id = 5 },
+                new Applicant() { Id = 4, Training_session_id = 3, User_id = 5 },
+                new Applicant() { Id = 5, Training_session_id = 4, User_id = 6 },
+                new Applicant() { Id = 6, Training_session_id = 5, User_id = 6 },
+                new Applicant() { Id = 7, Training_session_id = 1, User_id = 7 },
+                new Applicant() { Id = 8, Training_session_id = 7, User_id = 7 },
+                new Applicant() { Id = 9, Training_session_id = 8, User_id = 7 },
+                new Applicant() { Id = 10, Training_session_id = 1, User_id = 8 },
+                new Applicant() { Id = 11, Training_session_id = 3, User_id = 9 },
+                new Applicant() { Id = 12, Training_session_id = 1, User_id = 9 },
+                new Applicant() { Id = 13, Training_session_id = 4, User_id = 9 },
+                new Applicant() { Id = 14, Training_session_id = 10, User_id = 9 },
+                new Applicant() { Id = 15, Training_session_id = 6, User_id = 9 },
+                new Applicant() { Id = 16, Training_session_id = 7, User_id = 9 },
+                new Applicant() { Id = 17, Training_session_id = 11, User_id = 9 }
+                );
+            modelBuilder.Entity<TagTraining>().HasData(
+                new TagTraining() { Id = 1, Tag_id = 1, Training_id = 1 },
+                new TagTraining() { Id = 2, Tag_id = 2, Training_id = 1 },
+                new TagTraining() { Id = 3, Tag_id = 1, Training_id = 2 },
+                new TagTraining() { Id = 4, Tag_id = 4, Training_id = 2 },
+                new TagTraining() { Id = 5, Tag_id = 1, Training_id = 3 },
+                new TagTraining() { Id = 6, Tag_id = 5, Training_id = 3 },
+                new TagTraining() { Id = 7, Tag_id = 1, Training_id = 4 },
+                new TagTraining() { Id = 8, Tag_id = 4, Training_id = 4 },
+                new TagTraining() { Id = 9, Tag_id = 1, Training_id = 5 },
+                new TagTraining() { Id = 10, Tag_id = 7, Training_id = 5 },
+                new TagTraining() { Id = 11, Tag_id = 8, Training_id = 1 },
+                new TagTraining() { Id = 12, Tag_id = 6, Training_id = 2 },
+                new TagTraining() { Id = 13, Tag_id = 10, Training_id = 1 },
+                new TagTraining() { Id = 14, Tag_id = 9, Training_id = 3 }
+                );
             //string[] lines = File.ReadAllText("cities.csv").Trim().Split('\n');
             //int i = 1;
             //foreach (var line in lines)

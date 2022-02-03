@@ -16,7 +16,7 @@
                     <a class="nav-link active" routerLink="/register" class="ForgetPwd">Regisztrálni szeretnék!</a>
                 </div>
                 <div class="form-label">
-                    <input (click)="Login()" type="submit" class="btnSubmit" value="Bejelentkezés" />
+                    <input (click)="Login()" type="button" class="btnSubmit" value="Bejelentkezés" />
                 </div>
             </form>
             <p class="text-danger font-weight-bold text-center" *ngIf="errorMessage" id="error">{{errorMessage}}</p>

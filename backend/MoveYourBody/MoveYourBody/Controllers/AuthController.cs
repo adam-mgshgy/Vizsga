@@ -42,7 +42,7 @@ namespace MoveYourBody.WebAPI.Controllers
             
             if (user == null)
             {
-                return Unauthorized(new
+                return StatusCode(403, new
                 {
                     errorMessage = "Hibás e-mail cím vagy jelszó"
                 });
