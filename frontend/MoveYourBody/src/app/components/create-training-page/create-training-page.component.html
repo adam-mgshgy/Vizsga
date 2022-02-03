@@ -3,8 +3,26 @@
     <h1 *ngIf="training.id">Edzés szerkesztése</h1>
     <form>
         <div class="mb-3" id="photo">
-            <div>Fényképek feltöltése:</div>
-            <input type="file" multiple>
+            <!-- <div>Fényképek feltöltése:</div>
+            <input type="file" accept="image/png, image/jpeg" multiple> -->
+            <label>Upload Logo</label>
+                
+                <div class="custom-file fileInputProfileWrap">
+                    <input type="file" (change)="fileChangeEvent($event)" accept="image/png, image/jpeg" multiple class="fileInputProfile">
+                    <div class="img-space">
+
+                        <ng-container *ngIf="isImageSaved; else elseTemplate">
+                            <img [src]="cardImageBase64" />
+                        </ng-container>
+                        <ng-template #elseTemplate>
+
+                            <!-- <img src="./../../assets/placeholder.png" class="img-responsive"> -->
+                        </ng-template>
+
+                    </div>
+
+                </div>
+                <a class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">Remove</a>
         </div>
         <div class="mb-3">
             <label for="name" class="form-label">
