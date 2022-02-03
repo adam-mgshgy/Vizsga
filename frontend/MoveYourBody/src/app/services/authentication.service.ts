@@ -36,10 +36,8 @@ export class AuthenticationService {
           localStorage.setItem('jwt', token);
           this.userService.getUserById(data.userId).subscribe((result) => {
             localStorage.setItem('currentUser', JSON.stringify(result));
-
             this.currentUserSubject.next(result);
           });
-
           return data;
         })
       );

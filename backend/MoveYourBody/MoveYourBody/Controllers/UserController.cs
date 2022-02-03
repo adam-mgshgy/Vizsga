@@ -169,10 +169,20 @@ namespace MoveYourBody.WebAPI.Controllers
                 var applications = dbContext.Set<Applicant>().Where(a => a.User_id == delUser.Id).ToList();
                 foreach (var application in applications)
                 {
-                    dbContext.Remove<Applicant>(application);
-                    //TODO email kuldes pl edzőnek
-
+                    dbContext.Remove<Applicant>(application); //TODO email kuldes 
                 }
+                var trainings = dbContext.Set<Training>().Where(t => t.Trainer_id == delUser.Id).ToList();
+                var sessions = new List<TrainingSession>();
+                foreach (var training in trainings)
+                {
+                    sessions.AddRange(dbContext.Set<TrainingSession>().Where(s => s.Training_id == training.Id).ToList());
+                    dbContext.Remove<Training>(training);
+                }
+                foreach (var session in sessions)
+                {
+                    dbContext.Remove<TrainingSession>(session);
+                }
+                
                 dbContext.Remove(delUser);
                 dbContext.SaveChanges();
                 return Ok(user);

@@ -135,6 +135,7 @@ namespace MoveYourBody.Service
                 new TagTraining() { Id = 13, Tag_id = 10, Training_id = 1 },
                 new TagTraining() { Id = 14, Tag_id = 9, Training_id = 3 }
                 );
+
             //string[] lines = File.ReadAllText("cities.csv").Trim().Split('\n');
             //int i = 1;
             //foreach (var line in lines)
