@@ -30,9 +30,7 @@
         <li *ngIf="!user" class="nav-item">
           <a class="nav-link active" routerLink="/login">Bejelentkezés</a>
         </li>
-        <li *ngIf="user.role == 'Admin'" class="nav-item">
-          <a class="nav-link active" routerLink="/admin">Admin</a>
-        </li>
+        
       </ul>
       <ul  id="userDropdown" class="navbar-nav mr-auto mb-2 mb-lg-0">
         <form class="d-flex">
@@ -47,6 +45,9 @@
             <li><a class=" dropdown-item" routerLink="/profile">Fiókbeállítások</a></li>
             <li>
               <hr class="dropdown-divider">
+            </li>
+            <li *ngIf="user.role == 'Admin'">
+              <a class="dropdown-item" routerLink="/admin">Admin</a>
             </li>
             <li><a class="dropdown-item" routerLink="/mytrainings">Edzéseim</a></li>
             <li><a class=" dropdown-item" (click)="Logout()">Kijelentkezés</a></li>
