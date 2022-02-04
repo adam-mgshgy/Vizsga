@@ -10,3 +10,12 @@ input[type=number], input[type=text], select {
 #createButton {
     background-color: #216869;
 }
+.trainingDetails {
+    color: #216869;
+}
+#line {
+    width: 50%;
+    margin: auto;
+    margin-top: 15pt;
+    margin-bottom: 15pt;
+}

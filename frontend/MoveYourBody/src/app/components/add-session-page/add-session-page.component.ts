@@ -6,6 +6,7 @@ import { TrainingSessionService } from 'src/app/services/training-session.servic
 import { Time } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TrainingService } from 'src/app/services/training.service';
+import { TrainingModel } from 'src/app/models/training-model';
 
 @Component({
   selector: 'app-add-session-page',
@@ -22,6 +23,7 @@ export class AddSessionPageComponent implements OnInit {
   selectedCounty: string;
   selectedCity: string;
   newSession: TrainingSessionModel = new TrainingSessionModel();
+  training: TrainingModel = new TrainingModel();
   date: Date;
   time: Time;
 
@@ -114,21 +116,15 @@ export class AddSessionPageComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.trainingId = Number(params.get('trainingId'));
       this.sessionId = Number(params.get('sessionId'));
-      console.log(this.trainingId);
-      console.log(this.sessionId);
       if (this.sessionId) {
         this.trainingSessionService.getById(this.sessionId).subscribe(
           (result) => {
-            this.newSession = result;
+            this.newSession = result.session;
             this.newSession.date = '';
-            this.locationService.getById(this.newSession.location_id).subscribe(
-              (result) => {
-                this.selectedCounty = result[0].county_name;
-                this.CountyChanged(this.selectedCounty);
-                this.selectedCity = result[0].city_name;
-              },
-              (error) => console.log(error)
-            );
+            this.selectedCounty = result.location.county_name;
+            this.CountyChanged(this.selectedCounty);
+            this.selectedCity = result.location.city_name;
+            this.training = result.training;
           },
           (error) => console.log(error)
         );
@@ -139,6 +135,7 @@ export class AddSessionPageComponent implements OnInit {
             this.selectedCounty = result.location.county_name;
             this.CountyChanged(this.selectedCounty);
             this.selectedCity = result.location.city_name;
+            this.training = result.training;
           },
           (error) => console.log(error)
         );

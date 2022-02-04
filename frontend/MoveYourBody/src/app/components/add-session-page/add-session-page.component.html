@@ -1,4 +1,10 @@
 <div [ngStyle]="{'width.%': mobile ? '100' : '80'}" class="container-fluid">
+    <div class="trainingDetails">
+        <h2>Az aktuális edzés részletei:</h2>
+        <h3>{{training.name}}</h3>
+        <h3>{{training.description}}</h3>
+    </div>
+    <hr id="line" [ngStyle]="{'width.%': mobile ? '80' : '50'}">
     <form>
         <h1>Új alkalom hozzáadása</h1>
         <div class="mb-3">

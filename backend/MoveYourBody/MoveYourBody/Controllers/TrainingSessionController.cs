@@ -59,9 +59,15 @@ namespace MoveYourBody.WebAPI.Controllers
             return this.Run(() =>
             {
                 TrainingSession session = dbContext.Set<TrainingSession>().Where(s => s.Id == sessionId).FirstOrDefault();
-                //Location location = dbContext.Set<Location>().Where(l => l.Id == session.Location_id).FirstOrDefault();
-             
-                return Ok(session);
+                Location location = dbContext.Set<Location>().Where(l => l.Id == session.Location_id).FirstOrDefault();
+                Training training = dbContext.Set<Training>().Where(t => t.Id == session.Training_id).FirstOrDefault();
+
+                return Ok(new
+                {
+                    session,
+                    training,
+                    location
+                });
             });
 
         }

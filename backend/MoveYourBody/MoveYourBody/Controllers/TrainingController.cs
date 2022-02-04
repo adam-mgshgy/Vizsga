@@ -100,9 +100,9 @@ namespace MoveYourBody.WebAPI.Controllers
                 Location location = dbContext.Set<Location>().Where(l => l.Id == trainer.Location_id).FirstOrDefault();
                 return Ok(new
                 {
-                    trainer = trainer,
-                    training = training,
-                    location = location
+                    trainer,
+                    training,
+                    location
                 });
             });
         }
