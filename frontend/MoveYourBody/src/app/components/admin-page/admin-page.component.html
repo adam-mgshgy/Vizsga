@@ -30,6 +30,7 @@
             </label>
             <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-control" id="categoryName" name="categoryName" [(ngModel)]="newCategory.name">
         </div>
+        <!-- TODO -->
         <div class="mb-3">
             <label for="categoryImg" class="form-label">
                 Kép:
@@ -40,6 +41,7 @@
             <button id="createButton" type="submit" class="btn btn-success fs-5" (click)="SaveCategory()" >Kategória mentése</button>
             <button class="btn btn-danger ms-2 fs-5" (click)="CancelCategory()">Mégsem</button>
         </div>
+        <!-- TODO -->
     </form>
     <p class="text-danger font-weight-bold text-center" *ngIf="errorMessage" id="error">{{errorMessage}}</p>
 </div>

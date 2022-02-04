@@ -34,12 +34,14 @@ export class AdminPageComponent implements OnInit {
     this.newCategory = new CategoryModel();
   }
   SaveTag() {
+    this.newTag.id = 0;
     this.tagService.newTag(this.newTag).subscribe(
       (result) => console.log(result),
       (error) => console.log(error)
     );
   }
   SaveCategory() {
+    this.newCategory.id = 0;
     this.categoriesService.newCategory(this.newCategory).subscribe(
       (result) => console.log(result),
       (error) => console.log(error)
