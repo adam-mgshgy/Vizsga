@@ -10,6 +10,7 @@ import { CreateTrainingPageComponent } from './components/create-training-page/c
 import { AddSessionPageComponent } from './components/add-session-page/add-session-page.component';
 import { TrainingPageComponent } from './components/training-page/training-page.component';
 import { MyTrainingsPageComponent } from './components/my-trainings-page/my-trainings-page.component';
+import { AdminPageComponent } from './components/admin-page/admin-page.component';
 
 const routes: Routes = [
   {path: '', redirectTo:'home', pathMatch: 'full'},
@@ -24,7 +25,8 @@ const routes: Routes = [
   {path: 'addsession', component: AddSessionPageComponent},
   {path: 'addsession/:trainingId/:sessionId', component: AddSessionPageComponent},
   {path: 'training/:id', component: TrainingPageComponent},
-  {path: 'mytrainings', component: MyTrainingsPageComponent}
+  {path: 'mytrainings', component: MyTrainingsPageComponent},
+  {path: 'admin', component: AdminPageComponent}
 ];
 
 @NgModule({
