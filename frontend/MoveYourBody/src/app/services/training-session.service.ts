@@ -108,13 +108,13 @@ export class TrainingSessionService {
         })
       );
   }
-  getById(sessionId: number): Observable<TrainingSessionModel> {
+  getById(sessionId: number): Observable<any> {
     return this.http
-      .get<TrainingSessionModel>(
+      .get<any>(
         `${environment.ApiURL}/sessions/get?sessionId=${sessionId}`
       )
       .pipe(
-        map((data: TrainingSessionModel) => {
+        map((data: any) => {
           return data;
         }),
         catchError((err) => {
