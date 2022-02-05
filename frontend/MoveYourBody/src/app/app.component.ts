@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CategoryModel } from './models/category-model';
 import { UserModel } from './models/user-model';
-import { Subscription } from 'rxjs';
 import { LoginService } from './services/login.service';
 import { CategoriesService } from './services/categories.service';
 import { AuthenticationService } from './services/authentication.service';
@@ -17,15 +16,15 @@ import { UserService } from './services/user.service';
 export class AppComponent {
   //user: UserModel;
   //subscription: Subscription;
+  mobile: boolean = false;
+
 
   user: UserModel;
   constructor(
     private router: Router,
-    private loginService: LoginService,
     private categoryService: CategoriesService,
     private authenticationService: AuthenticationService,
     private jwtHelper: JwtHelperService,
-    private userService: UserService
   ) {
     this.authenticationService.currentUser.subscribe(
       (x) => (this.user = x)
@@ -36,7 +35,11 @@ export class AppComponent {
     //   (user) => (this.user = user)
     // );
 
-
+    if (window.innerWidth <= 800) {
+      this.mobile = true;
+    }
+    window.onresize = () => (this.mobile = window.innerWidth <= 991);
+    
     console.log(this.user)
     this.categoryService.getCategories().subscribe(
       (result) => (this.categories = result),

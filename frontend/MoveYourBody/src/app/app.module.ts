@@ -28,6 +28,7 @@ import { JwtInterceptor } from './JWT/JwtInterceptor';
 import { ErrorInterceptor } from './JWT/ErrorInterceptor';
 import { SessionModalComponent } from './components/session-modal/session-modal.component';
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
+import { MatSortModule } from '@angular/material/sort';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -59,6 +60,7 @@ export function tokenGetter() {
     HttpClientModule,
     FormsModule,
     MatIconModule,
+    MatSortModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

@@ -4,11 +4,6 @@ import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
 import { LocationModel } from 'src/app/models/location-model';
-import { CategoriesService } from 'src/app/services/categories.service';
-import { TrainingService } from 'src/app/services/training.service';
-import { TagService } from 'src/app/services/tag.service';
-import { TagTrainingService } from 'src/app/services/tag-training.service';
-import { UserService } from 'src/app/services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryModel } from 'src/app/models/category-model';
 import { TagTrainingModel } from 'src/app/models/tag-training-model';
@@ -17,7 +12,7 @@ import { LocationService } from 'src/app/services/location.service';
 import { ApplicantModel } from 'src/app/models/applicant-model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ApplicantService } from 'src/app/services/applicant.service';
-
+import {Sort} from '@angular/material/sort';
 @Component({
   selector: 'app-training-page',
   templateUrl: './training-page.component.html',
@@ -45,8 +40,8 @@ export class TrainingPageComponent implements OnInit {
     name: '',
     trainer_id: 0,
   };
-  public trainerName: '';
-  public trainer: UserModel = {
+  trainerName: '';
+  trainer: UserModel = {
     email: '',
     full_name: '',
     id: 0,
@@ -56,29 +51,51 @@ export class TrainingPageComponent implements OnInit {
     role: 'User',
     token: '',
   };
-  public category: CategoryModel;
-  public sessions: TrainingSessionModel[] = [];
-
-  categories: CategoryModel[];
+  category: CategoryModel = {
+    id: 0,
+    img_src: '',
+    name: ''
+  };
+  sessions: TrainingSessionModel[] = [];
+  sortedSessions: TrainingSessionModel[]= [];
   locations: LocationModel[];
   tagTraining: TagTrainingModel[] = [];
   tags: TagModel[] = [];
+  // sort: Sort;
 
   usersSessions: ApplicantModel[] = [];
   mobile: boolean = false;
   constructor(
-    private categoriesService: CategoriesService,
-    private trainingService: TrainingService,
     private trainingSessionService: TrainingSessionService,
-    private tagService: TagService,
-    private tagTrainingService: TagTrainingService,
-    private userService: UserService,
     private route: ActivatedRoute,
     private locationService: LocationService,
     private applicantService: ApplicantService,
     private authenticationService: AuthenticationService
   ) {
     this.authenticationService.currentUser.subscribe((x) => (this.user = x));
+  }
+  sortData(sort: Sort) {
+    const data = this.sessions.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedSessions = data;
+      return;
+    }
+    this.sortedSessions = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'date':
+          return this.compare(a.date, b.date, isAsc);
+        case 'price':
+          return this.compare(a.price, b.price, isAsc);
+        case 'minutes':
+          return this.compare(a.minutes, b.minutes, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+  compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
   
   ngOnInit(): void {
@@ -99,39 +116,14 @@ export class TrainingPageComponent implements OnInit {
     this.trainingSessionService.listByTrainingId(this.id).subscribe(
       (result) => {
         this.sessions = result.sessions;
+        this.sortedSessions = this.sessions.slice();
         this.training = result.training;
         this.trainerName = result.trainerName;
+        this.category = result.category;
+        this.tags = result.tags;
       },
       (error) => console.log(error)
     );
-    
-    this.categoriesService.getCategories().subscribe(
-      (result) => {
-        this.categories = result;
-        var i = 0;
-        while (
-          this.categories[i].id != this.training.category_id &&
-          i < this.categories.length
-        ) {
-          i++;
-        }
-        if (i < this.categories.length) {
-          this.category = this.categories[i];
-        }
-        this.tagTrainingService.getTags(this.category.id).subscribe(
-          (result) => {
-            this.tagTraining = result;
-          },
-          (error) => console.log(error)
-        );
-      },
-      (error) => console.log(error)
-    );
-    this.tagService.getTags().subscribe(
-      (result) => (this.tags = result),
-      (error) => console.log(error)
-    );
-
     this.locationService.getLocations().subscribe(
       (result) => {
         this.locations = result;

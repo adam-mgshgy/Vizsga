@@ -71,15 +71,6 @@ namespace MoveYourBody.WebAPI.Controllers
             {
                 var training = dbContext.Set<Training>()
                                             .Where(t => t.Id == id)
-                                            .Select(t => new
-                                            {
-                                                Id = t.Id,
-                                                Name = t.Name,
-                                                Trainer_id = t.Trainer_id,
-                                                Category_id = t.Category_id,
-                                                Description = t.Description,
-                                                Contact_phone = t.Contact_phone
-                                            })
                                             .FirstOrDefault();
 
                 if (training == null)

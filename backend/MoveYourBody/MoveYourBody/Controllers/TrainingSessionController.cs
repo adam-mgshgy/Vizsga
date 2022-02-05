@@ -24,12 +24,20 @@ namespace MoveYourBody.WebAPI.Controllers
             {
                 var sessions = dbContext.Set<TrainingSession>().Where(s => s.Training_id == trainingId).OrderBy(t => t.Date);
                 Training training = dbContext.Set<Training>().Where(t => t.Id == trainingId).FirstOrDefault();
-               
+                Category category = dbContext.Set<Category>().Where(c => c.Id == training.Category_id).FirstOrDefault();
+                var tagIds = dbContext.Set<TagTraining>().Where(t => t.Training_id == trainingId).ToList();
+                var tags = new List<Tag>();
+                foreach (var tag in tagIds)
+                {
+                    tags.AddRange(dbContext.Set<Tag>().Where(t => t.Id == tag.Tag_id).ToList());
+                }
                 var trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault().Full_name;
                 return Ok(new { 
                     sessions,
                     trainer,
-                    training
+                    training,
+                    category,
+                    tags
                 });
             });
         }

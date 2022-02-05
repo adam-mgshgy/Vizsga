@@ -42,4 +42,18 @@ export class CategoriesService {
         })
       );
   }
+  // getById(id: any): Observable<CategoryModel> {
+  //   return this.http
+  //     .get<CategoryModel>(`${environment.ApiURL}/categories/${id}`)
+  //     .pipe(
+  //       map((data: CategoryModel) => {
+  //         return data;
+  //       }),
+  //       catchError((err) => {
+  //         if (!environment.production && err.status == 404) {
+  //           return of(err);
+  //         } else throw err;
+  //       })
+  //     );
+  // }
 }
