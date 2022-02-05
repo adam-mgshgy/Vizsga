@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark mb-2">
   <div class="container-fluid">
-    <a id="logoLink" routerLink="/home"><img id="logoImage" src="./assets/images/mainPageImages/logoWhite.png" alt="logo"></a>
+    <a [ngStyle]="{'width.%': mobile ? '40' : '12'}"  id="logoLink" routerLink="/home"><img id="logoImage" src="./assets/images/mainPageImages/logoWhite.png" alt="logo"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
     </button>

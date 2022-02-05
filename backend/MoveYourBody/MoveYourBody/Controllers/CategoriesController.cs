@@ -51,9 +51,14 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(newcategory);
             });
         }
-
-
-
-
+        //[HttpGet("{id}")]
+        //public ActionResult GetById(int id)
+        //{
+        //    return this.Run(() =>
+        //    {
+        //        var category = dbContext.Set<Category>().Where(c => c.Id == id).FirstOrDefault();
+        //        return Ok(category);
+        //    });
+        //}
     }
 }

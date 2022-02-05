@@ -48,13 +48,8 @@ namespace MoveYourBody.WebAPI.Controllers
         public ActionResult ListByTag([FromQuery] int id)
         {
             return this.Run(() =>
-            {                                                               
-                var tagTraining = dbContext.Set<TagTraining>().Where(t => t.Tag_id == id).Select(t => new
-                {
-                    Id = t.Id,
-                    Training_id = t.Training_id,
-                    Tag_id = t.Tag_id
-                });
+            {
+                var tagTraining = dbContext.Set<TagTraining>().Where(t => t.Tag_id == id).ToList();
                 return Ok(tagTraining);
             });
         }
@@ -62,13 +57,8 @@ namespace MoveYourBody.WebAPI.Controllers
         public ActionResult ListByTraining([FromQuery] int id)
         {
             return this.Run(() =>
-            {               
-                var tagTraining = dbContext.Set<TagTraining>().Where(t => t.Training_id == id).Select(t => new
-                {
-                    Id = t.Id,
-                    Training_id = t.Training_id,
-                    Tag_id = t.Tag_id
-                });
+            {
+                var tagTraining = dbContext.Set<TagTraining>().Where(t => t.Training_id == id).ToList();
 
                 return Ok(tagTraining);
             });
@@ -79,12 +69,7 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var delete = dbContext.Set<TagTraining>().Where(d => d.Id == id).Select(t => new
-                {
-                    Id = t.Id,
-                    Training_id = t.Training_id,
-                    Tag_id = t.Tag_id
-                }).FirstOrDefault();
+                var delete = dbContext.Set<TagTraining>().Where(d => d.Id == id).FirstOrDefault();
 
                 dbContext.Remove(delete);
                 dbContext.SaveChanges();
