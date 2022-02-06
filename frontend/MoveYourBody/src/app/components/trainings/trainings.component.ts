@@ -21,31 +21,43 @@ export class TrainingsComponent implements OnInit {
 
   categoryId: number;
   tagId: number;
+  trainerId: number;
   trainings: TrainingModel[] = [];
   imgSrc = './assets/images/categoryPageImages/profile_rock.png';
   imgBckgSrc = './assets/images/categoryPageImages/index.jpg';
   mobile: boolean = false;
   categories: CategoryModel[] = [];
   trainers: UserModel[] = [];
+  trainer: UserModel;
   tagTraining: TagTrainingModel[] = [];
   tags: TagModel[] = [];
   selectedTags: TagModel[] = [];
   constructor(
     private route: ActivatedRoute,
-    private trainingService: TrainingService
+    private trainingService: TrainingService,
+    private categoryService: CategoriesService,
+    private tagService: TagService
+    
     ) {}
 
   ngOnInit(): void {
+    this.categoryService.getCategories().subscribe(
+      (result) => this.categories = result,
+      (error) => console.log(error)
+    );
+    this.tagService.getTags().subscribe(
+      (result) => this.tags = result,
+      (error) => console.log(error)
+    );
     this.route.paramMap.subscribe((params) => {
       this.categoryId = Number(params.get('category'));
       this.tagId = Number(params.get('tag'));
+      this.trainerId = Number(params.get('trainer'));
       if (this.categoryId) {
         this.trainingService.getByCategory(this.categoryId).subscribe(
           (result) => {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
-            this.tags = result.tags;
-            this.categories = result.categories;
             this.tagTraining = result.tagTrainings;
           }, (error) => console.log(error)
         )
@@ -55,20 +67,25 @@ export class TrainingsComponent implements OnInit {
           (result) => {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
-            this.tags = result.tags;
             this.tagTraining = result.tagTrainings;
-            this.categories = result.categories;
           }, (error) => console.log(error)
         )
+      }
+      else if (this.trainerId) {
+        this.trainingService.getByTrainerId(this.trainerId).subscribe(
+          (result) => {
+            this.trainings = result.trainings;
+            this.trainer = result.trainer;
+            this.tagTraining = result.tagTrainings;
+          }, (error) => console.log(error)
+        );
       }
       else {
         this.trainingService.getAll().subscribe(
           (result) => {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
-            this.tags = result.tags;
             this.tagTraining = result.tagTrainings;
-            this.categories = result.categories;
           }, (error) => console.log(error)
         )
       }

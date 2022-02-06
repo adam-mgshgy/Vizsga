@@ -5,11 +5,23 @@
     height: 30px;
     font-size: x-small;
     border: 0px;
-    color: white;
+    color: #DCE1DE;
 }
-#moreTag{
-    height: 30px;
-    padding: 0px;
-    border: 1px solid black;
-    width: 3rem;
+.catBtn {
+    background-color: #9CC5A1;
+    color: #1F2421;
+    font-weight: bold;
+}
+.dark {
+    background-color: #343a40;
+    margin: auto;
+    padding: auto;
+    align-items: center;
+    align-content: center;
+}
+.light {
+    background-color: white;
+}
+.hoverLink:hover {
+    cursor: pointer;
 }

@@ -118,7 +118,7 @@ export class TrainingPageComponent implements OnInit {
         this.sessions = result.sessions;
         this.sortedSessions = this.sessions.slice();
         this.training = result.training;
-        this.trainerName = result.trainerName;
+        this.trainerName = result.trainer;
         this.category = result.category;
         this.tags = result.tags;
       },

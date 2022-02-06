@@ -28,7 +28,8 @@ const routes: Routes = [
   {path: 'admin', component: AdminPageComponent},
   {path: 'trainings', component: TrainingsComponent},
   {path: 'trainings/category/:category', component: TrainingsComponent},
-  {path: 'trainings/tag/:tag', component: TrainingsComponent}
+  {path: 'trainings/tag/:tag', component: TrainingsComponent},
+  {path: 'trainings/trainer/:trainer', component: TrainingsComponent}
 
 ];
 

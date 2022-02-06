@@ -15,6 +15,9 @@ img {
 .trainer {
     text-align: center;
 }
+.trainer:hover {
+    cursor: pointer;
+}
 .center {
     margin-left: 30%;
     width: 40%;

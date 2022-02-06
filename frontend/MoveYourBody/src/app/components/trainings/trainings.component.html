@@ -4,32 +4,34 @@
       <div *ngFor="let training of trainings;let i=index" class="col-xxl-4 col-xl-6 col-md-6">
         <div class="card mb-3">
           <div class="row g-0">
-  
             <div class="col-4 align-items-center">
-              <img [src]="imgSrc" style=" width: 100%;height: 100%;object-fit: cover;" class="img-fluid" alt="...">
+              <img [routerLink]="'/trainings/trainer/' + training.trainer_id"  [src]="imgSrc" style=" width: 100%;height: 100%;object-fit: cover;" class="img-fluid hoverLink" alt="...">
             </div>
   
             <div class="col-8" id="bckg">
-              <img [src]="imgBckgSrc" style=" width: 100%;height: 100%;object-fit: cover;" class="img-fluid " alt="...">
+              <img [routerLink]="'/training/' + training.id" [src]="imgBckgSrc" style=" width: 100%;height: 100%;object-fit: cover;" class="img-fluid hoverLink" alt="...">
             </div>
   
-            <div class="card-body container-fluid row g-0" style="background-color: #343a40;">
-              <div class="col-auto">
-                <h4 class="card-title text-white mb-3 me-3">{{training.name}}</h4>
+            <div class="card-body dark container-fluid row g-0">
+              <div class="col">
+                <h3 class="card-title text-white hoverLink" [routerLink]="'/training/' + training.id">{{training.name}}</h3>
+                <span *ngIf="!trainer">
+                  <span *ngFor="let trainer of trainers">
+                    <h6 *ngIf="trainer.id == training.trainer_id" [routerLink]="'/trainings/trainer/' + trainer.id" class="card-title text-white hoverLink">{{trainer.full_name}}</h6>
+                  </span>
+                </span>
+                <h6 *ngIf="trainer" [routerLink]="'/trainings/trainer/' + trainer.id" class="card-title text-white hoverLink">{{trainer.full_name}}</h6>
               </div>
               <div class="col">
-                <button class="btn btn-primary mb-3" [routerLink]="'/training/' + training.id" >Megnézem</button>
+                <span *ngFor="let cat of categories">
+                  <button *ngIf="cat.id == training.category_id" class="btn mb-3 catBtn" [routerLink]="'/trainings/category/' + training.category_id" > {{ cat.name }}</button>
+                </span>
               </div>
-              
-              <h6 class="card-title text-white">{{ training.trainer_id == trainers[i].id ? trainers[i].full_name :'' }}</h6>
-              <a [routerLink]="'/trainings/category/' + training.category_id" ><h6 class="card-title text-white">{{ training.category_id == categories[i].id ? categories[i].name :'' }}</h6></a>
             </div>
   
-            <div class="col-md-12" style="background-color: white;">
-              <div class="card-body">
-  
-                <p class="card-text">{{training.description}}</p>
-  
+            <div class="col-md-12">
+              <div class="card-body light">
+                <h5 class="card-text">{{training.description}}</h5>
                <span *ngFor="let tag of tagTraining">
                   <button [routerLink]="'/trainings/tag/' + tag.tag_id" *ngIf="training.id == tag.training_id && tag.tag_id == tags[tag.tag_id-1].id  ? 'true' : ''" id="tag"  [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}"
                      class="btn fw-bold me-1 mb-1" >{{tags[tag.tag_id-1].name}}</button>

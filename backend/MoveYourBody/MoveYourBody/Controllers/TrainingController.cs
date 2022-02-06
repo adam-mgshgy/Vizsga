@@ -97,15 +97,26 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var user = dbContext.Set<User>().Where(u => u.Id == trainerId).FirstOrDefault();
-                var training = dbContext.Set<Training>().Where(t => t.Trainer_id == user.Id);
-
-                if (training == null)
+                var trainer = dbContext.Set<User>().Where(u => u.Id == trainerId).FirstOrDefault();
+                var trainings = dbContext.Set<Training>().Where(t => t.Trainer_id == trainer.Id).ToList();
+                if (trainings == null)
                     return BadRequest(new
                     {
                         ErrorMessage = "Nem létező edzés ehhez a felhasználóhoz"
                     });
-                return Ok(training);
+                var tagTrainings = new List<TagTraining>();
+
+                foreach (var training in trainings)
+                {
+                    tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
+
+                }
+                return Ok(new
+                {
+                    trainings,
+                    tagTrainings,
+                    trainer
+                });
             });
         }
         [HttpGet("UserId/{userId}")]
@@ -162,21 +173,18 @@ namespace MoveYourBody.WebAPI.Controllers
                     {
                         ErrorMessage = "Ezzel a kategóriával nincs edzés létrehozva"
                     });
-                var categories = dbContext.Set<Category>().ToList();
-                var tags = dbContext.Set<Tag>().ToList();
                 var trainers = new List<User>();
                 var tagTrainings = new List<TagTraining>();
                 foreach (var training in trainings)
                 {
-                    trainers.AddRange(dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).ToList());
+                    var trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault();
+                    if (!trainers.Contains(trainer)) trainers.Add(trainer);
                     tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
                 }
                 return Ok(new
                 {
                     trainings,
                     tagTrainings,
-                    categories,
-                    tags,
                     trainers
                 });
             });
@@ -192,21 +200,18 @@ namespace MoveYourBody.WebAPI.Controllers
                 {
                     trainings.AddRange(dbContext.Set<Training>().Where(t => t.Id == training.Training_id));
                 }
-                var categories = dbContext.Set<Category>().ToList();
-                var tags = dbContext.Set<Tag>().ToList();
                 var trainers = new List<User>();
                 tagTrainings = new List<TagTraining>();
                 foreach (var training in trainings)
                 {
-                    trainers.AddRange(dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).ToList());
+                    var trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault();
+                    if (!trainers.Contains(trainer)) trainers.Add(trainer);
                     tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
                 }
                 return Ok(new
                 {
                     trainings,
                     tagTrainings,
-                    categories,
-                    tags,
                     trainers
                 });
             });
@@ -218,23 +223,20 @@ namespace MoveYourBody.WebAPI.Controllers
             return this.Run(() =>
             {
                 var trainings = dbContext.Set<Training>().ToList();
-                var categories = dbContext.Set<Category>().ToList();
-                var tags = dbContext.Set<Tag>().ToList();
                 var trainers = new List<User>();
                 var tagTrainings = new List<TagTraining>();
 
                 foreach (var training in trainings)
                 {
-                    trainers.AddRange(dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).ToList());
+                    var trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault();
+                    if (!trainers.Contains(trainer)) trainers.Add(trainer);
                     tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
 
                 }
                 return Ok(new
                 {
                     trainings,
-                    categories,
                     tagTrainings,
-                    tags,
                     trainers
                 });
             });

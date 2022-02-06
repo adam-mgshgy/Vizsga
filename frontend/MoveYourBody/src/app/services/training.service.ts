@@ -88,13 +88,13 @@ export class TrainingService {
       );
   }
 
-  getByTrainerId(trainerId: any): Observable<TrainingModel[]> {
+  getByTrainerId(trainerId: any): Observable<any> {
     return this.http
-      .get<TrainingModel[]>(
+      .get<any>(
         `${environment.ApiURL}/training/TrainerId/${trainerId}`
       )
       .pipe(
-        map((data: TrainingModel[]) => {
+        map((data: any) => {
           return data;
         }),
         catchError((err) => {
