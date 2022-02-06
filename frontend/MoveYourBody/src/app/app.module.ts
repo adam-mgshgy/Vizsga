@@ -15,7 +15,7 @@ import { AddSessionPageComponent } from './components/add-session-page/add-sessi
 import { TrainingPageComponent } from './components/training-page/training-page.component';
 
 import {MatIconModule} from '@angular/material/icon';
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { MyTrainingsPageComponent } from './components/my-trainings-page/my-trainings-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -57,6 +57,7 @@ export function tokenGetter() {
     HttpClientModule,
     FormsModule,
     MatIconModule,
+    MatCheckboxModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

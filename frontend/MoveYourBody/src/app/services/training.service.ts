@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { TrainingModel } from '../models/training-model';
 import { catchError, map } from 'rxjs/operators';
+import { TrainingImagesModel } from '../models/training-images-model';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +31,26 @@ export class TrainingService {
         })
       );
   }
+  saveImage(images: any, trainingId: number): Observable<TrainingImagesModel> {
+    return this.http
+      .put<TrainingImagesModel>(`${environment.ApiURL}/training/Images?trainingId=${trainingId}`, images)
+      .pipe(
+        map((data: TrainingImagesModel) => {          
+          return data;
+        }),
+        catchError((err) => {
+          if (
+            !environment.production &&
+            (err.status == 404 || err.status == 405)
+          ) {
+            return of(images);
+          } else {
+            throw err;
+          }
+        })
+      );
+  }
+
   modifyTraining(model: TrainingModel): Observable<TrainingModel> {
     return this.http
       .post<TrainingModel>(`${environment.ApiURL}/training/modify`, model)
@@ -47,7 +68,20 @@ export class TrainingService {
         })
       );
   }
-
+  getImageById(id: any): Observable<TrainingImagesModel[]> {
+    return this.http
+      .get<TrainingImagesModel[]>(`${environment.ApiURL}/training/Images/${id}`)
+      .pipe(
+        map((data: TrainingImagesModel[]) => {
+          return data;
+        }),
+        catchError((err) => {
+          if (!environment.production && err.status == 404) {
+            return of(err);
+          } else throw err;
+        })
+      );
+  }
   deleteTraining(model: TrainingModel): Observable<any> {
     const options = {
       headers: new HttpHeaders({

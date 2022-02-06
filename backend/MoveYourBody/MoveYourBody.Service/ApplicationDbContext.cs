@@ -13,6 +13,7 @@ namespace MoveYourBody.Service
         public DbSet<User> User { get; set; }
         public DbSet<Location> Location { get; set; }
         public DbSet<Training> Training { get; set; }
+        public DbSet<TrainingImages> TrainingImages { get; set; }
         public DbSet<TrainingSession> TrainingSession { get; set; }
         public DbSet<TagTraining> TagTraining { get; set; }
         public DbSet<Applicant> Applicant { get; set; }

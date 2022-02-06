@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,39 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             this.dbContext = dbContext;
         }
+        [HttpPut("Images")]
+        public ActionResult SaveImages(string[] base64, [FromQuery] int trainingId)
+        {
+            return this.Run(() =>
+            {                
+                foreach (var item in base64)
+                {
+                    byte[] image = Convert.FromBase64String(item.Split(',')[1]);                    
+                    TrainingImages newTrainingImages = new TrainingImages()
+                    {
+                        Id = 0,
+                        ImageData = image,
+                        TrainingId = trainingId
+                    };
+                    dbContext.Set<TrainingImages>().Add(newTrainingImages);
+                
+
+                }
+
+                    dbContext.SaveChanges();
+                return Ok();
+
+            });
+        }
+        [HttpGet("Images/{id}")]
+        public ActionResult GetImageById(int id)
+        {
+            return this.Run(() =>
+            {
+                var trainingImages = dbContext.Set<TrainingImages>().Where(t => t.TrainingId == id);
+                return Ok(trainingImages);
+            });
+        }
         [HttpPut]
         public ActionResult New(Training training)
         {
@@ -34,9 +68,11 @@ namespace MoveYourBody.WebAPI.Controllers
                     Description = training.Description,
                     Contact_phone = training.Contact_phone,
                 };
+                
 
                 dbContext.Set<Training>().Add(newTraining);
-                dbContext.SaveChanges();
+                dbContext.SaveChanges();               
+
                 return Ok(newTraining);
 
             });

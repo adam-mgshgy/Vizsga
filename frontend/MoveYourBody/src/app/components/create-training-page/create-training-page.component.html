@@ -10,22 +10,38 @@
             <div class="custom-file fileInputProfileWrap">
                 <input type="file" (change)="fileChangeEvent($event)" accept="image/png, image/jpeg" class="fileInputProfile">
                 <div class="img-space">
-
-                    <ng-container *ngIf="isImageSaved" id="selectedImages">
+                    <ng-container *ngIf="!create" id="selectedImages">
 
                         <div class="row text-center text-lg-start">
-                            <div *ngFor="let image of images" class="col-lg-3 col-md-4 col-6">                                
-                                <img class="img-fluid img-thumbnail" [src]="image" alt="" (click)="selectedImage(image)">                                
-                              </div>                            
+                            <div *ngFor="let image of trainingImages;let i = index" class="col-lg-3 col-md-4 col-6">
+                                <mat-checkbox  id="selectedImage"  class="example-margin" [checked]="selectIndex.includes(i)">
+                                   
+                                </mat-checkbox>
+                                <img class="img-fluid img-thumbnail" [src]="'data:image/png;base64,'+image.imageData" (click)="selectedImage(i)">
+                            </div>
+                        </div>
+
+                    </ng-container>
+                    <ng-container *ngIf="isImageSaved" id="selectedImages">
+                        Új képek:
+                        <div class="row text-center text-lg-start">
+                            <div *ngFor="let image of images;let i = index" class="col-lg-3 col-md-4 col-6">
+                                <mat-checkbox  id="selectedImage"  class="example-margin" [checked]="selectNewIndex.includes(i)">
+                                   
+                                </mat-checkbox>
+                                <img class="img-fluid img-thumbnail" [src]="image" (click)="selectedNewImage(i)">
+                            </div>
                         </div>
 
                     </ng-container>
 
+                    
+
                 </div>
 
             </div>
-            <div *ngIf="imageError" [(ngModel)]="imageError">{{imageError}}</div>
-            <a class="btn btn-danger" (click)="imageError = 'Válassza ki a törlendő képet!'" *ngIf="isImageSaved">Eltávolítás</a>
+            <!-- <div *ngIf="imageError" [(ngModel)]="imageError">{{imageError}}</div> -->
+            <a class="btn btn-danger" (click)="deleteImage()" *ngIf="selectIndex.length > 0">Eltávolítás</a>
         </div>
         <div class="mb-3">
             <label for="name" class="form-label">
