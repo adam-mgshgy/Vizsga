@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CategoriesPageComponent } from './components/categories-page/categories-page.component';
-import { CategoryPageComponent } from './components/category-page/category-page.component';
 import { LoginpageComponent } from './components/login-page/login-page.component';
 import { MainpageComponent } from './components/main-page/main-page.component';
 import { RegistryPageComponent } from './components/registry-page/registry-page.component';
@@ -11,13 +10,13 @@ import { AddSessionPageComponent } from './components/add-session-page/add-sessi
 import { TrainingPageComponent } from './components/training-page/training-page.component';
 import { MyTrainingsPageComponent } from './components/my-trainings-page/my-trainings-page.component';
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
+import { TrainingsComponent } from './components/trainings/trainings.component';
 
 const routes: Routes = [
   {path: '', redirectTo:'home', pathMatch: 'full'},
   {path: 'home', component: MainpageComponent},
   {path: 'login', component: LoginpageComponent},
   {path: 'categories', component: CategoriesPageComponent},
-  {path: 'category/:category', component: CategoryPageComponent},
   {path: 'register', component: RegistryPageComponent},
   {path: 'profile', component: ProfileSettingsComponent},
   {path: 'createtraining', component: CreateTrainingPageComponent},
@@ -26,7 +25,11 @@ const routes: Routes = [
   {path: 'addsession/:trainingId/:sessionId', component: AddSessionPageComponent},
   {path: 'training/:id', component: TrainingPageComponent},
   {path: 'mytrainings', component: MyTrainingsPageComponent},
-  {path: 'admin', component: AdminPageComponent}
+  {path: 'admin', component: AdminPageComponent},
+  {path: 'trainings', component: TrainingsComponent},
+  {path: 'trainings/category/:category', component: TrainingsComponent},
+  {path: 'trainings/tag/:tag', component: TrainingsComponent}
+
 ];
 
 @NgModule({

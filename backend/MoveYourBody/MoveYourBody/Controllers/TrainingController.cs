@@ -24,7 +24,6 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-
                 Training newTraining = new Training()
                 {
                     Id = training.Id,
@@ -34,7 +33,6 @@ namespace MoveYourBody.WebAPI.Controllers
                     Description = training.Description,
                     Contact_phone = training.Contact_phone,
                 };
-
                 dbContext.Set<Training>().Add(newTraining);
                 dbContext.SaveChanges();
                 return Ok(newTraining);
@@ -48,7 +46,6 @@ namespace MoveYourBody.WebAPI.Controllers
             {                
                 dbContext.Entry(training).State = Microsoft.EntityFrameworkCore.EntityState.Modified;                
                 dbContext.SaveChanges();
-
                 return Ok(training);
             });
         }
@@ -57,7 +54,6 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                
                 dbContext.Remove(training);
                 dbContext.SaveChanges();
                 return Ok(training);
@@ -69,10 +65,7 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var training = dbContext.Set<Training>()
-                                            .Where(t => t.Id == id)
-                                            .FirstOrDefault();
-
+                var training = dbContext.Set<Training>().Where(t => t.Id == id).FirstOrDefault();
                 if (training == null)
                     return BadRequest(new
                     {
@@ -105,17 +98,7 @@ namespace MoveYourBody.WebAPI.Controllers
             return this.Run(() =>
             {
                 var user = dbContext.Set<User>().Where(u => u.Id == trainerId).FirstOrDefault();
-                var training = dbContext.Set<Training>()
-                                            .Where(t => t.Trainer_id == user.Id)
-                                            .Select(t => new
-                                            {
-                                                Id = t.Id,
-                                                Name = t.Name,
-                                                Trainer_id = t.Trainer_id,
-                                                Category_id = t.Category_id,
-                                                Description = t.Description,
-                                                Contact_phone = t.Contact_phone
-                                            });
+                var training = dbContext.Set<Training>().Where(t => t.Trainer_id == user.Id);
 
                 if (training == null)
                     return BadRequest(new
@@ -173,28 +156,89 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var training = dbContext.Set<Training>()
-                                            .Where(t => t.Category_id == id)
-                                            .Select(t => new
-                                            {
-                                                Id = t.Id,
-                                                Name = t.Name,
-                                                Trainer_id = t.Trainer_id,
-                                                Category_id = t.Category_id,
-                                                Description = t.Description,
-                                                Contact_phone = t.Contact_phone
-                                            });
-                                            
-
-                if (training == null)
+                var trainings = dbContext.Set<Training>().Where(t => t.Category_id == id).ToList();
+                if (trainings == null)
                     return BadRequest(new
                     {
                         ErrorMessage = "Ezzel a kategóriával nincs edzés létrehozva"
                     });
-                return Ok(training);
+                var categories = dbContext.Set<Category>().ToList();
+                var tags = dbContext.Set<Tag>().ToList();
+                var trainers = new List<User>();
+                var tagTrainings = new List<TagTraining>();
+                foreach (var training in trainings)
+                {
+                    trainers.AddRange(dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).ToList());
+                    tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
+                }
+                return Ok(new
+                {
+                    trainings,
+                    tagTrainings,
+                    categories,
+                    tags,
+                    trainers
+                });
+            });
+        }
+        [HttpGet("tag")]
+        public ActionResult GetByTag([FromQuery] int id)
+        {
+            return this.Run(() =>
+            {
+                var tagTrainings = dbContext.Set<TagTraining>().Where(t => t.Tag_id == id).ToList();
+                var trainings = new List<Training>();
+                foreach (var training in tagTrainings)
+                {
+                    trainings.AddRange(dbContext.Set<Training>().Where(t => t.Id == training.Training_id));
+                }
+                var categories = dbContext.Set<Category>().ToList();
+                var tags = dbContext.Set<Tag>().ToList();
+                var trainers = new List<User>();
+                tagTrainings = new List<TagTraining>();
+                foreach (var training in trainings)
+                {
+                    trainers.AddRange(dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).ToList());
+                    tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
+                }
+                return Ok(new
+                {
+                    trainings,
+                    tagTrainings,
+                    categories,
+                    tags,
+                    trainers
+                });
             });
         }
 
+        [HttpGet("all")]
+        public ActionResult GetAll()
+        {
+            return this.Run(() =>
+            {
+                var trainings = dbContext.Set<Training>().ToList();
+                var categories = dbContext.Set<Category>().ToList();
+                var tags = dbContext.Set<Tag>().ToList();
+                var trainers = new List<User>();
+                var tagTrainings = new List<TagTraining>();
+
+                foreach (var training in trainings)
+                {
+                    trainers.AddRange(dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).ToList());
+                    tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
+
+                }
+                return Ok(new
+                {
+                    trainings,
+                    categories,
+                    tagTrainings,
+                    tags,
+                    trainers
+                });
+            });
+        }
         // [HttpGet("location")]
         // public ActionResult GetByLocation([FromQuery] string field)
         // {

@@ -118,11 +118,25 @@ export class TrainingService {
         })
       );
   }
-  getByCategory(id: any): Observable<TrainingModel[]> {
+  getByCategory(id: any): Observable<any> {
     return this.http
-      .get<TrainingModel[]>(`${environment.ApiURL}/training/category?id=${id}`)
+      .get<any>(`${environment.ApiURL}/training/category?id=${id}`)
       .pipe(
-        map((data: TrainingModel[]) => {
+        map((data: any) => {
+          return data;
+        }),
+        catchError((err) => {
+          if (!environment.production && err.status == 404) {
+            return of(err);
+          } else throw err;
+        })
+      );
+  }
+  getByTag(id: any): Observable<any> {
+    return this.http
+      .get<any>(`${environment.ApiURL}/training/tag?id=${id}`)
+      .pipe(
+        map((data: any) => {
           return data;
         }),
         catchError((err) => {
@@ -137,6 +151,20 @@ export class TrainingService {
       .get<any>(`${environment.ApiURL}/training/data?trainingId=${trainingId}`)
       .pipe(
         map((data) => {
+          return data;
+        }),
+        catchError((err) => {
+          if (!environment.production && err.status == 404) {
+            return of(err);
+          } else throw err;
+        })
+      );
+  }
+  getAll(): Observable<any> {
+    return this.http
+      .get<any>(`${environment.ApiURL}/training/all`)
+      .pipe(
+        map((data: any) => {
           return data;
         }),
         catchError((err) => {
