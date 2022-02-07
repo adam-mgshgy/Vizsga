@@ -1,67 +1,79 @@
-<div class="container-fluid">
-  <h2>Részletes keresés</h2>
-  <div class="row mb-2">
-    <div class="col col-5">
+<div class="container-fluid search" >
+  <div class="row">
+    <button class="btn fs-5" id="startSearch" (click)="isSearchClicked=!isSearchClicked">Keresés</button>
+  </div>
+  <div *ngIf="isSearchClicked" class="row mb-2">
+    <div class="col col-lg-4 col-md-6 col-sm-12">
       <label for="county" class="form-label">
-        Megye választása
+        Megye választása:
       </label>
-      <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="county" name="county" required (ngModelChange)="CountyChanged($event)" [(ngModel)]="selectedCounty">
+      <select class="form-select form-select-sm" id="county" name="county" required (ngModelChange)="CountyChanged($event)" [(ngModel)]="selectedCounty">
         <option value=""></option>
         <option *ngFor="let county of counties" [value]="county.county_name">{{county.county_name}}</option>
       </select>
     </div>
-    <div *ngIf="selectedCounty" class="col col-5">
+
+    <div class="col col-lg-4 col-md-6 col-sm-12">
       <label for="city" class="form-label">
-        Város választása
+        Város választása:
       </label>
-      <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="city" name="city" required [(ngModel)]="selectedCity">
+      <select [disabled]="!selectedCounty" class="form-select form-select-sm " id="city" name="city" required [(ngModel)]="selectedCity">
         <option value=""></option>
         <option *ngFor="let city of cities" [value]="city.city_name">{{city.city_name}}</option>
       </select>
     </div>
-    <div class="row mb-2">
-      <div class="col col-5">
-        <label for="trainingName" class="form-label">
-          Edzés neve:
-        </label>
-        <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" maxlength="255" class="form-control" id="trainingName" name="trainingName" required [(ngModel)]="trainingName">
-      </div>
-      <div class="col col-5">
-        <label for="trainer" class="form-control-label">Edző neve:</label>
-        <select [ngStyle]="{'width.%': mobile ? '50' : '40'}" type="text" id="trainer" name="trainer" [(ngModel)]="trainerName">
-          <option value=""></option>
-          <option *ngFor="let trainer of trainers" [value]="trainer.full_name">{{trainer.full_name}}</option>
-        </select>
-      </div>
+
+    <div class="col col-lg-4 col-md-6 col-sm-12">
+      <label for="trainingName" class="form-label">
+        Edzés neve:
+      </label>
+      <input type="text" maxlength="255" class="form-control" id="trainingName" name="trainingName" required [(ngModel)]="trainingName">
     </div>
-    <div class="row mb-2">
-      <div class="col col-5">
-        <label for="category" class="form-control-label">Kategória:</label>
-        <select [ngStyle]="{'width.%': mobile ? '50' : '40'}" type="text" id="category" name="category" [(ngModel)]="selectedCategory">
-          <option value=""></option>
-          <option *ngFor="let cat of categories" [value]="cat.name">{{cat.name}}</option>
-        </select>
-      </div>
-      <div class="col col-5">
-        <label for="selectedTag" class="form-control-label">Tag:</label>
-        <select [ngStyle]="{'width.%': mobile ? '50' : '40'}" type="text" id="selectedTag" name="selectedTag" [(ngModel)]="selectedTag">
-          <option value=""></option>
-          <option *ngFor="let tag of tags" [value]="tag.name">{{tag.name}}</option>
-        </select>
-      </div>
+
+    <div class="col col-lg-4 col-md-6 col-sm-12">
+      <mat-form-field appearance="fill">
+        <mat-label >Edzők</mat-label>
+        <mat-select [(ngModel)]="selectedTrainers" multiple>
+          <mat-option *ngFor="let trainer of trainers" [value]="trainer.full_name">{{trainer.full_name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
-    <div class="row">
-      <div class="col">
-        <button class="btn btn-success" (click)="Search()" id="search">Keresés</button>
-      </div>
-      <div class="col">
-        <button class="btn btn-danger" (click)="Cancel()" id="cancel">Mégsem</button>
-      </div>
+
+    <div class="col col-lg-4 col-md-6 col-sm-12">
+      <mat-form-field appearance="fill">
+        <mat-label>Kategóriák</mat-label>
+        <mat-select [(ngModel)]="selectedCategories" multiple>
+          <mat-option *ngFor="let cat of categories" [value]="cat.name">{{cat.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col col-lg-4 col-md-6 col-sm-12">
+      <mat-form-field appearance="fill">
+        <mat-label>Tagek</mat-label>
+        <mat-select [(ngModel)]="selectedTags" multiple>
+          <mat-option *ngFor="let tag of tags" [value]="tag.name">{{tag.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col">
+        <button class="btn btn-success" (click)="Search()" id="searchBtn">Keresés</button>
+        <button class="btn btn-danger" (click)="Cancel()" id="cancelBtn">Mégsem</button>
     </div>
   </div>
+
 </div>
 
 <div (resized)="onResized($event)" [ngStyle]="{'width.%': mobile ==true ? '100' : '80'}" class="container-fluid">
+  <div class="row title">
+    <h1 *ngIf="!result">
+      Minden Edzés
+    </h1>
+    <h1 *ngIf="result">
+      A keresés eredménye
+    </h1>
+  </div>
   <div class="row">
 
     <div *ngFor="let training of trainings;let i=index" class="col-xxl-4 col-xl-6 col-md-6">

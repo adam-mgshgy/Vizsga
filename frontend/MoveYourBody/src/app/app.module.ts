@@ -14,6 +14,7 @@ import { AddSessionPageComponent } from './components/add-session-page/add-sessi
 import { TrainingPageComponent } from './components/training-page/training-page.component';
 
 import {MatIconModule} from '@angular/material/icon';
+import {MatSelectModule} from '@angular/material/select';
 
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { MyTrainingsPageComponent } from './components/my-trainings-page/my-trainings-page.component';
@@ -47,7 +48,7 @@ export function tokenGetter() {
     MyTrainingsPageComponent,
     SessionModalComponent,
     AdminPageComponent,
-    TrainingsComponent
+    TrainingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +62,7 @@ export function tokenGetter() {
     FormsModule,
     MatIconModule,
     MatSortModule,
+    MatSelectModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

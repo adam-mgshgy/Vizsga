@@ -25,3 +25,48 @@
 .hoverLink:hover {
     cursor: pointer;
 }
+
+.search>div {
+    font-size: large;
+    margin: auto;
+    text-align: center;
+}
+select, input {
+    height: 2.5rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+#searchBtn, #cancelBtn {
+    width: 15rem;
+    height: 3rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    font-size: large;
+}
+.search {
+    /* border: #343a40 solid 3px; 
+    border-radius: 15px; */
+    padding: 1rem;
+    margin: auto;
+    margin-bottom: 2rem;
+}
+#startSearch {
+    font-size: large;
+    background-color: #343a40;
+    color: white;
+    margin: auto;
+    width: 15rem;  
+    height: 3rem;
+    margin-bottom: 1rem;
+}
+.title {
+    margin: auto;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* body {
+    background-image: url(/frontend/MoveYourBody/src/assets/images/background.jpeg);
+    background-repeat: no-repeat;
+    background-color: black;
+  } */

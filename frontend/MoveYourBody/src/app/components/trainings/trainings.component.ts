@@ -4,16 +4,13 @@ import { CategoryModel } from 'src/app/models/category-model';
 import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { CategoriesService } from 'src/app/services/categories.service';
-import { TagTrainingService } from 'src/app/services/tag-training.service';
 import { TagService } from 'src/app/services/tag.service';
 import { TrainingService } from 'src/app/services/training.service';
-import { UserService } from 'src/app/services/user.service';
 import { ResizedEvent } from 'angular-resize-event';
 import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { UserModel } from 'src/app/models/user-model';
 import { LocationService } from 'src/app/services/location.service';
 import { LocationModel } from 'src/app/models/location-model';
-
 @Component({
   selector: 'app-trainings',
   templateUrl: './trainings.component.html',
@@ -23,24 +20,32 @@ export class TrainingsComponent implements OnInit {
   categoryId: number;
   tagId: number;
   trainerId: number;
+  
+  cities: LocationModel[] = [];
+  counties: LocationModel[] = [];
+
   trainings: TrainingModel[] = [];
+  categories: CategoryModel[] = [];
+  trainer: UserModel;
+  trainers: UserModel[] = [];
+  tags: TagModel[] = [];
+  tagTraining: TagTrainingModel[] = [];
+
   imgSrc = './assets/images/categoryPageImages/profile_rock.png';
   imgBckgSrc = './assets/images/categoryPageImages/index.jpg';
+
   mobile: boolean = false;
-  categories: CategoryModel[] = [];
-  trainers: UserModel[] = [];
-  trainer: UserModel;
-  tagTraining: TagTrainingModel[] = [];
-  tags: TagModel[] = [];
+  isSearchClicked: boolean = true;
+  result: boolean = false;
+
   selectedTags: TagModel[] = [];
-  counties: LocationModel[] = [];
-  cities: LocationModel[] = [];
-  selectedCategory: '';
+  selectedCategories: CategoryModel[] = [];
+  selectedTrainers: UserModel[] = [];
   selectedCounty: string;
   selectedCity: string;
   trainerName: '';
   trainingName: '';
-  selectedTag: '';
+
   constructor(
     private route: ActivatedRoute,
     private trainingService: TrainingService,
@@ -111,7 +116,13 @@ export class TrainingsComponent implements OnInit {
 
   }
   Cancel() {
-    
+    this.selectedTags= [];
+    this.selectedCategories = [];
+    this.selectedTrainers = [];
+    this.selectedCounty = '';
+    this.selectedCity = '';
+    this.trainerName = '';
+    this.trainingName = '';
   }
   CountyChanged(value) {
     this.locationService.getCities(this.selectedCounty).subscribe(

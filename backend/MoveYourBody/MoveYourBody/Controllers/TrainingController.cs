@@ -98,7 +98,7 @@ namespace MoveYourBody.WebAPI.Controllers
             return this.Run(() =>
             {
                 var trainer = dbContext.Set<User>().Where(u => u.Id == trainerId).FirstOrDefault();
-                var trainings = dbContext.Set<Training>().Where(t => t.Trainer_id == trainer.Id).ToList();
+                var trainings = dbContext.Set<Training>().Where(t => t.Trainer_id == trainerId).ToList();
                 if (trainings == null)
                     return BadRequest(new
                     {
