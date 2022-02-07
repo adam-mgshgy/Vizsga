@@ -2,7 +2,7 @@
     <h1>Fiókbeállítások</h1>
     <form>
         <div class="mb-3" id="photo">            
-            <label>Fényképek feltöltése</label>
+            <h5>Profilkép feltöltése</h5>
 
             <div class="custom-file fileInputProfileWrap">
                 <input type="file" (change)="fileChangeEvent($event)" accept="image/png, image/jpeg" class="fileInputProfile">
@@ -11,10 +11,10 @@
 
                         <div class="row text-center text-lg-start">
                             <div class="col-lg-3 col-md-4 col-6">
-                                <mat-checkbox  id="selectedImage"  class="example-margin" [checked]="">
+                                <mat-checkbox  id="selectedImage"  class="example-margin" [checked]="selected">
                                    
                                 </mat-checkbox>
-                                <img class="img-fluid img-thumbnail" [src]="'data:image/png;base64,'+'image.imageData'">
+                                <img class="img-fluid img-thumbnail" [src]="'data:image/png;base64,'+ profileImage.imageData" (click)="selected = !selected">
                             </div>
                         </div>
 
@@ -23,7 +23,7 @@
 
             </div>
             <!-- <div *ngIf="imageError" [(ngModel)]="imageError">{{imageError}}</div> -->
-            <a class="btn btn-danger" (click)="deleteImage()" >Eltávolítás</a>
+            <a class="btn btn-danger" *ngIf="selected" (click)="deleteImage()" >Eltávolítás</a>
         </div>
         <div class="mb-3">
             <label for="username" class="form-label fs-5">

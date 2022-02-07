@@ -5,6 +5,7 @@ import { LocationService } from 'src/app/services/location.service';
 import { UserService } from 'src/app/services/user.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router } from '@angular/router';
+import { ImagesModel } from 'src/app/models/images-model';
 
 @Component({
   selector: 'app-profile-settings',
@@ -32,11 +33,68 @@ export class ProfileSettingsComponent implements OnInit {
   selectedCounty: string;
   selectedCity: string;
   mobile: boolean = false;
-  fileChangeEvent(event: any){
+  profileImage: ImagesModel = new ImagesModel();
+  isImageSaved: boolean;
+  cardImageBase64: string;
+  image: string = "";
+  selected = false;
 
+  ngOnInit(): void {
+    if (window.innerWidth <= 800) {
+      this.mobile = true;
+    }
+    window.onresize = () => (this.mobile = window.innerWidth <= 991);
+
+    if (this.user.imageId != 0) {
+      this.userService.getImageById(this.user.imageId).subscribe(
+        result => this.profileImage = result,
+        error => console.log(error)
+      );
+    }
+
+    this.userModify = JSON.parse(JSON.stringify(this.user));
+    this.userModify.password = '';
+    this.locationService.getLocations().subscribe(
+      (result) => {
+        this.locations = result;
+      },
+      (error) => console.log(error)
+    );
+    this.locationService.getCounties().subscribe(
+      (result) => {
+        this.counties = result;
+        this.selectedCounty =
+          this.locations[this.user.location_id - 1].county_name;
+        this.locationService.getCities(this.selectedCounty).subscribe(
+          (result) => {
+            this.cities = result;
+            this.selectedCity =
+              this.locations[this.user.location_id - 1].city_name;
+          },
+          (error) => console.log(error)
+        );
+      },
+      (error) => console.log(error)
+    );
   }
-  deleteImage(){
 
+  fileChangeEvent(fileInput: any) {
+    //TODO max image size, input text change    
+    if (fileInput.target.files && fileInput.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const imgBase64Path = e.target.result;
+        this.cardImageBase64 = imgBase64Path;
+        this.isImageSaved = true;
+        this.image = this.cardImageBase64;
+      };
+      reader.readAsDataURL(fileInput.target.files[0]);
+    }
+    
+  }
+  deleteImage() {
+
+    //TODO check new upload or database
   }
   CountyChanged() {
     this.locationService.getCities(this.selectedCounty).subscribe(
@@ -116,35 +174,5 @@ export class ProfileSettingsComponent implements OnInit {
     this.userModify = null;
     this.router.navigateByUrl('/home');
   }
-  ngOnInit(): void {
-    if (window.innerWidth <= 800) {
-      this.mobile = true;
-    }
-    window.onresize = () => (this.mobile = window.innerWidth <= 991);
-
-    this.userModify = JSON.parse(JSON.stringify(this.user));
-    this.userModify.password = '';
-    this.locationService.getLocations().subscribe(
-      (result) => {
-        this.locations = result;
-      },
-      (error) => console.log(error)
-    );
-    this.locationService.getCounties().subscribe(
-      (result) => {
-        this.counties = result;
-        this.selectedCounty =
-          this.locations[this.user.location_id - 1].county_name;
-        this.locationService.getCities(this.selectedCounty).subscribe(
-          (result) => {
-            this.cities = result;
-            this.selectedCity =
-              this.locations[this.user.location_id - 1].city_name;
-          },
-          (error) => console.log(error)
-        );
-      },
-      (error) => console.log(error)
-    );
-  }
+  
 }

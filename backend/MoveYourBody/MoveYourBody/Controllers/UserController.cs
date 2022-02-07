@@ -28,17 +28,7 @@ namespace MoveYourBody.WebAPI.Controllers
             return this.Run(() =>
             {
                 var user = dbContext.Set<User>()
-                                            .Where(u => u.Id == id)
-                                            .Select(u => new
-                                            {
-                                                id = u.Id,
-                                                full_name = u.Full_name,
-                                                email = u.Email,
-                                                password = u.Password,
-                                                phone_number = u.Phone_number,
-                                                location_id = dbContext.Set<Location>().FirstOrDefault(l => l.Id == u.Location_id).Id,
-                                                role = u.Role
-                                            })
+                                            .Where(u => u.Id == id)                                            
                                             .FirstOrDefault();
 
                 if (user == null)
@@ -49,7 +39,19 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(user);
             });
         }
-        [HttpGet("email")]                                     // http://localhost:5000/user/12
+        [HttpGet("image")]                                     
+        public ActionResult GetImageById(int imageId)
+        {
+            return this.Run(() =>
+            {
+                var image = dbContext.Set<Images>()
+                                            .Where(i => i.Id == imageId)
+                                            .FirstOrDefault();
+                
+                return Ok(image);
+            });
+        }
+        [HttpGet("email")]                                     
         public ActionResult CheckEmail([FromQuery] string email)
         {
             return this.Run(() =>

@@ -34,6 +34,7 @@ export class TrainingPageComponent implements OnInit {
     phone_number: '',
     role: 'User',
     token: '',
+    imageId: 0
   };
 
   errorMessage = '';
@@ -55,6 +56,7 @@ export class TrainingPageComponent implements OnInit {
     phone_number: '',
     role: 'User',
     token: '',
+    imageId: 0
   };
   public category: CategoryModel;
   public sessions: TrainingSessionModel[] = [];

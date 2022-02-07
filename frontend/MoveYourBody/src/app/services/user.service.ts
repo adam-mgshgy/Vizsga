@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { catchError, map } from 'rxjs/operators';
 import { LoginModel } from '../models/login-model';
+import { ImagesModel } from '../models/images-model';
 
 
 
@@ -32,6 +33,20 @@ export class UserService {
   getUserById(id: any): Observable<UserModel> {
     return this.http.get<UserModel>(`${environment.ApiURL}/user/${id}`).pipe(
       map((data: UserModel) => {
+        return data;
+      }),
+      catchError(err => {
+        if (!environment.production && err.status == 404) {
+          return of(err);
+        } 
+        else 
+          throw err;
+      })
+    );
+  }
+  getImageById(imageId: any): Observable<ImagesModel> {
+    return this.http.get<ImagesModel>(`${environment.ApiURL}/user/image?imageId=${imageId}`).pipe(
+      map((data: any) => {
         return data;
       }),
       catchError(err => {
