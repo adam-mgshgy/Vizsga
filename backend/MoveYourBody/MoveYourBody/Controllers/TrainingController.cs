@@ -27,11 +27,19 @@ namespace MoveYourBody.WebAPI.Controllers
             {                
                 foreach (var item in base64)
                 {
-                    byte[] image = Convert.FromBase64String(item.Split(',')[1]);                    
+                    byte[] image = Convert.FromBase64String(item.Split(',')[1]);
+                    Images newImage = new Images()
+                    {
+                        Id = 0,
+                        ImageData = image
+                    };
+                    dbContext.Set<Images>().Add(newImage);
+                    dbContext.SaveChanges();
+
                     TrainingImages newTrainingImages = new TrainingImages()
                     {
                         Id = 0,
-                        ImageData = image,
+                        ImageId = dbContext.Set<Images>().Where(t => t.ImageData == image).FirstOrDefault().Id,
                         TrainingId = trainingId
                     };
                     dbContext.Set<TrainingImages>().Add(newTrainingImages);
@@ -49,8 +57,24 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var trainingImages = dbContext.Set<TrainingImages>().Where(t => t.TrainingId == id);
-                return Ok(trainingImages);
+                var trainingImages = dbContext.Set<TrainingImages>().Where(t => t.TrainingId == id).ToList();
+
+                List<int> lista = new List<int>();
+                foreach (var item in trainingImages)
+                {
+                    lista.Add(item.ImageId);
+                }
+                var images = dbContext.Set<Images>();
+
+                foreach (var item in lista)
+                {
+                    images.Add(dbContext.Set<Images>().Where(t => t.Id == item).FirstOrDefault());
+                }
+
+                return Ok(new {
+                    trainingImages,
+                    images
+                });
             });
         }
         [HttpPut]

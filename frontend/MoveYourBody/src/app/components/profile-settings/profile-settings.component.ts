@@ -32,6 +32,12 @@ export class ProfileSettingsComponent implements OnInit {
   selectedCounty: string;
   selectedCity: string;
   mobile: boolean = false;
+  fileChangeEvent(event: any){
+
+  }
+  deleteImage(){
+
+  }
   CountyChanged() {
     this.locationService.getCities(this.selectedCounty).subscribe(
       (result) => (this.cities = result),

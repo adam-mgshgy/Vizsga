@@ -1,6 +1,30 @@
 <div [ngStyle]="{'width.%': mobile ? '100' : '80'}" class="container-fluid">
     <h1>Fiókbeállítások</h1>
     <form>
+        <div class="mb-3" id="photo">            
+            <label>Fényképek feltöltése</label>
+
+            <div class="custom-file fileInputProfileWrap">
+                <input type="file" (change)="fileChangeEvent($event)" accept="image/png, image/jpeg" class="fileInputProfile">
+                <div class="img-space">
+                    <ng-container id="selectedImages">
+
+                        <div class="row text-center text-lg-start">
+                            <div class="col-lg-3 col-md-4 col-6">
+                                <mat-checkbox  id="selectedImage"  class="example-margin" [checked]="">
+                                   
+                                </mat-checkbox>
+                                <img class="img-fluid img-thumbnail" [src]="'data:image/png;base64,'+'image.imageData'">
+                            </div>
+                        </div>
+
+                    </ng-container>
+                </div>
+
+            </div>
+            <!-- <div *ngIf="imageError" [(ngModel)]="imageError">{{imageError}}</div> -->
+            <a class="btn btn-danger" (click)="deleteImage()" >Eltávolítás</a>
+        </div>
         <div class="mb-3">
             <label for="username" class="form-label fs-5">
                 Teljes név

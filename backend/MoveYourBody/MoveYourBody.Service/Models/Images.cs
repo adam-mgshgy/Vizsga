@@ -5,12 +5,10 @@ using System.Text;
 
 namespace MoveYourBody.Service.Models
 {
-    public class TrainingImages
+    public class Images
     {
         [Key]
         public int Id { get; set; }
-        public int ImageId { get; set; }
-        public int TrainingId { get; set; }
-
+        public byte[] ImageData { get; set; }
     }
 }
