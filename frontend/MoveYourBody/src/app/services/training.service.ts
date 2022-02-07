@@ -68,11 +68,11 @@ export class TrainingService {
         })
       );
   }
-  getImageById(id: any): Observable<TrainingImagesModel[]> {
+  getImageById(id: any): Observable<any> {
     return this.http
-      .get<TrainingImagesModel[]>(`${environment.ApiURL}/training/Images/${id}`)
+      .get<any>(`${environment.ApiURL}/training/Images/${id}`)
       .pipe(
-        map((data: TrainingImagesModel[]) => {
+        map((data: any) => {
           return data;
         }),
         catchError((err) => {

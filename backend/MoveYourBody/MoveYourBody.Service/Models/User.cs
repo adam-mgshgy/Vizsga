@@ -20,6 +20,6 @@ namespace MoveYourBody.Service.Models
         [Required]
         public int Location_id { get; set; }
         public string Role { get; set; }
-        public int ImageID { get; set; }
+        public int ImageId { get; set; }
     }
 }

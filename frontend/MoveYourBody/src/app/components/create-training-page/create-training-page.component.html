@@ -15,7 +15,7 @@
                                 <mat-checkbox  id="selectedImage"  class="example-margin" [checked]="selectIndex.includes(image.id)">
                                    
                                 </mat-checkbox>
-                                <img class="img-fluid img-thumbnail" [src]="'data:image/png;base64,'+image.id" (click)="selectedImage(image.id)">
+                                <img *ngIf="image.imageId == Images[i].id" class="img-fluid img-thumbnail" [src]="'data:image/png;base64,'+ Images[i].imageData" (click)="selectedImage(image.id)">
                             </div>
                         </div>
 

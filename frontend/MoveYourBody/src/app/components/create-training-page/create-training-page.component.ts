@@ -12,6 +12,7 @@ import { TrainingService } from 'src/app/services/training.service';
 import { LoginService } from 'src/app/services/login.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { TrainingImagesModel } from 'src/app/models/training-images-model';
+import { ImagesModel } from 'src/app/models/images-model';
 
 @Component({
   selector: 'app-create-training-page',
@@ -45,6 +46,7 @@ export class CreateTrainingPageComponent implements OnInit {
   deleteTag: string[] = [];
   deleteTagTraining: TagTrainingModel = new TagTrainingModel();
   trainingImages: TrainingImagesModel[] = [];
+  Images: ImagesModel[] = [];
 
 
   constructor(
@@ -97,9 +99,11 @@ export class CreateTrainingPageComponent implements OnInit {
         if (!this.create) {
           this.trainingService.getImageById(this.training.id).subscribe(
             (result) => {
-              for (const item of result) {
-                this.trainingImages.push(item);
-                
+              for (const item of result.trainingImages) {
+                this.trainingImages.push(item);                
+              }
+              for (const item of result.images) {
+                this.Images.push(item);                
               }
             },
             (error) => console.log(error)
@@ -169,12 +173,15 @@ export class CreateTrainingPageComponent implements OnInit {
       this.images.splice(index, 1);
       this.selectNewIndex.splice(this.selectNewIndex.indexOf(index), 1);
     }
-    //TODO delete after save
+
     this.trainingService.deleteImage(this.selectIndex).subscribe(
       result => {
         this.selectIndex = [];
         this.trainingService.getImageById(this.training.id).subscribe(
-        result => this.trainingImages = result,
+        result => {
+          this.trainingImages = result.trainingImages;
+          this.Images = result.images;
+        },
         error => console.log(error)
         );
       },

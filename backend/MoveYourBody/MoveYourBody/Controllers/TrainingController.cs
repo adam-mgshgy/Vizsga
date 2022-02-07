@@ -132,6 +132,8 @@ namespace MoveYourBody.WebAPI.Controllers
                 {
                     var trainingImages = dbContext.Set<TrainingImages>().Where(t => t.Id == item).FirstOrDefault();
                     dbContext.Remove(trainingImages);
+                    var image = dbContext.Set<Images>().Where(i => i.Id == trainingImages.ImageId).FirstOrDefault();
+                    dbContext.Remove(image);
 
                 }
                 dbContext.SaveChanges();
