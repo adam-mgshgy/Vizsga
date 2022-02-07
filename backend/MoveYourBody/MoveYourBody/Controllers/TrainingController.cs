@@ -99,6 +99,21 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(training);
             });
         }
+        [HttpDelete("Images/delete")]
+        public ActionResult DeleteImage(int[] id)
+        {
+            return this.Run(() =>
+            {
+                foreach (var item in id)
+                {
+                    var trainingImages = dbContext.Set<TrainingImages>().Where(t => t.Id == item).FirstOrDefault();
+                    dbContext.Remove(trainingImages);
+
+                }
+                dbContext.SaveChanges();
+                return Ok();
+            });
+        }
 
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
@@ -106,16 +121,7 @@ namespace MoveYourBody.WebAPI.Controllers
             return this.Run(() =>
             {
                 var training = dbContext.Set<Training>()
-                                            .Where(t => t.Id == id)
-                                            .Select(t => new
-                                            {
-                                                Id = t.Id,
-                                                Name = t.Name,
-                                                Trainer_id = t.Trainer_id,
-                                                Category_id = t.Category_id,
-                                                Description = t.Description,
-                                                Contact_phone = t.Contact_phone
-                                            })
+                                            .Where(t => t.Id == id)                                            
                                             .FirstOrDefault();
 
                 if (training == null)

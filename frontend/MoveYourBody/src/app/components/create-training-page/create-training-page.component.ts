@@ -158,16 +158,31 @@ export class CreateTrainingPageComponent implements OnInit {
     }
   }
   selectedImage(i: number) {//Adatbazisbol betoltott képek kiválasztása
-    
+    if (this.selectIndex.includes(i)) {
+      this.selectIndex.splice(this.selectIndex.indexOf(i), 1);
+    } else {
+      this.selectIndex.push(i);
+    }
   }
   deleteImage() {
-    if (this.create) {
-      for (const index of this.selectNewIndex) {
-        this.images.splice(index, 1);
-        this.selectNewIndex.splice(this.selectNewIndex.indexOf(index), 1);
-      }
+    for (const index of this.selectNewIndex) {
+      this.images.splice(index, 1);
+      this.selectNewIndex.splice(this.selectNewIndex.indexOf(index), 1);
     }
-    if (this.images == []) {
+    //TODO delete after save
+    this.trainingService.deleteImage(this.selectIndex).subscribe(
+      result => {
+        this.selectIndex = [];
+        this.trainingService.getImageById(this.training.id).subscribe(
+        result => this.trainingImages = result,
+        error => console.log(error)
+        );
+      },
+      error => console.log(error)
+      
+    );
+    
+    if (this.images.length < 1) {
       this.cardImageBase64 = null;
       this.isImageSaved = false;
     }
@@ -235,6 +250,12 @@ export class CreateTrainingPageComponent implements OnInit {
           );
         }
       } else {
+        this.trainingService
+                  .saveImage(this.images, this.training.id)
+                  .subscribe(
+                    (result) => console.log(result),
+                    (error) => console.log(error)
+                  );
         if (this.otherPhoneNumber) {
           this.training.contact_phone = this.otherPhoneNumberInput;
         } else {

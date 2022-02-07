@@ -14,10 +14,10 @@
 
                         <div class="row text-center text-lg-start">
                             <div *ngFor="let image of trainingImages;let i = index" class="col-lg-3 col-md-4 col-6">
-                                <mat-checkbox  id="selectedImage"  class="example-margin" [checked]="selectIndex.includes(i)">
+                                <mat-checkbox  id="selectedImage"  class="example-margin" [checked]="selectIndex.includes(image.id)">
                                    
                                 </mat-checkbox>
-                                <img class="img-fluid img-thumbnail" [src]="'data:image/png;base64,'+image.imageData" (click)="selectedImage(i)">
+                                <img class="img-fluid img-thumbnail" [src]="'data:image/png;base64,'+image.imageData" (click)="selectedImage(image.id)">
                             </div>
                         </div>
 
@@ -41,7 +41,7 @@
 
             </div>
             <!-- <div *ngIf="imageError" [(ngModel)]="imageError">{{imageError}}</div> -->
-            <a class="btn btn-danger" (click)="deleteImage()" *ngIf="selectIndex.length > 0">Eltávolítás</a>
+            <a class="btn btn-danger" (click)="deleteImage()" *ngIf="selectIndex.length > 0 || selectNewIndex.length > 0">Eltávolítás</a>
         </div>
         <div class="mb-3">
             <label for="name" class="form-label">

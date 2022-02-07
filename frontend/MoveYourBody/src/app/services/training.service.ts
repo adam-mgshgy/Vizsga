@@ -106,6 +106,30 @@ export class TrainingService {
         })
       );
   }
+  deleteImage(id: number[]): Observable<any> {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: id,
+    };
+
+    return this.http
+      .delete<any>(`${environment.ApiURL}/training/Images/delete`, options)
+      .pipe(
+        map((data: any) => {
+          return data;
+        }),
+        catchError((err) => {
+          if (
+            !environment.production &&
+            (err.status == 404 || err.status == 405)
+          ) {
+            return of(true);
+          } else throw err;
+        })
+      );
+  }
 
   getById(id: any): Observable<TrainingModel> {
     return this.http
