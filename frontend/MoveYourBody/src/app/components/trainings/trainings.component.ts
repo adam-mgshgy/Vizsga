@@ -11,6 +11,8 @@ import { UserService } from 'src/app/services/user.service';
 import { ResizedEvent } from 'angular-resize-event';
 import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { UserModel } from 'src/app/models/user-model';
+import { LocationService } from 'src/app/services/location.service';
+import { LocationModel } from 'src/app/models/location-model';
 
 @Component({
   selector: 'app-trainings',
@@ -18,7 +20,6 @@ import { UserModel } from 'src/app/models/user-model';
   styleUrls: ['./trainings.component.css'],
 })
 export class TrainingsComponent implements OnInit {
-
   categoryId: number;
   tagId: number;
   trainerId: number;
@@ -32,21 +33,35 @@ export class TrainingsComponent implements OnInit {
   tagTraining: TagTrainingModel[] = [];
   tags: TagModel[] = [];
   selectedTags: TagModel[] = [];
+  counties: LocationModel[] = [];
+  cities: LocationModel[] = [];
+  selectedCategory: '';
+  selectedCounty: string;
+  selectedCity: string;
+  trainerName: '';
+  trainingName: '';
+  selectedTag: '';
   constructor(
     private route: ActivatedRoute,
     private trainingService: TrainingService,
     private categoryService: CategoriesService,
-    private tagService: TagService
-    
-    ) {}
+    private tagService: TagService,
+    private locationService: LocationService
+  ) {}
 
   ngOnInit(): void {
     this.categoryService.getCategories().subscribe(
-      (result) => this.categories = result,
+      (result) => (this.categories = result),
       (error) => console.log(error)
     );
     this.tagService.getTags().subscribe(
-      (result) => this.tags = result,
+      (result) => (this.tags = result),
+      (error) => console.log(error)
+    );
+    this.locationService.getCounties().subscribe(
+      (result) => {
+        this.counties = result;
+      },
       (error) => console.log(error)
     );
     this.route.paramMap.subscribe((params) => {
@@ -59,39 +74,52 @@ export class TrainingsComponent implements OnInit {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
             this.tagTraining = result.tagTrainings;
-          }, (error) => console.log(error)
-        )
-      }
-      else if (this.tagId) {
+          },
+          (error) => console.log(error)
+        );
+      } else if (this.tagId) {
         this.trainingService.getByTag(this.tagId).subscribe(
           (result) => {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
             this.tagTraining = result.tagTrainings;
-          }, (error) => console.log(error)
-        )
-      }
-      else if (this.trainerId) {
+          },
+          (error) => console.log(error)
+        );
+      } else if (this.trainerId) {
         this.trainingService.getByTrainerId(this.trainerId).subscribe(
           (result) => {
             this.trainings = result.trainings;
             this.trainer = result.trainer;
             this.tagTraining = result.tagTrainings;
-          }, (error) => console.log(error)
+          },
+          (error) => console.log(error)
         );
-      }
-      else {
+      } else {
         this.trainingService.getAll().subscribe(
           (result) => {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
             this.tagTraining = result.tagTrainings;
-          }, (error) => console.log(error)
-        )
+          },
+          (error) => console.log(error)
+        );
       }
     });
   }
-  
+  Search() {
+
+  }
+  Cancel() {
+    
+  }
+  CountyChanged(value) {
+    this.locationService.getCities(this.selectedCounty).subscribe(
+      (result) => (this.cities = result),
+      (error) => console.log(error)
+    );
+  }
+
   actualtags: TagModel[] = [];
   actualTags(training_id: number) {}
   onResized(event: ResizedEvent) {

@@ -1,52 +1,109 @@
 <div class="container-fluid">
   <h2>Részletes keresés</h2>
-  <!-- tag, kategória, megye, város, név, edző -->
+  <div class="row mb-2">
+    <div class="col col-5">
+      <label for="county" class="form-label">
+        Megye választása
+      </label>
+      <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="county" name="county" required (ngModelChange)="CountyChanged($event)" [(ngModel)]="selectedCounty">
+        <option value=""></option>
+        <option *ngFor="let county of counties" [value]="county.county_name">{{county.county_name}}</option>
+      </select>
+    </div>
+    <div *ngIf="selectedCounty" class="col col-5">
+      <label for="city" class="form-label">
+        Város választása
+      </label>
+      <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="city" name="city" required [(ngModel)]="selectedCity">
+        <option value=""></option>
+        <option *ngFor="let city of cities" [value]="city.city_name">{{city.city_name}}</option>
+      </select>
+    </div>
+    <div class="row mb-2">
+      <div class="col col-5">
+        <label for="trainingName" class="form-label">
+          Edzés neve:
+        </label>
+        <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" maxlength="255" class="form-control" id="trainingName" name="trainingName" required [(ngModel)]="trainingName">
+      </div>
+      <div class="col col-5">
+        <label for="trainer" class="form-control-label">Edző neve:</label>
+        <select [ngStyle]="{'width.%': mobile ? '50' : '40'}" type="text" id="trainer" name="trainer" [(ngModel)]="trainerName">
+          <option value=""></option>
+          <option *ngFor="let trainer of trainers" [value]="trainer.full_name">{{trainer.full_name}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col col-5">
+        <label for="category" class="form-control-label">Kategória:</label>
+        <select [ngStyle]="{'width.%': mobile ? '50' : '40'}" type="text" id="category" name="category" [(ngModel)]="selectedCategory">
+          <option value=""></option>
+          <option *ngFor="let cat of categories" [value]="cat.name">{{cat.name}}</option>
+        </select>
+      </div>
+      <div class="col col-5">
+        <label for="selectedTag" class="form-control-label">Tag:</label>
+        <select [ngStyle]="{'width.%': mobile ? '50' : '40'}" type="text" id="selectedTag" name="selectedTag" [(ngModel)]="selectedTag">
+          <option value=""></option>
+          <option *ngFor="let tag of tags" [value]="tag.name">{{tag.name}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-success" (click)="Search()" id="search">Keresés</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-danger" (click)="Cancel()" id="cancel">Mégsem</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div (resized)="onResized($event)" [ngStyle]="{'width.%': mobile ==true ? '100' : '80'}" class="container-fluid">
-    <div class="row">
-  
-      <div *ngFor="let training of trainings;let i=index" class="col-xxl-4 col-xl-6 col-md-6">
-        <div class="card mb-3">
-          <div class="row g-0">
-            <div class="col-4 align-items-center">
-              <img [routerLink]="'/trainings/trainer/' + training.trainer_id"  [src]="imgSrc" style=" width: 100%;height: 100%;object-fit: cover;" class="img-fluid hoverLink" alt="...">
-            </div>
-  
-            <div class="col-8" id="bckg">
-              <img [routerLink]="'/training/' + training.id" [src]="imgBckgSrc" style=" width: 100%;height: 100%;object-fit: cover;" class="img-fluid hoverLink" alt="...">
-            </div>
-  
-            <div class="card-body dark container-fluid row g-0">
-              <div class="col">
-                <h3 class="card-title text-white hoverLink" [routerLink]="'/training/' + training.id">{{training.name}}</h3>
-                <span *ngIf="!trainer">
-                  <span *ngFor="let trainer of trainers">
-                    <h6 *ngIf="trainer.id == training.trainer_id" [routerLink]="'/trainings/trainer/' + trainer.id" class="card-title text-white hoverLink">{{trainer.full_name}}</h6>
-                  </span>
+  <div class="row">
+
+    <div *ngFor="let training of trainings;let i=index" class="col-xxl-4 col-xl-6 col-md-6">
+      <div class="card mb-3">
+        <div class="row g-0">
+          <div class="col-4 align-items-center">
+            <img [routerLink]="'/trainings/trainer/' + training.trainer_id" [src]="imgSrc" style=" width: 100%;height: 100%;object-fit: cover;" class="img-fluid hoverLink" alt="...">
+          </div>
+
+          <div class="col-8" id="bckg">
+            <img [routerLink]="'/training/' + training.id" [src]="imgBckgSrc" style=" width: 100%;height: 100%;object-fit: cover;" class="img-fluid hoverLink" alt="...">
+          </div>
+
+          <div class="card-body dark container-fluid row g-0">
+            <div class="col">
+              <h3 class="card-title text-white hoverLink" [routerLink]="'/training/' + training.id">{{training.name}}</h3>
+              <span *ngIf="!trainer">
+                <span *ngFor="let trainer of trainers">
+                  <h6 *ngIf="trainer.id == training.trainer_id" [routerLink]="'/trainings/trainer/' + trainer.id" class="card-title text-white hoverLink">{{trainer.full_name}}</h6>
                 </span>
-                <h6 *ngIf="trainer" [routerLink]="'/trainings/trainer/' + trainer.id" class="card-title text-white hoverLink">{{trainer.full_name}}</h6>
-              </div>
-              <div class="col">
-                <span *ngFor="let cat of categories">
-                  <button *ngIf="cat.id == training.category_id" class="btn mb-3 catBtn" [routerLink]="'/trainings/category/' + training.category_id" > {{ cat.name }}</button>
-                </span>
-              </div>
+              </span>
+              <h6 *ngIf="trainer" [routerLink]="'/trainings/trainer/' + trainer.id" class="card-title text-white hoverLink">{{trainer.full_name}}</h6>
             </div>
-  
-            <div class="col-md-12">
-              <div class="card-body light">
-                <h5 class="card-text">{{training.description}}</h5>
-               <span *ngFor="let tag of tagTraining">
-                  <button [routerLink]="'/trainings/tag/' + tag.tag_id" *ngIf="training.id == tag.training_id && tag.tag_id == tags[tag.tag_id-1].id  ? 'true' : ''" id="tag"  [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}"
-                     class="btn fw-bold me-1 mb-1" >{{tags[tag.tag_id-1].name}}</button>
-                </span>
-                
-                <!-- <p class="card-text fw-bold"><a class="text-decoration-none text-black" routerLink="">{{locations[users[i].location_id].city_name}}</a></p> -->
-              </div>
+            <div class="col">
+              <span *ngFor="let cat of categories">
+                <button *ngIf="cat.id == training.category_id" class="btn mb-3 catBtn" [routerLink]="'/trainings/category/' + training.category_id"> {{ cat.name }}</button>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="card-body light">
+              <h5 class="card-text">{{training.description}}</h5>
+              <span *ngFor="let tag of tagTraining">
+                <button [routerLink]="'/trainings/tag/' + tag.tag_id" *ngIf="training.id == tag.training_id && tag.tag_id == tags[tag.tag_id-1].id  ? 'true' : ''" id="tag" [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}" class="btn fw-bold me-1 mb-1">{{tags[tag.tag_id-1].name}}</button>
+              </span>
+
+              <!-- <p class="card-text fw-bold"><a class="text-decoration-none text-black" routerLink="">{{locations[users[i].location_id].city_name}}</a></p> -->
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
