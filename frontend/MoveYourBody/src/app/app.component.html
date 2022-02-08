@@ -9,18 +9,27 @@
         <li class="nav-item">
           <a class="nav-link active" routerLink="/home">Kezdőlap</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/trainings">Minden Edzés</a>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" routerLink="/categories" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
             Kategóriák
           </a>
           <ul class="dropdown-menu">
-            <li *ngFor="let cat of categories | slice:0:5">
-              <a class="dropdown-item" [routerLink]="'/category/' +  cat.name">{{cat.name}}</a>
+            <li *ngFor="let cat of categories">
+              <a class="dropdown-item" [routerLink]="'/trainings/category/' +  cat.id">{{cat.name}}</a>
             </li>
-            <li>
-              <hr class="dropdown-divider">
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+            Tagek
+          </a>
+          <ul class="dropdown-menu">
+            <li *ngFor="let tag of tags">
+              <a class="dropdown-item" [routerLink]="'/trainings/tag/' +  tag.id">{{tag.name}}</a>
             </li>
-            <li><a class=" dropdown-item" routerLink="/categories">További kategóriák</a></li>
           </ul>
         </li>
 
@@ -30,13 +39,13 @@
         <li *ngIf="!user" class="nav-item">
           <a class="nav-link active" routerLink="/login">Bejelentkezés</a>
         </li>
-        
       </ul>
-      <ul  id="userDropdown" class="navbar-nav mr-auto mb-2 mb-lg-0">
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button id="searchBtn" class="btn" type="submit">Search</button>
-        </form>
+      <form *ngIf="user" class="d-flex">
+        <input class="form-control me-2" type="text" placeholder="Edzés neve" name="trainingName" [(ngModel)]="trainingName">
+        <button id="searchBtn" class="btn" (click)="Search()" type="submit">Keresés</button>
+      </form>
+      <ul  id="userDropdown" class="navbar-nav mr-auto mb-2 mb-lg-0">      
+      
         <li *ngIf="user" class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
             {{user.full_name}}

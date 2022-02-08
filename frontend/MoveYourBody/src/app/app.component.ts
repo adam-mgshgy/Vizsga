@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { CategoryModel } from './models/category-model';
 import { UserModel } from './models/user-model';
-import { LoginService } from './services/login.service';
 import { CategoriesService } from './services/categories.service';
 import { AuthenticationService } from './services/authentication.service';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { UserService } from './services/user.service';
+import { TagService } from './services/tag.service';
+import { TagModel } from './models/tag-model';
+import { TrainingService } from './services/training.service';
 
 @Component({
   selector: 'app-root',
@@ -14,27 +15,24 @@ import { UserService } from './services/user.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  //user: UserModel;
-  //subscription: Subscription;
   mobile: boolean = false;
-
-
+  title = 'MoveYourBody';
+  categories: CategoryModel[] = [];
+  tags: TagModel[] = [];
   user: UserModel;
+  trainingName: string;
   constructor(
     private router: Router,
     private categoryService: CategoriesService,
     private authenticationService: AuthenticationService,
     private jwtHelper: JwtHelperService,
+    private tagService: TagService,
   ) {
     this.authenticationService.currentUser.subscribe(
       (x) => (this.user = x)
     );
   }
   ngOnInit() {
-    // this.subscription = this.loginService.currentUser.subscribe(
-    //   (user) => (this.user = user)
-    // );
-
     if (window.innerWidth <= 800) {
       this.mobile = true;
     }
@@ -45,12 +43,11 @@ export class AppComponent {
       (result) => (this.categories = result),
       (error) => console.log(error)
     );
+    this.tagService.getTags().subscribe(
+      (result) => (this.tags = result),
+      (error) => console.log(error)
+    )
   }
-  // ngOnDestroy() {
-  //   this.subscription.unsubscribe();
-  // }
-  title = 'MoveYourBody';
-  public categories: CategoryModel[] = [];
 
   isUserAuthenticated() {
     const token: string = localStorage.getItem("jwt");
@@ -65,6 +62,10 @@ export class AppComponent {
   Logout(){
     this.authenticationService.logout();
         this.router.navigate(['/login']);
+  }
+
+  Search() {
+    this.router.navigateByUrl('/trainings/name/' + this.trainingName);
   }
   
 }

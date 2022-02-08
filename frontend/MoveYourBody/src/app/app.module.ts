@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { LoginpageComponent } from './components/login-page/login-page.component';
 import { MainpageComponent } from './components/main-page/main-page.component';
 import { CategoriesPageComponent } from './components/categories-page/categories-page.component';
-import { CategoryPageComponent } from './components/category-page/category-page.component';
 import { RegistryPageComponent } from './components/registry-page/registry-page.component';
 import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
 import { CreateTrainingPageComponent } from './components/create-training-page/create-training-page.component';
@@ -15,6 +14,7 @@ import { AddSessionPageComponent } from './components/add-session-page/add-sessi
 import { TrainingPageComponent } from './components/training-page/training-page.component';
 
 import {MatIconModule} from '@angular/material/icon';
+import {MatSelectModule} from '@angular/material/select';
 
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { MyTrainingsPageComponent } from './components/my-trainings-page/my-trainings-page.component';
@@ -29,6 +29,7 @@ import { ErrorInterceptor } from './JWT/ErrorInterceptor';
 import { SessionModalComponent } from './components/session-modal/session-modal.component';
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
 import { MatSortModule } from '@angular/material/sort';
+import { TrainingsComponent } from './components/trainings/trainings.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -39,7 +40,6 @@ export function tokenGetter() {
     LoginpageComponent,
     MainpageComponent,
     CategoriesPageComponent,
-    CategoryPageComponent,
     RegistryPageComponent,
     ProfileSettingsComponent,
     CreateTrainingPageComponent,
@@ -47,7 +47,8 @@ export function tokenGetter() {
     TrainingPageComponent,
     MyTrainingsPageComponent,
     SessionModalComponent,
-    AdminPageComponent
+    AdminPageComponent,
+    TrainingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +62,7 @@ export function tokenGetter() {
     FormsModule,
     MatIconModule,
     MatSortModule,
+    MatSelectModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

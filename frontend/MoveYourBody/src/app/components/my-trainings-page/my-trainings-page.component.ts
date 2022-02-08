@@ -105,14 +105,8 @@ export class MyTrainingsPageComponent implements OnInit {
     if (this.user.role == 'Trainer') {
       this.trainingService.getByTrainerId(this.user.id).subscribe(
         (result) => {
-          this.myTrainings = result;
-          for (const item of this.myTrainings) {
-            this.tagTrainingService
-              .getByTraining(item.id)
-              .subscribe((result) => {
-                this.tagTraining.push.apply(this.tagTraining, result);
-              });
-          }
+          this.myTrainings = result.trainings;
+          this.tagTraining = result.tagTrainings
         },
         (error) => console.log(error)
       );

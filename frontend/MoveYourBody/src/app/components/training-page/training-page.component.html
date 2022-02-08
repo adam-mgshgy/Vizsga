@@ -1,20 +1,20 @@
 <div class="container mt-4">
     <div class="row">
-        <div class="col-lg-4 col-md-10 col-sm-10 trainer">
+        <div class="col-lg-4 col-md-10 col-sm-10 trainer" [routerLink]="'/trainings/trainer/' + training.trainer_id">
             <img src=".//src/assets/images/categoryPageImages/profile_rock.png" alt="">
-            <h1>{{trainer.full_name}}</h1>
-            <h3 class="fw-2">{{training.contact_phone}}</h3>
+            <h2>{{trainerName}}</h2>
+            <h4 class="fw-2">{{training.contact_phone}}</h4>
         </div>
         <div class="col-lg-8 col-md-10 col-sm-10 trainer">
             <h1 class="mb-4">{{training.name}}</h1>
             <h2 class="mb-4">Az edzés leírása: </h2>
             <h2 class="mb-4">{{training.description}}</h2>
-            <h3 class="mb-4">Kategória: <a [routerLink]="'/category/' + category.name">{{category.name}}</a></h3>
+            <h3 class="mb-4">Kategória: <a [routerLink]="'/trainings/category/' + category.id">{{category.name}}</a></h3>
             
             <h3 class="mb-4">Címkék:</h3>
             <span *ngFor="let tag of tags">
                 <button id="tag"  [ngStyle]="{'background-color':tag.colour, 'border-color':'white'}"
-                   class="btn fw-bold me-1 mb-1" >{{tag.name}}</button>
+                   class="btn fw-bold me-1 mb-1" [routerLink]="'/trainings/tag/' + tag.id" >{{tag.name}}</button>
               </span>
         </div>
         <div class="row">
@@ -36,7 +36,7 @@
                 <tr *ngFor="let session of sortedSessions" >
                     <td>
                         <span *ngFor="let location of locations" class="locations">
-                            <span *ngIf="location.id == session.location_id" >{{location.city_name}}</span>
+                            <a *ngIf="location.id == session.location_id" [routerLink]="'/trainings/city/' + location.city_name" >{{location.city_name}}</a>
                         </span>
                     </td>
                     <td>
