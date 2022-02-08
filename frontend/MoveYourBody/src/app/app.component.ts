@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TagService } from './services/tag.service';
 import { TagModel } from './models/tag-model';
+import { TrainingService } from './services/training.service';
 
 @Component({
   selector: 'app-root',
@@ -19,12 +20,13 @@ export class AppComponent {
   categories: CategoryModel[] = [];
   tags: TagModel[] = [];
   user: UserModel;
+  trainingName: string;
   constructor(
     private router: Router,
     private categoryService: CategoriesService,
     private authenticationService: AuthenticationService,
     private jwtHelper: JwtHelperService,
-    private tagService: TagService
+    private tagService: TagService,
   ) {
     this.authenticationService.currentUser.subscribe(
       (x) => (this.user = x)
@@ -60,6 +62,10 @@ export class AppComponent {
   Logout(){
     this.authenticationService.logout();
         this.router.navigate(['/login']);
+  }
+
+  Search() {
+    this.router.navigateByUrl('/trainings/name/' + this.trainingName);
   }
   
 }

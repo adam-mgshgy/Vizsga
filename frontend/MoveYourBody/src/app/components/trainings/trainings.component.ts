@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryModel } from 'src/app/models/category-model';
 import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
@@ -20,7 +20,7 @@ export class TrainingsComponent implements OnInit {
   categoryId: number;
   tagId: number;
   trainerId: number;
-  
+
   cities: LocationModel[] = [];
   counties: LocationModel[] = [];
 
@@ -35,23 +35,19 @@ export class TrainingsComponent implements OnInit {
   imgBckgSrc = './assets/images/categoryPageImages/index.jpg';
 
   mobile: boolean = false;
-  isSearchClicked: boolean = true;
   result: boolean = false;
 
-  selectedTags: TagModel[] = [];
-  selectedCategories: CategoryModel[] = [];
-  selectedTrainers: UserModel[] = [];
   selectedCounty: string;
   selectedCity: string;
-  trainerName: '';
-  trainingName: '';
+  trainingName: string;
 
   constructor(
     private route: ActivatedRoute,
     private trainingService: TrainingService,
     private categoryService: CategoriesService,
     private tagService: TagService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -73,6 +69,9 @@ export class TrainingsComponent implements OnInit {
       this.categoryId = Number(params.get('category'));
       this.tagId = Number(params.get('tag'));
       this.trainerId = Number(params.get('trainer'));
+      this.trainingName = params.get('name');
+      this.selectedCounty = params.get('county');
+      this.selectedCity = params.get('city');
       if (this.categoryId) {
         this.trainingService.getByCategory(this.categoryId).subscribe(
           (result) => {
@@ -100,6 +99,33 @@ export class TrainingsComponent implements OnInit {
           },
           (error) => console.log(error)
         );
+      } else if (this.trainingName) {
+        this.trainingService.getByName(this.trainingName).subscribe(
+          (result) => {
+            this.trainings = result.trainings;
+            this.trainers = result.trainers;
+            this.tagTraining = result.tagTrainings;
+          },
+          (error) => console.log(error)
+        );
+      } else if (this.selectedCity) {
+        this.trainingService.getByCity(this.selectedCity).subscribe(
+          (result) => {
+            this.trainings = result.trainings;
+            this.trainers = result.trainers;
+            this.tagTraining = result.tagTrainings;
+          },
+          (error) => console.log(error)
+        );
+      } else if (this.selectedCounty) {
+        this.trainingService.getByCounty(this.selectedCounty).subscribe(
+          (result) => {
+            this.trainings = result.trainings;
+            this.trainers = result.trainers;
+            this.tagTraining = result.tagTrainings;
+          },
+          (error) => console.log(error)
+        );
       } else {
         this.trainingService.getAll().subscribe(
           (result) => {
@@ -113,22 +139,36 @@ export class TrainingsComponent implements OnInit {
     });
   }
   Search() {
+    if (this.selectedCity) {
+      this.router.navigateByUrl('trainings/city/' + this.selectedCity);
+    } else {
+      this.router.navigateByUrl('trainings/county/' + this.selectedCounty);
+    }
+  }
 
-  }
-  Cancel() {
-    this.selectedTags= [];
-    this.selectedCategories = [];
-    this.selectedTrainers = [];
-    this.selectedCounty = '';
-    this.selectedCity = '';
-    this.trainerName = '';
-    this.trainingName = '';
-  }
   CountyChanged(value) {
+    for (const item of this.counties) {
+      if (item.county_name == value) {
+        this.selectedCounty = item.county_name;
+        console.log(this.selectedCounty);
+      } else if (value == item.id) {
+        this.selectedCounty = item.county_name;
+      }
+    }
     this.locationService.getCities(this.selectedCounty).subscribe(
       (result) => (this.cities = result),
       (error) => console.log(error)
     );
+  }
+  CityChanged(value) {
+    for (const item of this.cities) {
+      if (item.city_name == value) {
+        this.selectedCity = item.city_name;
+        console.log(this.selectedCity);
+      } else if (value == item.id) {
+        this.selectedCity = item.city_name;
+      }
+    }
   }
 
   actualtags: TagModel[] = [];

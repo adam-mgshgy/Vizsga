@@ -36,19 +36,13 @@ select, input {
     margin-top: 1rem;
     margin-bottom: 2rem;
 }
-#searchBtn, #cancelBtn {
-    width: 15rem;
-    height: 3rem;
-    margin-left: 2rem;
-    margin-right: 2rem;
-    font-size: large;
+#searchBtn {
+    width: 25%;
+    font-size: medium;
 }
 .search {
-    /* border: #343a40 solid 3px; 
-    border-radius: 15px; */
-    padding: 1rem;
+    padding: 2rem;
     margin: auto;
-    margin-bottom: 2rem;
 }
 #startSearch {
     font-size: large;

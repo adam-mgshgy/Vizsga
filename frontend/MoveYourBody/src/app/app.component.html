@@ -39,8 +39,11 @@
         <li *ngIf="!user" class="nav-item">
           <a class="nav-link active" routerLink="/login">Bejelentkezés</a>
         </li>
-        
       </ul>
+      <form *ngIf="user" class="d-flex">
+        <input class="form-control me-2" type="text" placeholder="Edzés neve" name="trainingName" [(ngModel)]="trainingName">
+        <button id="searchBtn" class="btn" (click)="Search()" type="submit">Keresés</button>
+      </form>
       <ul  id="userDropdown" class="navbar-nav mr-auto mb-2 mb-lg-0">      
       
         <li *ngIf="user" class="nav-item dropdown">

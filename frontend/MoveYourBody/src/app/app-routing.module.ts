@@ -29,7 +29,10 @@ const routes: Routes = [
   {path: 'trainings', component: TrainingsComponent},
   {path: 'trainings/category/:category', component: TrainingsComponent},
   {path: 'trainings/tag/:tag', component: TrainingsComponent},
-  {path: 'trainings/trainer/:trainer', component: TrainingsComponent}
+  {path: 'trainings/trainer/:trainer', component: TrainingsComponent},
+  {path: 'trainings/name/:name', component: TrainingsComponent},
+  {path: 'trainings/county/:county', component: TrainingsComponent},
+  {path: 'trainings/city/:city', component: TrainingsComponent}
 
 ];
 

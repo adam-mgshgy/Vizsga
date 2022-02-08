@@ -146,6 +146,48 @@ export class TrainingService {
         })
       );
   }
+  getByName(name: string): Observable<any> {
+    return this.http
+      .get<any>(`${environment.ApiURL}/training/name?trainingName=${name}`)
+      .pipe(
+        map((data: any) => {
+          return data;
+        }),
+        catchError((err) => {
+          if (!environment.production && err.status == 404) {
+            return of(err);
+          } else throw err;
+        })
+      );
+  }
+  getByCounty(county: string): Observable<any> {
+    return this.http
+      .get<any>(`${environment.ApiURL}/training/county?county=${county}`)
+      .pipe(
+        map((data: any) => {
+          return data;
+        }),
+        catchError((err) => {
+          if (!environment.production && err.status == 404) {
+            return of(err);
+          } else throw err;
+        })
+      );
+  }
+  getByCity(city: string): Observable<any> {
+    return this.http
+      .get<any>(`${environment.ApiURL}/training/city?city=${city}`)
+      .pipe(
+        map((data: any) => {
+          return data;
+        }),
+        catchError((err) => {
+          if (!environment.production && err.status == 404) {
+            return of(err);
+          } else throw err;
+        })
+      );
+  }
   listByTrainingId(trainingId: any): Observable<any> {
     return this.http
       .get<any>(`${environment.ApiURL}/training/data?trainingId=${trainingId}`)
