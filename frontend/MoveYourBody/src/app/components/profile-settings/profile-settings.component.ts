@@ -45,12 +45,7 @@ export class ProfileSettingsComponent implements OnInit {
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
 
-    if (this.user.imageId != 0) {
-      this.userService.getImageById(this.user.imageId).subscribe(
-        result => this.profileImage = result,
-        error => console.log(error)
-      );
-    }
+    
 
     this.userModify = JSON.parse(JSON.stringify(this.user));
     this.userModify.password = '';
@@ -60,6 +55,12 @@ export class ProfileSettingsComponent implements OnInit {
       },
       (error) => console.log(error)
     );
+    if (this.user.imageId != 0) {
+      this.userService.getImageById(this.user.imageId).subscribe(
+        result => this.profileImage = result,
+        error => console.log(error)
+      );
+    }
     this.locationService.getCounties().subscribe(
       (result) => {
         this.counties = result;
@@ -87,10 +88,20 @@ export class ProfileSettingsComponent implements OnInit {
         this.cardImageBase64 = imgBase64Path;
         this.isImageSaved = true;
         this.image = this.cardImageBase64;
+        
+        this.saveImage();
       };
       reader.readAsDataURL(fileInput.target.files[0]);
+
     }
     
+  }
+  saveImage(){
+    console.log(this.image)
+    this.userService.saveImage(this.image, this.user.id).subscribe(
+      result => console.log(result),
+      error => console.log(error)
+    );
   }
   deleteImage() {
 

@@ -7,7 +7,7 @@
             <div class="custom-file fileInputProfileWrap">
                 <input type="file" (change)="fileChangeEvent($event)" accept="image/png, image/jpeg" class="fileInputProfile">
                 <div class="img-space">
-                    <ng-container id="selectedImages">
+                    <ng-container *ngIf="image != ''" id="selectedImages">
 
                         <div class="row text-center text-lg-start">
                             <div class="col-lg-3 col-md-4 col-6">

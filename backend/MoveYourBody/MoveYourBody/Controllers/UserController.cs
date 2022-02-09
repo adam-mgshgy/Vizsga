@@ -39,6 +39,30 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(user);
             });
         }
+        [HttpPut("image")]
+        public ActionResult SaveImages(string base64, [FromQuery] int userId)
+        {
+            return this.Run(() =>
+            {
+                byte[] image = Convert.FromBase64String(base64.Split(',')[1]);
+                Images newImage = new Images()
+                {
+                    Id = 0,
+                    ImageData = image
+                };
+                dbContext.Set<Images>().Add(newImage);
+                dbContext.SaveChanges();
+
+                var user = dbContext.Set<User>().Where(u => u.Id == userId).FirstOrDefault();
+                user.ImageId = dbContext.Set<Images>().Where(i => i.ImageData == image).FirstOrDefault().Id;
+
+                dbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                dbContext.SaveChanges();
+
+                return Ok();
+
+            });
+        }
         [HttpGet("image")]                                     
         public ActionResult GetImageById(int imageId)
         {

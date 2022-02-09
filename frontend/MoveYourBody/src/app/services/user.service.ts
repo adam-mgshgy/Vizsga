@@ -44,6 +44,25 @@ export class UserService {
       })
     );
   }
+  saveImage(image: any, userId: number): Observable<ImagesModel> {
+    return this.http
+      .put<ImagesModel>(`${environment.ApiURL}/user/image?userId=${userId}`, image)
+      .pipe(
+        map((data: ImagesModel) => {          
+          return data;
+        }),
+        catchError((err) => {
+          if (
+            !environment.production &&
+            (err.status == 404 || err.status == 405)
+          ) {
+            return of(image);
+          } else {
+            throw err;
+          }
+        })
+      );
+  }
   getImageById(imageId: any): Observable<ImagesModel> {
     return this.http.get<ImagesModel>(`${environment.ApiURL}/user/image?imageId=${imageId}`).pipe(
       map((data: any) => {
