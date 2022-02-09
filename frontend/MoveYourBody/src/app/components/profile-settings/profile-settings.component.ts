@@ -36,16 +36,29 @@ export class ProfileSettingsComponent implements OnInit {
   profileImage: ImagesModel = new ImagesModel();
   isImageSaved: boolean;
   cardImageBase64: string;
-  image: string = "";
+  image: string[] = [];
   selected = false;
 
   ngOnInit(): void {
+    this.profileImage = null;
+    this.userService.getUserById(this.user.id).subscribe(
+      (result) => {
+        this.user = result;
+        if (this.user.imageId != 0) {
+          this.userService.getImageById(this.user.imageId).subscribe(
+            (result) => {
+              this.profileImage = result;
+            },
+            (error) => console.log(error)
+          );
+        }
+      },
+      (error) => console.log(error)
+    );
     if (window.innerWidth <= 800) {
       this.mobile = true;
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
-
-    
 
     this.userModify = JSON.parse(JSON.stringify(this.user));
     this.userModify.password = '';
@@ -55,12 +68,7 @@ export class ProfileSettingsComponent implements OnInit {
       },
       (error) => console.log(error)
     );
-    if (this.user.imageId != 0) {
-      this.userService.getImageById(this.user.imageId).subscribe(
-        result => this.profileImage = result,
-        error => console.log(error)
-      );
-    }
+
     this.locationService.getCounties().subscribe(
       (result) => {
         this.counties = result;
@@ -80,32 +88,58 @@ export class ProfileSettingsComponent implements OnInit {
   }
 
   fileChangeEvent(fileInput: any) {
-    //TODO max image size, input text change    
+    //TODO max image size, input text change
     if (fileInput.target.files && fileInput.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
         const imgBase64Path = e.target.result;
         this.cardImageBase64 = imgBase64Path;
         this.isImageSaved = true;
-        this.image = this.cardImageBase64;
-        
+        this.image.push(this.cardImageBase64);
+
         this.saveImage();
       };
       reader.readAsDataURL(fileInput.target.files[0]);
-
     }
-    
   }
-  saveImage(){
-    console.log(this.image)
+  saveImage() {
+    console.log(this.image);
     this.userService.saveImage(this.image, this.user.id).subscribe(
-      result => console.log(result),
-      error => console.log(error)
+      (result) => {console.log(result);
+        this.userService.getUserById(this.user.id).subscribe(
+          (result) => {
+            this.user = result;
+            if (this.user.imageId != 0) {
+              this.userService.getImageById(this.user.imageId).subscribe(
+                (result) => {
+                  this.profileImage = result;
+                },
+                (error) => console.log(error)
+              );
+            }
+          },
+          (error) => console.log(error)
+        );
+      },
+      (error) => console.log(error)
     );
   }
   deleteImage() {
-
-    //TODO check new upload or database
+    if (this.user.imageId != 0) {
+      console.log(this.profileImage);
+      this.userService.deleteImage(this.profileImage.id).subscribe(
+        (result) => {
+          console.log(result),
+            this.userService.getUserById(this.user.id).subscribe(
+              (result) => (this.user = result),
+              (error) => console.log(error)
+            );
+          this.profileImage = null;
+          this.selected = false;
+        },
+        (error) => console.log(error)
+      );
+    } 
   }
   CountyChanged() {
     this.locationService.getCities(this.selectedCounty).subscribe(
@@ -185,5 +219,4 @@ export class ProfileSettingsComponent implements OnInit {
     this.userModify = null;
     this.router.navigateByUrl('/home');
   }
-  
 }

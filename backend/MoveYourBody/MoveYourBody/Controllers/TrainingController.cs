@@ -64,7 +64,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 {
                     lista.Add(item.ImageId);
                 }
-                var images = dbContext.Set<Images>();
+                var images = dbContext.Set<Images>().Where(t => t.Id == -1).ToList();
 
                 foreach (var item in lista)
                 {

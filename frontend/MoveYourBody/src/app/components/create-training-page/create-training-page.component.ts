@@ -103,7 +103,7 @@ export class CreateTrainingPageComponent implements OnInit {
                 this.trainingImages.push(item);                
               }
               for (const item of result.images) {
-                this.Images.push(item);                
+                this.Images.push(item);            
               }
             },
             (error) => console.log(error)

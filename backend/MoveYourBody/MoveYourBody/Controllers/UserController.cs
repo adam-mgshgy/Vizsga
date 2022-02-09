@@ -40,11 +40,11 @@ namespace MoveYourBody.WebAPI.Controllers
             });
         }
         [HttpPut("image")]
-        public ActionResult SaveImages(string base64, [FromQuery] int userId)
+        public ActionResult SaveImages(string[] base64, [FromQuery] int userId)
         {
             return this.Run(() =>
             {
-                byte[] image = Convert.FromBase64String(base64.Split(',')[1]);
+                byte[] image = Convert.FromBase64String(base64[0].Split(',')[1]);
                 Images newImage = new Images()
                 {
                     Id = 0,
@@ -184,6 +184,21 @@ namespace MoveYourBody.WebAPI.Controllers
                 dbContext.SaveChanges();
 
                 return Ok(user);
+            });
+        }
+        [HttpDelete("image/delete")]
+        public ActionResult DeleteImage(int id)
+        {
+            return this.Run(() =>
+            {
+                
+                var image = dbContext.Set<Images>().Where(i => i.Id == id).FirstOrDefault();
+                dbContext.Remove(image);
+                var user = dbContext.Set<User>().Where(u => u.ImageId == id).FirstOrDefault();
+                user.ImageId = 0;
+                dbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                dbContext.SaveChanges();
+                return Ok();
             });
         }
         [HttpDelete]//, Authorize(Roles = "Admin, Trainer, User")]

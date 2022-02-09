@@ -77,6 +77,30 @@ export class UserService {
       })
     );
   }
+  deleteImage(id: number): Observable<any> {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: id,
+    };
+
+    return this.http
+      .delete<any>(`${environment.ApiURL}/user/image/delete?id=${id}`, options)
+      .pipe(
+        map((data: any) => {
+          return data;
+        }),
+        catchError((err) => {
+          if (
+            !environment.production &&
+            (err.status == 404 || err.status == 405)
+          ) {
+            return of(true);
+          } else throw err;
+        })
+      );
+  }
   getTrainer(training_id: any): Observable<UserModel> {
     return this.http.get<UserModel>(`${environment.ApiURL}/user/getTrainer?training_id=${training_id}`).pipe(
       map((data: any) => {
