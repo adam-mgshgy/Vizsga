@@ -7,5 +7,5 @@ export class UserModel {
     public location_id: number | null = null;
     public role = '';
     public token = '';
-
+    public imageId: number |null = null;
 }

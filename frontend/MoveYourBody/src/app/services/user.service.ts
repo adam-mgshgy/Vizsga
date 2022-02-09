@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { catchError, map } from 'rxjs/operators';
 import { LoginModel } from '../models/login-model';
+import { ImagesModel } from '../models/images-model';
 
 
 
@@ -42,6 +43,63 @@ export class UserService {
           throw err;
       })
     );
+  }
+  saveImage(image: any, userId: number): Observable<ImagesModel> {
+    return this.http
+      .put<ImagesModel>(`${environment.ApiURL}/user/image?userId=${userId}`, image)
+      .pipe(
+        map((data: ImagesModel) => {          
+          return data;
+        }),
+        catchError((err) => {
+          if (
+            !environment.production &&
+            (err.status == 404 || err.status == 405)
+          ) {
+            return of(image);
+          } else {
+            throw err;
+          }
+        })
+      );
+  }
+  getImageById(imageId: any): Observable<ImagesModel> {
+    return this.http.get<ImagesModel>(`${environment.ApiURL}/user/image?imageId=${imageId}`).pipe(
+      map((data: any) => {
+        return data;
+      }),
+      catchError(err => {
+        if (!environment.production && err.status == 404) {
+          return of(err);
+        } 
+        else 
+          throw err;
+      })
+    );
+  }
+  deleteImage(id: number): Observable<any> {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: id,
+    };
+
+    return this.http
+      .delete<any>(`${environment.ApiURL}/user/image/delete?id=${id}`, options)
+      .pipe(
+        map((data: any) => {
+          return data;
+        }),
+        catchError((err) => {
+          if (
+            !environment.production &&
+            (err.status == 404 || err.status == 405)
+          ) {
+            return of(true);
+          } else throw err;
+        })
+      );
   }
   getTrainer(training_id: any): Observable<UserModel> {
     return this.http.get<UserModel>(`${environment.ApiURL}/user/getTrainer?training_id=${training_id}`).pipe(

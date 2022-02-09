@@ -28,17 +28,7 @@ namespace MoveYourBody.WebAPI.Controllers
             return this.Run(() =>
             {
                 var user = dbContext.Set<User>()
-                                            .Where(u => u.Id == id)
-                                            .Select(u => new
-                                            {
-                                                id = u.Id,
-                                                full_name = u.Full_name,
-                                                email = u.Email,
-                                                password = u.Password,
-                                                phone_number = u.Phone_number,
-                                                location_id = dbContext.Set<Location>().FirstOrDefault(l => l.Id == u.Location_id).Id,
-                                                role = u.Role
-                                            })
+                                            .Where(u => u.Id == id)                                            
                                             .FirstOrDefault();
 
                 if (user == null)
@@ -49,7 +39,43 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(user);
             });
         }
-        [HttpGet("email")]                                     // http://localhost:5000/user/12
+        [HttpPut("image")]
+        public ActionResult SaveImages(string[] base64, [FromQuery] int userId)
+        {
+            return this.Run(() =>
+            {
+                byte[] image = Convert.FromBase64String(base64[0].Split(',')[1]);
+                Images newImage = new Images()
+                {
+                    Id = 0,
+                    ImageData = image
+                };
+                dbContext.Set<Images>().Add(newImage);
+                dbContext.SaveChanges();
+
+                var user = dbContext.Set<User>().Where(u => u.Id == userId).FirstOrDefault();
+                user.ImageId = dbContext.Set<Images>().Where(i => i.ImageData == image).FirstOrDefault().Id;
+
+                dbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                dbContext.SaveChanges();
+
+                return Ok();
+
+            });
+        }
+        [HttpGet("image")]                                     
+        public ActionResult GetImageById(int imageId)
+        {
+            return this.Run(() =>
+            {
+                var image = dbContext.Set<Images>()
+                                            .Where(i => i.Id == imageId)
+                                            .FirstOrDefault();
+                
+                return Ok(image);
+            });
+        }
+        [HttpGet("email")]                                     
         public ActionResult CheckEmail([FromQuery] string email)
         {
             return this.Run(() =>
@@ -158,6 +184,21 @@ namespace MoveYourBody.WebAPI.Controllers
                 dbContext.SaveChanges();
 
                 return Ok(user);
+            });
+        }
+        [HttpDelete("image/delete")]
+        public ActionResult DeleteImage(int id)
+        {
+            return this.Run(() =>
+            {
+                
+                var image = dbContext.Set<Images>().Where(i => i.Id == id).FirstOrDefault();
+                dbContext.Remove(image);
+                var user = dbContext.Set<User>().Where(u => u.ImageId == id).FirstOrDefault();
+                user.ImageId = 0;
+                dbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                dbContext.SaveChanges();
+                return Ok();
             });
         }
         [HttpDelete]//, Authorize(Roles = "Admin, Trainer, User")]

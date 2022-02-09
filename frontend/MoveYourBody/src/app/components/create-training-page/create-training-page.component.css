@@ -16,7 +16,7 @@ ul {
     text-align: left;
 }
 #photo {
-    margin: auto;
+    margin: auto;   
 }
 #createButton {
     background-color: #216869;
@@ -24,3 +24,12 @@ ul {
 #close:hover{
     cursor: pointer;
 }
+
+  .row img {
+    opacity: 1;
+    cursor: pointer;
+  }
+  
+  .row img:hover {
+    opacity: 0.8;
+  }

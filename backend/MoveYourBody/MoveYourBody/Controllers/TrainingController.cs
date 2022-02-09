@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,63 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             this.dbContext = dbContext;
         }
+        [HttpPut("Images")]
+        public ActionResult SaveImages(string[] base64, [FromQuery] int trainingId)
+        {
+            return this.Run(() =>
+            {                
+                foreach (var item in base64)
+                {
+                    byte[] image = Convert.FromBase64String(item.Split(',')[1]);
+                    Images newImage = new Images()
+                    {
+                        Id = 0,
+                        ImageData = image
+                    };
+                    dbContext.Set<Images>().Add(newImage);
+                    dbContext.SaveChanges();
+
+                    TrainingImages newTrainingImages = new TrainingImages()
+                    {
+                        Id = 0,
+                        ImageId = dbContext.Set<Images>().Where(t => t.ImageData == image).FirstOrDefault().Id,
+                        TrainingId = trainingId
+                    };
+                    dbContext.Set<TrainingImages>().Add(newTrainingImages);
+                
+
+                }
+
+                    dbContext.SaveChanges();
+                return Ok();
+
+            });
+        }
+        [HttpGet("Images/{id}")]
+        public ActionResult GetImageById(int id)
+        {
+            return this.Run(() =>
+            {
+                var trainingImages = dbContext.Set<TrainingImages>().Where(t => t.TrainingId == id).ToList();
+
+                List<int> lista = new List<int>();
+                foreach (var item in trainingImages)
+                {
+                    lista.Add(item.ImageId);
+                }
+                var images = dbContext.Set<Images>().Where(t => t.Id == -1).ToList();
+
+                foreach (var item in lista)
+                {
+                    images.Add(dbContext.Set<Images>().Where(t => t.Id == item).FirstOrDefault());
+                }
+
+                return Ok(new {
+                    trainingImages,
+                    images
+                });
+            });
+        }
         [HttpPut]
         public ActionResult New(Training training)
         {
@@ -33,8 +91,10 @@ namespace MoveYourBody.WebAPI.Controllers
                     Description = training.Description,
                     Contact_phone = training.Contact_phone,
                 };
+
                 dbContext.Set<Training>().Add(newTraining);
-                dbContext.SaveChanges();
+                dbContext.SaveChanges();               
+
                 return Ok(newTraining);
 
             });
@@ -59,13 +119,34 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(training);
             });
         }
+        [HttpDelete("Images/delete")]
+        public ActionResult DeleteImage(int[] id)
+        {
+            return this.Run(() =>
+            {
+                foreach (var item in id)
+                {
+                    var trainingImages = dbContext.Set<TrainingImages>().Where(t => t.Id == item).FirstOrDefault();
+                    dbContext.Remove(trainingImages);
+                    var image = dbContext.Set<Images>().Where(i => i.Id == trainingImages.ImageId).FirstOrDefault();
+                    dbContext.Remove(image);
+
+                }
+                dbContext.SaveChanges();
+                return Ok();
+            });
+        }
 
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
             return this.Run(() =>
             {
-                var training = dbContext.Set<Training>().Where(t => t.Id == id).FirstOrDefault();
+
+                var training = dbContext.Set<Training>()
+                                            .Where(t => t.Id == id)                                            
+                                            .FirstOrDefault();
+
                 if (training == null)
                     return BadRequest(new
                     {

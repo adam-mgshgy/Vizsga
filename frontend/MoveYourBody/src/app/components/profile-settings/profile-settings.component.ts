@@ -5,6 +5,7 @@ import { LocationService } from 'src/app/services/location.service';
 import { UserService } from 'src/app/services/user.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router } from '@angular/router';
+import { ImagesModel } from 'src/app/models/images-model';
 
 @Component({
   selector: 'app-profile-settings',
@@ -32,6 +33,114 @@ export class ProfileSettingsComponent implements OnInit {
   selectedCounty: string;
   selectedCity: string;
   mobile: boolean = false;
+  profileImage: ImagesModel = new ImagesModel();
+  isImageSaved: boolean;
+  cardImageBase64: string;
+  image: string[] = [];
+  selected = false;
+
+  ngOnInit(): void {
+    this.profileImage = null;
+    this.userService.getUserById(this.user.id).subscribe(
+      (result) => {
+        this.user = result;
+        if (this.user.imageId != 0) {
+          this.userService.getImageById(this.user.imageId).subscribe(
+            (result) => {
+              this.profileImage = result;
+            },
+            (error) => console.log(error)
+          );
+        }
+      },
+      (error) => console.log(error)
+    );
+    if (window.innerWidth <= 800) {
+      this.mobile = true;
+    }
+    window.onresize = () => (this.mobile = window.innerWidth <= 991);
+
+    this.userModify = JSON.parse(JSON.stringify(this.user));
+    this.userModify.password = '';
+    this.locationService.getLocations().subscribe(
+      (result) => {
+        this.locations = result;
+      },
+      (error) => console.log(error)
+    );
+
+    this.locationService.getCounties().subscribe(
+      (result) => {
+        this.counties = result;
+        this.selectedCounty =
+          this.locations[this.user.location_id - 1].county_name;
+        this.locationService.getCities(this.selectedCounty).subscribe(
+          (result) => {
+            this.cities = result;
+            this.selectedCity =
+              this.locations[this.user.location_id - 1].city_name;
+          },
+          (error) => console.log(error)
+        );
+      },
+      (error) => console.log(error)
+    );
+  }
+
+  fileChangeEvent(fileInput: any) {
+    //TODO max image size, input text change
+    if (fileInput.target.files && fileInput.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const imgBase64Path = e.target.result;
+        this.cardImageBase64 = imgBase64Path;
+        this.isImageSaved = true;
+        this.image.push(this.cardImageBase64);
+
+        this.saveImage();
+      };
+      reader.readAsDataURL(fileInput.target.files[0]);
+    }
+  }
+  saveImage() {
+    console.log(this.image);
+    this.userService.saveImage(this.image, this.user.id).subscribe(
+      (result) => {console.log(result);
+        this.userService.getUserById(this.user.id).subscribe(
+          (result) => {
+            this.user = result;
+            if (this.user.imageId != 0) {
+              this.userService.getImageById(this.user.imageId).subscribe(
+                (result) => {
+                  this.profileImage = result;
+                },
+                (error) => console.log(error)
+              );
+            }
+          },
+          (error) => console.log(error)
+        );
+      },
+      (error) => console.log(error)
+    );
+  }
+  deleteImage() {
+    if (this.user.imageId != 0) {
+      console.log(this.profileImage);
+      this.userService.deleteImage(this.profileImage.id).subscribe(
+        (result) => {
+          console.log(result),
+            this.userService.getUserById(this.user.id).subscribe(
+              (result) => (this.user = result),
+              (error) => console.log(error)
+            );
+          this.profileImage = null;
+          this.selected = false;
+        },
+        (error) => console.log(error)
+      );
+    } 
+  }
   CountyChanged() {
     this.locationService.getCities(this.selectedCounty).subscribe(
       (result) => (this.cities = result),
@@ -109,36 +218,5 @@ export class ProfileSettingsComponent implements OnInit {
   cancel() {
     this.userModify = null;
     this.router.navigateByUrl('/home');
-  }
-  ngOnInit(): void {
-    if (window.innerWidth <= 800) {
-      this.mobile = true;
-    }
-    window.onresize = () => (this.mobile = window.innerWidth <= 991);
-
-    this.userModify = JSON.parse(JSON.stringify(this.user));
-    this.userModify.password = '';
-    this.locationService.getLocations().subscribe(
-      (result) => {
-        this.locations = result;
-      },
-      (error) => console.log(error)
-    );
-    this.locationService.getCounties().subscribe(
-      (result) => {
-        this.counties = result;
-        this.selectedCounty =
-          this.locations[this.user.location_id - 1].county_name;
-        this.locationService.getCities(this.selectedCounty).subscribe(
-          (result) => {
-            this.cities = result;
-            this.selectedCity =
-              this.locations[this.user.location_id - 1].city_name;
-          },
-          (error) => console.log(error)
-        );
-      },
-      (error) => console.log(error)
-    );
   }
 }

@@ -34,7 +34,7 @@ export class AuthenticationService {
         map((data) => {
           const token = data.token;
           localStorage.setItem('jwt', token);
-          this.userService.getUserById(data.userId).subscribe((result) => {
+          this.userService.getUserById(data.userId).subscribe((result) => {            
             localStorage.setItem('currentUser', JSON.stringify(result));
             this.currentUserSubject.next(result);
           });
