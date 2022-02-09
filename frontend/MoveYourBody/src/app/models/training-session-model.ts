@@ -10,5 +10,6 @@ export class TrainingSessionModel {
     public number_of_applicants: number  = 0;
     public address_name = '';
     public place_name = '';
+    public isPast: boolean;
     
 }

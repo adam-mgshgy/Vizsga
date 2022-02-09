@@ -33,7 +33,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let session of sortedSessions" >
+                <tr *ngFor="let session of sortedSessions">
                     <td>
                         <span *ngFor="let location of locations" class="locations">
                             <a *ngIf="location.id == session.location_id" [routerLink]="'/trainings/city/' + location.city_name" >{{location.city_name}}</a>
