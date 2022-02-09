@@ -40,6 +40,7 @@ export class TrainingPageComponent implements OnInit {
     id: 0,
     name: '',
     trainer_id: 0,
+    indexImageId: 0
   };
   trainerName: '';
   trainer: UserModel = {

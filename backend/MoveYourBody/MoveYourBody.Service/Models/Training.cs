@@ -19,5 +19,6 @@ namespace MoveYourBody.Service.Models
         [Required, StringLength(255)]
         public string Description { get; set; }
         public string Contact_phone { get; set; }
+        public int IndexImageId { get; set; }
     }
 }

@@ -12,13 +12,14 @@
 
                         <div class="row text-center text-lg-start">
                             <div *ngFor="let image of trainingImages;let i = index" class="col-lg-3 col-md-4 col-6">
-                                <mat-checkbox  id="selectedImage"  class="example-margin" [checked]="selectIndex.includes(image.id)">
+                                <mat-checkbox  id="selectedImage"  class="example-margin me-3" [checked]="selectIndex.includes(image.id)">
                                    
                                 </mat-checkbox>
+                                <label *ngIf="training.indexImageId == Images[i].id">Indexkép</label>
                                 <img *ngIf="image.imageId == Images[i].id" class="img-fluid img-thumbnail" [src]="'data:image/png;base64,'+ Images[i].imageData" (click)="selectedImage(image.id)">
                             </div>
                         </div>
-
+                        
                     </ng-container>
                     <ng-container *ngIf="isImageSaved" id="selectedImages">
                         Új képek:
@@ -38,8 +39,10 @@
                 </div>
 
             </div>
+            <div *ngIf="isImageSaved && selectNewIndex.length > 0">Indexkép kijelölése csak a képek feltöltése után elérhető!</div>
             <!-- <div *ngIf="imageError" [(ngModel)]="imageError">{{imageError}}</div> -->
-            <a class="btn btn-danger" (click)="deleteImage()" *ngIf="selectIndex.length > 0 || selectNewIndex.length > 0">Eltávolítás</a>
+            <a class="btn btn-danger me-3" (click)="deleteImage()" *ngIf="selectIndex.length > 0 || selectNewIndex.length > 0">Eltávolítás</a>
+            <a class="btn btn-info" (click)="selectIndexImage()" *ngIf="selectIndex.length > 0 && selectNewIndex.length == 0">Indexkép beállítása</a>
         </div>
         <div class="mb-3">
             <label for="name" class="form-label">

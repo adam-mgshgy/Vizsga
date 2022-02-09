@@ -5,4 +5,5 @@ export class TrainingModel{
     public trainer_id: number | null = null;
     public description = '';
     public contact_phone = '';
+    public indexImageId: number | null = null;
 }

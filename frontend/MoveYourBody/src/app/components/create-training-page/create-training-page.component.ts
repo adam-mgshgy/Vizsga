@@ -149,6 +149,15 @@ export class CreateTrainingPageComponent implements OnInit {
     }
     return false;
   }
+  selectIndexImage(){
+    if (this.selectIndex.length == 1) {
+      this.training.indexImageId = this.selectIndex[0];
+      this.trainingService.modifyTraining(this.training).subscribe(
+        result => this.training = result,
+        error => console.log(error)
+      );
+    }
+  }
 
   selectNewIndex: number[] = [];
   selectIndex: number[] = [];
@@ -177,6 +186,12 @@ export class CreateTrainingPageComponent implements OnInit {
     this.trainingService.deleteImage(this.selectIndex).subscribe(
       result => {
         this.selectIndex = [];
+        this.trainingService.getById(this.training.id).subscribe(
+          result => {
+           this.training = result;
+          },
+          error => console.log(error)
+        );
         this.trainingService.getImageById(this.training.id).subscribe(
         result => {
           this.trainingImages = result.trainingImages;
