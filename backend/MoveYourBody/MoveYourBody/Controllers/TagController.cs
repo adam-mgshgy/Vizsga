@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoveYourBody.Service;
 using MoveYourBody.Service.Models;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace MoveYourBody.WebAPI.Controllers
 {
@@ -32,6 +34,22 @@ namespace MoveYourBody.WebAPI.Controllers
                     colour = t.Colour
                 });
                 return Ok(tag);
+            });
+        }
+        [HttpPut("add"), Authorize(Roles = "Admin")]
+        public ActionResult AddTag(Tag tag)
+        {
+            return this.Run(() =>
+            {
+                var newTag = new Tag
+                {
+                    Id = 0,
+                    Name = tag.Name,
+                    Colour = tag.Colour
+                };
+                dbContext.Set<Tag>().Add(newTag);
+                dbContext.SaveChanges();
+                return Ok(newTag);
             });
         }
     }

@@ -1,0 +1,47 @@
+<div [ngStyle]="{'width.%': mobile ? '100' : '80'}" class="container-fluid">
+    <form>
+        <h1>Új tag hozzáadása</h1>
+        <div class="mb-3">
+            <label for="tagName" class="form-label">
+                Név:
+            </label>
+            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-control" id="tagName" name="tagName" [(ngModel)]="newTag.name">
+        </div>
+        <div class="mb-3">
+            <label for="tagColour" class="form-label">
+                Szín:
+            </label>
+            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="color" class="form-control" id="tagColour" name="tagColour" [(ngModel)]="newTag.colour">
+        </div>
+        <div class="mb-3">
+            <button id="createButton" type="submit" class="btn btn-success fs-5" (click)="SaveTag()" >Tag mentése</button>
+            <button class="btn btn-danger ms-2 fs-5" (click)="CancelTag()">Mégsem</button>
+        </div>
+    </form>
+    <p class="text-danger font-weight-bold text-center" *ngIf="errorMessage" id="error">{{errorMessage}}</p>
+</div>
+
+<div [ngStyle]="{'width.%': mobile ? '100' : '80'}" class="container-fluid">
+    <form>
+        <h1>Új kategória hozzáadása</h1>
+        <div class="mb-3">
+            <label for="categoryName" class="form-label">
+                Név:
+            </label>
+            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" class="form-control" id="categoryName" name="categoryName" [(ngModel)]="newCategory.name">
+        </div>
+        <!-- TODO -->
+        <div class="mb-3">
+            <label for="categoryImg" class="form-label">
+                Kép:
+            </label>
+            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="file" class="form-control" id="categoryImg" name="categoryImg" [(ngModel)]="newCategory.img_src">
+        </div>
+        <div class="mb-3">
+            <button id="createButton" type="submit" class="btn btn-success fs-5" (click)="SaveCategory()" >Kategória mentése</button>
+            <button class="btn btn-danger ms-2 fs-5" (click)="CancelCategory()">Mégsem</button>
+        </div>
+        <!-- TODO -->
+    </form>
+    <p class="text-danger font-weight-bold text-center" *ngIf="errorMessage" id="error">{{errorMessage}}</p>
+</div>

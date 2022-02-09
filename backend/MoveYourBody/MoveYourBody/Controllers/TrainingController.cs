@@ -82,7 +82,6 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-
                 Training newTraining = new Training()
                 {
                     Id = training.Id,
@@ -92,7 +91,6 @@ namespace MoveYourBody.WebAPI.Controllers
                     Description = training.Description,
                     Contact_phone = training.Contact_phone,
                 };
-                
 
                 dbContext.Set<Training>().Add(newTraining);
                 dbContext.SaveChanges();               
@@ -108,7 +106,6 @@ namespace MoveYourBody.WebAPI.Controllers
             {                
                 dbContext.Entry(training).State = Microsoft.EntityFrameworkCore.EntityState.Modified;                
                 dbContext.SaveChanges();
-
                 return Ok(training);
             });
         }
@@ -117,7 +114,6 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                
                 dbContext.Remove(training);
                 dbContext.SaveChanges();
                 return Ok(training);
@@ -146,6 +142,7 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
+
                 var training = dbContext.Set<Training>()
                                             .Where(t => t.Id == id)                                            
                                             .FirstOrDefault();
@@ -168,9 +165,9 @@ namespace MoveYourBody.WebAPI.Controllers
                 Location location = dbContext.Set<Location>().Where(l => l.Id == trainer.Location_id).FirstOrDefault();
                 return Ok(new
                 {
-                    trainer = trainer,
-                    training = training,
-                    location = location
+                    trainer,
+                    training,
+                    location
                 });
             });
         }
@@ -181,25 +178,26 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var user = dbContext.Set<User>().Where(u => u.Id == trainerId).FirstOrDefault();
-                var training = dbContext.Set<Training>()
-                                            .Where(t => t.Trainer_id == user.Id)
-                                            .Select(t => new
-                                            {
-                                                Id = t.Id,
-                                                Name = t.Name,
-                                                Trainer_id = t.Trainer_id,
-                                                Category_id = t.Category_id,
-                                                Description = t.Description,
-                                                Contact_phone = t.Contact_phone
-                                            });
-
-                if (training == null)
+                var trainer = dbContext.Set<User>().Where(u => u.Id == trainerId).FirstOrDefault();
+                var trainings = dbContext.Set<Training>().Where(t => t.Trainer_id == trainerId).ToList();
+                if (trainings == null)
                     return BadRequest(new
                     {
                         ErrorMessage = "Nem létező edzés ehhez a felhasználóhoz"
                     });
-                return Ok(training);
+                var tagTrainings = new List<TagTraining>();
+
+                foreach (var training in trainings)
+                {
+                    tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
+
+                }
+                return Ok(new
+                {
+                    trainings,
+                    tagTrainings,
+                    trainer
+                });
             });
         }
         [HttpGet("UserId/{userId}")]
@@ -250,54 +248,199 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var training = dbContext.Set<Training>()
-                                            .Where(t => t.Category_id == id)
-                                            .Select(t => new
-                                            {
-                                                Id = t.Id,
-                                                Name = t.Name,
-                                                Trainer_id = t.Trainer_id,
-                                                Category_id = t.Category_id,
-                                                Description = t.Description,
-                                                Contact_phone = t.Contact_phone
-                                            });
-                                            
-
-                if (training == null)
+                var trainings = dbContext.Set<Training>().Where(t => t.Category_id == id).ToList();
+                if (trainings == null)
                     return BadRequest(new
                     {
                         ErrorMessage = "Ezzel a kategóriával nincs edzés létrehozva"
                     });
-                return Ok(training);
+                var trainers = new List<User>();
+                var tagTrainings = new List<TagTraining>();
+                foreach (var training in trainings)
+                {
+                    var trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault();
+                    if (!trainers.Contains(trainer)) trainers.Add(trainer);
+                    tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
+                }
+                return Ok(new
+                {
+                    trainings,
+                    tagTrainings,
+                    trainers
+                });
+            });
+        }
+        [HttpGet("tag")]
+        public ActionResult GetByTag([FromQuery] int id)
+        {
+            return this.Run(() =>
+            {
+                var tagTrainings = dbContext.Set<TagTraining>().Where(t => t.Tag_id == id).ToList();
+                var trainings = new List<Training>();
+                foreach (var training in tagTrainings)
+                {
+                    trainings.AddRange(dbContext.Set<Training>().Where(t => t.Id == training.Training_id));
+                }
+                var trainers = new List<User>();
+                tagTrainings = new List<TagTraining>();
+                foreach (var training in trainings)
+                {
+                    var trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault();
+                    if (!trainers.Contains(trainer)) trainers.Add(trainer);
+                    tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
+                }
+                return Ok(new
+                {
+                    trainings,
+                    tagTrainings,
+                    trainers
+                });
             });
         }
 
-        // [HttpGet("location")]
-        // public ActionResult GetByLocation([FromQuery] string field)
-        // {
-        //     return this.Run(() =>
-        //     {
-        //         int.TryParse(field, out int id);
-        //         var training = dbContext.Set<Training>()
-        //         .Include(u => u.Trainer.Location)
-        //         .Where(c => 
-        //             c.Trainer.Location.County_name == field || 
-        //             c.Trainer.Location.City_name == field ||
-        //             c.Trainer.Location.Id == id)
-        //         .Select(t => new
+        [HttpGet("all")]
+        public ActionResult GetAll()
+        {
+            return this.Run(() =>
+            {
+                var trainings = dbContext.Set<Training>().ToList();
+                var trainers = new List<User>();
+                var tagTrainings = new List<TagTraining>();
 
-        //         {
-        //             Id = t.Id,
-        //             Name = t.Name,
-        //             Trainer = dbContext.Set<User>().Any(u => u.Id == t.Trainer.Id),
-        //             Category = t.Category.Name,
-        //             Description = t.Description,
-        //             Contact_phone = t.Contact_phone,
-        //             Location = dbContext.Set<Location>().FirstOrDefault(l => l.City_name == t.Trainer.Location.City_name)
-        //         });
-        //         return Ok(training);
-        //     });
+                foreach (var training in trainings)
+                {
+                    var trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault();
+                    if (!trainers.Contains(trainer)) trainers.Add(trainer);
+                    tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
 
-        // }
+                }
+                return Ok(new
+                {
+                    trainings,
+                    tagTrainings,
+                    trainers
+                });
+            });
+        }
+
+        [HttpGet("county")]
+        public ActionResult getByCounty([FromQuery] string county)
+        {
+            return this.Run(() =>
+            {
+                var trainings = new List<Training>();
+                var trainers = new List<User>();
+
+                    var locIds = dbContext.Set<Location>().Where(l => l.County_name == county).ToList();
+                    var sessionIds = new List<TrainingSession>();
+                    foreach (var locId in locIds)
+                    {
+                        sessionIds.AddRange(dbContext.Set<TrainingSession>().Where(s => s.Location_id == locId.Id).ToList());
+                    }
+                    var trainingsBySessionId = new List<Training>();
+                    foreach (var session in sessionIds)
+                    {
+                        var trainingsBySession = dbContext.Set<Training>().Where(t => t.Id == session.Training_id).ToList();
+                        foreach (var tr in trainingsBySession)
+                        {
+                            if (!trainings.Contains(tr))
+                            {
+                                trainings.Add(tr);
+                            }
+                        }
+                    }
+
+                var tagTrainings = new List<TagTraining>();
+
+                foreach (var training in trainings)
+                {
+                    var trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault();
+                    if (!trainers.Contains(trainer)) trainers.Add(trainer);
+                    tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
+
+                }
+                return Ok(new
+                {
+                    trainings,
+                    tagTrainings,
+                    trainers
+                });
+            });
+        }
+        [HttpGet("city")]
+        public ActionResult getByCity([FromQuery] string city)
+        {
+            return this.Run(() =>
+            {
+                var trainings = new List<Training>();
+                var trainers = new List<User>();
+                
+                    var locIds = dbContext.Set<Location>().Where(l => l.City_name == city).ToList();
+                    var sessionIds = new List<TrainingSession>();
+                    foreach (var locId in locIds)
+                    {
+                        sessionIds.AddRange(dbContext.Set<TrainingSession>().Where(s => s.Location_id == locId.Id).ToList());
+                    }
+                    var trainingsBySessionId = new List<Training>();
+                    foreach (var session in sessionIds)
+                    {
+                        var trainingsBySession = dbContext.Set<Training>().Where(t => t.Id == session.Training_id).ToList();
+                        foreach (var tr in trainingsBySession)
+                        {
+                            if (!trainings.Contains(tr))
+                            {
+                                trainings.Add(tr);
+                            }
+                        }
+                    }
+               
+                var tagTrainings = new List<TagTraining>();
+
+                foreach (var training in trainings)
+                {
+                    var trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault();
+                    if (!trainers.Contains(trainer)) trainers.Add(trainer);
+                    tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
+
+                }
+                return Ok(new
+                {
+                    trainings,
+                    tagTrainings,
+                    trainers
+                });
+            });
+        }
+        [HttpGet("name")]
+        public ActionResult GetByName([FromQuery] string trainingName)
+        {
+            return this.Run(() =>
+            {
+                //add trainings to list that match the name
+                var trainings = new List<Training>();
+                var trainers = new List<User>();
+
+                if (trainingName != null)
+                {
+                    var trainingsByName = dbContext.Set<Training>().Where(t => t.Name.ToLower().Contains(trainingName.ToLower())).ToList();
+                    trainings.AddRange(trainingsByName);
+                }
+                var tagTrainings = new List<TagTraining>();
+
+                foreach (var training in trainings)
+                {
+                    var trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault();
+                    if (!trainers.Contains(trainer)) trainers.Add(trainer);
+                    tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
+
+                }
+                return Ok(new
+                {
+                    trainings,
+                    tagTrainings,
+                    trainers
+                });
+            });
+        }
     }
 }

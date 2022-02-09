@@ -1,0 +1,66 @@
+.container-fluid{
+    width: 80%;
+}
+#tag{    
+    height: 30px;
+    font-size: x-small;
+    border: 0px;
+    color: #DCE1DE;
+}
+.catBtn {
+    background-color: #9CC5A1;
+    color: #1F2421;
+    font-weight: bold;
+}
+.dark {
+    background-color: #343a40;
+    margin: auto;
+    padding: auto;
+    align-items: center;
+    align-content: center;
+}
+.light {
+    background-color: white;
+}
+.hoverLink:hover {
+    cursor: pointer;
+}
+
+.search>div {
+    font-size: large;
+    margin: auto;
+    text-align: center;
+}
+select, input {
+    height: 2.5rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+#searchBtn {
+    width: 25%;
+    font-size: medium;
+}
+.search {
+    padding: 2rem;
+    margin: auto;
+}
+#startSearch {
+    font-size: large;
+    background-color: #343a40;
+    color: white;
+    margin: auto;
+    width: 15rem;  
+    height: 3rem;
+    margin-bottom: 1rem;
+}
+.title {
+    margin: auto;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* body {
+    background-image: url(/frontend/MoveYourBody/src/assets/images/background.jpeg);
+    background-repeat: no-repeat;
+    background-color: black;
+  } */

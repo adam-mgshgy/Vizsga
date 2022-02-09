@@ -25,11 +25,11 @@
  #searchBtn {
     color: #216869;
     background-color: white;
+    margin-right: 2rem;
  }
  #logoImage {
    width: 100%;
  }
  #logoLink {
    width: 12%;
-
  }
