@@ -12,6 +12,8 @@ import { TagService } from 'src/app/services/tag.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { TrainingSessionService } from 'src/app/services/training-session.service';
 import { ApplicantService } from 'src/app/services/applicant.service';
+import { ImagesModel } from 'src/app/models/images-model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-my-trainings-page',
@@ -26,7 +28,8 @@ export class MyTrainingsPageComponent implements OnInit {
     private modalService: NgbModal,
     private tagTrainingService: TagTrainingService,
     private tagService: TagService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private userService: UserService
   ) {
     this.authenticationService.currentUser.subscribe((x) => (this.user = x));
     // this.ordered_session = Object.values(
@@ -48,6 +51,8 @@ export class MyTrainingsPageComponent implements OnInit {
   tags: TagModel[] = [];
   sessions: TrainingSessionModel[] = [];
   ordered_session: any[] = [];
+  profileImages: ImagesModel[] = [];
+  indexImages: ImagesModel[] = [];
 
   // groupByDate(array, property) {
   //   var hash = {},
@@ -106,7 +111,31 @@ export class MyTrainingsPageComponent implements OnInit {
       this.trainingService.getByTrainerId(this.user.id).subscribe(
         (result) => {
           this.myTrainings = result.trainings;
-          this.tagTraining = result.tagTrainings
+          this.userService.getUserById(this.user.id).subscribe(
+            (result) => {
+              this.user = result;
+              this.userService.getImageById(this.user.imageId).subscribe(
+                (result) => {
+                  this.profileImages.push(result);
+                },
+                (error) => console.log(error)
+              );
+              //TODO Create training page indeximage for first time, refresh indeximageid on delete
+              for (const item of this.myTrainings) {                
+                this.trainingService.getImageById(item.id).subscribe(
+                  (result) => {
+                    
+                    this.indexImages.push(result.images[0]);
+                  },
+                  (error) => console.log(error)
+                );
+              }
+            },
+            (error) => console.log(error)
+          );
+          
+
+          this.tagTraining = result.tagTrainings;
         },
         (error) => console.log(error)
       );
@@ -114,6 +143,15 @@ export class MyTrainingsPageComponent implements OnInit {
       this.trainingService.getByUserId(this.user.id).subscribe(
         (result) => {
           this.trainers = result.trainers;
+          for (const item of this.trainers) {
+            this.userService.getImageById(item.imageId).subscribe(
+              (result) => {
+                console.log(result);
+                this.profileImages.push(result);
+              },
+              (error) => console.log(error)
+            );
+          }
           this.myTrainings = result.trainings;
           this.tagTraining.push.apply(this.tagTraining, result.tagTrainingList);
         },
