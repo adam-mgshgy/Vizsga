@@ -69,7 +69,7 @@ export class CreateTrainingPageComponent implements OnInit {
 
     this.trainingService.getByTrainerId(this.user.id).subscribe(
       (result) => {
-        this.myTrainings = result;
+        this.myTrainings = result.trainings;
 
         this.route.paramMap.subscribe((params) => {
           this.id = params.get('id');
