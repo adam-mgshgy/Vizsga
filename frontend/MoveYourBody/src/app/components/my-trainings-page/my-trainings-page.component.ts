@@ -107,6 +107,7 @@ export class MyTrainingsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //TODO default profileImage
     if (this.user.role == 'Trainer') {
       this.trainingService.getByTrainerId(this.user.id).subscribe(
         (result) => {
@@ -120,9 +121,7 @@ export class MyTrainingsPageComponent implements OnInit {
                   console.log(this.profileImages[0].id)
                 },
                 (error) => console.log(error)
-              );
-              
-              console.log(this.myTrainings)
+              );                            
               for (const training of this.myTrainings) {                
                 this.trainingService.getImageById(training.id).subscribe(
                   (result) => {
@@ -156,12 +155,32 @@ export class MyTrainingsPageComponent implements OnInit {
             this.userService.getImageById(item.imageId).subscribe(
               (result) => {
                 console.log(result);
-                this.profileImages.push(result);
+                if (result != null) {
+                  this.profileImages.push(result);
+                  
+                }
+                console.log(this.profileImages)
               },
               (error) => console.log(error)
             );
           }
           this.myTrainings = result.trainings;
+          for (const training of this.myTrainings) {                
+            this.trainingService.getImageById(training.id).subscribe(
+              (result) => {
+                console.log(result)
+                for (const item of result.images) {
+                  if (item.id == training.indexImageId) {
+                    this.indexImages.push(item);
+                    
+                  }
+                  
+                }
+                console.log(this.indexImages)
+              },
+              (error) => console.log(error)
+            );
+          }
           this.tagTraining.push.apply(this.tagTraining, result.tagTrainingList);
         },
         (error) => console.log(error)

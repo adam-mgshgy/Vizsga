@@ -48,7 +48,6 @@ export class CreateTrainingPageComponent implements OnInit {
   trainingImages: TrainingImagesModel[] = [];
   Images: ImagesModel[] = [];
 
-
   constructor(
     private route: ActivatedRoute,
     private categoryService: CategoriesService,
@@ -65,7 +64,7 @@ export class CreateTrainingPageComponent implements OnInit {
     if (window.innerWidth <= 800) {
       this.mobile = true;
     }
-    window.onresize = () => (this.mobile = window.innerWidth <= 991);    
+    window.onresize = () => (this.mobile = window.innerWidth <= 991);
 
     this.trainingService.getByTrainerId(this.user.id).subscribe(
       (result) => {
@@ -85,7 +84,7 @@ export class CreateTrainingPageComponent implements OnInit {
           } else {
             this.training = new TrainingModel();
           }
-        });        
+        });
         if (
           this.training.contact_phone != this.user.phone_number &&
           this.training.contact_phone != ''
@@ -100,16 +99,16 @@ export class CreateTrainingPageComponent implements OnInit {
           this.trainingService.getImageById(this.training.id).subscribe(
             (result) => {
               for (const item of result.trainingImages) {
-                this.trainingImages.push(item);    
-                console.log(this.trainingImages)            
+                this.trainingImages.push(item);
+                console.log(this.trainingImages);
               }
               for (const item of result.images) {
-                this.Images.push(item);          
+                this.Images.push(item);
               }
             },
             (error) => console.log(error)
           );
-        }   
+        }
       },
       (error) => console.log(error)
     );
@@ -126,8 +125,6 @@ export class CreateTrainingPageComponent implements OnInit {
       (result) => (this.tags = result),
       (error) => console.log(error)
     );
-
-     
   }
 
   images: string[] = [];
@@ -150,14 +147,17 @@ export class CreateTrainingPageComponent implements OnInit {
     }
     return false;
   }
-  selectIndexImage(){
+  selectIndexImage() {
     if (this.selectIndex.length == 1) {
-      console.log(this.selectIndex)
+      console.log(this.selectIndex);
       this.training.indexImageId = this.selectIndex[0];
-      console.log(this.training)
+      console.log(this.training);
       this.trainingService.modifyTraining(this.training).subscribe(
-        result => this.training = result,
-        error => console.log(error)
+        (result) => {
+          this.training = result;
+          this.selectIndex = [];
+        },
+        (error) => console.log(error)
       );
     }
   }
@@ -166,14 +166,16 @@ export class CreateTrainingPageComponent implements OnInit {
   selectIndex: number[] = [];
 
   delete: string[] = [];
-  selectedNewImage(i: number) {//Új képek kiválasztása
+  selectedNewImage(i: number) {
+    //Új képek kiválasztása
     if (this.selectNewIndex.includes(i)) {
       this.selectNewIndex.splice(this.selectNewIndex.indexOf(i), 1);
     } else {
       this.selectNewIndex.push(i);
     }
   }
-  selectedImage(i: number) {//Adatbazisbol betoltott képek kiválasztása
+  selectedImage(i: number) {
+    //Adatbazisbol betoltott képek kiválasztása
     if (this.selectIndex.includes(i)) {
       this.selectIndex.splice(this.selectIndex.indexOf(i), 1);
     } else {
@@ -187,26 +189,25 @@ export class CreateTrainingPageComponent implements OnInit {
     }
 
     this.trainingService.deleteImage(this.selectIndex).subscribe(
-      result => {
+      (result) => {
         this.selectIndex = [];
         this.trainingService.getById(this.training.id).subscribe(
-          result => {
-           this.training = result;
+          (result) => {
+            this.training = result;
           },
-          error => console.log(error)
+          (error) => console.log(error)
         );
         this.trainingService.getImageById(this.training.id).subscribe(
-        result => {
-          this.trainingImages = result.trainingImages;
-          this.Images = result.images;
-        },
-        error => console.log(error)
+          (result) => {
+            this.trainingImages = result.trainingImages;
+            this.Images = result.images;
+          },
+          (error) => console.log(error)
         );
       },
-      error => console.log(error)
-      
+      (error) => console.log(error)
     );
-    
+
     if (this.images.length < 1) {
       this.cardImageBase64 = null;
       this.isImageSaved = false;
@@ -242,7 +243,7 @@ export class CreateTrainingPageComponent implements OnInit {
           this.training.contact_phone = this.user.phone_number;
 
           this.trainingService.newTraining(this.training).subscribe(
-            (result) => {              
+            (result) => {
               this.trainingService.saveImage(this.images, result.id).subscribe(
                 (result) => console.log(result),
                 (error) => console.log(error)
@@ -275,12 +276,10 @@ export class CreateTrainingPageComponent implements OnInit {
           );
         }
       } else {
-        this.trainingService
-                  .saveImage(this.images, this.training.id)
-                  .subscribe(
-                    (result) => console.log(result),
-                    (error) => console.log(error)
-                  );
+        this.trainingService.saveImage(this.images, this.training.id).subscribe(
+          (result) => console.log(result),
+          (error) => console.log(error)
+        );
         if (this.otherPhoneNumber) {
           this.training.contact_phone = this.otherPhoneNumberInput;
         } else {
