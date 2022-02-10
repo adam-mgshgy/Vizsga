@@ -81,7 +81,8 @@
         <mat-panel-description>
           <button *ngIf="user.role == 'Trainer'" class="btn btn-primary me-3" [routerLink]="'/addsession/'  +  currentTraining.id + '/' + session.id" (click)="close()">Duplikálás</button>
           <button *ngIf="user.role == 'Trainer'" class="btn btn-danger" (click)="deleteSession(session)">Törlés</button>
-          <button *ngIf="user.role == 'User' && !session.isPast" class="btn btn-danger" (click)="deleteApplication(session.id)">Lemondás</button>
+          <button class="btn fw-bold" disabled *ngIf="session.isPast" style="color: red;">Lejárt</button>
+          <button *ngIf="user.role == 'User'" class="btn btn-danger" (click)="deleteApplication(session.id)">{{session.isPast ? 'Törlés' : 'Lemondás'}}</button>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <app-session-modal  [session]="session"></app-session-modal>

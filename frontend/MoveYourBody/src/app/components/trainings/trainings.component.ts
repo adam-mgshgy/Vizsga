@@ -36,7 +36,7 @@ export class TrainingsComponent implements OnInit {
 
   mobile: boolean = false;
   result: boolean = false;
-
+  isSearch = false;
   selectedCounty: string;
   selectedCity: string;
   trainingName: string;
