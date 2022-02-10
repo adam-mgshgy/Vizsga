@@ -100,10 +100,11 @@ export class CreateTrainingPageComponent implements OnInit {
           this.trainingService.getImageById(this.training.id).subscribe(
             (result) => {
               for (const item of result.trainingImages) {
-                this.trainingImages.push(item);                
+                this.trainingImages.push(item);    
+                console.log(this.trainingImages)            
               }
               for (const item of result.images) {
-                this.Images.push(item);            
+                this.Images.push(item);          
               }
             },
             (error) => console.log(error)
@@ -151,7 +152,9 @@ export class CreateTrainingPageComponent implements OnInit {
   }
   selectIndexImage(){
     if (this.selectIndex.length == 1) {
+      console.log(this.selectIndex)
       this.training.indexImageId = this.selectIndex[0];
+      console.log(this.training)
       this.trainingService.modifyTraining(this.training).subscribe(
         result => this.training = result,
         error => console.log(error)

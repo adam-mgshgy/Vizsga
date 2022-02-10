@@ -12,11 +12,11 @@
 
                         <div class="row text-center text-lg-start">
                             <div *ngFor="let image of trainingImages;let i = index" class="col-lg-3 col-md-4 col-6">
-                                <mat-checkbox  id="selectedImage"  class="example-margin me-3" [checked]="selectIndex.includes(image.id)">
+                                <mat-checkbox  id="selectedImage"  class="example-margin me-3" [checked]="selectIndex.includes(image.imageId)">
                                    
                                 </mat-checkbox>
                                 <label *ngIf="training.indexImageId == Images[i].id">Indexkép</label>
-                                <img *ngIf="image.imageId == Images[i].id" class="img-fluid img-thumbnail" [src]="'data:image/png;base64,'+ Images[i].imageData" (click)="selectedImage(image.id)">
+                                <img *ngIf="image.imageId == Images[i].id" class="img-fluid img-thumbnail" [src]="'data:image/png;base64,'+ Images[i].imageData" (click)="selectedImage(image.imageId)">
                             </div>
                         </div>
                         
