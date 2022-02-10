@@ -6,7 +6,6 @@ import { UserModel } from 'src/app/models/user-model';
 import { ApplicantService } from 'src/app/services/applicant.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { LocationService } from 'src/app/services/location.service';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-session-modal',
@@ -17,7 +16,6 @@ export class SessionModalComponent implements OnInit {
   @Input() session = new TrainingSessionModel();
   constructor(
     private applicantService: ApplicantService,
-    private userService: UserService,
     private locationService: LocationService,
     private authenticationService: AuthenticationService
   ) {
@@ -25,22 +23,14 @@ export class SessionModalComponent implements OnInit {
   }
   user: UserModel;
   location: LocationModel;
-
   public applicants: ApplicantModel[] = [];
   public applicantUsers: UserModel[] = [];
   ngOnInit(): void {
     if (this.user.role == 'Trainer') {
       this.applicantService.listBySessionId(this.session.id).subscribe(
         (result) => {
-          this.applicants = result;
-          this.applicants.forEach((applicant) => {
-            this.userService.getUserById(applicant.user_id).subscribe(
-              (result) => {
-                this.applicantUsers.push(result);
-              },
-              (error) => console.log(error)
-            );
-          });
+          this.applicants = result.applicants;
+          this.applicantUsers = result.users;
         },
         (error) => console.log(error)
       );

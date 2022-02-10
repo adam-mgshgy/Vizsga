@@ -58,7 +58,13 @@ select, input {
     text-align: center;
     margin-bottom: 1rem;
 }
-
+#searchText {
+    background-color: #49A078;
+    color: white;
+    width: 30%;
+    margin: auto;
+    
+}
 /* body {
     background-image: url(/frontend/MoveYourBody/src/assets/images/background.jpeg);
     background-repeat: no-repeat;

@@ -24,14 +24,10 @@ export class MyTrainingsPageComponent implements OnInit {
     private trainingSessionService: TrainingSessionService,
     private applicantService: ApplicantService,
     private modalService: NgbModal,
-    private tagTrainingService: TagTrainingService,
     private tagService: TagService,
     private authenticationService: AuthenticationService
   ) {
     this.authenticationService.currentUser.subscribe((x) => (this.user = x));
-    // this.ordered_session = Object.values(
-    //   this.groupByDate(this.sessions, 'date')
-    // ); //date alapján rendez
   }
   closeResult = '';
   category: string | null = null;
@@ -47,21 +43,8 @@ export class MyTrainingsPageComponent implements OnInit {
   trainers: UserModel[] = [];
   tags: TagModel[] = [];
   sessions: TrainingSessionModel[] = [];
-  ordered_session: any[] = [];
 
-  // groupByDate(array, property) {
-  //   var hash = {},
-  //     props = property.split('.');
-  //   for (var i = 0; i < array.length; i++) {
-  //     var key = props.reduce(function (acc, prop) {
-  //       return acc && acc[prop].substr(0, 10);
-  //     }, array[i]);
-  //     if (!hash[key]) hash[key] = [];
-  //     hash[key].push(array[i]);
-  //   }
-  //   return hash;
-  // }
-
+  currentDate = new Date();
   deleteSession(session: TrainingSessionModel) {
     if (session.number_of_applicants > 0) {
       alert('Figyelem, az alkalomra már vannak jelentkezők!');
@@ -106,7 +89,7 @@ export class MyTrainingsPageComponent implements OnInit {
       this.trainingService.getByTrainerId(this.user.id).subscribe(
         (result) => {
           this.myTrainings = result.trainings;
-          this.tagTraining = result.tagTrainings
+          this.tagTraining = result.tagTrainings;
         },
         (error) => console.log(error)
       );
@@ -167,6 +150,7 @@ export class MyTrainingsPageComponent implements OnInit {
         (result) => {
           this.sessions = result.sessions;
           this.currentTraining = result.training;
+          this.CheckIfPast();
         },
         (error) => console.log(error)
       );
@@ -177,7 +161,7 @@ export class MyTrainingsPageComponent implements OnInit {
           (result) => {
             this.sessions = result.sessions;
             this.currentTraining = result.training;
-            console.log(result);
+            this.CheckIfPast();
           },
           (error) => console.log(error)
         );
@@ -204,5 +188,20 @@ export class MyTrainingsPageComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+  CheckIfPast() {
+    this.sessions.forEach((session) => {
+      var year = Number(session.date.substring(0, 4));
+      var month = Number(session.date.substring(5, 7));
+      var day = Number(session.date.substring(8, 10));
+      var hour = Number(session.date.substring(11, 13));
+      var minute = Number(session.date.substring(14, 16));
+      var sessionDate = new Date(year, month - 1, day, hour, minute);
+      if (sessionDate < this.currentDate) {
+        session.isPast = true;
+      } else {
+        session.isPast = false;
+      }
+    });
   }
 }

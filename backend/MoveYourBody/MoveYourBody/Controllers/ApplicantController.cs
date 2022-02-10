@@ -22,8 +22,21 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var applicants = dbContext.Set<Applicant>().Where(t => t.Training_session_id == trainingSessionId);
-                return Ok(applicants);
+                var applicants = dbContext.Set<Applicant>().Where(t => t.Training_session_id == trainingSessionId).ToList();
+                var users = new List<User>();
+                foreach (var applicant in applicants)
+                {
+                    var user = dbContext.Set<User>().Where(u => u.Id == applicant.User_id).First();
+                    if (!users.Contains(user))
+                    {
+                        users.Add(user);
+                    }
+                }
+                return Ok(new
+                {
+                    applicants,
+                    users
+                });
             });
         }
         [HttpGet("list/user")]
