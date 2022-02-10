@@ -4,12 +4,17 @@
       <div class="card mb-3">
         <div class="row g-0">
           <div class="col-4 align-items-center">
+            <img *ngIf=" user.imageId == 0 && user.role == 'Trainer'" [src]="imgSrc" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
             <img *ngIf="user.role == 'Trainer' && profileImages.length > 0 && profileImages[0].id == user.imageId " [src]="'data:image/png;base64,'+ profileImages[0].imageData" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
+            
+            <img *ngIf=" trainers[i]&& trainers[i].imageId == 0 && user.role == 'User'" [src]="imgSrc" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
             <span *ngFor="let image of profileImages">
-            <img *ngIf="user.role == 'User' && profileImages.length > 0 && image.id == trainers[i].imageId" [src]="'data:image/png;base64,'+ image.imageData" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
-          </span>
+              <img *ngIf="user.role == 'User' && profileImages.length > 0 && image.id == trainers[i].imageId" [src]="'data:image/png;base64,'+ image.imageData" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
+            </span>
           </div>
-          <div  class="col-8" id="bckg">
+          <div class="col-8" id="bckg">
+            <img *ngIf=" training.indexImageId == 0" [src]="imgBckgSrc" style="width: 100%; height: 100%;" class="img-fluid" alt="..." />
+
             <span *ngFor="let image of indexImages">
               <img *ngIf="indexImages.length > 0 && image.id == training.indexImageId" [src]="'data:image/png;base64,'+ image.imageData" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
 
@@ -28,7 +33,7 @@
               <button id="newSession" *ngIf="user.role == 'Trainer'" class="btn btn-primary mb-3 me-3" [routerLink]="'/addsession/'  + training.id + '/' + 0">
                 Új alkalom
               </button>
-              <button *ngIf="user.role == 'Trainer'"  id="sessions" class="btn btn-primary mb-3 me-3" (click)="open(content, training.id)">
+              <button *ngIf="user.role == 'Trainer'" id="sessions" class="btn btn-primary mb-3 me-3" (click)="open(content, training.id)">
                 Alkalmak
               </button>
               <button *ngIf="user.role == 'User'" id="sessions" class="btn btn-primary mb-3 me-3" (click)="open(content, training.id)">
@@ -74,7 +79,7 @@
         <mat-panel-title *ngIf="sessions.length > 0">
           Időpont
         </mat-panel-title>
-        <mat-panel-title *ngIf="sessions.length == 0" >
+        <mat-panel-title *ngIf="sessions.length == 0">
           Még nincsenek alkalmak létrehozva!
         </mat-panel-title>
       </mat-expansion-panel-header>

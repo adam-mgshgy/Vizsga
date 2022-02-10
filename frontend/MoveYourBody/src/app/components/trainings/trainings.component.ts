@@ -11,6 +11,8 @@ import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { UserModel } from 'src/app/models/user-model';
 import { LocationService } from 'src/app/services/location.service';
 import { LocationModel } from 'src/app/models/location-model';
+import { ImagesModel } from 'src/app/models/images-model';
+import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-trainings',
   templateUrl: './trainings.component.html',
@@ -31,8 +33,9 @@ export class TrainingsComponent implements OnInit {
   tags: TagModel[] = [];
   tagTraining: TagTrainingModel[] = [];
 
-  imgSrc = './assets/images/categoryPageImages/profile_rock.png';
-  imgBckgSrc = './assets/images/categoryPageImages/index.jpg';
+  imgSrc = './assets/images/defaultImages/defaultProfilePicture.png';
+  imgBckgSrc = './assets/images/mainPageImages/logo.png';
+
 
   mobile: boolean = false;
   result: boolean = false;
@@ -41,13 +44,17 @@ export class TrainingsComponent implements OnInit {
   selectedCity: string;
   trainingName: string;
 
+  profileImages: ImagesModel[] = [];
+  indexImages: ImagesModel[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private trainingService: TrainingService,
     private categoryService: CategoriesService,
     private tagService: TagService,
     private locationService: LocationService,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -73,10 +80,41 @@ export class TrainingsComponent implements OnInit {
       this.selectedCounty = params.get('county');
       this.selectedCity = params.get('city');
       if (this.categoryId) {
+        //TODO profile pictures bug
         this.trainingService.getByCategory(this.categoryId).subscribe(
           (result) => {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
+            console.log(this.trainers)
+            for (const item of this.trainers) {
+              this.userService.getImageById(item.imageId).subscribe(
+                (result) => {
+                  if (result != null) {
+                    this.profileImages.push(result);
+                    
+                  }
+
+                },
+                (error) => console.log(error)
+              );
+            }
+            console.log(this.trainings)
+            for (const training of this.trainings) {                
+              this.trainingService.getImageById(training.id).subscribe(
+                (result) => {
+                  console.log(result)
+                  for (const item of result.images) {
+                    if (item.id == training.indexImageId) {
+                      this.indexImages.push(item);
+                      
+                    }
+                    
+                  }
+                  console.log(this.indexImages)
+                },
+                (error) => console.log(error)
+              );
+            }
             this.tagTraining = result.tagTrainings;
           },
           (error) => console.log(error)
@@ -86,6 +124,35 @@ export class TrainingsComponent implements OnInit {
           (result) => {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
+            for (const item of this.trainers) {
+              this.userService.getImageById(item.imageId).subscribe(
+                (result) => {
+                  console.log(result);
+                  if (result != null) {
+                    this.profileImages.push(result);
+                    
+                  }
+                  console.log(this.profileImages)
+                },
+                (error) => console.log(error)
+              );
+            }
+            for (const training of this.trainings) {                
+              this.trainingService.getImageById(training.id).subscribe(
+                (result) => {
+                  console.log(result)
+                  for (const item of result.images) {
+                    if (item.id == training.indexImageId) {
+                      this.indexImages.push(item);
+                      
+                    }
+                    
+                  }
+                  console.log(this.indexImages)
+                },
+                (error) => console.log(error)
+              );
+            }
             this.tagTraining = result.tagTrainings;
           },
           (error) => console.log(error)
@@ -95,6 +162,35 @@ export class TrainingsComponent implements OnInit {
           (result) => {
             this.trainings = result.trainings;
             this.trainer = result.trainer;
+            for (const item of this.trainers) {
+              this.userService.getImageById(item.imageId).subscribe(
+                (result) => {
+                  console.log(result);
+                  if (result != null) {
+                    this.profileImages.push(result);
+                    
+                  }
+                  console.log(this.profileImages)
+                },
+                (error) => console.log(error)
+              );
+            }
+            for (const training of this.trainings) {                
+              this.trainingService.getImageById(training.id).subscribe(
+                (result) => {
+                  console.log(result)
+                  for (const item of result.images) {
+                    if (item.id == training.indexImageId) {
+                      this.indexImages.push(item);
+                      
+                    }
+                    
+                  }
+                  console.log(this.indexImages)
+                },
+                (error) => console.log(error)
+              );
+            }
             this.tagTraining = result.tagTrainings;
           },
           (error) => console.log(error)
@@ -104,6 +200,35 @@ export class TrainingsComponent implements OnInit {
           (result) => {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
+            for (const item of this.trainers) {
+              this.userService.getImageById(item.imageId).subscribe(
+                (result) => {
+                  console.log(result);
+                  if (result != null) {
+                    this.profileImages.push(result);
+                    
+                  }
+                  console.log(this.profileImages)
+                },
+                (error) => console.log(error)
+              );
+            }
+            for (const training of this.trainings) {                
+              this.trainingService.getImageById(training.id).subscribe(
+                (result) => {
+                  console.log(result)
+                  for (const item of result.images) {
+                    if (item.id == training.indexImageId) {
+                      this.indexImages.push(item);
+                      
+                    }
+                    
+                  }
+                  console.log(this.indexImages)
+                },
+                (error) => console.log(error)
+              );
+            }
             this.tagTraining = result.tagTrainings;
           },
           (error) => console.log(error)
@@ -113,6 +238,35 @@ export class TrainingsComponent implements OnInit {
           (result) => {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
+            for (const item of this.trainers) {
+              this.userService.getImageById(item.imageId).subscribe(
+                (result) => {
+                  console.log(result);
+                  if (result != null) {
+                    this.profileImages.push(result);
+                    
+                  }
+                  console.log(this.profileImages)
+                },
+                (error) => console.log(error)
+              );
+            }
+            for (const training of this.trainings) {                
+              this.trainingService.getImageById(training.id).subscribe(
+                (result) => {
+                  console.log(result)
+                  for (const item of result.images) {
+                    if (item.id == training.indexImageId) {
+                      this.indexImages.push(item);
+                      
+                    }
+                    
+                  }
+                  console.log(this.indexImages)
+                },
+                (error) => console.log(error)
+              );
+            }
             this.tagTraining = result.tagTrainings;
           },
           (error) => console.log(error)
@@ -122,6 +276,35 @@ export class TrainingsComponent implements OnInit {
           (result) => {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
+            for (const item of this.trainers) {
+              this.userService.getImageById(item.imageId).subscribe(
+                (result) => {
+                  console.log(result);
+                  if (result != null) {
+                    this.profileImages.push(result);
+                    
+                  }
+                  console.log(this.profileImages)
+                },
+                (error) => console.log(error)
+              );
+            }
+            for (const training of this.trainings) {                
+              this.trainingService.getImageById(training.id).subscribe(
+                (result) => {
+                  console.log(result)
+                  for (const item of result.images) {
+                    if (item.id == training.indexImageId) {
+                      this.indexImages.push(item);
+                      
+                    }
+                    
+                  }
+                  console.log(this.indexImages)
+                },
+                (error) => console.log(error)
+              );
+            }
             this.tagTraining = result.tagTrainings;
           },
           (error) => console.log(error)
@@ -131,11 +314,40 @@ export class TrainingsComponent implements OnInit {
           (result) => {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
+            console.log(this.trainers)
+            for (const item of this.trainers) {
+              this.userService.getImageById(item.imageId).subscribe(
+                (result) => {                  
+                  if (result != null) {
+                    this.profileImages.push(result);
+                    
+                  }                  
+                },
+                (error) => console.log(error)
+              );
+            }
+            for (const training of this.trainings) {                
+              this.trainingService.getImageById(training.id).subscribe(
+                (result) => {
+                  console.log(result)
+                  for (const item of result.images) {
+                    if (item.id == training.indexImageId) {
+                      this.indexImages.push(item);
+                      
+                    }
+                    
+                  }
+                  console.log(this.indexImages)
+                },
+                (error) => console.log(error)
+              );
+            }
             this.tagTraining = result.tagTrainings;
           },
           (error) => console.log(error)
         );
       }
+            
     });
   }
   Search() {

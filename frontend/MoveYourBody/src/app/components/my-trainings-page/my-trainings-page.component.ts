@@ -38,8 +38,9 @@ export class MyTrainingsPageComponent implements OnInit {
   }
   closeResult = '';
   category: string | null = null;
-  imgSrc = './assets/images/categoryPageImages/profile_rock.png';
-  imgBckgSrc = './assets/images/categoryPageImages/index.jpg';
+  imgSrc = './assets/images/defaultImages/defaultProfilePicture.png';
+  imgBckgSrc = './assets/images/mainPageImages/logo.png';
+  
   mobile: boolean = false;
   counter = 0;
 
