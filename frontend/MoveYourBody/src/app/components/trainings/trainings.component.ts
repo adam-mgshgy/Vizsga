@@ -36,7 +36,6 @@ export class TrainingsComponent implements OnInit {
   imgSrc = './assets/images/defaultImages/defaultProfilePicture.png';
   imgBckgSrc = './assets/images/mainPageImages/logo.png';
 
-
   mobile: boolean = false;
   result: boolean = false;
 
@@ -85,32 +84,28 @@ export class TrainingsComponent implements OnInit {
           (result) => {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
-            console.log(this.trainers)
+            console.log(this.trainers);
             for (const item of this.trainers) {
               this.userService.getImageById(item.imageId).subscribe(
                 (result) => {
                   if (result != null) {
                     this.profileImages.push(result);
-                    
                   }
-
                 },
                 (error) => console.log(error)
               );
             }
-            console.log(this.trainings)
-            for (const training of this.trainings) {                
+            console.log(this.trainings);
+            for (const training of this.trainings) {
               this.trainingService.getImageById(training.id).subscribe(
                 (result) => {
-                  console.log(result)
+                  console.log(result);
                   for (const item of result.images) {
                     if (item.id == training.indexImageId) {
                       this.indexImages.push(item);
-                      
                     }
-                    
                   }
-                  console.log(this.indexImages)
+                  console.log(this.indexImages);
                 },
                 (error) => console.log(error)
               );
@@ -130,25 +125,22 @@ export class TrainingsComponent implements OnInit {
                   console.log(result);
                   if (result != null) {
                     this.profileImages.push(result);
-                    
                   }
-                  console.log(this.profileImages)
+                  console.log(this.profileImages);
                 },
                 (error) => console.log(error)
               );
             }
-            for (const training of this.trainings) {                
+            for (const training of this.trainings) {
               this.trainingService.getImageById(training.id).subscribe(
                 (result) => {
-                  console.log(result)
+                  console.log(result);
                   for (const item of result.images) {
                     if (item.id == training.indexImageId) {
                       this.indexImages.push(item);
-                      
                     }
-                    
                   }
-                  console.log(this.indexImages)
+                  console.log(this.indexImages);
                 },
                 (error) => console.log(error)
               );
@@ -162,31 +154,27 @@ export class TrainingsComponent implements OnInit {
           (result) => {
             this.trainings = result.trainings;
             this.trainer = result.trainer;
+            this.trainers.push(this.trainer);
             for (const item of this.trainers) {
               this.userService.getImageById(item.imageId).subscribe(
                 (result) => {
                   console.log(result);
                   if (result != null) {
                     this.profileImages.push(result);
-                    
                   }
-                  console.log(this.profileImages)
+                  console.log(this.profileImages);
                 },
                 (error) => console.log(error)
               );
             }
-            for (const training of this.trainings) {                
+            for (const training of this.trainings) {
               this.trainingService.getImageById(training.id).subscribe(
                 (result) => {
-                  console.log(result)
                   for (const item of result.images) {
                     if (item.id == training.indexImageId) {
                       this.indexImages.push(item);
-                      
                     }
-                    
                   }
-                  console.log(this.indexImages)
                 },
                 (error) => console.log(error)
               );
@@ -203,28 +191,22 @@ export class TrainingsComponent implements OnInit {
             for (const item of this.trainers) {
               this.userService.getImageById(item.imageId).subscribe(
                 (result) => {
-                  console.log(result);
                   if (result != null) {
                     this.profileImages.push(result);
-                    
                   }
-                  console.log(this.profileImages)
                 },
                 (error) => console.log(error)
               );
             }
-            for (const training of this.trainings) {                
+            for (const training of this.trainings) {
               this.trainingService.getImageById(training.id).subscribe(
                 (result) => {
-                  console.log(result)
+                  console.log(result);
                   for (const item of result.images) {
                     if (item.id == training.indexImageId) {
                       this.indexImages.push(item);
-                      
                     }
-                    
                   }
-                  console.log(this.indexImages)
                 },
                 (error) => console.log(error)
               );
@@ -244,25 +226,20 @@ export class TrainingsComponent implements OnInit {
                   console.log(result);
                   if (result != null) {
                     this.profileImages.push(result);
-                    
                   }
-                  console.log(this.profileImages)
                 },
                 (error) => console.log(error)
               );
             }
-            for (const training of this.trainings) {                
+            for (const training of this.trainings) {
               this.trainingService.getImageById(training.id).subscribe(
                 (result) => {
-                  console.log(result)
+                  console.log(result);
                   for (const item of result.images) {
                     if (item.id == training.indexImageId) {
                       this.indexImages.push(item);
-                      
                     }
-                    
                   }
-                  console.log(this.indexImages)
                 },
                 (error) => console.log(error)
               );
@@ -282,25 +259,20 @@ export class TrainingsComponent implements OnInit {
                   console.log(result);
                   if (result != null) {
                     this.profileImages.push(result);
-                    
                   }
-                  console.log(this.profileImages)
                 },
                 (error) => console.log(error)
               );
             }
-            for (const training of this.trainings) {                
+            for (const training of this.trainings) {
               this.trainingService.getImageById(training.id).subscribe(
                 (result) => {
-                  console.log(result)
+                  console.log(result);
                   for (const item of result.images) {
                     if (item.id == training.indexImageId) {
                       this.indexImages.push(item);
-                      
                     }
-                    
                   }
-                  console.log(this.indexImages)
                 },
                 (error) => console.log(error)
               );
@@ -314,30 +286,26 @@ export class TrainingsComponent implements OnInit {
           (result) => {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
-            console.log(this.trainers)
+            console.log(this.trainers);
             for (const item of this.trainers) {
               this.userService.getImageById(item.imageId).subscribe(
-                (result) => {                  
+                (result) => {
                   if (result != null) {
                     this.profileImages.push(result);
-                    
-                  }                  
+                  }
                 },
                 (error) => console.log(error)
               );
             }
-            for (const training of this.trainings) {                
+            for (const training of this.trainings) {
               this.trainingService.getImageById(training.id).subscribe(
                 (result) => {
-                  console.log(result)
+                  console.log(result);
                   for (const item of result.images) {
                     if (item.id == training.indexImageId) {
                       this.indexImages.push(item);
-                      
                     }
-                    
                   }
-                  console.log(this.indexImages)
                 },
                 (error) => console.log(error)
               );
@@ -347,7 +315,6 @@ export class TrainingsComponent implements OnInit {
           (error) => console.log(error)
         );
       }
-            
     });
   }
   Search() {
