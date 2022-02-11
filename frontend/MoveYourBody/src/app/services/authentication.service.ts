@@ -57,7 +57,6 @@ export class AuthenticationService {
     }
     const userInfo: any = jwt_decode(localStorage.getItem('jwt'));
     var roles = userInfo["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-    console.log(roles)
     if (Array.isArray(roles)){
       return roles.indexOf(roleName) >= 0
     } else {
