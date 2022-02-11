@@ -11,28 +11,29 @@ import { TrainingPageComponent } from './components/training-page/training-page.
 import { MyTrainingsPageComponent } from './components/my-trainings-page/my-trainings-page.component';
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
 import { TrainingsComponent } from './components/trainings/trainings.component';
+import { AuthGuard } from './JWT/auth-guard.service';
 
 const routes: Routes = [
   {path: '', redirectTo:'home', pathMatch: 'full'},
   {path: 'home', component: MainpageComponent},
   {path: 'login', component: LoginpageComponent},
-  {path: 'categories', component: CategoriesPageComponent},
+  {path: 'categories', component: CategoriesPageComponent, canActivate:[AuthGuard]},
   {path: 'register', component: RegistryPageComponent},
-  {path: 'profile', component: ProfileSettingsComponent},
-  {path: 'createtraining', component: CreateTrainingPageComponent},
-  {path: 'createtraining/:id', component: CreateTrainingPageComponent},
-  {path: 'addsession', component: AddSessionPageComponent},
-  {path: 'addsession/:trainingId/:sessionId', component: AddSessionPageComponent},
-  {path: 'training/:id', component: TrainingPageComponent},
-  {path: 'mytrainings', component: MyTrainingsPageComponent},
-  {path: 'admin', component: AdminPageComponent},
-  {path: 'trainings', component: TrainingsComponent},
-  {path: 'trainings/category/:category', component: TrainingsComponent},
-  {path: 'trainings/tag/:tag', component: TrainingsComponent},
-  {path: 'trainings/trainer/:trainer', component: TrainingsComponent},
-  {path: 'trainings/name/:name', component: TrainingsComponent},
-  {path: 'trainings/county/:county', component: TrainingsComponent},
-  {path: 'trainings/city/:city', component: TrainingsComponent}
+  {path: 'profile', component: ProfileSettingsComponent, canActivate:[AuthGuard]},
+  {path: 'createtraining', component: CreateTrainingPageComponent, canActivate:[AuthGuard]},
+  {path: 'createtraining/:id', component: CreateTrainingPageComponent, canActivate:[AuthGuard]},
+  {path: 'addsession', component: AddSessionPageComponent, canActivate:[AuthGuard]},
+  {path: 'addsession/:trainingId/:sessionId', component: AddSessionPageComponent, canActivate:[AuthGuard]},
+  {path: 'training/:id', component: TrainingPageComponent, canActivate:[AuthGuard]},
+  {path: 'mytrainings', component: MyTrainingsPageComponent, canActivate:[AuthGuard]},
+  {path: 'admin', component: AdminPageComponent, canActivate:[AuthGuard]},
+  {path: 'trainings', component: TrainingsComponent, canActivate:[AuthGuard]},
+  {path: 'trainings/category/:category', component: TrainingsComponent, canActivate:[AuthGuard]},
+  {path: 'trainings/tag/:tag', component: TrainingsComponent, canActivate:[AuthGuard]},
+  {path: 'trainings/trainer/:trainer', component: TrainingsComponent, canActivate:[AuthGuard]},
+  {path: 'trainings/name/:name', component: TrainingsComponent, canActivate:[AuthGuard]},
+  {path: 'trainings/county/:county', component: TrainingsComponent, canActivate:[AuthGuard]},
+  {path: 'trainings/city/:city', component: TrainingsComponent, canActivate:[AuthGuard]}
 
 ];
 
