@@ -38,8 +38,8 @@ export class MyTrainingsPageComponent implements OnInit {
   }
   closeResult = '';
   category: string | null = null;
-  imgSrc = './assets/images/defaultImages/defaultProfilePicture.png';
-  imgBckgSrc = './assets/images/mainPageImages/logo.png';
+  defaultProfile = './assets/images/defaultImages/defaultProfilePicture.png';
+  defaultTraining = './assets/images/mainPageImages/logo.png';
   
   mobile: boolean = false;
   counter = 0;
@@ -108,7 +108,6 @@ export class MyTrainingsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //TODO default profileImage
     if (this.user.role == 'Trainer') {
       this.trainingService.getByTrainerId(this.user.id).subscribe(
         (result) => {
@@ -119,7 +118,6 @@ export class MyTrainingsPageComponent implements OnInit {
               this.userService.getImageById(this.user.imageId).subscribe(
                 (result) => {
                   this.profileImages.push(result);
-                  console.log(this.profileImages[0].id)
                 },
                 (error) => console.log(error)
               );                            
@@ -155,12 +153,10 @@ export class MyTrainingsPageComponent implements OnInit {
           for (const item of this.trainers) {
             this.userService.getImageById(item.imageId).subscribe(
               (result) => {
-                console.log(result);
                 if (result != null) {
                   this.profileImages.push(result);
                   
                 }
-                console.log(this.profileImages)
               },
               (error) => console.log(error)
             );
@@ -169,7 +165,6 @@ export class MyTrainingsPageComponent implements OnInit {
           for (const training of this.myTrainings) {                
             this.trainingService.getImageById(training.id).subscribe(
               (result) => {
-                console.log(result)
                 for (const item of result.images) {
                   if (item.id == training.indexImageId) {
                     this.indexImages.push(item);
@@ -177,7 +172,6 @@ export class MyTrainingsPageComponent implements OnInit {
                   }
                   
                 }
-                console.log(this.indexImages)
               },
               (error) => console.log(error)
             );

@@ -32,10 +32,14 @@ namespace MoveYourBody.WebAPI.Controllers
                     tags.AddRange(dbContext.Set<Tag>().Where(t => t.Id == tag.Tag_id).ToList());
                 }
                 var trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault().Full_name;
+                var imageId = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault().ImageId;
+
+                var image = dbContext.Set<Images>().Where(i =>i.Id == imageId).FirstOrDefault();
                 return Ok(new { 
                     sessions,
                     trainer,
                     training,
+                    image,
                     category,
                     tags
                 });
@@ -51,7 +55,10 @@ namespace MoveYourBody.WebAPI.Controllers
                 foreach (var appl in applications)
                 {
                     var sess = dbContext.Set<TrainingSession>().Where(s => s.Training_id == trainingId && s.Id == appl.Training_session_id).FirstOrDefault();
-                    sessions.Add(sess);
+                    if (sess != null)
+                    {
+                        sessions.Add(sess);
+                    }
                 }
                 Training training = dbContext.Set<Training>().Where(t => t.Id == trainingId).FirstOrDefault();
                 sessions.OrderBy(s => s.Date);

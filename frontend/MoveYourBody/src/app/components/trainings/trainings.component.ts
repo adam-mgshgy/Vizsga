@@ -33,8 +33,8 @@ export class TrainingsComponent implements OnInit {
   tags: TagModel[] = [];
   tagTraining: TagTrainingModel[] = [];
 
-  imgSrc = './assets/images/defaultImages/defaultProfilePicture.png';
-  imgBckgSrc = './assets/images/mainPageImages/logo.png';
+  defaultProfile = './assets/images/defaultImages/defaultProfilePicture.png';
+  defaultTraining = './assets/images/mainPageImages/logo.png';
 
   mobile: boolean = false;
   result: boolean = false;
@@ -286,7 +286,6 @@ export class TrainingsComponent implements OnInit {
           (result) => {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
-            console.log(this.trainers);
             for (const item of this.trainers) {
               this.userService.getImageById(item.imageId).subscribe(
                 (result) => {
@@ -300,7 +299,6 @@ export class TrainingsComponent implements OnInit {
             for (const training of this.trainings) {
               this.trainingService.getImageById(training.id).subscribe(
                 (result) => {
-                  console.log(result);
                   for (const item of result.images) {
                     if (item.id == training.indexImageId) {
                       this.indexImages.push(item);

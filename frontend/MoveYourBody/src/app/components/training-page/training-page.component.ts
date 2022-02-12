@@ -13,12 +13,17 @@ import { ApplicantModel } from 'src/app/models/applicant-model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ApplicantService } from 'src/app/services/applicant.service';
 import {Sort} from '@angular/material/sort';
+import { ImagesModel } from 'src/app/models/images-model';
+import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-training-page',
   templateUrl: './training-page.component.html',
   styleUrls: ['./training-page.component.css'],
 })
 export class TrainingPageComponent implements OnInit {
+  profileImage: ImagesModel = new ImagesModel();
+  defaultProfile = './assets/images/defaultImages/defaultProfilePicture.png';
+  defaultTraining = './assets/images/mainPageImages/logo.png';
   id: Number;
   user: UserModel = {
     email: '',
@@ -73,7 +78,8 @@ export class TrainingPageComponent implements OnInit {
     private route: ActivatedRoute,
     private locationService: LocationService,
     private applicantService: ApplicantService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private userService: UserService
   ) {
     this.authenticationService.currentUser.subscribe((x) => (this.user = x));
   }
@@ -106,6 +112,17 @@ export class TrainingPageComponent implements OnInit {
       this.mobile = true;
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
+    console.log(this.trainer.imageId)
+    this.userService.getImageById(this.trainer.imageId).subscribe(
+      (result) => {
+        //TODO
+        console.log(result)
+        if (result != null) {
+          this.profileImage = result;
+        }
+      },
+      (error) => console.log(error)
+    );
 
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
@@ -124,6 +141,7 @@ export class TrainingPageComponent implements OnInit {
         this.trainerName = result.trainer;
         this.category = result.category;
         this.tags = result.tags;
+        this.profileImage = result.image
       },
       (error) => console.log(error)
     );
