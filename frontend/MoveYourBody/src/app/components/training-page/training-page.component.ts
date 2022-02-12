@@ -84,7 +84,21 @@ export class TrainingPageComponent implements OnInit {
     this.authenticationService.currentUser.subscribe((x) => (this.user = x));
   }
   sortData(sort: Sort) {
-    const data = this.sessions.slice();
+    let dataTemp = [];
+    this.sessions.forEach(session => {
+      var year = Number(session.date.substring(0, 4));
+      var month = Number(session.date.substring(5, 7));
+      var day = Number(session.date.substring(8, 10));
+      var hour = Number(session.date.substring(11, 13));
+      var minute = Number(session.date.substring(14, 16));
+      var sessionDate = new Date(year, month - 1, day, hour, minute);
+      if (sessionDate > this.currentDate) {
+        dataTemp.push(session);
+      }
+      
+    });
+
+    const data = dataTemp; 
     if (!sort.active || sort.direction === '') {
       this.sortedSessions = data;
       return;
@@ -111,19 +125,7 @@ export class TrainingPageComponent implements OnInit {
     if (window.innerWidth <= 800) {
       this.mobile = true;
     }
-    window.onresize = () => (this.mobile = window.innerWidth <= 991);
-    console.log(this.trainer.imageId)
-    this.userService.getImageById(this.trainer.imageId).subscribe(
-      (result) => {
-        //TODO
-        console.log(result)
-        if (result != null) {
-          this.profileImage = result;
-        }
-      },
-      (error) => console.log(error)
-    );
-
+    window.onresize = () => (this.mobile = window.innerWidth <= 991);  
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
     });

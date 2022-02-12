@@ -162,7 +162,6 @@ export class TrainingsComponent implements OnInit {
                   if (result != null) {
                     this.profileImages.push(result);
                   }
-                  console.log(this.profileImages);
                 },
                 (error) => console.log(error)
               );
