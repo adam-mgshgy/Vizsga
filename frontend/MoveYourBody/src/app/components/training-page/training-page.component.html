@@ -1,4 +1,6 @@
 <div class="container mt-4">
+
+
     <div class="row">
         <div class="col-lg-4 col-md-10 col-sm-10 trainer" [routerLink]="'/trainings/trainer/' + training.trainer_id">
             <img *ngIf="!profileImage" [src]="defaultProfile" alt="">
@@ -7,19 +9,40 @@
             <h2>{{trainerName}}</h2>
             <h4 class="fw-2">{{training.contact_phone}}</h4>
         </div>
-        <div class="col-lg-8 col-md-10 col-sm-10 trainer">
-            <h1 class="mb-4">{{training.name}}</h1>
-            <h2 class="mb-4">Az edzés leírása: </h2>
-            <h2 class="mb-4">{{training.description}}</h2>
-            <h3 class="mb-4">Kategória: <a [routerLink]="'/trainings/category/' + category.id">{{category.name}}</a></h3>
-            
-            <h3 class="mb-4">Címkék:</h3>
-            <span *ngFor="let tag of tags">
-                <button id="tag"  [ngStyle]="{'background-color':tag.colour, 'border-color':'white'}"
-                   class="btn fw-bold me-1 mb-1" [routerLink]="'/trainings/tag/' + tag.id" >{{tag.name}}</button>
-              </span>
+        <div id="slider" class="carousel slide col-lg-8 col-md-10 col-sm-10" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button *ngFor="let image of Images; let i = index" type="button" data-bs-target="#slider" attr.data-bs-slide-to="{{i}}" [ngClass]="{'active': i == 0 }"></button>
+            </div>
+            <div class="carousel-inner">
+
+                <div *ngFor="let image of Images; let i=index" class="carousel-item" [ngClass]="{'active': i == 0 }">
+                    <img [src]="'data:image/png;base64,'+ image.imageData" class="d-block w-100" alt="...">
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#slider" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#slider" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+
+            </div>
         </div>
         <div class="row">
+            <div class="col-lg-8 col-md-10 col-sm-10 trainer" style="margin: auto;">
+                <h1 class="mb-4">{{training.name}}</h1>
+                <h2 class="mb-4">Az edzés leírása: </h2>
+                <h2 class="mb-4">{{training.description}}</h2>
+                <h3 class="mb-4">Kategória: <a [routerLink]="'/trainings/category/' + category.id">{{category.name}}</a></h3>
+
+                <h3 class="mb-4">Címkék:</h3>
+                <span *ngFor="let tag of tags">
+                    <button id="tag" [ngStyle]="{'background-color':tag.colour, 'border-color':'white'}" class="btn fw-bold me-1 mb-1" [routerLink]="'/trainings/tag/' + tag.id">{{tag.name}}</button>
+                </span>
+            </div>
+
         </div>
     </div>
     <div class="row g-0 mx-5">
@@ -38,7 +61,7 @@
                 <tr *ngFor="let session of sortedSessions">
                     <td>
                         <span *ngFor="let location of locations" class="locations">
-                            <a *ngIf="location.id == session.location_id" [routerLink]="'/trainings/city/' + location.city_name" >{{location.city_name}}</a>
+                            <a *ngIf="location.id == session.location_id" [routerLink]="'/trainings/city/' + location.city_name">{{location.city_name}}</a>
                         </span>
                     </td>
                     <td>
@@ -48,7 +71,7 @@
                     <td>{{session.date | date: 'yyyy.MM.dd. HH:mm'}}</td>
                     <td>{{session.price}}</td>
                     <td>{{session.minutes}}</td>
-                    <td>{{session.number_of_applicants + '/' + session.max_member}}</td> 
+                    <td>{{session.number_of_applicants + '/' + session.max_member}}</td>
                     <td><button class="btn fw-bold mb-2 mt-2" (click)="Apply(session.id)">Jelentkezek!</button></td>
                 </tr>
             </tbody>

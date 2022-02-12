@@ -15,6 +15,7 @@ import { ApplicantService } from 'src/app/services/applicant.service';
 import {Sort} from '@angular/material/sort';
 import { ImagesModel } from 'src/app/models/images-model';
 import { UserService } from 'src/app/services/user.service';
+import { TrainingService } from 'src/app/services/training.service';
 @Component({
   selector: 'app-training-page',
   templateUrl: './training-page.component.html',
@@ -22,6 +23,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class TrainingPageComponent implements OnInit {
   profileImage: ImagesModel = new ImagesModel();
+  Images: ImagesModel[] = [];
   defaultProfile = './assets/images/defaultImages/defaultProfilePicture.png';
   defaultTraining = './assets/images/mainPageImages/logo.png';
   id: Number;
@@ -79,7 +81,7 @@ export class TrainingPageComponent implements OnInit {
     private locationService: LocationService,
     private applicantService: ApplicantService,
     private authenticationService: AuthenticationService,
-    private userService: UserService
+    private trainingService: TrainingService
   ) {
     this.authenticationService.currentUser.subscribe((x) => (this.user = x));
   }
@@ -125,7 +127,8 @@ export class TrainingPageComponent implements OnInit {
     if (window.innerWidth <= 800) {
       this.mobile = true;
     }
-    window.onresize = () => (this.mobile = window.innerWidth <= 991);  
+    window.onresize = () => (this.mobile = window.innerWidth <= 991);    
+
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
     });
@@ -143,6 +146,16 @@ export class TrainingPageComponent implements OnInit {
         this.category = result.category;
         this.tags = result.tags;
         this.profileImage = result.image
+
+        this.trainingService.getImageById(this.training.id).subscribe(
+          (result) => {
+            console.log(result)
+            for (const item of result.images) {
+              this.Images.push(item);          
+            }        
+          },
+          (error) => console.log(error)
+        );
 
         this.sessions.forEach(session => {
           var year = Number(session.date.substring(0, 4));
