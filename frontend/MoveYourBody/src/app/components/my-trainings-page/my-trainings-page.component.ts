@@ -12,6 +12,8 @@ import { TagService } from 'src/app/services/tag.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { TrainingSessionService } from 'src/app/services/training-session.service';
 import { ApplicantService } from 'src/app/services/applicant.service';
+import { ImagesModel } from 'src/app/models/images-model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-my-trainings-page',
@@ -25,14 +27,16 @@ export class MyTrainingsPageComponent implements OnInit {
     private applicantService: ApplicantService,
     private modalService: NgbModal,
     private tagService: TagService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private userService: UserService
   ) {
     this.authenticationService.currentUser.subscribe((x) => (this.user = x));
   }
   closeResult = '';
   category: string | null = null;
-  imgSrc = './assets/images/categoryPageImages/profile_rock.png';
-  imgBckgSrc = './assets/images/categoryPageImages/index.jpg';
+  defaultProfile = './assets/images/defaultImages/defaultProfilePicture.png';
+  defaultTraining = './assets/images/mainPageImages/logo.png';
+  
   mobile: boolean = false;
   counter = 0;
 
@@ -43,6 +47,9 @@ export class MyTrainingsPageComponent implements OnInit {
   trainers: UserModel[] = [];
   tags: TagModel[] = [];
   sessions: TrainingSessionModel[] = [];
+  ordered_session: any[] = [];
+  profileImages: ImagesModel[] = [];
+  indexImages: ImagesModel[] = [];
 
   currentDate = new Date();
   deleteSession(session: TrainingSessionModel) {
@@ -89,6 +96,34 @@ export class MyTrainingsPageComponent implements OnInit {
       this.trainingService.getByTrainerId(this.user.id).subscribe(
         (result) => {
           this.myTrainings = result.trainings;
+          this.userService.getUserById(this.user.id).subscribe(
+            (result) => {
+              this.user = result;
+              this.userService.getImageById(this.user.imageId).subscribe(
+                (result) => {
+                  this.profileImages.push(result);
+                },
+                (error) => console.log(error)
+              );                            
+              for (const training of this.myTrainings) {                
+                this.trainingService.getImageById(training.id).subscribe(
+                  (result) => {
+                    console.log(result)
+                    for (const item of result.images) {
+                      if (item.id == training.indexImageId) {
+                        this.indexImages.push(item);
+                        
+                      }
+                      
+                    }
+                    console.log(this.indexImages)
+                  },
+                  (error) => console.log(error)
+                );
+              }
+            },
+            (error) => console.log(error)
+          );
           this.tagTraining = result.tagTrainings;
         },
         (error) => console.log(error)
@@ -97,7 +132,32 @@ export class MyTrainingsPageComponent implements OnInit {
       this.trainingService.getByUserId(this.user.id).subscribe(
         (result) => {
           this.trainers = result.trainers;
+          for (const item of this.trainers) {
+            this.userService.getImageById(item.imageId).subscribe(
+              (result) => {
+                if (result != null) {
+                  this.profileImages.push(result);
+                  
+                }
+              },
+              (error) => console.log(error)
+            );
+          }
           this.myTrainings = result.trainings;
+          for (const training of this.myTrainings) {                
+            this.trainingService.getImageById(training.id).subscribe(
+              (result) => {
+                for (const item of result.images) {
+                  if (item.id == training.indexImageId) {
+                    this.indexImages.push(item);
+                    
+                  }
+                  
+                }
+              },
+              (error) => console.log(error)
+            );
+          }
           this.tagTraining.push.apply(this.tagTraining, result.tagTrainingList);
         },
         (error) => console.log(error)

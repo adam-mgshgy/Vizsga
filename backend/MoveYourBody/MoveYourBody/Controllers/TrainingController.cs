@@ -31,7 +31,7 @@ namespace MoveYourBody.WebAPI.Controllers
                     Images newImage = new Images()
                     {
                         Id = 0,
-                        ImageData = image
+                        ImageData = image,
                     };
                     dbContext.Set<Images>().Add(newImage);
                     dbContext.SaveChanges();
@@ -40,14 +40,21 @@ namespace MoveYourBody.WebAPI.Controllers
                     {
                         Id = 0,
                         ImageId = dbContext.Set<Images>().Where(t => t.ImageData == image).FirstOrDefault().Id,
-                        TrainingId = trainingId
+                        TrainingId = trainingId,
                     };
                     dbContext.Set<TrainingImages>().Add(newTrainingImages);
-                
+                    dbContext.SaveChanges();
+                    var training = dbContext.Set<Training>().Where(t => t.Id == newTrainingImages.TrainingId).FirstOrDefault();
+                    if (dbContext.Set<TrainingImages>().Where(t => t.TrainingId == training.Id).Count() == 1)
+                    {
+                        training.IndexImageId = dbContext.Set<Images>().Where(t => t.ImageData == image).FirstOrDefault().Id;
+                        dbContext.Entry(training).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
+                    }
+                    dbContext.SaveChanges();
 
                 }
 
-                    dbContext.SaveChanges();
                 return Ok();
 
             });
@@ -126,11 +133,22 @@ namespace MoveYourBody.WebAPI.Controllers
             {
                 foreach (var item in id)
                 {
-                    var trainingImages = dbContext.Set<TrainingImages>().Where(t => t.Id == item).FirstOrDefault();
+                    var trainingImages = dbContext.Set<TrainingImages>().Where(t => t.ImageId == item).FirstOrDefault();
                     dbContext.Remove(trainingImages);
                     var image = dbContext.Set<Images>().Where(i => i.Id == trainingImages.ImageId).FirstOrDefault();
                     dbContext.Remove(image);
+                    dbContext.SaveChanges();
 
+                    var training = dbContext.Set<Training>().Where(t => t.Id == trainingImages.TrainingId).FirstOrDefault();
+                    if (training.IndexImageId == item && dbContext.Set<TrainingImages>().Where(t => t.TrainingId == trainingImages.TrainingId) != null)
+                    {
+                        training.IndexImageId = dbContext.Set<TrainingImages>().Where(t => t.TrainingId == trainingImages.TrainingId).FirstOrDefault().ImageId;
+                    }
+                    else if (dbContext.Set<TrainingImages>().Where(t => t.TrainingId == trainingImages.TrainingId) == null)
+                    {
+                        training.IndexImageId = 0;
+                    }
+                    dbContext.Entry(training).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 }
                 dbContext.SaveChanges();
                 return Ok();

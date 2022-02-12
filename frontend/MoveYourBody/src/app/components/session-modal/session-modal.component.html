@@ -34,7 +34,7 @@
       <div>Helyszín</div>
     </div>
     <div class="col-6">
-      <div>{{location.city_name + ', ' + session.address_name}}</div>
+      <div *ngIf="location">{{location.city_name + ', ' + session.address_name}}</div>
     </div>
     <hr>
   </div>
