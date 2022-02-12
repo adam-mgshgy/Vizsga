@@ -46,3 +46,11 @@ table {
   text-align: center;
   vertical-align: middle;
 }
+#description{
+    border: 3px solid #216869;
+    border-radius: 50px;
+}
+#descriptionTitle{
+    margin: auto;
+    width: auto;
+}
