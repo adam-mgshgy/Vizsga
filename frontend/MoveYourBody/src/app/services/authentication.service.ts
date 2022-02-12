@@ -4,6 +4,8 @@ import { BehaviorSubject, map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UserModel } from '../models/user-model';
 import { UserService } from './user.service';
+import jwt_decode from 'jwt-decode'
+
 
 @Injectable({
   providedIn: 'root',
@@ -47,5 +49,18 @@ export class AuthenticationService {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
     localStorage.removeItem('jwt');
+  }
+
+  hasRole(roleName: string): boolean {
+    if (!this.currentUser) {
+      return false;
+    }
+    const userInfo: any = jwt_decode(localStorage.getItem('jwt'));
+    var roles = userInfo["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+    if (Array.isArray(roles)){
+      return roles.indexOf(roleName) >= 0
+    } else {
+      return roles == roleName;
+    }
   }
 }

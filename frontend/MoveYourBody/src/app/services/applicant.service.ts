@@ -83,9 +83,9 @@ export class ApplicantService {
       })
     );
   }
-  listBySessionId(sessionId: any): Observable<ApplicantModel[]> {
-    return this.http.get<ApplicantModel[]>(`${environment.ApiURL}/applicants/list/session?trainingSessionId=${sessionId}`, ).pipe(
-      map((data: ApplicantModel[]) => {        
+  listBySessionId(sessionId: any): Observable<any> {
+    return this.http.get<any>(`${environment.ApiURL}/applicants/list/session?trainingSessionId=${sessionId}`, ).pipe(
+      map((data: any) => {        
         return data;
       }),
       catchError(err => {

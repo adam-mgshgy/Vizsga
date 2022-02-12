@@ -69,7 +69,7 @@ export class TrainingPageComponent implements OnInit {
   locations: LocationModel[];
   tagTraining: TagTrainingModel[] = [];
   tags: TagModel[] = [];
-  // sort: Sort;
+  currentDate = new Date();
 
   usersSessions: ApplicantModel[] = [];
   mobile: boolean = false;
@@ -136,12 +136,27 @@ export class TrainingPageComponent implements OnInit {
     this.trainingSessionService.listByTrainingId(this.id).subscribe(
       (result) => {
         this.sessions = result.sessions;
-        this.sortedSessions = this.sessions.slice();
         this.training = result.training;
         this.trainerName = result.trainer;
         this.category = result.category;
         this.tags = result.tags;
         this.profileImage = result.image
+
+        this.sessions.forEach(session => {
+          var year = Number(session.date.substring(0, 4));
+          var month = Number(session.date.substring(5, 7));
+          var day = Number(session.date.substring(8, 10));
+          var hour = Number(session.date.substring(11, 13));
+          var minute = Number(session.date.substring(14, 16));
+          var sessionDate = new Date(year, month - 1, day, hour, minute);
+          if (sessionDate < this.currentDate) {
+            session.isPast = true;
+          }
+          else {
+            session.isPast = false;
+            this.sortedSessions.push(session)
+          }
+        });
       },
       (error) => console.log(error)
     );

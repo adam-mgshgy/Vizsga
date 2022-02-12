@@ -1,8 +1,8 @@
 <div class="container-fluid search">
   <div class="row">
-    <h3>Keresés hely alapján</h3>
+    <button class="btn fs-2" (click)="isSearch=!isSearch" id="searchText">Keresés hely alapján</button>
   </div>
-  <div class="row mb-2">
+  <div class="row mb-2" *ngIf="isSearch">
     <div class="col col-lg-6 col-md-6 col-sm-12">
       <label for="county" class="form-label">
         Megye választása:

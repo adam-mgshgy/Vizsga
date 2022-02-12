@@ -50,10 +50,6 @@
               <span *ngFor="let tag of tagTraining">
                 <button *ngIf="training && tags[tag.tag_id-1] &&myTrainings.length > 0 && training.id == tag.training_id && tag.tag_id == tags[tag.tag_id-1].id  ? 'true' : ''" id="tag" [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}" class="btn fw-bold me-1 mb-1">{{tags[tag.tag_id-1].name}}</button>
               </span>
-              <select *ngIf=" " id="moreTag" class="btn fw-bold me-1 mb-1">
-                <option value="">...</option>
-                <option *ngFor="let tag of tags" value="">{{tag.name}}</option>
-              </select>
             </div>
           </div>
         </div>
@@ -87,8 +83,8 @@
 
     <mat-divider></mat-divider>
 
-    <mat-expansion-panel *ngFor="let session of sessions;let i = index">
-      <mat-expansion-panel-header>
+    <mat-expansion-panel *ngFor="let session of sessions;let i = index" [style]="session.isPast ? 'opacity: 0.6' : ''">
+      <mat-expansion-panel-header >
         <mat-panel-title>
           {{ session.date | date: 'yyyy.MM.dd. HH:mm'}}
           <mat-divider></mat-divider>
@@ -96,10 +92,11 @@
         <mat-panel-description>
           <button *ngIf="user.role == 'Trainer'" class="btn btn-primary me-3" [routerLink]="'/addsession/'  +  currentTraining.id + '/' + session.id" (click)="close()">Duplikálás</button>
           <button *ngIf="user.role == 'Trainer'" class="btn btn-danger" (click)="deleteSession(session)">Törlés</button>
-          <button *ngIf="user.role == 'User'" class="btn btn-danger" (click)="deleteApplication(session.id)">Lemondás</button>
+          <button class="btn fw-bold" disabled *ngIf="session.isPast" style="color: red;">Lejárt</button>
+          <button *ngIf="user.role == 'User'" class="btn btn-danger" (click)="deleteApplication(session.id)">{{session.isPast ? 'Törlés' : 'Lemondás'}}</button>
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <app-session-modal [session]="session"></app-session-modal>
+      <app-session-modal  [session]="session"></app-session-modal>
     </mat-expansion-panel>
 
   </mat-accordion>

@@ -22,7 +22,7 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var sessions = dbContext.Set<TrainingSession>().Where(s => s.Training_id == trainingId).OrderBy(t => t.Date);
+                var sessions = dbContext.Set<TrainingSession>().Where(s => s.Training_id == trainingId).OrderBy(t => t.Date).ToList();
                 Training training = dbContext.Set<Training>().Where(t => t.Id == trainingId).FirstOrDefault();
                 Category category = dbContext.Set<Category>().Where(c => c.Id == training.Category_id).FirstOrDefault();
                 var tagIds = dbContext.Set<TagTraining>().Where(t => t.Training_id == trainingId).ToList();
@@ -61,7 +61,7 @@ namespace MoveYourBody.WebAPI.Controllers
                     }
                 }
                 Training training = dbContext.Set<Training>().Where(t => t.Id == trainingId).FirstOrDefault();
-                sessions.OrderBy(s => s.Date);
+                sessions = sessions.OrderBy(s => s.Date).ToList();
                 return Ok(new
                 {
                     sessions,

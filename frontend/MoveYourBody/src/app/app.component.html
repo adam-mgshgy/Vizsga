@@ -9,20 +9,20 @@
         <li class="nav-item">
           <a class="nav-link active" routerLink="/home">Kezdőlap</a>
         </li>
-        <li class="nav-item">
+        <li *ngIf="user" class="nav-item">
           <a class="nav-link active" routerLink="/trainings">Minden Edzés</a>
         </li>
-        <li class="nav-item dropdown">
+        <li *ngIf="user" class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" routerLink="/categories" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
             Kategóriák
           </a>
-          <ul class="dropdown-menu">
+          <ul *ngIf="user" class="dropdown-menu">
             <li *ngFor="let cat of categories">
               <a class="dropdown-item" [routerLink]="'/trainings/category/' +  cat.id">{{cat.name}}</a>
             </li>
           </ul>
         </li>
-        <li class="nav-item dropdown">
+        <li *ngIf="user" class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
             Tagek
           </a>
