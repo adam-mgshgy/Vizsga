@@ -1,4 +1,4 @@
-<div (resized)="onResized($event)" [ngStyle]="{ 'width.%': mobile == true ? '100' : '80' }" class="container-fluid">
+<div (resized)="onResized($event)" [ngStyle]="{ 'width.%': mobile == true ? '100' : '80' }" class="container-fluid mt-2">
   <div class="row">
     <div *ngFor="let training of myTrainings; let i = index" class="col-xxl-4 col-xl-6 col-md-6">
       <div class="card mb-3">

@@ -1,72 +1,80 @@
-.container-fluid{
-    width: 80%;
+.container-fluid {
+  width: 80%;
+  height: 100%;
 }
-#tag{    
-    height: 30px;
-    font-size: x-small;
-    border: 0px;
-    color: #DCE1DE;
+#tag {
+  height: 30px;
+  font-size: x-small;
+  border: 0px;
+  color: #dce1de;
 }
 .catBtn {
-    background-color: #9CC5A1;
-    color: #1F2421;
-    font-weight: bold;
+  background-color: #9cc5a1;
+  color: #1f2421;
+  font-weight: bold;
 }
 .dark {
-    background-color: #343a40;
-    margin: auto;
-    padding: auto;
-    align-items: center;
-    align-content: center;
+  background-color: #343a40;
+  margin: auto;
+  padding: auto;
+  align-items: center;
+  align-content: center;
 }
 .light {
-    background-color: white;
+  background-color: white;
 }
 .hoverLink:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-.search>div {
-    font-size: large;
-    margin: auto;
-    text-align: center;
+.search > div {
+  font-size: large;
+  margin: auto;
+  text-align: center;
 }
-select, input {
-    height: 2.5rem;
-    margin-top: 1rem;
-    margin-bottom: 2rem;
+select,
+input {
+  height: 2.5rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 #searchBtn {
-    width: 25%;
-    font-size: medium;
+  width: 25%;
+  font-size: medium;
 }
 .search {
-    padding: 2rem;
-    margin: auto;
+  padding: 2rem;
+  margin: auto;
 }
 #startSearch {
-    font-size: large;
-    background-color: #343a40;
-    color: white;
-    margin: auto;
-    width: 15rem;  
-    height: 3rem;
-    margin-bottom: 1rem;
+  font-size: large;
+  background-color: #343a40;
+  color: white;
+  margin: auto;
+  width: 15rem;
+  height: 3rem;
+  margin-bottom: 1rem;
 }
 .title {
-    margin: auto;
-    text-align: center;
-    margin-bottom: 1rem;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 #searchText {
-    background-color: #49A078;
-    color: white;
-    width: 30%;
-    margin: auto;
-    
+  background-color: #49a078;
+  color: white;
+  width: 30%;
+  margin: auto;
 }
-/* body {
-    background-image: url(/frontend/MoveYourBody/src/assets/images/background.jpeg);
-    background-repeat: no-repeat;
-    background-color: black;
-  } */
+body,
+html {
+  height: 100%;
+}
+.parallax {
+  background-image: url("C:\Users\HP\Desktop\Vizsga\frontend\MoveYourBody\src\assets\images\background.jpeg");
+  height: 100%;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
