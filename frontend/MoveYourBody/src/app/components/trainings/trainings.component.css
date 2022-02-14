@@ -1,6 +1,5 @@
 .container-fluid {
   width: 80%;
-  height: 100%;
 }
 #tag {
   height: 30px;
@@ -41,10 +40,18 @@ input {
 #searchBtn {
   width: 25%;
   font-size: medium;
+  background-color: #49A078;
 }
 .search {
   padding: 2rem;
   margin: auto;
+}
+.appearing {
+  /* background-color: rgba(255, 255, 255, 0.7); */
+  background-color: white;
+  padding: 1rem;
+  border-radius: 4px;
+
 }
 #startSearch {
   font-size: large;
@@ -61,20 +68,24 @@ input {
   margin-bottom: 1rem;
 }
 #searchText {
-  background-color: #49a078;
+  background-color: #216869;
   color: white;
   width: 30%;
   margin: auto;
 }
-body,
-html {
-  height: 100%;
-}
+
 .parallax {
-  background-image: url("C:\Users\HP\Desktop\Vizsga\frontend\MoveYourBody\src\assets\images\background.jpeg");
-  height: 100%;
+  background-image: url("../../../assets/images/background.jpeg");
+  min-height: calc(100vh - 59px);
+  
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+@media screen and (max-width: 991px) {
+  .parallax {
+    min-height: calc(100vh - 79px);
+
+  }
 }

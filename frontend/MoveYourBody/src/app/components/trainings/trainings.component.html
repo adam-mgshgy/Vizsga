@@ -1,9 +1,9 @@
 <div class="parallax">
   <div class="container-fluid search">
     <div class="row">
-      <button class="btn fs-2" (click)="isSearch=!isSearch" id="searchText">Keresés hely alapján</button>
+      <button class="btn fs-2 mb-2" *ngIf="!isSearch" (click)="isSearch=!isSearch" id="searchText">Keresés hely alapján</button>
     </div>
-    <div class="row mb-2" *ngIf="isSearch">
+    <div class="row mb-2 appearing" *ngIf="isSearch">
       <div class="col col-lg-6 col-md-6 col-sm-12">
         <label for="county" class="form-label">
           Megye választása:
@@ -25,23 +25,19 @@
       </div>
 
       <div class="col">
-        <button class="btn btn-success" (click)="Search()" id="searchBtn">Keresés</button>
+        <button class="btn fw-bold me-2" (click)="Search()" id="searchBtn">Keresés</button>
+        <button class="btn btn-danger fw-bold" (click)="isSearch=!isSearch">X</button>
       </div>
     </div>
-
   </div>
 
   <div (resized)="onResized($event)" [ngStyle]="{'width.%': mobile ==true ? '100' : '80'}" class="container-fluid">
     <div class="row title">
-      <h1 *ngIf="!result">
+      <h1>
         Minden Edzés
-      </h1>
-      <h1 *ngIf="result">
-        A keresés eredménye
       </h1>
     </div>
     <div class="row">
-
       <div *ngFor="let training of trainings;let i=index" class="col-xxl-4 col-xl-6 col-md-6">
         <div class="card mb-3">
           <div class="row g-0">
