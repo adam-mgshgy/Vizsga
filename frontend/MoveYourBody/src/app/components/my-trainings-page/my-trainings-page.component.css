@@ -1,6 +1,8 @@
-.container-fluid{
-    width: 80%;
+.container-fluid {
+  width: 80%;
+  padding-top: 2rem;
 }
+
 #tag{    
     height: 30px;
     font-size: x-small;
@@ -8,44 +10,57 @@
     color: white;
     cursor: pointer;
 }
-#moreTag{
-    height: 30px;
-    padding: 0px;
-    border: 1px solid black;
-    width: 3rem;
+#moreTag {
+  height: 30px;
+  padding: 0px;
+  border: 1px solid black;
+  width: 3rem;
 }
 #lightBckg {
-    background-color: white;
+  background-color: white;
 }
-#modify{
-    background-color: #216869;
-    border-color: white;
+#modify {
+  background-color: #216869;
+  border-color: white;
 }
-#newSession{
-    background-color: #49A078;
-    border-color: white;
-
+#newSession {
+  background-color: #49a078;
+  border-color: white;
 }
-#sessions{
-    background-color: #216869;
-    border-color: white;
+#sessions {
+  background-color: #216869;
+  border-color: white;
 }
 #newTraining {
-    width: 40%;
-    height: 150px;
-    font-size: xx-large;
-    background-color: #9CC5A1;
-    color: white;
+  width: 40%;
+  height: 150px;
+  font-size: xx-large;
+  background-color: #9cc5a1;
+  color: white;
 }
-#exPanel{
+#exPanel {
   pointer-events: none;
 }
 .noApplications {
-    margin: 10%;
-    text-align: center;
-    color: #216869;
+  margin: 10%;
+  text-align: center;
+  color: #216869;
 }
 .noApplications a {
-    text-decoration: none;
-    color: #216869;
+  text-decoration: none;
+  color: #216869;
+}
+.parallax {
+  background-image: url("../../../assets/images/backgrounds/background2.jpeg");
+  min-height: calc(100vh - 59px);
+
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+@media screen and (max-width: 991px) {
+  .parallax {
+    min-height: calc(100vh - 79px);
+  }
 }

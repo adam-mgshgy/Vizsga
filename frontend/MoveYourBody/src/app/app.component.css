@@ -1,12 +1,5 @@
-.dropdown:hover .dropdown-menu {
-    display: block;
-    margin-top: 0;
- }
  .dropdown:not(:hover) .dropdown-menu{
     display: none;
- }
- #userDropdown{
-    margin-right: 3rem;
  }
  nav {
    background-color: #216869;
@@ -31,5 +24,5 @@
    width: 100%;
  }
  #logoLink {
-   width: 12%;
+   width: 60px;
  }

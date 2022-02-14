@@ -1,35 +1,57 @@
-#name{
-    margin: auto;
-    text-align: center;
+#name {
+  margin: auto;
+  text-align: center;
 }
 .form-text {
-    margin: auto;
+  margin: auto;
 }
 .container-fluid {
-    align-content: center;
-    text-align: center;
+  align-content: center;
+  text-align: center;
+  color:white;
+}
+.color {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  margin-left:25%;
+  margin-right:25%;
+  background-color: rgba(27, 27, 27, 0.568);
 }
 ul {
-    margin-left: 35%;
-    width: 60%;
-    list-style: none;
-    text-align: left;
+  margin-left: 40%;
+  width: 60%;
+  list-style: none;
+  text-align: left;
 }
 #photo {
-    margin: auto;   
+  margin: auto;
 }
 #createButton {
-    background-color: #216869;
+  background-color: #216869;
 }
-#close:hover{
-    cursor: pointer;
+#close:hover {
+  cursor: pointer;
 }
 
-  .row img {
-    opacity: 1;
-    cursor: pointer;
+.row img {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.row img:hover {
+  opacity: 0.8;
+}
+.parallax {
+    background-image: url("../../../assets/images/backgrounds/background2.jpeg");
+    min-height: calc(100vh - 58px);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
+  @media screen and (max-width: 991px) {
+    .parallax {
+      min-height: calc(100vh - 79px);
   
-  .row img:hover {
-    opacity: 0.8;
+    }
   }
