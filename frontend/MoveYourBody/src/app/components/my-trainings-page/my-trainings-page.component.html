@@ -47,9 +47,12 @@
             <div class="card-body">
               <p class="card-text">{{training.description}}</p>
 
-              <span *ngFor="let tag of tagTraining">
-                <button *ngIf="training && tags[tag.tag_id-1] &&myTrainings.length > 0 && training.id == tag.training_id && tag.tag_id == tags[tag.tag_id-1].id  ? 'true' : ''" id="tag" [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}" class="btn fw-bold me-1 mb-1">{{tags[tag.tag_id-1].name}}</button>
-              </span>
+              <mat-chip-list>
+                <span *ngFor="let tag of tagTraining">
+                  <mat-chip *ngIf="tags[tag.tag_id-1] && tag.training_id == training.id" id="tag" [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}" class="btn fw-bold me-1 mb-1">{{tags[tag.tag_id-1].name}}</mat-chip>
+                </span>
+
+              </mat-chip-list>
             </div>
           </div>
         </div>

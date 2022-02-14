@@ -28,6 +28,7 @@ h2 {
 }
 #tag {
   color: white;
+  cursor: pointer;
 }
 .locations {
   padding: 0;

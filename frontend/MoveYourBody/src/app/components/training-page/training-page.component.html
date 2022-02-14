@@ -37,9 +37,12 @@
     <div class="row mt-5 mb-5">
         <div class="col-lg-4">
             <h3 class="mb-4"><a [routerLink]="'/trainings/category/' + category.id">{{category.name}}</a></h3>
-            <span *ngFor="let tag of tags">
-                <button id="tag" [ngStyle]="{'background-color':tag.colour, 'border-color':'white'}" class="btn fw-bold me-1 mb-1" [routerLink]="'/trainings/tag/' + tag.id">{{tag.name}}</button>
-            </span>
+            
+                <mat-chip-list>
+                    <span *ngFor="let tag of tags">
+                    <mat-chip id="tag" [ngStyle]="{'background-color':tag.colour, 'border-color':'white'}" class="btn fw-bold me-1 mb-1" [routerLink]="'/trainings/tag/' + tag.id">{{tag.name}}</mat-chip>
+                </span>
+                </mat-chip-list>                            
         </div>
         <div class="col">
             <h2 id="descriptionTitle" class="mb-2">Az edzés leírása: </h2>
