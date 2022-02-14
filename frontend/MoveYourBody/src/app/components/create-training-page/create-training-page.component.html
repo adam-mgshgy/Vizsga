@@ -68,7 +68,7 @@
             <div class="form-control-label me-2">Címkék:</div>
             <ul>
                 <li *ngFor="let tag of tags" class="checks">
-                    <input [value]="tag.name" class="form-check-input me-2" type="checkbox" (change)="onTagChange(tag.name)" value="{{tag.name}}" id="{{tag.name}}" [checked]="checkTags(tag.name)">
+                    <input [value]="tag.name" class="form-check-input me-2" type="checkbox" (change)="onTagChange(tag.name)" value="{{tag.name}}" id="{{tag.name}}" [checked]="checkTags(tag.id)">
                     <label class="form-check-label" for="{{tag.name}}">
                         {{tag.name}}
                     </label>
