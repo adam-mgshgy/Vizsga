@@ -12,7 +12,7 @@ import { ProfileSettingsComponent } from './components/profile-settings/profile-
 import { CreateTrainingPageComponent } from './components/create-training-page/create-training-page.component';
 import { AddSessionPageComponent } from './components/add-session-page/add-session-page.component';
 import { TrainingPageComponent } from './components/training-page/training-page.component';
-
+import {MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
@@ -64,6 +64,7 @@ export function tokenGetter() {
     MatCheckboxModule,
     MatSortModule,
     MatSelectModule,
+    MatChipsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
