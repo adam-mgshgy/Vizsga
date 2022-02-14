@@ -1,11 +1,14 @@
 .container-fluid {
   width: 80%;
 }
-#tag {
-  height: 30px;
-  font-size: x-small;
-  border: 0px;
-  color: #dce1de;
+
+#tag{    
+    height: 30px;
+    font-size: x-small;
+    border: 0px;
+    color: #DCE1DE;
+    cursor: pointer;
+
 }
 .catBtn {
   background-color: #9cc5a1;

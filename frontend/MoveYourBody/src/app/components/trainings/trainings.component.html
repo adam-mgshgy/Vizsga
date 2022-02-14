@@ -31,17 +31,25 @@
     </div>
   </div>
 
-  <div (resized)="onResized($event)" [ngStyle]="{'width.%': mobile ==true ? '100' : '80'}" class="container-fluid">
-    <div class="row title">
-      <h1>
-        Minden Edzés
-      </h1>
-    </div>
-    <div class="row">
-      <div *ngFor="let training of trainings;let i=index" class="col-xxl-4 col-xl-6 col-md-6">
-        <div class="card mb-3">
-          <div class="row g-0">
-            <div class="col-4 align-items-center">
+</div>
+
+<div (resized)="onResized($event)" [ngStyle]="{'width.%': mobile ==true ? '100' : '80'}" class="container-fluid">
+  <div class="row title">
+    <h1>
+      Minden Edzés
+    </h1>
+  </div>
+  <div class="row">
+
+    <div *ngFor="let training of trainings;let i=index" class="col-xxl-4 col-xl-6 col-md-6">
+      <div class="card mb-3">
+        <div class="row g-0">
+          <div class="col-4 align-items-center">
+            <span *ngFor="let trainer of trainers">
+              <img *ngIf="training.trainer_id == trainer.id && trainer.imageId == 0" [routerLink]="'/trainings/trainer/' + training.trainer_id" [src]="defaultProfile" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
+            </span>
+            <span *ngFor="let image of profileImages">
+
               <span *ngFor="let trainer of trainers">
                 <img *ngIf="training.trainer_id == trainer.id && trainer.imageId == 0" [routerLink]="'/trainings/trainer/' + training.trainer_id" [src]="defaultProfile" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
               </span>
@@ -76,16 +84,14 @@
                 </span>
               </div>
             </div>
-
-            <div class="col-md-12">
-              <div class="card-body light">
-                <h5 class="card-text">{{training.description}}</h5>
+          <div class="col-md-12">
+            <div class="card-body light">
+              <h5 class="card-text">{{training.description}}</h5>
+              <mat-chip-list>
                 <span *ngFor="let tag of tagTraining">
-                  <button [routerLink]="'/trainings/tag/' + tag.tag_id" *ngIf="training.id && training.id == tag.training_id && tag.tag_id == tags[tag.tag_id-1].id  ? 'true' : ''" id="tag" [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}" class="btn fw-bold me-1 mb-1">{{tags[tag.tag_id-1].name}}</button>
+                  <mat-chip [routerLink]="'/trainings/tag/' + tag.tag_id" *ngIf="tag.training_id == training.id" id="tag" [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}" class="btn fw-bold me-1 mb-1">{{tags[tag.tag_id-1].name}}</mat-chip>
                 </span>
-
-                <!-- <p class="card-text fw-bold"><a class="text-decoration-none text-black" routerLink="">{{locations[users[i].location_id].city_name}}</a></p> -->
-              </div>
+              </mat-chip-list>                           
             </div>
           </div>
         </div>

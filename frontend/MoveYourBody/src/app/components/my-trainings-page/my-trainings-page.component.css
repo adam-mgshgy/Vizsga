@@ -2,11 +2,13 @@
   width: 80%;
   padding-top: 2rem;
 }
-#tag {
-  height: 30px;
-  font-size: x-small;
-  border: 0px;
-  color: white;
+
+#tag{    
+    height: 30px;
+    font-size: x-small;
+    border: 0px;
+    color: white;
+    cursor: pointer;
 }
 #moreTag {
   height: 30px;

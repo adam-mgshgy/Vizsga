@@ -79,7 +79,8 @@ export class TrainingsComponent implements OnInit {
       this.selectedCounty = params.get('county');
       this.selectedCity = params.get('city');
       if (this.categoryId) {
-        //TODO profile pictures bug
+        this.profileImages = [];
+        this.indexImages = [];
         this.trainingService.getByCategory(this.categoryId).subscribe(
           (result) => {
             this.trainings = result.trainings;
@@ -115,6 +116,8 @@ export class TrainingsComponent implements OnInit {
           (error) => console.log(error)
         );
       } else if (this.tagId) {
+        this.profileImages = [];
+        this.indexImages = [];
         this.trainingService.getByTag(this.tagId).subscribe(
           (result) => {
             this.trainings = result.trainings;
@@ -150,6 +153,8 @@ export class TrainingsComponent implements OnInit {
           (error) => console.log(error)
         );
       } else if (this.trainerId) {
+        this.profileImages = [];
+        this.indexImages = [];
         this.trainingService.getByTrainerId(this.trainerId).subscribe(
           (result) => {
             this.trainings = result.trainings;
@@ -183,6 +188,8 @@ export class TrainingsComponent implements OnInit {
           (error) => console.log(error)
         );
       } else if (this.trainingName) {
+        this.profileImages = [];
+        this.indexImages = [];
         this.trainingService.getByName(this.trainingName).subscribe(
           (result) => {
             this.trainings = result.trainings;
@@ -215,6 +222,8 @@ export class TrainingsComponent implements OnInit {
           (error) => console.log(error)
         );
       } else if (this.selectedCity) {
+        this.profileImages = [];
+        this.indexImages = [];
         this.trainingService.getByCity(this.selectedCity).subscribe(
           (result) => {
             this.trainings = result.trainings;
@@ -248,6 +257,8 @@ export class TrainingsComponent implements OnInit {
           (error) => console.log(error)
         );
       } else if (this.selectedCounty) {
+        this.profileImages = [];
+        this.indexImages = [];
         this.trainingService.getByCounty(this.selectedCounty).subscribe(
           (result) => {
             this.trainings = result.trainings;
