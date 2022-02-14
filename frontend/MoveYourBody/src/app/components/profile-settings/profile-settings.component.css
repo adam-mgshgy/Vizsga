@@ -8,10 +8,12 @@ button {
 }
 .form-text {
   margin: auto;
+  color: black;
 }
 .container-fluid {
   align-content: center;
   text-align: center;
+  /* background-color: rgba(0, 0, 0, 0.5); */
 }
 #cancelSubscriptionButton {
   background-color: #1f2421;
@@ -26,14 +28,21 @@ button {
 #email {
   background-color: #9cc5a1;
 }
+.form-label,
+h1,
+h5 {
+  color: black;
+}
 .parallax {
-  background-image: url("../../../assets/images/background.jpeg");
+  background-image: url("../../../assets/images/backgrounds/profilesettings.jpeg");
   min-height: calc(100vh - 59px);
-
+  font-weight: bold;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; 
 }
 @media screen and (max-width: 991px) {
   .parallax {

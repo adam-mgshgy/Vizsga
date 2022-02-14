@@ -1,72 +1,75 @@
-<div [ngStyle]="{'width.%': mobile ==true ? '100' : '80'}" class="container-fluid mt-2">
-    <h1>Regisztráció</h1>
-    <form>
-        <p>A *-gal jelölt mezők kitöltése kötelező!</p>
-        <div class="mb-3">
-            <label for="username" class="form-label fs-5">
-                Teljes név*
-            </label>
-            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="text" maxlength="255" class="form-control" id="username" name="username" required [(ngModel)]="newUser.full_name">
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label fs-5">E-mail cím*</label>
-            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="email" maxlength="320" class="form-control" id="email" name="email" required [(ngModel)]="newUser.email">
-            <div [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" id="emailHelp" class="form-text">Az e-mail cím regisztráció után nem változtatható meg!</div>
-        </div>
-        <div class="mb-3">
-            <label for="phoneNumber" class="form-label fs-5">
-                Telefonszám*
-            </label>
-            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="text" maxlength="12" class="form-control" id="phoneNumber" name="phoneNumber" required [(ngModel)]="newUser.phone_number">
-            <div id="phoneNumberNelp" class="form-text">Kérjük ezt a formátumot használd: +36123456789</div>
-        </div>
-        <div class="mb-3">
-            <label class="form-label fs-4"> Helyszín:</label>
-            <div [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" id="cityHelp" class="form-text">Kérjük add meg a várost és megyét, ahol szívesen edzenél, hogy a megfelelő edzéseket mutathassuk!</div>
+<div class="parallax">
+    <div class="container-fluid">
+        <div class="color" [ngStyle]="{'width.%': mobile ? '90' : '50', 'margin-left.%': mobile ? '5' : '25', 'margin-right.%': mobile ? '5' : '25'}">
+            <h1>Regisztráció</h1>
+            <form>
+                <p>A *-gal jelölt mezők kitöltése kötelező!</p>
+                <div class="mb-3">
+                    <label for="username" class="form-label fs-5">
+                        Teljes név*
+                    </label>
+                    <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="text" maxlength="255" class="form-control" id="username" name="username" required [(ngModel)]="newUser.full_name">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label fs-5">E-mail cím*</label>
+                    <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="email" maxlength="320" class="form-control" id="email" name="email" required [(ngModel)]="newUser.email">
+                    <div [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" id="emailHelp" class="form-text">Az e-mail cím regisztráció után nem változtatható meg!</div>
+                </div>
+                <div class="mb-3">
+                    <label for="phoneNumber" class="form-label fs-5">
+                        Telefonszám*
+                    </label>
+                    <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="text" maxlength="12" class="form-control" id="phoneNumber" name="phoneNumber" required [(ngModel)]="newUser.phone_number">
+                    <div id="phoneNumberNelp" class="form-text">Kérjük ezt a formátumot használd: +36123456789</div>
+                </div>
+                <div>
+                    <label class="form-label fs-4"> Helyszín:</label>
+                    <div [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" id="cityHelp" class="form-text">Kérjük add meg a várost és megyét, ahol szívesen edzenél!</div>
 
-        </div>
-        <div class="mb-3">
-            <label for="county" class="form-label fs-5">
-                Megye*
-            </label>
-            <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="county" name="county" required (ngModelChange)="CountyChanged($event)" [(ngModel)]="selectedCounty">
-                <option *ngFor="let county of counties" [value]="county.county_name">{{county.county_name}}</option>
-            </select>
-        </div>
-        <div *ngIf="selectedCounty" class="mb-3">
-            <label for="city" class="form-label fs-5">
-                Város*
-            </label>
-            <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="city" name="city" required (ngModelChange)="CityChanged($event)" [(ngModel)]="selectedCity">
-                <option value=""></option>
-                <option *ngFor="let city of cities" [value]="city.city_name">{{city.city_name}}</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label fs-5">Jelszó*</label>
-            <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="password" maxlength="255" class="form-control pwd" name="password" required [(ngModel)]="newUser.password"> 
-        </div>
-        <!-- <div class="mb-3">
+                </div>
+                <div class="mb-3">
+                    <label for="county" class="form-label fs-5">
+                        Megye*
+                    </label>
+                    <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="county" name="county" required (ngModelChange)="CountyChanged($event)" [(ngModel)]="selectedCounty">
+                        <option *ngFor="let county of counties" [value]="county.county_name">{{county.county_name}}</option>
+                    </select>
+                </div>
+                <div *ngIf="selectedCounty" class="mb-3">
+                    <label for="city" class="form-label fs-5">
+                        Város*
+                    </label>
+                    <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="city" name="city" required (ngModelChange)="CityChanged($event)" [(ngModel)]="selectedCity">
+                        <option value=""></option>
+                        <option *ngFor="let city of cities" [value]="city.city_name">{{city.city_name}}</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label fs-5">Jelszó*</label>
+                    <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="password" maxlength="255" class="form-control pwd" name="password" required [(ngModel)]="newUser.password">
+                </div>
+                <!-- <div class="mb-3">
             <label for="password" class="form-label fs-5">Jelszó ismét*</label>
             <input [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" type="password" class="form-control pwd" name="password" required > 
         </div> -->
-        <!-- <div class="mb-3">
+                <!-- <div class="mb-3">
             <input class="form-check-input" type="checkbox" id="accept" name="accept" required>
             <label class="form-check-label ms-2" for="accept">
                 Felhasználási feltételek elfogadása*
             </label>
         </div> -->
-        <div class="mb-3">
-            <input class="form-check-input" type="checkbox" id="trainer" name="trainer" (click)="TrainerChecked($event)" [checked]="newUser.role == 'Trainer'">
-            <label class="form-check-label ms-2" for="trainer">
-                Edzőként szeretnék regisztrálni
-            </label>
+                <div class="mb-3">
+                    <input class="form-check-input" type="checkbox" id="trainer" name="trainer" (click)="TrainerChecked($event)" [checked]="newUser.role == 'Trainer'">
+                    <label class="form-check-label ms-2" for="trainer">
+                        Edzőként szeretnék regisztrálni
+                    </label>
+                </div>
+                <div>
+                    <button id="registerButton" type="submit" class="btn fs-5" (click)="Register()">Regisztráció</button>
+                    <button class="btn btn-danger ms-2 fs-5" (click)="Cancel()" routerLink="/home">Mégsem</button>
+                </div>
+            </form>
+            <p class="text-danger font-weight-bold text-center" *ngIf="errorMessage" id="error">{{errorMessage}}</p>
         </div>
-        <div class="mb-3">
-            <button id="registerButton" type="submit" class="btn fs-5" (click)="Register()">Regisztráció</button>
-            <button class="btn btn-danger ms-2 fs-5" (click)="Cancel()" routerLink="/home">Mégsem</button>
-        </div>
-    </form>
-    <p class="text-danger font-weight-bold text-center" *ngIf="errorMessage" id="error">{{errorMessage}}</p>
-
+    </div>
 </div>

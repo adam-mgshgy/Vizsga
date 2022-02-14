@@ -1,99 +1,93 @@
-<div [ngStyle]="{'width.%': mobile ? '100' : '80'}" class="container-fluid fs-5 mt-2">
-    <h1 *ngIf="!training.id">Edzés létrehozása</h1>
-    <h1 *ngIf="training.id">Edzés szerkesztése</h1>
-    <form>
-        <div class="mb-3" id="photo">            
-            <h5>Fényképek feltöltése</h5>
+<div class="parallax">
+    <div class="container-fluid fs-5">
+        <div [ngStyle]="{'width.%': mobile ? '90' : '50', 'margin-left.%': mobile ? '5' : '25', 'margin-right.%': mobile ? '5' : '25'}" class="color">
 
-            <div class="custom-file fileInputProfileWrap">
-                <input type="file" (change)="fileChangeEvent($event)" accept="image/png, image/jpeg" class="fileInputProfile">
-                <div class="img-space">
-                    <ng-container *ngIf="!create" id="selectedImages">
+            <h1 *ngIf="!training.id">Edzés létrehozása</h1>
+            <h1 *ngIf="training.id">Edzés szerkesztése</h1>
+            <form>
+                <div class="mb-3" id="photo">
+                    <h5>Fényképek feltöltése</h5>
+                    <div class="custom-file fileInputProfileWrap">
+                        <input type="file" (change)="fileChangeEvent($event)" accept="image/png, image/jpeg" class="fileInputProfile">
+                        <div class="img-space">
+                            <ng-container *ngIf="!create" id="selectedImages">
+                                <div class="row text-center text-lg-start">
+                                    <div *ngFor="let image of trainingImages;let i = index" class="col-lg-3 col-md-4 col-6">
+                                        <mat-checkbox id="selectedImage" class="example-margin me-3" [checked]="selectIndex.includes(image.imageId)">
 
-                        <div class="row text-center text-lg-start">
-                            <div *ngFor="let image of trainingImages;let i = index" class="col-lg-3 col-md-4 col-6">
-                                <mat-checkbox  id="selectedImage"  class="example-margin me-3" [checked]="selectIndex.includes(image.imageId)">
-                                   
-                                </mat-checkbox>
-                                <label *ngIf="training.indexImageId == Images[i].id">Indexkép</label>
-                                <img *ngIf="image.imageId == Images[i].id" class="img-fluid img-thumbnail" [src]="'data:image/png;base64,'+ Images[i].imageData" (click)="selectedImage(image.imageId)">
-                            </div>
+                                        </mat-checkbox>
+                                        <label *ngIf="training.indexImageId == Images[i].id">Indexkép</label>
+                                        <img *ngIf="image.imageId == Images[i].id" class="img-fluid img-thumbnail" [src]="'data:image/png;base64,'+ Images[i].imageData" (click)="selectedImage(image.imageId)">
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="isImageSaved" id="selectedImages">
+                                Új képek:
+                                <div class="row text-center text-lg-start">
+                                    <div *ngFor="let image of images;let i = index" class="col-lg-3 col-md-4 col-6">
+                                        <mat-checkbox id="selectedImage" class="example-margin" [checked]="selectNewIndex.includes(i)">
+
+                                        </mat-checkbox>
+                                        <img class="img-fluid img-thumbnail" [src]="image" (click)="selectedNewImage(i)">
+                                    </div>
+                                </div>
+                            </ng-container>
                         </div>
-                        
-                    </ng-container>
-                    <ng-container *ngIf="isImageSaved" id="selectedImages">
-                        Új képek:
-                        <div class="row text-center text-lg-start">
-                            <div *ngFor="let image of images;let i = index" class="col-lg-3 col-md-4 col-6">
-                                <mat-checkbox  id="selectedImage"  class="example-margin" [checked]="selectNewIndex.includes(i)">
-                                   
-                                </mat-checkbox>
-                                <img class="img-fluid img-thumbnail" [src]="image" (click)="selectedNewImage(i)">
-                            </div>
-                        </div>
-
-                    </ng-container>
-
-                    
-
+                    </div>
+                    <div *ngIf="isImageSaved && selectNewIndex.length > 0">Indexkép kijelölése csak a képek feltöltése után elérhető!</div>
+                    <!-- <div *ngIf="imageError" [(ngModel)]="imageError">{{imageError}}</div> -->
+                    <a class="btn btn-danger me-3" (click)="deleteImage()" *ngIf="selectIndex.length > 0 || selectNewIndex.length > 0">Eltávolítás</a>
+                    <a class="btn btn-info" (click)="selectIndexImage()" *ngIf="selectIndex.length > 0 && selectNewIndex.length == 0">Indexkép beállítása</a>
                 </div>
-
-            </div>
-            <div *ngIf="isImageSaved && selectNewIndex.length > 0">Indexkép kijelölése csak a képek feltöltése után elérhető!</div>
-            <!-- <div *ngIf="imageError" [(ngModel)]="imageError">{{imageError}}</div> -->
-            <a class="btn btn-danger me-3" (click)="deleteImage()" *ngIf="selectIndex.length > 0 || selectNewIndex.length > 0">Eltávolítás</a>
-            <a class="btn btn-info" (click)="selectIndexImage()" *ngIf="selectIndex.length > 0 && selectNewIndex.length == 0">Indexkép beállítása</a>
-        </div>
-        <div class="mb-3">
-            <label for="name" class="form-label">
-                Edzés neve:
-            </label>
-            <input [ngStyle]="{'width.%': mobile ? '70' : '50'}" type="text" maxlength="50" class="form-control" id="name" name="name" [(ngModel)]="training.name" required value="{{training.name}}">
-        </div>
-        <div class="mb-3 fs-4">
-            <label>Edző neve: {{user.full_name}}</label>
-        </div>
-        <div class="mb-3">
-            <label for="category" class="form-control-label me-3">Kategória:</label>
-            <select [ngStyle]="{'width.%': mobile ? '50' : '40'}" type="text" id="category" name="category" [(ngModel)]="selectedCat" (ngModelChange)="selectCategory($event)">
-                <option value=""></option>
-                <option *ngFor="let cat of categories" [value]="cat.name">{{cat.name}}</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="description" class="form-control-label d-block">Edzés leírása:</label>
-            <textarea [ngStyle]="{'width.%': mobile ? '70' : '50'}" type="text" maxlength="50" name="description" id="description" cols="50" rows="8" [(ngModel)]="training.description" value="{{training.description}}"></textarea>
-        </div>
-        <div class="mb-3 checks">
-            <div class="form-control-label me-2">Címkék:</div>
-            <ul>
-                <li *ngFor="let tag of tags" class="checks">
-                    <input [value]="tag.name" class="form-check-input me-2" type="checkbox" (change)="onTagChange(tag.name)" value="{{tag.name}}" id="{{tag.name}}" [checked]="checkTags(tag.name)">
-                    <label class="form-check-label" for="{{tag.name}}">
-                        {{tag.name}}
+                <div class="mb-3">
+                    <label for="name" class="form-label">
+                        Edzés neve:
                     </label>
-                </li>
-            </ul>
+                    <input [ngStyle]="{'width.%': mobile ? '70' : '50'}" type="text" maxlength="50" class="form-control" id="name" name="name" [(ngModel)]="training.name" required value="{{training.name}}">
+                </div>
+                <div class="mb-3 fs-4">
+                    <label>Edző neve: {{user.full_name}}</label>
+                </div>
+                <div class="mb-3">
+                    <label for="category" class="form-control-label me-3">Kategória:</label>
+                    <select [ngStyle]="{'width.%': mobile ? '50' : '40'}" type="text" id="category" name="category" [(ngModel)]="selectedCat" (ngModelChange)="selectCategory($event)">
+                        <option value=""></option>
+                        <option *ngFor="let cat of categories" [value]="cat.name">{{cat.name}}</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-control-label d-block">Edzés leírása:</label>
+                    <textarea [ngStyle]="{'width.%': mobile ? '70' : '50'}" type="text" maxlength="50" name="description" id="description" cols="50" rows="8" [(ngModel)]="training.description" value="{{training.description}}"></textarea>
+                </div>
+                <div class="mb-3 checks">
+                    <div class="form-control-label me-2">Címkék:</div>
+                    <ul>
+                        <li *ngFor="let tag of tags" class="checks">
+                            <input [value]="tag.name" class="form-check-input me-2" type="checkbox" (change)="onTagChange(tag.name)" value="{{tag.name}}" id="{{tag.name}}" [checked]="checkTags(tag.name)">
+                            <label class="form-check-label" for="{{tag.name}}">
+                                {{tag.name}}
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="mb-3">
+                    <input class="form-check-input" type="radio" name="phone" id="phone" (change)="phone()" [checked]="!otherPhoneNumber">
+                    <label type="text" class="form-check-label ms-2" for="phone">
+                        A saját telefonszámom szeretném használni ({{user.phone_number}})
+                    </label>
+                    <br>
+                    <input class="form-check-input" type="radio" name="phone" id="otherPhone" (change)="otherPhone()" [checked]="otherPhoneNumber">
+                    <label type="text" class="form-check-label ms-2 me-2" for="otherPhone">
+                        Másik telefonszámot adok meg:
+                        <input type="text" id="otherPhoneNumber" name="otherPhoneNumber" maxlength="12" [disabled]="!otherPhoneNumber" [(ngModel)]="otherPhoneNumberInput">
+                    </label>
+                </div>
+                <div>
+                    <button id="createButton" type="submit" class="btn btn-success fs-5" (click)="save()">Edzés mentése</button>
+                    <button class="btn btn-danger ms-2 fs-5" routerLink="/mytrainings">Mégsem</button>
+                </div>
+            </form>
+            <p class="text-danger font-weight-bold text-center" *ngIf="errorMessage" id="error">{{errorMessage}}</p>
         </div>
-
-        <div class="mb-3">
-            <input class="form-check-input" type="radio" name="phone" id="phone" (change)="phone()" [checked]="!otherPhoneNumber">
-            <label type="text" class="form-check-label ms-2" for="phone">
-                A saját telefonszámom szeretném használni ({{user.phone_number}})
-            </label>
-            <br>
-            <input class="form-check-input" type="radio" name="phone" id="otherPhone" (change)="otherPhone()" [checked]="otherPhoneNumber">
-            <label type="text" class="form-check-label ms-2 me-2" for="otherPhone">
-                Másik telefonszámot adok meg:
-                <input type="text" id="otherPhoneNumber" name="otherPhoneNumber" maxlength="12" [disabled]="!otherPhoneNumber" [(ngModel)]="otherPhoneNumberInput">
-            </label>
-        </div>
-
-        <div class="mb-3">
-            <button id="createButton" type="submit" class="btn btn-success fs-5" (click)="save()">Edzés mentése</button>
-            <button class="btn btn-danger ms-2 fs-5" routerLink="/mytrainings">Mégsem</button>
-        </div>
-    </form>
-    <p class="text-danger font-weight-bold text-center" *ngIf="errorMessage" id="error">{{errorMessage}}</p>
-
+    </div>
 </div>

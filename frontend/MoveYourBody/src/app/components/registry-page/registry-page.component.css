@@ -1,28 +1,57 @@
-div input, select{
-    width: 40%;
-    margin: auto;
-    text-align: center;
+div input,
+select {
+  width: 40%;
+  margin: auto;
+  text-align: center;
 }
-#accept, #trainer {
-    width: 1rem;
+#accept,
+#trainer {
+  width: 1rem;
 }
 .form-text {
-    margin: auto;
-    text-align: center;
-    display: block;
+  margin: auto;
+  text-align: center;
+  display: block;
+  color: white;
 }
 .container-fluid {
-    align-content: center;
-    text-align: center;
+  align-content: center;
+  text-align: center;
+  color: white;
 }
-#registerButton{
-    background-color: #216869;
-    color: white;
+#registerButton {
+  background-color: #216869;
+  color: white;
 }
 label {
-    text-align: center;
-    display: block;
+  text-align: center;
+  display: block;
 }
-.form-check-label, .form-check-input {
-    display:inline-block;
+.form-check-label,
+.form-check-input {
+  display: inline-block;
+}
+.parallax {
+  background-image: url("../../../assets/images/backgrounds/background2.jpeg");
+  min-height: calc(100vh - 59px);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+@media screen and (max-width: 991px) {
+  .parallax {
+    min-height: calc(100vh - 79px);
+  }
+  .color {
+    min-height: calc(100vh - 79px);
+  }
+}
+.color {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  margin-left: 25%;
+  margin-right: 25%;
+  background-color: rgba(27, 27, 27, 0.568);
+  height: calc(100vh - 59px);
 }

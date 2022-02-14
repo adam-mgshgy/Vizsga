@@ -13,9 +13,9 @@
   font-weight: bold;
 }
 .dark {
-  background-color: #343a40;
   margin: auto;
   padding: auto;
+  background-color: #1f2421;
   align-items: center;
   align-content: center;
 }
@@ -31,6 +31,11 @@
   margin: auto;
   text-align: center;
 }
+.form-select {
+  margin: auto;
+  margin-bottom: 1rem;
+}
+
 select,
 input {
   height: 2.5rem;
@@ -47,11 +52,13 @@ input {
   margin: auto;
 }
 .appearing {
-  /* background-color: rgba(255, 255, 255, 0.7); */
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.4);
   padding: 1rem;
   border-radius: 4px;
-
+  color: white;
+  font-size: medium;
+  font-weight: bolder;
+  width: 70%;
 }
 #startSearch {
   font-size: large;
@@ -66,16 +73,19 @@ input {
   margin: auto;
   text-align: center;
   margin-bottom: 1rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 30%;
 }
 #searchText {
-  background-color: #216869;
+  background-color: rgba(33, 104, 105, 0.8);
   color: white;
   width: 30%;
   margin: auto;
 }
 
 .parallax {
-  background-image: url("../../../assets/images/background.jpeg");
+  background-image: url("../../../assets/images/backgrounds/background2.jpeg");
   min-height: calc(100vh - 59px);
   
   background-attachment: fixed;
