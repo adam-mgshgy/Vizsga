@@ -40,12 +40,14 @@ export class CreateTrainingPageComponent implements OnInit {
   training: TrainingModel = new TrainingModel();
   myTrainings: TrainingModel[] = [];
   
-  deleteTag: string[] = [];
-  deleteTagTraining: TagTrainingModel = new TagTrainingModel();
+
+
   trainingImages: TrainingImagesModel[] = [];
   Images: ImagesModel[] = [];
 
-  tagTrainings: TagTrainingModel[] = [];
+  selectedTag:  number[] = []; //Adatbázisban lévő edzéshez mentett tagek
+  selectedNewTag: number[] = []; //újonnan mentésre váró tagek id-ja
+  deleteTag:  number[] = []; //Adatbázisban lévő edzéshez mentett tagek törlése (id-val)
 
   constructor(
     private route: ActivatedRoute,
@@ -78,7 +80,11 @@ export class CreateTrainingPageComponent implements OnInit {
             if (filteredTrainings.length == 1) {
               this.training = filteredTrainings[0];
               this.tagTrainingService.getByTraining(this.training.id).subscribe(
-                (result) => this.tagTrainings = result,
+                (result) => {
+                  for (const item of result) {
+                  this.selectedTag.push(item.tag_id);
+                }
+              },
                 (error) => console.log(error)
               );
             } else {
@@ -102,8 +108,7 @@ export class CreateTrainingPageComponent implements OnInit {
           this.trainingService.getImageById(this.training.id).subscribe(
             (result) => {
               for (const item of result.trainingImages) {
-                this.trainingImages.push(item);
-                console.log(this.trainingImages);
+                this.trainingImages.push(item);                
               }
               for (const item of result.images) {
                 this.Images.push(item);
@@ -226,6 +231,7 @@ export class CreateTrainingPageComponent implements OnInit {
             this.training.id = 0;
             this.training.trainer_id = this.user.id;
             this.training.contact_phone = this.otherPhoneNumberInput;
+            this.training.indexImageId = 0;
             this.trainingService.newTraining(this.training).subscribe(
               (result) => {
                 this.trainingService
@@ -246,7 +252,7 @@ export class CreateTrainingPageComponent implements OnInit {
           this.training.id = 0;
           this.training.trainer_id = this.user.id;
           this.training.contact_phone = this.user.phone_number;
-
+          this.training.indexImageId = 0;
           this.trainingService.newTraining(this.training).subscribe(
             (result) => {
               this.trainingService.saveImage(this.images, result.id).subscribe(
@@ -260,6 +266,10 @@ export class CreateTrainingPageComponent implements OnInit {
 
               this.training.id = result.id;
               //
+              if (this.selectedNewTag) {
+                this.saveTags();  
+              }
+              
             },
             (error) => console.log(error)
           );
@@ -283,12 +293,46 @@ export class CreateTrainingPageComponent implements OnInit {
         );
         //TAGTRAINING
         
+        if (this.selectedNewTag) {
+         this.saveTags();
+        }
+        if (this.deleteTag) {
+          this.deleteTags();
+        }
       }
     }
   }
-
-  refreshTags() {
-   
+  saveTags(){
+    let tagtraining = new TagTrainingModel();
+    tagtraining.training_id = this.training.id;
+    tagtraining.id = 0;
+    for (const item of this.selectedNewTag) {
+      tagtraining.tag_id = item;
+      this.tagTrainingService.newTagTraining(tagtraining).subscribe(
+        (result) => {
+          
+          
+        },
+        (error) => console.log(error)
+      );
+      
+    }
+  }
+  deleteTags() {
+    let tagtraining = new TagTrainingModel();
+    tagtraining.training_id = this.training.id;
+    tagtraining.id = 0;
+    for (const item of this.deleteTag) {
+      tagtraining.tag_id = item;
+      this.tagTrainingService.deleteTagTraining(tagtraining).subscribe(
+        (result) => {
+          
+          
+        },
+        (error) => console.log(error)
+      );
+      
+    }
   }
 
   errorCheck(): boolean {
@@ -330,8 +374,8 @@ export class CreateTrainingPageComponent implements OnInit {
     }
   }
   checkTags(value) {
-    for (const item of this.tagTrainings) {
-      if (value == item.tag_id) {
+    for (const item of this.selectedTag) {
+      if (value == item) {
         return true;
       }
       
@@ -340,7 +384,20 @@ export class CreateTrainingPageComponent implements OnInit {
   }
 
   onTagChange(value) {
-    
-    
+    if (this.selectedNewTag.includes(value.id)) {
+      this.selectedNewTag.splice(this.selectedNewTag.indexOf(value.id), 1);
+    }
+    else if(this.selectedTag.includes(value.id)){
+      this.selectedTag.splice(this.selectedTag.indexOf(value.id), 1)
+      this.deleteTag.push(value.id);
+    }
+    else if(this.deleteTag.includes(value.id)){
+      this.deleteTag.splice(this.deleteTag.indexOf(value.id), 1);
+      this.selectedTag.push(value.id);
+    }
+    else{
+      this.selectedNewTag.push(value.id);
+    }
+    console.log(this.deleteTag)
   }
 }

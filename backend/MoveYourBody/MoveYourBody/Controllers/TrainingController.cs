@@ -97,6 +97,7 @@ namespace MoveYourBody.WebAPI.Controllers
                     Trainer_id = training.Trainer_id,
                     Description = training.Description,
                     Contact_phone = training.Contact_phone,
+                    IndexImageId = 0
                 };
 
                 dbContext.Set<Training>().Add(newTraining);
