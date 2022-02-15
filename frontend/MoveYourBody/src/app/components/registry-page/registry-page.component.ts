@@ -21,6 +21,8 @@ export class RegistryPageComponent implements OnInit {
   selectedCity: string;
   newUser: UserModel = new UserModel();
   errorMessage = '';
+  password2 = '';
+
   constructor(
     private locationService: LocationService,
     private modalService: NgbModal,
@@ -74,6 +76,7 @@ export class RegistryPageComponent implements OnInit {
         (error) => console.log(error)
       );
       this.newUser.id = 0;
+      this.newUser.imageId = 0;
       this.userService.Register(this.newUser).subscribe(
         (result) => {
           console.log(this.newUser);
@@ -87,6 +90,7 @@ export class RegistryPageComponent implements OnInit {
     this.newUser = new UserModel();
     this.selectedCounty = '';
     this.selectedCity = '';
+    this.password2 = '';
   }
   ngOnInit(): void {
     if (window.innerWidth <= 800) {
@@ -114,6 +118,10 @@ export class RegistryPageComponent implements OnInit {
     }
     if (this.newUser.password == '') {
       this.errorMessage = 'Kérem adjon meg egy jelszót!';
+      return false;
+    }
+    if (this.newUser.password != this.password2) {
+      this.errorMessage = 'Nem egyezik a két jelszó!';
       return false;
     }
     if (this.newUser.phone_number == '') {
