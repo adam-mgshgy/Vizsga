@@ -8,7 +8,7 @@ namespace MoveYourBody.Service.Models
     public class Training
     {
         [Required, Key]
-        public int Id { get; set; } //id name cat trainer minm maxm desc phone
+        public int Id { get; set; }
         [Required, StringLength(50)]
         public string Name { get; set; }
         [Required]
@@ -16,7 +16,7 @@ namespace MoveYourBody.Service.Models
         [Required]
         public int Trainer_id { get; set; }
 
-        [Required, StringLength(255)]
+        [Required]
         public string Description { get; set; }
         public string Contact_phone { get; set; }
         public int IndexImageId { get; set; }
