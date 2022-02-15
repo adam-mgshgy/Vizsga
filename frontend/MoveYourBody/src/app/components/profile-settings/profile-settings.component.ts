@@ -38,6 +38,7 @@ export class ProfileSettingsComponent implements OnInit {
   cardImageBase64: string;
   image: string[] = [];
   selected = false;
+  pwdChange = false;
 
   ngOnInit(): void {
     this.profileImage = null;
@@ -161,7 +162,7 @@ export class ProfileSettingsComponent implements OnInit {
       this.errorMessage = 'Kérem adja meg a nevét!';
       return false;
     }
-    if (this.userModify.password == '' || this.password2 == '') {
+    if (this.pwdChange && (this.userModify.password == '' || this.password2 == '')) {
       this.errorMessage = 'Kérem adjon meg jelszót!';
       return false;
     }
@@ -185,10 +186,15 @@ export class ProfileSettingsComponent implements OnInit {
   }
   save() {
     if (this.errorCheck()) {
+      if (!this.pwdChange) {
+        this.userModify.password = this.user.password;
+      }
+      else {
+        this.userModify.password = this.password2;
+      }
       this.locationService.getLocationId(this.selectedCity).subscribe(
         (result) => {
           this.userModify.location_id = result[0].id;
-          console.log(this.userModify.location_id);
           this.userModify.id = this.user.id;
           this.userService.modifyUser(this.userModify).subscribe(
             (result) => {
