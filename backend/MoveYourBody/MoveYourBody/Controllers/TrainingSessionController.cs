@@ -141,13 +141,12 @@ namespace MoveYourBody.WebAPI.Controllers
                 smtpClient.EnableSsl = true;
                 MailMessage mail = new MailMessage();
                 mail.Subject = "Edzés lemondva!";
-                mail.Body = "<div style='text-align: center;'><h1> Kedves jelentkező!</h1><h3> Az edzés amire jelentkezett lemondásra került! </h3><hr><h1>" + training.Name +"</h1><h2>" + session.Date + "</h2><h4>" + trainer.Full_name + "</h4><h4>" + training.Contact_phone + "</h4></div>";
+                mail.Body = "<div style='text-align: center;'><h1>Kedves jelentkező!</h1><h3> Az edzés amire jelentkezett lemondásra került! </h3><hr><h1>" + training.Name +"</h1><h2>" + session.Date + "</h2><h4>" + trainer.Full_name + "</h4><h4>" + training.Contact_phone + "</h4></div>";
                 mail.IsBodyHtml = true;
                 mail.From = new MailAddress("contact.moveyourbody@gmail.com", "MoveYourBody");
                 foreach (var applicant in applicants)
                 {
                     dbContext.Remove<Applicant>(applicant);
-                    //TODO email kuldes pl
                     var user = dbContext.Set<User>().Where(u => u.Id == applicant.User_id).FirstOrDefault();
                     mail.To.Add(new MailAddress(user.Email));
                     smtpClient.Send(mail);
