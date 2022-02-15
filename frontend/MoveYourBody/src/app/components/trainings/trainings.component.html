@@ -88,7 +88,7 @@
           </div>
           <div class="col-md-12">
             <div class="card-body light">
-              <h5 class="card-text">{{training.description}}</h5>
+              <h5 ngbTooltip="{{ training.description.length > 45 ? training.description : ''}}" placement="bottom" class="card-text">{{training.description.length > 45 ? training.description.slice(0,45) + '...' : training.description}}</h5>
               <mat-chip-list>
                 <span *ngFor="let tag of tagTraining">
                   <mat-chip [routerLink]="'/trainings/tag/' + tag.tag_id" *ngIf="tag.training_id == training.id" id="tag" [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}" class="btn fw-bold me-1 mb-1">{{tags[tag.tag_id-1].name}}</mat-chip>
