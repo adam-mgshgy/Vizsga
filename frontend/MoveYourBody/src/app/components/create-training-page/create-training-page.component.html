@@ -39,40 +39,9 @@
                     <a class="btn btn-danger me-3" (click)="deleteImage()" *ngIf="selectIndex.length > 0 || selectNewIndex.length > 0">Eltávolítás</a>
                     <a class="btn btn-info" (click)="selectIndexImage()" *ngIf="selectIndex.length > 0 && selectNewIndex.length == 0">Indexkép beállítása</a>
                 </div>
-
-            </div>
-            <div *ngIf="isImageSaved && selectNewIndex.length > 0">Indexkép kijelölése csak a képek feltöltése után elérhető!</div>
-            <!-- <div *ngIf="imageError" [(ngModel)]="imageError">{{imageError}}</div> -->
-            <a class="btn btn-danger me-3" (click)="deleteImage()" *ngIf="selectIndex.length > 0 || selectNewIndex.length > 0">Eltávolítás</a>
-            <a class="btn btn-info" (click)="selectIndexImage()" *ngIf="selectIndex.length > 0 && selectNewIndex.length == 0">Indexkép beállítása</a>
-        </div>
-        <div class="mb-3">
-            <label for="name" class="form-label">
-                Edzés neve:
-            </label>
-            <input [ngStyle]="{'width.%': mobile ? '70' : '50'}" type="text" maxlength="50" class="form-control" id="name" name="name" [(ngModel)]="training.name" required value="{{training.name}}">
-        </div>
-        <div class="mb-3 fs-4">
-            <label>Edző neve: {{user.full_name}}</label>
-        </div>
-        <div class="mb-3">
-            <label for="category" class="form-control-label me-3">Kategória:</label>
-            <select [ngStyle]="{'width.%': mobile ? '50' : '40'}" type="text" id="category" name="category" [(ngModel)]="selectedCat" (ngModelChange)="selectCategory($event)">
-                <option value=""></option>
-                <option *ngFor="let cat of categories" [value]="cat.name">{{cat.name}}</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="description" class="form-control-label d-block">Edzés leírása:</label>
-            <textarea [ngStyle]="{'width.%': mobile ? '70' : '50'}" type="text" maxlength="50" name="description" id="description" cols="50" rows="8" [(ngModel)]="training.description" value="{{training.description}}"></textarea>
-        </div>
-        <div class="mb-3 checks">
-            <div class="form-control-label me-2">Címkék:</div>
-            <ul>
-                <li *ngFor="let tag of tags" class="checks">
-                    <input [value]="tag.name" class="form-check-input me-2" type="checkbox" (change)="onTagChange(tag)" value="{{tag.name}}" id="{{tag.name}}" [checked]="checkTags(tag.id)">
-                    <label class="form-check-label" for="{{tag.name}}">
-                        {{tag.name}}
+                <div class="mb-3">
+                    <label for="name" class="form-label">
+                        Edzés neve:
                     </label>
                     <input [ngStyle]="{'width.%': mobile ? '70' : '50'}" type="text" maxlength="50" class="form-control" id="name" name="name" [(ngModel)]="training.name" required value="{{training.name}}">
                 </div>
@@ -94,7 +63,7 @@
                     <div class="form-control-label me-2">Címkék:</div>
                     <ul>
                         <li *ngFor="let tag of tags" class="checks">
-                            <input [value]="tag.name" class="form-check-input me-2" type="checkbox" (change)="onTagChange(tag.name)" value="{{tag.name}}" id="{{tag.name}}" [checked]="checkTags(tag.name)">
+                            <input [value]="tag.name" class="form-check-input me-2" type="checkbox" (change)="onTagChange(tag)" value="{{tag.name}}" id="{{tag.name}}" [checked]="checkTags(tag.id)">
                             <label class="form-check-label" for="{{tag.name}}">
                                 {{tag.name}}
                             </label>
