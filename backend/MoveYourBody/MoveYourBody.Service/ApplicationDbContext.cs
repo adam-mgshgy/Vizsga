@@ -82,7 +82,7 @@ namespace MoveYourBody.Service
                 new User() { Email = "admin@email.com", Full_name = "Admin", Id = 10, Location_id = 67, Password = "admin", Phone_number = "+36701234569", Role = "Admin" }
                 );
             modelBuilder.Entity<Training>().HasData(
-                new Training() { Id = 1, Category_id = 1, Contact_phone = "+36701234567", Description = "Rövid leírás az edzésről", Name = "Edzés 1", Trainer_id = 1 },
+                new Training() { Id = 1, Category_id = 1, Contact_phone = "+36701234567", Description = "Rövid leírás az edzésről még sokkal hosszabb leírás fúha nagyon hosszú ki se fér, lássuk meddig megy a szöveg olvassuk tovább", Name = "Edzés 1", Trainer_id = 1 },
                 new Training() { Id = 2, Category_id = 2, Contact_phone = "+36701234567", Description = "Rövid leírás az edzésről", Name = "Edzés 2", Trainer_id = 1 },
                 new Training() { Id = 3, Category_id = 3, Contact_phone = "+36701234566", Description = "Rövid leírás az edzésről", Name = "Edzés 3", Trainer_id = 2 },
                 new Training() { Id = 4, Category_id = 4, Contact_phone = "+36701234566", Description = "Rövid leírás az edzésről", Name = "Edzés 4", Trainer_id = 2 },

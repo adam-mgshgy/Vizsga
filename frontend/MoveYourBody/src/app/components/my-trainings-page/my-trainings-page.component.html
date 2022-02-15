@@ -1,106 +1,106 @@
-<div (resized)="onResized($event)" [ngStyle]="{ 'width.%': mobile == true ? '100' : '80' }" class="container-fluid">
-  <div class="row">
-    <div *ngFor="let training of myTrainings; let i = index" class="col-xxl-4 col-xl-6 col-md-6">
-      <div class="card mb-3">
-        <div class="row g-0">
-          <div class="col-4 align-items-center">
-            <img *ngIf=" user.imageId == 0 && user.role == 'Trainer'" [src]="defaultProfile" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
-            <img *ngIf="user.role == 'Trainer' && profileImages[0] && profileImages.length > 0 && profileImages[0].id == user.imageId " [src]="'data:image/png;base64,'+ profileImages[0].imageData" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
-            
-            <img *ngIf=" trainers[i]&& trainers[i].imageId == 0 && user.role == 'User'" [src]="defaultProfile" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
-            <span *ngFor="let image of profileImages">
-              <img *ngIf="user.role == 'User' && profileImages.length > 0 && image.id == trainers[i].imageId" [src]="'data:image/png;base64,'+ image.imageData" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
-            </span>
-          </div>
-          <div class="col-8" id="bckg">
-            <img *ngIf=" training.indexImageId == 0" [src]="defaultTraining" style="width: 100%; height: 100%;" class="img-fluid" alt="..." />
+<div class="parallax">
+  <div (resized)="onResized($event)" [ngStyle]="{ 'width.%': mobile == true ? '100' : '80' }" class="container-fluid">
+    <div class="row">
+      <div *ngFor="let training of myTrainings; let i = index" class="col-xxl-4 col-xl-6 col-md-6">
+        <div class="card mb-3">
+          <div class="row g-0">
+            <div class="col-4 align-items-center">
+              <img *ngIf=" user.imageId == 0 && user.role == 'Trainer'" [src]="defaultProfile" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
+              <img *ngIf="user.role == 'Trainer' && profileImages[0] && profileImages.length > 0 && profileImages[0].id == user.imageId " [src]="'data:image/png;base64,'+ profileImages[0].imageData" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
 
-            <span *ngFor="let image of indexImages">
-              <img *ngIf="indexImages.length > 0 && image.id == training.indexImageId" [src]="'data:image/png;base64,'+ image.imageData" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
-
-            </span>
-          </div>
-          <div class="card-body container-fluid row g-0" style="background-color: #343a40">
-            <div class="col-auto">
-              <h4 class="card-title text-white mb-3 me-3">
-                {{ training.name }}
-              </h4>
+              <img *ngIf=" trainers[i]&& trainers[i].imageId == 0 && user.role == 'User'" [src]="defaultProfile" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
+              <span *ngFor="let image of profileImages">
+                <img *ngIf="user.role == 'User' && profileImages.length > 0 && image.id == trainers[i].imageId" [src]="'data:image/png;base64,'+ image.imageData" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
+              </span>
             </div>
-            <div class="col-12">
-              <button id="modify" *ngIf="user.role == 'Trainer'" class="btn btn-primary mb-3 me-3" [routerLink]="'/createtraining/' + training.id">
-                Szerkesztés
-              </button>
-              <button id="newSession" *ngIf="user.role == 'Trainer'" class="btn btn-primary mb-3 me-3" [routerLink]="'/addsession/'  + training.id + '/' + 0">
-                Új alkalom
-              </button>
-              <button *ngIf="user.role == 'Trainer'" id="sessions" class="btn btn-primary mb-3 me-3" (click)="open(content, training.id)">
-                Alkalmak
-              </button>
-              <button *ngIf="user.role == 'User'" id="sessions" class="btn btn-primary mb-3 me-3" (click)="open(content, training.id)">
-                Jelentkezések
-              </button>
+            <div class="col-8" id="bckg">
+              <img *ngIf=" training.indexImageId == 0" [src]="defaultTraining" style="width: 100%; height: 100%;" class="img-fluid" alt="..." />
+
+              <span *ngFor="let image of indexImages">
+                <img *ngIf="indexImages.length > 0 && image.id == training.indexImageId" [src]="'data:image/png;base64,'+ image.imageData" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
+
+              </span>
             </div>
-            <h6 *ngIf="user.role == 'Trainer'" class="card-title text-white">{{ user.full_name }}</h6>
-            <h6 *ngIf="user.role == 'User'" class="card-title text-white">{{ trainers[training.trainer_id-1].full_name }}</h6>
-          </div>
-          <div class="col-md-12" id="lightBckg">
-            <div class="card-body">
-              <p class="card-text">{{training.description}}</p>
+            <div class="card-body container-fluid row g-0" style="background-color: #343a40">
+              <div class="col-auto">
+                <h4 class="card-title text-white mb-3 me-3">
+                  {{ training.name }}
+                </h4>
+              </div>
+              <div class="col-12">
+                <button id="modify" *ngIf="user.role == 'Trainer'" class="btn btn-primary mb-3 me-3" [routerLink]="'/createtraining/' + training.id">
+                  Szerkesztés
+                </button>
+                <button id="newSession" *ngIf="user.role == 'Trainer'" class="btn btn-primary mb-3 me-3" [routerLink]="'/addsession/'  + training.id + '/' + 0">
+                  Új alkalom
+                </button>
+                <button *ngIf="user.role == 'Trainer'" id="sessions" class="btn btn-primary mb-3 me-3" (click)="open(content, training.id)">
+                  Alkalmak
+                </button>
+                <button *ngIf="user.role == 'User'" id="sessions" class="btn btn-primary mb-3 me-3" (click)="open(content, training.id)">
+                  Jelentkezések
+                </button>
+              </div>
+              <h6 *ngIf="user.role == 'Trainer'" class="card-title text-white">{{ user.full_name }}</h6>
+              <h6 *ngIf="user.role == 'User'" class="card-title text-white">{{ trainers[training.trainer_id-1].full_name }}</h6>
+            </div>
+            <div class="col-md-12" id="lightBckg">
+              <div class="card-body">
+                <p class="card-text">{{training.description.length > 50 ? training.description.slice(0,50) + '...' : training.description}}</p>
+                <mat-chip-list>
+                  <span *ngFor="let tag of tagTraining">
+                    <mat-chip *ngIf="tags[tag.tag_id-1] && tag.training_id == training.id" id="tag" [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}" class="btn fw-bold me-1 mb-1">{{tags[tag.tag_id-1].name}}</mat-chip>
+                  </span>
 
-              <mat-chip-list>
-                <span *ngFor="let tag of tagTraining">
-                  <mat-chip *ngIf="tags[tag.tag_id-1] && tag.training_id == training.id" id="tag" [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}" class="btn fw-bold me-1 mb-1">{{tags[tag.tag_id-1].name}}</mat-chip>
-                </span>
-
-              </mat-chip-list>
+                </mat-chip-list>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="col">
+        <button *ngIf="user.role == 'Trainer'" id="newTraining" class="btn fw-bold mx-2" routerLink="/createtraining">
+          Új edzés
+        </button>
+      </div>
     </div>
-    <div class="col">
-      <button *ngIf="user.role == 'Trainer'" id="newTraining" class="btn fw-bold mx-2" routerLink="/createtraining">
-        Új edzés
-      </button>
+    <div class="noApplications">
+      <h2 *ngIf="myTrainings.length == 0 && this.user.role == 'User'">Még nem jelentkezett egy edzésre sem!</h2>
+      <h2><a *ngIf="myTrainings.length == 0 && this.user.role == 'User'" routerLink="/categories">Megnézem az összes kategóriát!</a></h2>
     </div>
   </div>
-</div>
-<div class="noApplications">
-  <h2 *ngIf="myTrainings.length == 0 && this.user.role == 'User'">Még nem jelentkezett egy edzésre sem!</h2>
-  <h2><a *ngIf="myTrainings.length == 0 && this.user.role == 'User'" routerLink="/categories">Megnézem az összes kategóriát!</a></h2>
-</div>
 
-<!-- Modal popup -->
-<ng-template #content let-modal>
-  <mat-accordion>
-    <mat-expansion-panel id="exPanel" hideToggle>
-      <mat-expansion-panel-header>
-        <mat-panel-title *ngIf="sessions.length > 0">
-          Időpont
-        </mat-panel-title>
-        <mat-panel-title *ngIf="sessions.length == 0">
-          Még nincsenek alkalmak létrehozva!
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-    </mat-expansion-panel>
+  <!-- Modal popup -->
+  <ng-template #content let-modal>
+    <mat-accordion>
+      <mat-expansion-panel id="exPanel" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title *ngIf="sessions.length > 0">
+            Időpont
+          </mat-panel-title>
+          <mat-panel-title *ngIf="sessions.length == 0">
+            Még nincsenek alkalmak létrehozva!
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
 
-    <mat-divider></mat-divider>
+      <mat-divider></mat-divider>
 
-    <mat-expansion-panel *ngFor="let session of sessions;let i = index" [style]="session.isPast ? 'opacity: 0.6' : ''">
-      <mat-expansion-panel-header >
-        <mat-panel-title>
-          {{ session.date | date: 'yyyy.MM.dd. HH:mm'}}
-          <mat-divider></mat-divider>
-        </mat-panel-title>
-        <mat-panel-description>
-          <button *ngIf="user.role == 'Trainer'" class="btn btn-primary me-3" [routerLink]="'/addsession/'  +  currentTraining.id + '/' + session.id" (click)="close()">Duplikálás</button>
-          <button *ngIf="user.role == 'Trainer'" class="btn btn-danger" (click)="deleteSession(session)">Törlés</button>
-          <button class="btn fw-bold" disabled *ngIf="session.isPast" style="color: red;">Lejárt</button>
-          <button *ngIf="user.role == 'User'" class="btn btn-danger" (click)="deleteApplication(session.id)">{{session.isPast ? 'Törlés' : 'Lemondás'}}</button>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <app-session-modal  [session]="session"></app-session-modal>
-    </mat-expansion-panel>
+      <mat-expansion-panel *ngFor="let session of sessions;let i = index" [style]="session.isPast ? 'opacity: 0.6' : ''">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ session.date | date: 'yyyy.MM.dd. HH:mm'}}
+            <mat-divider></mat-divider>
+          </mat-panel-title>
+          <mat-panel-description>
+            <button *ngIf="user.role == 'Trainer'" class="btn btn-primary me-3" [routerLink]="'/addsession/'  +  currentTraining.id + '/' + session.id" (click)="close()">Duplikálás</button>
+            <button *ngIf="user.role == 'Trainer'" class="btn btn-danger" (click)="deleteSession(session)">Törlés</button>
+            <button class="btn fw-bold" disabled *ngIf="session.isPast" style="color: red;">Lejárt</button>
+            <button *ngIf="user.role == 'User'" class="btn btn-danger" (click)="deleteApplication(session.id)">{{session.isPast ? 'Törlés' : 'Lemondás'}}</button>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-session-modal [session]="session"></app-session-modal>
+      </mat-expansion-panel>
 
-  </mat-accordion>
-</ng-template>
+    </mat-accordion>
+  </ng-template>

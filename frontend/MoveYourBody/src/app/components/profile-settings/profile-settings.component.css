@@ -1,28 +1,51 @@
-div input, select{
-    margin: auto;
-    text-align: center;
+div input,
+select {
+  margin: auto;
+  text-align: center;
 }
 button {
-    border: none;
+  border: none;
 }
 .form-text {
-    margin: auto;
+  margin: auto;
+  color: black;
 }
 .container-fluid {
-    align-content: center;
-    text-align: center;
+  align-content: center;
+  text-align: center;
+  /* background-color: rgba(0, 0, 0, 0.5); */
 }
-#cancelSubscriptionButton{
-    background-color: #1F2421;
-    color: white;
+#cancelSubscriptionButton {
+  background-color: #1f2421;
+  color: white;
 }
 #modifyButton {
-    background-color: #216869;
+  background-color: #216869;
 }
 #subscribeButton {
-    background-color: #49A078 ;
+  background-color: #49a078;
 }
 #email {
-    background-color: #9CC5A1;
+  background-color: #9cc5a1;
 }
-
+.form-label,
+h1,
+h5 {
+  color: black;
+}
+.parallax {
+  background-image: url("../../../assets/images/backgrounds/profilesettings.jpeg");
+  min-height: calc(100vh - 59px);
+  font-weight: bold;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; 
+}
+@media screen and (max-width: 991px) {
+  .parallax {
+    min-height: calc(100vh - 79px);
+  }
+}
