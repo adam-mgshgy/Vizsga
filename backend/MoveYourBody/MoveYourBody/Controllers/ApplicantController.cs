@@ -63,6 +63,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 dbContext.Set<Applicant>().Add(newApplicant);
                 dbContext.SaveChanges();
                 dbContext.Set<TrainingSession>().Where(s => s.Id == newApplicant.Training_session_id).First().Number_of_applicants++;
+                dbContext.SaveChanges();
                 return Ok(newApplicant);
             });
         }

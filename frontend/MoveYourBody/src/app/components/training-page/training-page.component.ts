@@ -40,6 +40,7 @@ export class TrainingPageComponent implements OnInit {
   };
 
   errorMessage = '';
+  successMessage = '';
   training: TrainingModel = {
     category_id: 0,
     contact_phone: '',
@@ -146,10 +147,8 @@ export class TrainingPageComponent implements OnInit {
         this.category = result.category;
         this.tags = result.tags;
         this.profileImage = result.image
-
         this.trainingService.getImageById(this.training.id).subscribe(
           (result) => {
-            console.log(result)
             for (const item of result.images) {
               this.Images.push(item);          
             }        
@@ -192,6 +191,12 @@ export class TrainingPageComponent implements OnInit {
       this.applicantService.newApplicant(newApplicant).subscribe(
         (result) => {
           this.usersSessions.push(newApplicant);
+          var idx = this.sessions.findIndex((s) => s.id == sessionId);
+          this.sessions[idx].number_of_applicants++;
+          idx = this.sortedSessions.findIndex((s) => s.id == sessionId);
+          this.sortedSessions[idx].number_of_applicants++;
+          this.errorMessage = '';
+          this.successMessage = 'Sikeres jelentkezés!';
         },
         (error) => {
           this.errorMessage = error.message;
@@ -199,6 +204,7 @@ export class TrainingPageComponent implements OnInit {
       );
     } else {
       this.errorMessage = 'Erre az edzésre már jelentkezett!';
+      this.successMessage = '';
     }
   }
 }
