@@ -84,6 +84,7 @@
                 </tr>
             </tbody>
         </table>
-        <p class="text-danger font-weight-bold text-center" *ngIf="errorMessage" id="error">{{errorMessage}}</p>
+        <p class="text-danger font-weight-bold text-center" *ngIf="errorMessage" id="error" (click)="errorMessage = ''">{{errorMessage}}</p>
+        <p class="text-success font-weight-bold text-center" *ngIf="successMessage" id="success">{{successMessage}}</p>
     </div>
 </div>

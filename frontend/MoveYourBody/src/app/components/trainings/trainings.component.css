@@ -78,7 +78,7 @@ input {
   margin-bottom: 1rem;
   color: white;
   background-color: rgba(0, 0, 0, 0.4);
-  width: 30%;
+  max-width: 30%;
 }
 #searchText {
   background-color: rgba(33, 104, 105, 0.8);
@@ -99,6 +99,8 @@ input {
 @media screen and (max-width: 991px) {
   .parallax {
     min-height: calc(100vh - 79px);
-
+  }
+  .title, #searchText {
+    min-width: fit-content;
   }
 }
