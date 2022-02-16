@@ -113,7 +113,7 @@ namespace MoveYourBody.WebAPI.Controllers
                     Password = user.Password,
                     Phone_number = user.Phone_number,
                     Location_id = user.Location_id,
-                    Role = user.Role
+                    Role = user.Role,
                 };
 
 
@@ -157,31 +157,31 @@ namespace MoveYourBody.WebAPI.Controllers
             });
         }
 
-        [HttpGet("login"), Authorize(Roles = "Admin, Trainer, User")]
-        public ActionResult Login([FromQuery] string email, string password)
-        {
-            return this.Run(() =>
-            {
-                var user = dbContext.Set<User>()
-                            .FirstOrDefault(u => u.Email == email && u.Password == password);
-                if (user == null)
-                {
-                    return Unauthorized(new
-                    {
-                        errorMessage = "Hibás e-mail cím vagy jelszó"
-                    });
-                }
-                return Ok(user);
-            });
-            //TODO
-            //var jwt = new JwtService(config);
-            //var token = jwt.GenerateSecurityToken(user.Email, new List<Claim>() { new Claim("LoginId", login.Id.ToString()) });
+        //[HttpGet("login"), Authorize(Roles = "Admin, Trainer, User")]
+        //public ActionResult Login([FromQuery] string email, string password)
+        //{
+        //    return this.Run(() =>
+        //    {
+        //        var user = dbContext.Set<User>()
+        //                    .FirstOrDefault(u => u.Email == email && u.Password == password);
+        //        if (user == null)
+        //        {
+        //            return Unauthorized(new
+        //            {
+        //                errorMessage = "Hibás e-mail cím vagy jelszó"
+        //            });
+        //        }
+        //        return Ok(user);
+        //    });
+        //    //TODO
+        //    //var jwt = new JwtService(config);
+        //    //var token = jwt.GenerateSecurityToken(user.Email, new List<Claim>() { new Claim("LoginId", login.Id.ToString()) });
 
-            //return Ok(new
-            //{
-            //    token = token
-            //});
-        }
+        //    //return Ok(new
+        //    //{
+        //    //    token = token
+        //    //});
+        //}
 
         [HttpPost("modify"), Authorize(Roles = "Admin, Trainer, User")]
         public ActionResult Modify(User user)
