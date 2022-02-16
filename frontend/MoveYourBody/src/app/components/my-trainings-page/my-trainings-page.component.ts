@@ -77,6 +77,7 @@ export class MyTrainingsPageComponent implements OnInit {
             this.sessions.findIndex((x) => x.id == sessionId),
             1
           );
+          
           if (this.sessions.length == 0) {
             this.myTrainings.splice(
               this.myTrainings.findIndex(

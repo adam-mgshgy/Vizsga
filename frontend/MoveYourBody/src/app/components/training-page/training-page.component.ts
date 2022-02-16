@@ -98,10 +98,10 @@ export class TrainingPageComponent implements OnInit {
       if (sessionDate > this.currentDate) {
         dataTemp.push(session);
       }
-      
+
     });
 
-    const data = dataTemp; 
+    const data = dataTemp;
     if (!sort.active || sort.direction === '') {
       this.sortedSessions = data;
       return;
@@ -123,12 +123,12 @@ export class TrainingPageComponent implements OnInit {
   compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
-  
+
   ngOnInit(): void {
     if (window.innerWidth <= 800) {
       this.mobile = true;
     }
-    window.onresize = () => (this.mobile = window.innerWidth <= 991);    
+    window.onresize = () => (this.mobile = window.innerWidth <= 991);
 
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
@@ -150,8 +150,8 @@ export class TrainingPageComponent implements OnInit {
         this.trainingService.getImageById(this.training.id).subscribe(
           (result) => {
             for (const item of result.images) {
-              this.Images.push(item);          
-            }        
+              this.Images.push(item);
+            }
           },
           (error) => console.log(error)
         );
@@ -193,8 +193,8 @@ export class TrainingPageComponent implements OnInit {
           this.usersSessions.push(newApplicant);
           var idx = this.sessions.findIndex((s) => s.id == sessionId);
           this.sessions[idx].number_of_applicants++;
-          idx = this.sortedSessions.findIndex((s) => s.id == sessionId);
-          this.sortedSessions[idx].number_of_applicants++;
+          // idx = this.sortedSessions.findIndex((s) => s.id == sessionId);
+          // this.sortedSessions[idx].number_of_applicants++;
           this.errorMessage = '';
           this.successMessage = 'Sikeres jelentkezés!';
         },
