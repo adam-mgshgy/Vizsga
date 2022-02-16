@@ -155,33 +155,7 @@ namespace MoveYourBody.WebAPI.Controllers
 
                 return Ok(trainer);
             });
-        }
-
-        //[HttpGet("login"), Authorize(Roles = "Admin, Trainer, User")]
-        //public ActionResult Login([FromQuery] string email, string password)
-        //{
-        //    return this.Run(() =>
-        //    {
-        //        var user = dbContext.Set<User>()
-        //                    .FirstOrDefault(u => u.Email == email && u.Password == password);
-        //        if (user == null)
-        //        {
-        //            return Unauthorized(new
-        //            {
-        //                errorMessage = "Hibás e-mail cím vagy jelszó"
-        //            });
-        //        }
-        //        return Ok(user);
-        //    });
-        //    //TODO
-        //    //var jwt = new JwtService(config);
-        //    //var token = jwt.GenerateSecurityToken(user.Email, new List<Claim>() { new Claim("LoginId", login.Id.ToString()) });
-
-        //    //return Ok(new
-        //    //{
-        //    //    token = token
-        //    //});
-        //}
+        }        
 
         [HttpPost("modify"), Authorize(Roles = "Admin, Trainer, User")]
         public ActionResult Modify(User user)
