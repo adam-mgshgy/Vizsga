@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using MoveYourBody.Service;
 using MoveYourBody.Service.Models;
 
@@ -16,9 +18,11 @@ namespace MoveYourBody.WebAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
-        public UserController(ApplicationDbContext dbContext)
+        private readonly IConfiguration config;
+        public UserController(ApplicationDbContext dbContext, IConfiguration config)
         {
             this.dbContext = dbContext;
+            this.config = config;
         }
 
         
@@ -99,15 +103,7 @@ namespace MoveYourBody.WebAPI.Controllers
                     {
                         ErrorMessage = "A megadott e-mail címmel már történt korábban regisztráció"
                     });
-                User register = null;
-                //var location = dbContext.Set<Location>().FirstOrDefault(l => l.Id == user.Location_id);
-                //if (location == null)
-                //{
-                //    return BadRequest(new
-                //    {
-                //        ErrorMessage = "A megadott város nem létezik"
-                //    });
-                //}
+                User register = null;                
 
                 register = new User()
                 {
@@ -123,7 +119,20 @@ namespace MoveYourBody.WebAPI.Controllers
 
                 dbContext.Set<User>().Add(register);
                 dbContext.SaveChanges();
-                return Ok(register);
+
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                smtpClient.Credentials = new System.Net.NetworkCredential("contact.moveyourbody@gmail.com", config.GetSection("Auth").GetSection("password").Value);
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtpClient.EnableSsl = true;
+                MailMessage mail = new MailMessage();
+                mail.Subject = "Sikeres regisztráció!";
+                mail.Body = "<div style='text-align: center'><h1>Kedves " + register.Full_name +"!</h1><hr/><h3>Sikeresen regisztrált a MoveYourBody felületére!</h3><h3>Felhasználóneve a bejelentkezéshez: " + register.Email + "</h3><h2>Jó edzést kíván a MoveYourBody csapata!</h2></div>";
+                mail.IsBodyHtml = true;
+                mail.From = new MailAddress("contact.moveyourbody@gmail.com", "MoveYourBody");
+                mail.To.Add(new MailAddress(register.Email));
+                smtpClient.Send(mail);
+
+                    return Ok(register);
             });
         }
         [HttpGet("getTrainer")]

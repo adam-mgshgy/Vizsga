@@ -42,7 +42,7 @@
                 </button>
               </div>
               <h6 *ngIf="user.role == 'Trainer'" class="card-title text-white">{{ user.full_name }}</h6>
-              <h6 *ngIf="user.role == 'User'" class="card-title text-white">{{ trainers[training.trainer_id-1].full_name }}</h6>
+              <h6 *ngIf="user.role == 'User' && trainers[training.trainer_id-1]" class="card-title text-white">{{ trainers[training.trainer_id-1].full_name }}</h6>
             </div>
             <div class="col-md-12" id="lightBckg">
               <div class="card-body">
