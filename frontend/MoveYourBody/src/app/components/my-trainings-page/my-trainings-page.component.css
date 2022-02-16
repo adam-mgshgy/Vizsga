@@ -44,11 +44,12 @@
 .noApplications {
   margin: 10%;
   text-align: center;
-  color: #216869;
+  color: white;
 }
-.noApplications a {
+.noApplications a {  
   text-decoration: none;
-  color: #216869;
+  color: white;
+  font-weight: bold;
 }
 .parallax {
   background-image: url("../../../assets/images/backgrounds/background2.jpeg");

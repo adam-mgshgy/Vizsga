@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Protocols;
 using MoveYourBody.Service;
 using MoveYourBody.Service.Models;
@@ -15,9 +16,13 @@ namespace MoveYourBody.WebAPI.Controllers
     public class TrainingSessionController : Controller
     {
         private readonly ApplicationDbContext dbContext;
-        public TrainingSessionController(ApplicationDbContext dbContext)
+        private readonly IConfiguration config;
+
+        public TrainingSessionController(ApplicationDbContext dbContext, IConfiguration config)
         {
             this.dbContext = dbContext;
+            this.config = config;
+
         }
         [HttpGet("list")]
         public ActionResult ListByTraining([FromQuery] int trainingId)
@@ -136,12 +141,12 @@ namespace MoveYourBody.WebAPI.Controllers
                 var training = dbContext.Set<Training>().Where(t => t.Id == session.Training_id).FirstOrDefault();
                 var trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault();
                 SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-                smtpClient.Credentials = new System.Net.NetworkCredential("contact.moveyourbody@gmail.com", "M0v3y0urb0dy");                
+                smtpClient.Credentials = new System.Net.NetworkCredential("contact.moveyourbody@gmail.com", config.GetSection("Auth").GetSection("password").Value);                
                 smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtpClient.EnableSsl = true;
                 MailMessage mail = new MailMessage();
                 mail.Subject = "Edzés lemondva!";
-                mail.Body = "<div style='text-align: center;'><h1>Kedves jelentkező!</h1><h3> Az edzés amire jelentkezett lemondásra került! </h3><hr><h1>" + training.Name +"</h1><h2>" + session.Date + "</h2><h4>" + trainer.Full_name + "</h4><h4>" + training.Contact_phone + "</h4></div>";
+                mail.Body = "<div style='text-align: center;'><h1>Kedves Jelentkező!</h1><h3> Az edzés, amire jelentkezett lemondásra került! </h3><hr><h1>" + training.Name +"</h1><h2>" + session.Date + "</h2><h4>" + trainer.Full_name + "</h4><h4>" + training.Contact_phone + "</h4></div>";
                 mail.IsBodyHtml = true;
                 mail.From = new MailAddress("contact.moveyourbody@gmail.com", "MoveYourBody");
                 foreach (var applicant in applicants)
