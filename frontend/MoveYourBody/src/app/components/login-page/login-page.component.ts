@@ -28,9 +28,9 @@ export class LoginpageComponent implements OnInit {
 
   Login() {
     if (this.email == '') {
-      this.errorMessage = 'Kérjük adja meg E-mail címét!';
+      this.errorMessage = 'Kérem adja meg az e-mail címét!';
     } else if (this.password == '') {
-      this.errorMessage = 'Kérjük adja meg jelszavát!';
+      this.errorMessage = 'Kérem adja meg a jelszavát!';
     } else {
       this.authenticationService
         .login(this.email, this.password)
@@ -45,7 +45,7 @@ export class LoginpageComponent implements OnInit {
           },
           (error) => {
             console.log(error);
-            this.errorMessage = 'Hibás E-mail cím vagy jelszó!';
+            this.errorMessage = 'Hibás e-mail cím vagy jelszó!';
           }
         );
     }
