@@ -158,15 +158,15 @@ namespace MoveYourBody.WebAPI.Controllers
             });
         }        
 
-        [HttpPost("modify"), Authorize(Roles = "Admin, Trainer, User")]
+        [HttpPost("modify")]
         public ActionResult Modify(User user)
         {
             return this.Run(() =>
             {
-                var modifyuser = dbContext.Set<User>().Where(u => u.Id == user.Id).FirstOrDefault();
+                user.PasswordHash = "";
                 if (user.Password == "")
                 {
-                    user.PasswordHash = modifyuser.PasswordHash;
+                    user.PasswordHash = dbContext.Set<User>().AsNoTracking().Where(u => u.Id == user.Id).First().PasswordHash;
                 }
                 dbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 dbContext.SaveChanges();
