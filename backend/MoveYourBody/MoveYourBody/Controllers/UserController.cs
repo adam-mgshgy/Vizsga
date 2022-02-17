@@ -34,6 +34,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 var user = dbContext.Set<User>()
                                             .Where(u => u.Id == id)                                            
                                             .FirstOrDefault();
+                user.PasswordHash = null;
 
                 if (user == null)
                     return BadRequest(new
@@ -113,7 +114,7 @@ namespace MoveYourBody.WebAPI.Controllers
                     Password = user.Password,
                     Phone_number = user.Phone_number,
                     Location_id = user.Location_id,
-                    Role = user.Role
+                    Role = user.Role,
                 };
 
 
@@ -155,43 +156,21 @@ namespace MoveYourBody.WebAPI.Controllers
 
                 return Ok(trainer);
             });
-        }
+        }        
 
-        [HttpGet("login"), Authorize(Roles = "Admin, Trainer, User")]
-        public ActionResult Login([FromQuery] string email, string password)
-        {
-            return this.Run(() =>
-            {
-                var user = dbContext.Set<User>()
-                            .FirstOrDefault(u => u.Email == email && u.Password == password);
-                if (user == null)
-                {
-                    return Unauthorized(new
-                    {
-                        errorMessage = "Hibás e-mail cím vagy jelszó"
-                    });
-                }
-                return Ok(user);
-            });
-            //TODO
-            //var jwt = new JwtService(config);
-            //var token = jwt.GenerateSecurityToken(user.Email, new List<Claim>() { new Claim("LoginId", login.Id.ToString()) });
-
-            //return Ok(new
-            //{
-            //    token = token
-            //});
-        }
-
-        [HttpPost("modify"), Authorize(Roles = "Admin, Trainer, User")]
+        [HttpPost("modify")]
         public ActionResult Modify(User user)
         {
             return this.Run(() =>
             {
+                user.PasswordHash = "";
+                if (user.Password == "")
+                {
+                    user.PasswordHash = dbContext.Set<User>().AsNoTracking().Where(u => u.Id == user.Id).First().PasswordHash;
+                }
                 dbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                //dbContext.Entry(user.Location_id).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 dbContext.SaveChanges();
-
+                user.PasswordHash = "";
                 return Ok(user);
             });
         }

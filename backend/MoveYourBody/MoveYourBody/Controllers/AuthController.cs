@@ -21,57 +21,28 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             this.config = config;
             this.dbContext = dbContext;
-        }
+        }       
 
         [HttpPost]
         public ActionResult Login(LoginModel model)
         {
             return this.Run(() =>
             {
-                if (!string.IsNullOrEmpty(model.Email))
-                    return VisitorLoginByEmail(model);
-                else
-                    return AdLogin(model);
-            });
-        }
+                var user = dbContext.Set<User>()
+                                 .FirstOrDefault(r => r.Email == model.Email);
 
-        private ActionResult VisitorLoginByEmail(LoginModel model)
-        {
-            var user = dbContext.Set<User>()
-                            .FirstOrDefault(r => r.Email == model.Email && r.Password == model.Password);
-            
-            if (user == null)
-            {
-                return StatusCode(403, new
+                if (user == null || !user.CheckPassword(model.Password))
+                    return Forbid();
+
+                var jwt = new JwtService(config);
+                var token = jwt.GenerateSecurityToken(model.Email, user.Role);
+
+                return Ok(new
                 {
-                    errorMessage = "Hibás e-mail cím vagy jelszó"
+                    token = token,
+                    userId = user.Id
                 });
-            }
-            List<Claim> claims = new List<Claim>() {
-            new Claim (ClaimTypes.Email, 
-                model.Email),                        
-		    
-            // Add the ClaimType Role which carries the Role of the user
-            new Claim (ClaimTypes.Role, user.Role)
-        };
-
-
-
-
-            var jwt = new JwtService(config);
-            var token = jwt.GenerateSecurityToken(model.Email, user.Role, new List<Claim>() { new Claim("RegistrationId", user.Id.ToString()) });
-
-            return Ok(new
-            {
-                token = token,
-                userId = user.Id
             });
-        }
-
-        private ActionResult AdLogin(LoginModel model)
-        {
-            //TODO: megcsinálni
-            return Ok();
-        }
+        }        
     }
 }

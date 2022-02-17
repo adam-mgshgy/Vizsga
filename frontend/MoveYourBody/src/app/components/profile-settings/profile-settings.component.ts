@@ -187,7 +187,7 @@ export class ProfileSettingsComponent implements OnInit {
   save() {
     if (this.errorCheck()) {
       if (!this.pwdChange) {
-        this.userModify.password = this.user.password;
+        this.userModify.password = "";
       }
       else {
         this.userModify.password = this.password2;
@@ -199,6 +199,7 @@ export class ProfileSettingsComponent implements OnInit {
           this.userService.modifyUser(this.userModify).subscribe(
             (result) => {
               this.user = this.userModify;
+              this.authenticationService.modifyUser(this.userModify.id);
               this.router.navigateByUrl('/home');
             },
             (error) => (this.errorMessage = error)

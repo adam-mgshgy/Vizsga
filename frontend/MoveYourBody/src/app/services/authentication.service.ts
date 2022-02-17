@@ -44,6 +44,14 @@ export class AuthenticationService {
         })
       );
   }
+  modifyUser(id: number){  
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
+    this.userService.getUserById(id).subscribe((result) => {            
+      localStorage.setItem('currentUser', JSON.stringify(result));
+      this.currentUserSubject.next(result);
+    });
+  }
 
   logout() {
     localStorage.removeItem('currentUser');
