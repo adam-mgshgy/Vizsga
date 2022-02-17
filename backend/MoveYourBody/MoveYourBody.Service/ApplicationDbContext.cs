@@ -19,11 +19,13 @@ namespace MoveYourBody.Service
         public DbSet<TrainingSession> TrainingSession { get; set; }
         public DbSet<TagTraining> TagTraining { get; set; }
         public DbSet<Applicant> Applicant { get; set; }
+        public bool isMigration = false;
 
         public ApplicationDbContext()
         {
 #if DEBUG        
             connectionString = "Server=localhost;Database=moveyourbody;Uid=root;Pwd=;charset=utf8";
+            isMigration = true;
 #endif
         }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -139,14 +141,18 @@ namespace MoveYourBody.Service
                 new TagTraining() { Id = 14, Tag_id = 9, Training_id = 3 }
                 );
 
-            //string[] lines = File.ReadAllText("cities.csv").Trim().Split('\n');
-            //int i = 1;
-            //foreach (var line in lines)
-            //{
-            //    modelBuilder.Entity<Location>().HasData(
-            //        new Location() { City_name = line.Split(';')[0].Trim(), County_name = line.Split(';')[1].Trim(), Id = i++ }
-            //        );
-            //}
+            if (isMigration)
+            {
+                string[] lines = File.ReadAllText("cities.csv").Trim().Split('\n');
+                int i = 1;
+                foreach (var line in lines)
+                {
+                    modelBuilder.Entity<Location>().HasData(
+                        new Location() { City_name = line.Split(';')[0].Trim(), County_name = line.Split(';')[1].Trim(), Id = i++ }
+                        );
+                }
+
+            }
 
 
         }
