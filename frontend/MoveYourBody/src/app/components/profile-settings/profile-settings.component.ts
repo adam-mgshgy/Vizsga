@@ -187,8 +187,7 @@ export class ProfileSettingsComponent implements OnInit {
   save() {
     if (this.errorCheck()) {
       if (!this.pwdChange) {
-        //Mi jojjon ide????
-        this.userModify.password = this.user.password;
+        this.userModify.password = "";
       }
       else {
         this.userModify.password = this.password2;

@@ -34,6 +34,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 var user = dbContext.Set<User>()
                                             .Where(u => u.Id == id)                                            
                                             .FirstOrDefault();
+                user.PasswordHash = null;
 
                 if (user == null)
                     return BadRequest(new
@@ -162,10 +163,14 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
+                var modifyuser = dbContext.Set<User>().Where(u => u.Id == user.Id).FirstOrDefault();
+                if (user.Password == "")
+                {
+                    user.PasswordHash = modifyuser.PasswordHash;
+                }
                 dbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                //dbContext.Entry(user.Location_id).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 dbContext.SaveChanges();
-
+                user.PasswordHash = "";
                 return Ok(user);
             });
         }
