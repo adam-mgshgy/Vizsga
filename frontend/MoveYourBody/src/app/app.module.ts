@@ -29,7 +29,7 @@ import { ErrorInterceptor } from './JWT/ErrorInterceptor';
 import { SessionModalComponent } from './components/session-modal/session-modal.component';
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
 import { MatSortModule } from '@angular/material/sort';
-import { TrainingsComponent } from './components/trainings/trainings.component';
+import { TrainingsPageComponent } from './components/trainings-page/trainings-page.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -48,7 +48,7 @@ export function tokenGetter() {
     MyTrainingsPageComponent,
     SessionModalComponent,
     AdminPageComponent,
-    TrainingsComponent,
+    TrainingsPageComponent,
   ],
   imports: [
     BrowserModule,

@@ -10,7 +10,7 @@ import { AddSessionPageComponent } from './components/add-session-page/add-sessi
 import { TrainingPageComponent } from './components/training-page/training-page.component';
 import { MyTrainingsPageComponent } from './components/my-trainings-page/my-trainings-page.component';
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
-import { TrainingsComponent } from './components/trainings/trainings.component';
+import { TrainingsPageComponent } from './components/trainings-page/trainings-page.component';
 import { AuthGuard } from './JWT/auth-guard.service';
 
 const routes: Routes = [
@@ -27,13 +27,13 @@ const routes: Routes = [
   {path: 'training/:id', component: TrainingPageComponent, canActivate:[AuthGuard]},
   {path: 'mytrainings', component: MyTrainingsPageComponent, canActivate:[AuthGuard]},
   {path: 'admin', component: AdminPageComponent, canActivate:[AuthGuard]},
-  {path: 'trainings', component: TrainingsComponent, canActivate:[AuthGuard]},
-  {path: 'trainings/category/:category', component: TrainingsComponent, canActivate:[AuthGuard]},
-  {path: 'trainings/tag/:tag', component: TrainingsComponent, canActivate:[AuthGuard]},
-  {path: 'trainings/trainer/:trainer', component: TrainingsComponent, canActivate:[AuthGuard]},
-  {path: 'trainings/name/:name', component: TrainingsComponent, canActivate:[AuthGuard]},
-  {path: 'trainings/county/:county', component: TrainingsComponent, canActivate:[AuthGuard]},
-  {path: 'trainings/city/:city', component: TrainingsComponent, canActivate:[AuthGuard]}
+  {path: 'trainings', component: TrainingsPageComponent, canActivate:[AuthGuard]},
+  {path: 'trainings/category/:category', component: TrainingsPageComponent, canActivate:[AuthGuard]},
+  {path: 'trainings/tag/:tag', component: TrainingsPageComponent, canActivate:[AuthGuard]},
+  {path: 'trainings/trainer/:trainer', component: TrainingsPageComponent, canActivate:[AuthGuard]},
+  {path: 'trainings/name/:name', component: TrainingsPageComponent, canActivate:[AuthGuard]},
+  {path: 'trainings/county/:county', component: TrainingsPageComponent, canActivate:[AuthGuard]},
+  {path: 'trainings/city/:city', component: TrainingsPageComponent, canActivate:[AuthGuard]}
 
 ];
 
