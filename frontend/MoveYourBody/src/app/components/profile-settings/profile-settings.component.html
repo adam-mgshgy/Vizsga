@@ -25,7 +25,7 @@
             </div>
             <div class="mb-3">
                 <label for="username" class="form-label fs-5">
-                    Teljes név
+                    Teljes név:
                 </label>
                 <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" maxlength="255" class="form-control" id="username" name="username" value="{{userModify.full_name}}" [(ngModel)]="userModify.full_name">
             </div>
@@ -36,7 +36,7 @@
             </div>
             <div class="mb-3">
                 <label for="phoneNumber" class="form-label fs-5">
-                    Telefonszám
+                    Telefonszám:
                 </label>
                 <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="text" maxlength="12" class="form-control" id="phoneNumber" name="phoneNumber" value="{{userModify.phone_number}}" [(ngModel)]="userModify.phone_number">
                 <div id="phoneNumberNelp" class="form-text">Kérjük ezt a formátumot használd: +36123456789</div>
@@ -44,7 +44,7 @@
             <div class="mb-3">
                 <div class="mb-3">
                     <label for="county" class="form-label fs-5">
-                        Megye*
+                        Megye:
                     </label>
                     <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="county" name="county" required (change)="CountyChanged()" [(ngModel)]="selectedCounty">
                         <option *ngFor="let county of counties" [value]="county.county_name">{{county.county_name}}</option>
@@ -52,7 +52,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="city" class="form-label fs-5">
-                        Város*
+                        Város:
                     </label>
                     <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="city" name="city" required [(ngModel)]="selectedCity">
                         <option *ngFor="let city of cities" [value]="city.city_name">{{city.city_name}}</option>
@@ -68,20 +68,20 @@
                 </button>
             </div>
             <div class="mb-3" *ngIf="pwdChange">
-                <label for="password" class="form-label fs-5">Jelszó</label>
+                <label for="password" class="form-label fs-5">Jelszó:</label>
                 <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="password" maxlength="255" class="form-control pwd" name="password" [(ngModel)]="userModify.password">
             </div>
             <div class="mb-3" *ngIf="pwdChange">
-                <label for="password2" class="form-label fs-5">Jelszó ismét</label>
+                <label for="password2" class="form-label fs-5">Jelszó ismét:</label>
                 <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="password" maxlength="255" class="form-control pwd" name="password2" [(ngModel)]="password2">
             </div>
             
             <div class="mb-3">
-                <button id="subscribeButton" (click)="ChangeTrainerValue()" [ngClass]="userModify.role == 'Trainer' ? 'd-none' : 'd-inline-block'" type="button" class="btn btn-info fs-5" data-bs-toggle="tooltip" data-bs-html="true" title="Ha szeretnél edzővé válni és feltölteni edzéseid, nézd meg ajánlatainkat a gombra kattinva!">
+                <button id="subscribeButton" (click)="ChangeTrainerValue()" [ngClass]="userModify.role == 'Trainer' ? 'd-none' : 'd-inline-block'" type="button" class="btn btn-info fs-5" data-bs-toggle="tooltip" data-bs-html="true" title="Ha szeretne edzővé válni és feltölteni edzéseit, kattintson!">
                     Edzővé válok!
                 </button>
-                <button id="cancelSubscriptionButton" (click)="ChangeTrainerValue()" [ngClass]="userModify.role == 'Trainer' ? 'd-inline-block' : 'd-none'" type="button" class="btn btn-info fs-5" data-bs-toggle="tooltip" data-bs-html="true" title="Ha szeretnéd lemondani edzői előfizetésed, kattints a gombra!">
-                    Előfizetés lemondása
+                <button id="cancelSubscriptionButton" (click)="ChangeTrainerValue()" [ngClass]="userModify.role == 'Trainer' ? 'd-inline-block' : 'd-none'" type="button" class="btn btn-info fs-5" data-bs-toggle="tooltip" data-bs-html="true" title="Ha szeretne lemondani edzői lehetőségeiről, kattintson a gombra!">
+                    Edzőség lemondása
                 </button>
             </div>
             <div>

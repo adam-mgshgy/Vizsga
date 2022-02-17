@@ -22,7 +22,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="county" class="form-label fs-5">
-                        Megye*
+                        Megye:
                     </label>
                     <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="county" name="county" required (ngModelChange)="CountyChanged($event)" [(ngModel)]="selectedCounty">
                         <option *ngFor="let county of counties" [value]="county.county_name">{{county.county_name}}</option>
@@ -30,7 +30,7 @@
                 </div>
                 <div *ngIf="selectedCounty" class="mb-3">
                     <label for="city" class="form-label fs-5">
-                        Város*
+                        Város:
                     </label>
                     <select [ngStyle]="{'width.%': mobile ==true ? '80' : '50'}" class="form-select form-select-sm " id="city" name="city" required (ngModelChange)="CityChanged($event)" [(ngModel)]="selectedCity">
                         <option value=""></option>

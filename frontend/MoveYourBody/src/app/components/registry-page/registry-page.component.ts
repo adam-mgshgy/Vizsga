@@ -113,7 +113,7 @@ export class RegistryPageComponent implements OnInit {
       return false;
     }
     if (this.newUser.email == '') {
-      this.errorMessage = 'Kérem adja meg az email-címét!';
+      this.errorMessage = 'Kérem adja meg az e-mail címét!';
       return false;
     }
     if (this.newUser.password == '') {

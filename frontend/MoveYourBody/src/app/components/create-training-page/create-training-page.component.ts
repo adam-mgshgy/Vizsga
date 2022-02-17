@@ -350,7 +350,7 @@ export class CreateTrainingPageComponent implements OnInit {
       return false;
     }
     if (this.otherPhoneNumber == true && this.otherPhoneNumberInput == null) {
-      this.errorMessage = 'Kérem adja meg a másodlagos telefonszámot!';
+      this.errorMessage = 'Kérem adja meg a hadználni kívánt telefonszámot!';
       return false;
     }
     return true;
