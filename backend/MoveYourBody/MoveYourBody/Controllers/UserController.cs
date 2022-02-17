@@ -163,7 +163,6 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                user.PasswordHash = "";
                 if (user.Password == "")
                 {
                     user.PasswordHash = dbContext.Set<User>().AsNoTracking().Where(u => u.Id == user.Id).First().PasswordHash;
