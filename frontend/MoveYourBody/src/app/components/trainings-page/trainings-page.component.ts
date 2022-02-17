@@ -15,10 +15,10 @@ import { ImagesModel } from 'src/app/models/images-model';
 import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-trainings',
-  templateUrl: './trainings.component.html',
-  styleUrls: ['./trainings.component.css'],
+  templateUrl: './trainings-page.component.html',
+  styleUrls: ['./trainings-page.component.css'],
 })
-export class TrainingsComponent implements OnInit {
+export class TrainingsPageComponent implements OnInit {
   categoryId: number;
   tagId: number;
   trainerId: number;
