@@ -22,14 +22,8 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var location = dbContext.Set<Location>().Select(l => new
-                {
-                    id = l.Id,
-                    county_name = l.County_name,
-                    city_name = l.City_name
-
-                });
-                return Ok(location);
+                var locations = dbContext.Set<Location>().ToArray();
+                return Ok(locations);
             });
         }
         [HttpGet("counties")]

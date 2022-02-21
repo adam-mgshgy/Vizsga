@@ -194,18 +194,5 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal("", value.PasswordHash);
             }
         }
-
-        //[Fact]
-        //public void Register()
-        //{
-        //    using (var context = TestDbContext.GenerateTestDbContext())
-        //    {
-        //var sut = new UserController(context, config);
-
-        //    }
-        //}
-
-
-
     }
 }
