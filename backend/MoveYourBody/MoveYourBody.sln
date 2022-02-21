@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoveYourBody.WebAPI", "Move
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoveYourBody.Service", "MoveYourBody.Service\MoveYourBody.Service.csproj", "{E0F42869-8620-4263-82AD-964725BA83B7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoveYourBody.WebAPI.Tests", "..\..\..\2022-02-17 (WeatherForecast WebAPI Test)\WF.Tests\MoveYourBody.WebAPI.Tests.csproj", "{81895A52-057E-401B-97CC-CA7A7535EC69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoveYourBody.WebAPI.Tests", "MoveYourBody.WebAPI.Tests\MoveYourBody.WebAPI.Tests.csproj", "{D2D4C580-4184-44ED-B8A9-09E72A9D1C64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{E0F42869-8620-4263-82AD-964725BA83B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0F42869-8620-4263-82AD-964725BA83B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0F42869-8620-4263-82AD-964725BA83B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{81895A52-057E-401B-97CC-CA7A7535EC69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81895A52-057E-401B-97CC-CA7A7535EC69}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{81895A52-057E-401B-97CC-CA7A7535EC69}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{81895A52-057E-401B-97CC-CA7A7535EC69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2D4C580-4184-44ED-B8A9-09E72A9D1C64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2D4C580-4184-44ED-B8A9-09E72A9D1C64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2D4C580-4184-44ED-B8A9-09E72A9D1C64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2D4C580-4184-44ED-B8A9-09E72A9D1C64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
