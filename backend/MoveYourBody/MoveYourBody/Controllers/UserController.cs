@@ -121,17 +121,17 @@ namespace MoveYourBody.WebAPI.Controllers
                 dbContext.Set<User>().Add(register);
                 dbContext.SaveChanges();
 
-                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-                smtpClient.Credentials = new System.Net.NetworkCredential("contact.moveyourbody@gmail.com", config.GetSection("Auth").GetSection("password").Value);
-                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtpClient.EnableSsl = true;
-                MailMessage mail = new MailMessage();
-                mail.Subject = "Sikeres regisztráció!";
-                mail.Body = "<div style='text-align: center'><h1>Kedves " + register.Full_name +"!</h1><hr/><h3>Sikeresen regisztrált a MoveYourBody felületére!</h3><h3>Felhasználóneve a bejelentkezéshez: " + register.Email + "</h3><h2>Jó edzést kíván a MoveYourBody csapata!</h2></div>";
-                mail.IsBodyHtml = true;
-                mail.From = new MailAddress("contact.moveyourbody@gmail.com", "MoveYourBody");
-                mail.To.Add(new MailAddress(register.Email));
-                smtpClient.Send(mail);
+                //SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                //smtpClient.Credentials = new System.Net.NetworkCredential("contact.moveyourbody@gmail.com", config.GetSection("Auth").GetSection("password").Value);
+                //smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                //smtpClient.EnableSsl = true;
+                //MailMessage mail = new MailMessage();
+                //mail.Subject = "Sikeres regisztráció!";
+                //mail.Body = "<div style='text-align: center'><h1>Kedves " + register.Full_name +"!</h1><hr/><h3>Sikeresen regisztrált a MoveYourBody felületére!</h3><h3>Felhasználóneve a bejelentkezéshez: " + register.Email + "</h3><h2>Jó edzést kíván a MoveYourBody csapata!</h2></div>";
+                //mail.IsBodyHtml = true;
+                //mail.From = new MailAddress("contact.moveyourbody@gmail.com", "MoveYourBody");
+                //mail.To.Add(new MailAddress(register.Email));
+                //smtpClient.Send(mail);
 
                     return Ok(register);
             });
@@ -143,16 +143,17 @@ namespace MoveYourBody.WebAPI.Controllers
             {
                 var training = dbContext.Set<Training>().Where(t => t.Id == training_id).FirstOrDefault();
 
-                var trainer = dbContext.Set<User>().Where(t => t.Id == training.Trainer_id).Select(t => new {
-
-                    Id = t.Id,
-                    Full_name = t.Full_name,
-                    Email = "",
-                    Location_id = "",
-                    Password = "",
-                    Phone_number = "",
-                    Trainer = true
-                }).FirstOrDefault();
+                var trainer = dbContext.Set<User>().Where(t => t.Id == training.Trainer_id)
+                //    .Select(t => new {
+                //    Id = t.Id,
+                //    Full_name = t.Full_name,
+                //    Email = "",
+                //    Location_id = "",
+                //    Password = "",
+                //    Phone_number = "",
+                //    Trainer = true
+                //})
+                    .FirstOrDefault();
 
                 return Ok(trainer);
             });
@@ -169,6 +170,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 }
                 dbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 dbContext.SaveChanges();
+                user.Password = "";
                 user.PasswordHash = "";
                 return Ok(user);
             });
