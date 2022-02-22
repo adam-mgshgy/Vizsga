@@ -44,7 +44,7 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var sessions = dbContext.Set<Applicant>().Where(u => u.User_id == userId);
+                var sessions = dbContext.Set<Applicant>().Where(u => u.User_id == userId).ToList();
                 return Ok(sessions);
             });
         }
