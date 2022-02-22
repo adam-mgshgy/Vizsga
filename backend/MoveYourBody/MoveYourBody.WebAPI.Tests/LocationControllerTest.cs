@@ -55,8 +55,59 @@ namespace MoveYourBody.WebAPI.Tests
                 //Location[] value = (Location[])((OkObjectResult)result).Value; ???
                 //Assert.Equal("jozsiedzo@email.com", value.Email);
                 //Assert.Equal("Edzõ József", value.Full_name);
-                Assert.IsType<OkObjectResult>(result);
+   
 
+            }
+        }
+        [Fact]
+        public void ListByFieldId()
+        {
+            using (var context = TestDbContext.GenerateTestDbContext())
+            {
+                var sut = new LocationController(context);
+
+                var result = sut.ListByField("1");
+                Assert.IsType<OkObjectResult>(result);
+                Location[] value = (Location[])((OkObjectResult)result).Value;
+                Location location = (Location)value[0];
+                //{ 1, "Aba", "Fejér" },
+                Assert.Equal(1, location.Id);
+                Assert.Equal("Aba", location.City_name);
+                Assert.Equal("Fejér", location.County_name);
+            }
+        }
+        [Fact]
+        public void ListByFieldCityName()
+        {
+            using (var context = TestDbContext.GenerateTestDbContext())
+            {
+                var sut = new LocationController(context);
+
+                var result = sut.ListByField("Aba");
+                Assert.IsType<OkObjectResult>(result);
+                Location[] value = (Location[])((OkObjectResult)result).Value;
+                Location location = (Location)value[0];
+                //{ 1, "Aba", "Fejér" },
+                Assert.Equal(1, location.Id);
+                Assert.Equal("Aba", location.City_name);
+                Assert.Equal("Fejér", location.County_name);
+            }
+        }
+        [Fact]
+        public void ListByFieldCountyName()
+        {
+            using (var context = TestDbContext.GenerateTestDbContext())
+            {
+                var sut = new LocationController(context);
+
+                var result = sut.ListByField("Fejér");
+                Assert.IsType<OkObjectResult>(result);
+                Location[] value = (Location[])((OkObjectResult)result).Value;
+                Location location = (Location)value[0];
+                //{ 1, "Aba", "Fejér" },
+                Assert.Equal(1, location.Id);
+                Assert.Equal("Aba", location.City_name);
+                Assert.Equal("Fejér", location.County_name);
             }
         }
         //[Fact]
