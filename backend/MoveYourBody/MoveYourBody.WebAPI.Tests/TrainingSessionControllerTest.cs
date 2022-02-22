@@ -221,6 +221,91 @@ namespace MoveYourBody.WebAPI.Tests
             }
         }
 
+        [Fact]
+        public void Modify()
+        {
+            using (var context = TestDbContext.GenerateTestDbContext())
+            {
+                var sut = new TrainingSessionController(context, config);
+                //new TrainingSession() { Address_name = "Virág utca 8.", Date = new DateTime(2022, 3, 10, 12, 0, 0), Id = 11, Location_id = 61, Max_member = 10, Min_member = 5, Minutes = 45, Number_of_applicants = 1, Place_name = "Sportközpont", Price = 1500, Training_id = 7 }
+
+                TrainingSession modifySession = new TrainingSession()
+                {
+                    Id = 11,
+                    Address_name = "Virág utca 11.",
+                    Date = new DateTime(2022, 3, 10, 12, 0, 0),
+                    Location_id = 61,
+                    Max_member = 8,
+                    Min_member = 5,
+                    Minutes = 45,
+                    Number_of_applicants = 1,
+                    Place_name = "Sportközpont",
+                    Price = 1800,
+                    Training_id = 7
+                };
+                var result = sut.Modify(modifySession);
+                Assert.IsType<OkObjectResult>(result);
+
+                var value = ((OkObjectResult)result).Value;
+                TrainingSession session = (TrainingSession)((OkObjectResult)result).Value;
+
+                Assert.IsType<TrainingSession>(session);
+                Assert.Equal(11, session.Id);
+                Assert.Equal(7, session.Training_id);
+                Assert.Equal(61, session.Location_id);
+                Assert.Equal(1800, session.Price);
+                Assert.Equal(45, session.Minutes);
+                Assert.Equal(5, session.Min_member);
+                Assert.Equal(8, session.Max_member);
+                Assert.Equal(1, session.Number_of_applicants);
+                Assert.Equal("Virág utca 11.", session.Address_name);
+                Assert.Equal("Sportközpont", session.Place_name);
+                Assert.Equal("2022. 03. 10. 12:00:00", session.Date.ToString());
+            }
+        }
+
+        [Fact]
+        public void Delete()
+        {
+            using (var context = TestDbContext.GenerateTestDbContext())
+            {
+                var sut = new TrainingSessionController(context, config);
+                //new TrainingSession() { Address_name = "Virág utca 8.", Date = new DateTime(2022, 3, 10, 12, 0, 0), Id = 11, Location_id = 61, Max_member = 10, Min_member = 5, Minutes = 45, Number_of_applicants = 1, Place_name = "Sportközpont", Price = 1500, Training_id = 7 }
+
+                TrainingSession deleteSession = new TrainingSession()
+                {
+                    Id = 11,
+                    Address_name = "Virág utca 8.",
+                    Date = new DateTime(2022, 3, 10, 12, 0, 0),
+                    Location_id = 61,
+                    Max_member = 10,
+                    Min_member = 5,
+                    Minutes = 45,
+                    Number_of_applicants = 1,
+                    Place_name = "Sportközpont",
+                    Price = 1500,
+                    Training_id = 7
+                };
+                var result = sut.Delete(deleteSession);
+                Assert.IsType<OkObjectResult>(result);
+
+                var value = ((OkObjectResult)result).Value;
+                TrainingSession session = (TrainingSession)((OkObjectResult)result).Value;
+
+                Assert.IsType<TrainingSession>(session);
+                Assert.Equal(11, session.Id);
+                Assert.Equal(7, session.Training_id);
+                Assert.Equal(61, session.Location_id);
+                Assert.Equal(1500, session.Price);
+                Assert.Equal(45, session.Minutes);
+                Assert.Equal(5, session.Min_member);
+                Assert.Equal(10, session.Max_member);
+                Assert.Equal(1, session.Number_of_applicants);
+                Assert.Equal("Virág utca 8.", session.Address_name);
+                Assert.Equal("Sportközpont", session.Place_name);
+                Assert.Equal("2022. 03. 10. 12:00:00", session.Date.ToString());
+            }
+        }
         //[Fact]
         //public void Register()
         //{
