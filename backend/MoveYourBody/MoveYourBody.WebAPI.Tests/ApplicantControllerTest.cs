@@ -41,8 +41,32 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.IsType<OkObjectResult>(result);
 
                 var value = ((OkObjectResult)result).Value;
-                //List<Applicant> applicants = value; ???
-                Assert.IsType<OkObjectResult>(result);
+
+                List<Applicant> applicants = value.GetPropertyValue<List<Applicant>>("applicants");
+                List<User> users = value.GetPropertyValue<List<User>>("users");
+                Assert.IsType<List<Applicant>>(applicants);
+                Assert.IsType<List<User>>(users);
+                Assert.Equal(8, applicants[0].Id);
+                Assert.Equal(16, applicants[1].Id);
+                Assert.Equal(7, applicants[0].Training_session_id);
+                Assert.Equal(7, applicants[1].Training_session_id);
+                Assert.Equal(7, applicants[0].User_id);
+                Assert.Equal(9, applicants[1].User_id);
+
+                Assert.Equal(7, users[0].Id);
+                Assert.Equal(9, users[1].Id);
+                Assert.Equal(64, users[0].Location_id);
+                Assert.Equal(66, users[1].Location_id);
+                Assert.Equal(0, users[0].ImageId);
+                Assert.Equal(0, users[1].ImageId);
+                Assert.Equal("+36701234561", users[0].Phone_number);
+                Assert.Equal("+36701234568", users[1].Phone_number);
+                Assert.Equal("User", users[0].Role);
+                Assert.Equal("User", users[0].Role);
+                Assert.Equal("User Éva", users[0].Full_name);
+                Assert.Equal("User Gabriella", users[1].Full_name);
+                Assert.Equal("evi@email.com", users[0].Email);
+                Assert.Equal("gabi@email.com", users[1].Email);
 
             }
         }
