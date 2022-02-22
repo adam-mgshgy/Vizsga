@@ -103,7 +103,7 @@ namespace MoveYourBody.Service
                 new TrainingSession() { Address_name = "Virág utca 1.", Date = new DateTime(2022,3,10,9,30, 0), Id = 8, Location_id = 60, Max_member = 12, Min_member = 3, Minutes = 45, Number_of_applicants = 1, Place_name = "Sportközpont", Price = 1500, Training_id = 5 },
                 new TrainingSession() { Address_name = "Virág utca 2.", Date = new DateTime(2022,3,20,12,30, 0), Id = 9, Location_id = 60, Max_member = 10, Min_member = 6, Minutes = 45, Number_of_applicants = 0, Place_name = "Sportközpont", Price = 1500, Training_id = 6 },
                 new TrainingSession() { Address_name = "Virág utca 3.", Date = new DateTime(2022,3,10,12,30, 0), Id = 10, Location_id = 60, Max_member = 10, Min_member = 5, Minutes = 45, Number_of_applicants = 1, Place_name = "Sportközpont", Price = 1500, Training_id = 7 },
-                new TrainingSession() { Address_name = "Virág utca 8.", Date = new DateTime(2022, 3, 10, 12, 0, 0), Id = 11, Location_id = 61, Max_member = 10, Min_member = 5, Minutes = 45, Number_of_applicants = 1, Place_name = "Sportközpont", Price = 1500, Training_id = 7 }
+                new TrainingSession() { Address_name = "Virág utca 8.", Date = new DateTime(2022,3,10,12,0,0), Id = 11, Location_id = 61, Max_member = 10, Min_member = 5, Minutes = 45, Number_of_applicants = 1, Place_name = "Sportközpont", Price = 1500, Training_id = 7 }
                 );
             modelBuilder.Entity<Applicant>().HasData(
                 new Applicant() { Id = 1, Training_session_id = 1, User_id = 4 },

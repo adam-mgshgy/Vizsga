@@ -265,7 +265,7 @@ namespace MoveYourBody.WebAPI.Tests
 
 
                 Assert.IsType<List<TagTraining>>(tagTrainings);
-                //{ 1, "Csurgó", "Somogy" },
+
                 Assert.Equal(9, tagTrainings[0].Id);
                 Assert.Equal(7, tagTrainings[1].Tag_id);
                 Assert.Equal(5, tagTrainings[0].Training_id);
@@ -318,7 +318,7 @@ namespace MoveYourBody.WebAPI.Tests
 
 
                 Assert.IsType<List<TagTraining>>(tagTrainings);
-                //{ 1, "Csurgó", "Somogy" },
+
                 Assert.Equal(1, tagTrainings[0].Id);
                 Assert.Equal(1, tagTrainings[0].Tag_id);
                 Assert.Equal(1, tagTrainings[0].Training_id);
@@ -336,7 +336,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(5, sessions[0].Number_of_applicants);
                 Assert.Equal("Virág utca 8.", sessions[0].Address_name);
                 Assert.Equal("Sportközpont", sessions[0].Place_name);
-                Assert.Equal("2022.03.10 12:30:00", sessions[0].Date.ToString());
+                Assert.Equal("2022. 03. 10. 12:30:00", sessions[0].Date.ToString());
 
 
                 Assert.IsType<List<Applicant>>(applications);
@@ -344,6 +344,306 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(1, applications[0].Id);
                 Assert.Equal(1, applications[0].Training_session_id);
                 Assert.Equal(4, applications[0].User_id);
+
+            }
+        }    
+
+        [Fact]
+        public void GetByCategory()
+        {
+            using (var context = TestDbContext.GenerateTestDbContext())
+            {
+
+                var sut = new TrainingController(context);
+
+                var result = sut.GetByCategory(2);
+                Assert.IsType<OkObjectResult>(result);
+                var value = ((OkObjectResult)result).Value;
+
+                List<User> trainers = value.GetPropertyValue<List<User>>("trainers");
+                List<Training> trainings = value.GetPropertyValue<List<Training>>("trainings");
+                List<TagTraining> tagTrainings = value.GetPropertyValue<List<TagTraining>>("tagTrainings");
+
+
+                Assert.IsType<List<User>>(trainers);
+
+                Assert.Equal(3, trainers[1].Id);
+                Assert.Equal("gezaedzo@email.com", trainers[1].Email);
+                Assert.Equal("Edző Géza", trainers[1].Full_name);
+                Assert.Equal(0, trainers[1].ImageId);
+                Assert.Equal(60, trainers[1].Location_id);
+                Assert.Equal(null, trainers[1].Password);
+                Assert.Equal(null, trainers[1].PasswordHash);
+                Assert.Equal("Trainer", trainers[1].Role);
+                Assert.Equal("+36701234565", trainers[1].Phone_number);
+
+
+                Assert.IsType<List<Training>>(trainings);
+
+                Assert.Equal(2, trainings[0].Id);
+                Assert.Equal(2, trainings[0].Category_id);
+                Assert.Equal(1, trainings[0].Trainer_id);
+                Assert.Equal("Edzés 2", trainings[0].Name);
+                Assert.Equal("Rövid leírás az edzésről", trainings[0].Description);
+                Assert.Equal("+36701234567", trainings[0].Contact_phone);
+                Assert.Equal(0, trainings[0].IndexImageId);
+
+
+                Assert.IsType<List<TagTraining>>(tagTrainings);
+
+                Assert.Equal(4, tagTrainings[1].Id);
+                Assert.Equal(4, tagTrainings[1].Tag_id);
+                Assert.Equal(2, tagTrainings[1].Training_id);
+
+            }
+        }
+
+        [Fact]
+        public void GetByTag()
+        {
+            using (var context = TestDbContext.GenerateTestDbContext())
+            {
+
+                var sut = new TrainingController(context);
+
+                var result = sut.GetByTag(4);
+                Assert.IsType<OkObjectResult>(result);
+                var value = ((OkObjectResult)result).Value;
+
+                List<User> trainers = value.GetPropertyValue<List<User>>("trainers");
+                List<Training> trainings = value.GetPropertyValue<List<Training>>("trainings");
+                List<TagTraining> tagTrainings = value.GetPropertyValue<List<TagTraining>>("tagTrainings");
+
+
+                Assert.IsType<List<User>>(trainers);
+
+                Assert.Equal(2, trainers[1].Id);
+                Assert.Equal("belaedzo@email.com", trainers[1].Email);
+                Assert.Equal("Edző Béla", trainers[1].Full_name);
+                Assert.Equal(0, trainers[1].ImageId);
+                Assert.Equal(59, trainers[1].Location_id);
+                Assert.Equal(null, trainers[1].Password);
+                Assert.Equal(null, trainers[1].PasswordHash);
+                Assert.Equal("Trainer", trainers[1].Role);
+                Assert.Equal("+36701234566", trainers[1].Phone_number);
+
+
+                Assert.IsType<List<Training>>(trainings);
+
+                Assert.Equal(2, trainings[0].Id);
+                Assert.Equal(2, trainings[0].Category_id);
+                Assert.Equal(1, trainings[0].Trainer_id);
+                Assert.Equal("Edzés 2", trainings[0].Name);
+                Assert.Equal("Rövid leírás az edzésről", trainings[0].Description);
+                Assert.Equal("+36701234567", trainings[0].Contact_phone);
+                Assert.Equal(0, trainings[0].IndexImageId);
+
+
+                Assert.IsType<List<TagTraining>>(tagTrainings);
+
+                Assert.Equal(4, tagTrainings[1].Id);
+                Assert.Equal(4, tagTrainings[1].Tag_id);
+                Assert.Equal(2, tagTrainings[1].Training_id);
+
+            }
+        }
+
+        [Fact]
+        public void GetAll()
+        {
+            using (var context = TestDbContext.GenerateTestDbContext())
+            {
+
+                var sut = new TrainingController(context);
+
+                var result = sut.GetAll();
+                Assert.IsType<OkObjectResult>(result);
+                var value = ((OkObjectResult)result).Value;
+
+                List<User> trainers = value.GetPropertyValue<List<User>>("trainers");
+                List<Training> trainings = value.GetPropertyValue<List<Training>>("trainings");
+                List<TagTraining> tagTrainings = value.GetPropertyValue<List<TagTraining>>("tagTrainings");
+
+
+                Assert.IsType<List<User>>(trainers);
+
+                Assert.Equal(2, trainers[1].Id);
+                Assert.Equal("belaedzo@email.com", trainers[1].Email);
+                Assert.Equal("Edző Béla", trainers[1].Full_name);
+                Assert.Equal(0, trainers[1].ImageId);
+                Assert.Equal(59, trainers[1].Location_id);
+                Assert.Equal(null, trainers[1].Password);
+                Assert.Equal(null, trainers[1].PasswordHash);
+                Assert.Equal("Trainer", trainers[1].Role);
+                Assert.Equal("+36701234566", trainers[1].Phone_number);
+
+
+                Assert.IsType<List<Training>>(trainings);
+
+                Assert.Equal(2, trainings[1].Id);
+                Assert.Equal(2, trainings[1].Category_id);
+                Assert.Equal(1, trainings[1].Trainer_id);
+                Assert.Equal("Edzés 2", trainings[1].Name);
+                Assert.Equal("Rövid leírás az edzésről", trainings[1].Description);
+                Assert.Equal("+36701234567", trainings[1].Contact_phone);
+                Assert.Equal(0, trainings[1].IndexImageId);
+
+
+                Assert.IsType<List<TagTraining>>(tagTrainings);
+
+                Assert.Equal(2, tagTrainings[1].Id);
+                Assert.Equal(2, tagTrainings[1].Tag_id);
+                Assert.Equal(1, tagTrainings[1].Training_id);
+
+            }
+        }
+
+        [Fact]
+        public void GetByCounty()
+        {
+            using (var context = TestDbContext.GenerateTestDbContext())
+            {
+
+                var sut = new TrainingController(context);
+
+                var result = sut.getByCounty("Győr-Moson-Sopron");
+                Assert.IsType<OkObjectResult>(result);
+                var value = ((OkObjectResult)result).Value;
+
+                List<User> trainers = value.GetPropertyValue<List<User>>("trainers");
+                List<Training> trainings = value.GetPropertyValue<List<Training>>("trainings");
+                List<TagTraining> tagTrainings = value.GetPropertyValue<List<TagTraining>>("tagTrainings");
+
+
+                Assert.IsType<List<User>>(trainers);
+
+                Assert.Equal(2, trainers[1].Id);
+                Assert.Equal("belaedzo@email.com", trainers[1].Email);
+                Assert.Equal("Edző Béla", trainers[1].Full_name);
+                Assert.Equal(0, trainers[1].ImageId);
+                Assert.Equal(59, trainers[1].Location_id);
+                Assert.Equal(null, trainers[1].Password);
+                Assert.Equal(null, trainers[1].PasswordHash);
+                Assert.Equal("Trainer", trainers[1].Role);
+                Assert.Equal("+36701234566", trainers[1].Phone_number);
+
+
+                Assert.IsType<List<Training>>(trainings);
+
+                Assert.Equal(4, trainings[1].Id);
+                Assert.Equal(4, trainings[1].Category_id);
+                Assert.Equal(2, trainings[1].Trainer_id);
+                Assert.Equal("Edzés 4", trainings[1].Name);
+                Assert.Equal("Rövid leírás az edzésről", trainings[1].Description);
+                Assert.Equal("+36701234566", trainings[1].Contact_phone);
+                Assert.Equal(0, trainings[1].IndexImageId);
+
+
+                Assert.IsType<List<TagTraining>>(tagTrainings);
+
+                Assert.Equal(2, tagTrainings[1].Id);
+                Assert.Equal(2, tagTrainings[1].Tag_id);
+                Assert.Equal(1, tagTrainings[1].Training_id);
+
+            }
+        }
+
+        [Fact]
+        public void GetByCity()
+        {
+            using (var context = TestDbContext.GenerateTestDbContext())
+            {
+
+                var sut = new TrainingController(context);
+
+                var result = sut.getByCity("Csurgó");
+                Assert.IsType<OkObjectResult>(result);
+                var value = ((OkObjectResult)result).Value;
+
+                List<User> trainers = value.GetPropertyValue<List<User>>("trainers");
+                List<Training> trainings = value.GetPropertyValue<List<Training>>("trainings");
+                List<TagTraining> tagTrainings = value.GetPropertyValue<List<TagTraining>>("tagTrainings");
+
+
+                Assert.IsType<List<User>>(trainers);
+
+                Assert.Equal(3, trainers[1].Id);
+                Assert.Equal("gezaedzo@email.com", trainers[1].Email);
+                Assert.Equal("Edző Géza", trainers[1].Full_name);
+                Assert.Equal(0, trainers[1].ImageId);
+                Assert.Equal(60, trainers[1].Location_id);
+                Assert.Equal(null, trainers[1].Password);
+                Assert.Equal(null, trainers[1].PasswordHash);
+                Assert.Equal("Trainer", trainers[1].Role);
+                Assert.Equal("+36701234565", trainers[1].Phone_number);
+
+
+                Assert.IsType<List<Training>>(trainings);
+
+                Assert.Equal(5, trainings[1].Id);
+                Assert.Equal(5, trainings[1].Category_id);
+                Assert.Equal(3, trainings[1].Trainer_id);
+                Assert.Equal("Edzés 5", trainings[1].Name);
+                Assert.Equal("Rövid leírás az edzésről", trainings[1].Description);
+                Assert.Equal("+36701234565", trainings[1].Contact_phone);
+                Assert.Equal(0, trainings[1].IndexImageId);
+
+
+                Assert.IsType<List<TagTraining>>(tagTrainings);
+
+                Assert.Equal(4, tagTrainings[1].Id);
+                Assert.Equal(4, tagTrainings[1].Tag_id);
+                Assert.Equal(2, tagTrainings[1].Training_id);
+
+            }
+        }
+
+        [Fact]
+        public void GetByName()
+        {
+            using (var context = TestDbContext.GenerateTestDbContext())
+            {
+
+                var sut = new TrainingController(context);
+
+                var result = sut.GetByName("Edzés 5");
+                Assert.IsType<OkObjectResult>(result);
+                var value = ((OkObjectResult)result).Value;
+
+                List<User> trainers = value.GetPropertyValue<List<User>>("trainers");
+                List<Training> trainings = value.GetPropertyValue<List<Training>>("trainings");
+                List<TagTraining> tagTrainings = value.GetPropertyValue<List<TagTraining>>("tagTrainings");
+
+
+                Assert.IsType<List<User>>(trainers);
+
+                Assert.Equal(3, trainers[0].Id);
+                Assert.Equal("gezaedzo@email.com", trainers[0].Email);
+                Assert.Equal("Edző Géza", trainers[0].Full_name);
+                Assert.Equal(0, trainers[0].ImageId);
+                Assert.Equal(60, trainers[0].Location_id);
+                Assert.Equal(null, trainers[0].Password);
+                Assert.Equal(null, trainers[0].PasswordHash);
+                Assert.Equal("Trainer", trainers[0].Role);
+                Assert.Equal("+36701234565", trainers[0].Phone_number);
+
+
+                Assert.IsType<List<Training>>(trainings);
+
+                Assert.Equal(5, trainings[0].Id);
+                Assert.Equal(5, trainings[0].Category_id);
+                Assert.Equal(3, trainings[0].Trainer_id);
+                Assert.Equal("Edzés 5", trainings[0].Name);
+                Assert.Equal("Rövid leírás az edzésről", trainings[0].Description);
+                Assert.Equal("+36701234565", trainings[0].Contact_phone);
+                Assert.Equal(0, trainings[0].IndexImageId);
+
+
+                Assert.IsType<List<TagTraining>>(tagTrainings);
+
+                Assert.Equal(9, tagTrainings[0].Id);
+                Assert.Equal(1, tagTrainings[0].Tag_id);
+                Assert.Equal(5, tagTrainings[0].Training_id);
 
             }
         }
