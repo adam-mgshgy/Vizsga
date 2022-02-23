@@ -36,7 +36,6 @@ namespace MoveYourBody.WebAPI.Controllers
 
                 var jwt = new JwtService(config);
                 var token = jwt.GenerateSecurityToken(model.Email, user.Role);
-
                 return Ok(new
                 {
                     token = token,
