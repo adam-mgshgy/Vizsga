@@ -83,20 +83,5 @@ export class TagTrainingService {
       })
     );
   }
-
-  getTags(id: any): Observable<TagTrainingModel[]> {
-    return this.http.get<TagTrainingModel[]>(`${environment.ApiURL}/tagTraining/GetTags?training_id=${id}`, ).pipe(
-      map((data: TagTrainingModel[]) => {        
-        return data;
-      }),
-      catchError(err => {
-        if (!environment.production && err.status == 404) {
-          return of(err);
-        } 
-        else 
-          throw err;
-      })
-    );
-  }
-
+  
 }

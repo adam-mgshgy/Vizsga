@@ -92,6 +92,50 @@ namespace MoveYourBody.WebAPI.Tests
             }
         }
 
-        //TODO
+        [Fact]
+        public void Refresh()
+        {
+            using (var context = TestDbContext.GenerateTestDbContext())
+            {
+
+                var sut = new TagTrainingController(context);
+
+                var result = sut.Refresh(2);
+                Assert.IsType<OkObjectResult>(result);
+
+                TagTraining value = (TagTraining)((OkObjectResult)result).Value;
+
+                Assert.Equal(2, value.Id);
+                Assert.Equal(2, value.Tag_id);
+                Assert.Equal(1, value.Training_id);
+
+            }
+        }
+
+        [Fact]
+        public void Delete()
+        {
+            using (var context = TestDbContext.GenerateTestDbContext())
+            {
+
+                var sut = new TagTrainingController(context);
+
+                TagTraining tagTraining = new TagTraining()
+                {
+                    Id = 6,
+                    Tag_id = 5,
+                    Training_id = 3,
+                };
+                var result = sut.Delete(tagTraining);
+                Assert.IsType<OkObjectResult>(result);
+
+                TagTraining value = (TagTraining)((OkObjectResult)result).Value;
+
+                Assert.Equal(6, value.Id);
+                Assert.Equal(5, value.Tag_id);
+                Assert.Equal(3, value.Training_id);
+
+            }
+        }
     }
 }
