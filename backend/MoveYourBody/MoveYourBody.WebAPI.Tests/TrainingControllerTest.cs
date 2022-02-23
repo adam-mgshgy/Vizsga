@@ -109,37 +109,37 @@ namespace MoveYourBody.WebAPI.Tests
             }
         }
 
-        //[Fact]
-        //public void SaveImages()
-        //{
-        //    using (var context = TestDbContext.GenerateTestDbContext())
-        //    {
-        //        var sut = new TrainingController(context);
-        //        string[] base64 = {"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==" };
-        //        var result = sut.SaveImages(base64, 1);
-        //        Assert.IsType<OkObjectResult>(result);
+        [Fact]
+        public void SaveImages()
+        {
+            using (var context = TestDbContext.GenerateTestDbContext())
+            {
+                var sut = new TrainingController(context);
+                //string[] base64 = new string[] { "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==" };
+                var result = sut.SaveImages(new string[]{ "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==" }, 2);
+                Assert.IsType<OkObjectResult>(result);
 
-        //    }
-        //}
+            }
+        }
 
-        //[Fact]
-        //public void GetImageById()
-        //{
-        //    using (var context = TestDbContext.GenerateTestDbContext())
-        //    {
-        //        var sut = new TrainingController(context);
-        //        var result = sut.GetImageById(1);
+        [Fact]
+        public void GetImageById()
+        {
+            using (var context = TestDbContext.GenerateTestDbContext())
+            {
+                var sut = new TrainingController(context);
+                var result = sut.GetImageById(2);
 
-        //        var value = ((OkObjectResult)result).Value;
+                var value = ((OkObjectResult)result).Value;
 
-        //        List<TrainingImages> trainingImages = value.GetPropertyValue<List<TrainingImages>>("trainingImages");
-        //        List<Images> images = value.GetPropertyValue<List<Images>>("images");
-        //        Assert.IsType<List<TrainingImages>>(trainingImages);
-        //        Assert.IsType<List<Images>>(images);
-                
+                List<TrainingImages> trainingImages = value.GetPropertyValue<List<TrainingImages>>("trainingImages");
+                List<Images> images = value.GetPropertyValue<List<Images>>("images");
+                Assert.IsType<List<TrainingImages>>(trainingImages);
+                Assert.IsType<List<Images>>(images);
 
-        //    }
-        //}
+                Assert.Equal("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==", Convert.ToBase64String(images[0].ImageData));
+            }
+        }
 
         [Fact]
         public void Delete()

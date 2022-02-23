@@ -275,6 +275,7 @@ export class CreateTrainingPageComponent implements OnInit {
           );
         }
       } else {
+        console.log(this.images);
         this.trainingService.saveImage(this.images, this.training.id).subscribe(
           (result) => console.log(result),
           (error) => console.log(error)

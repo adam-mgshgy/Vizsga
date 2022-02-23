@@ -35,7 +35,7 @@ namespace MoveYourBody.WebAPI.Controllers
                     };
                     dbContext.Set<Images>().Add(newImage);
                     dbContext.SaveChanges();
-                                        
+
                     TrainingImages newTrainingImages = new TrainingImages()
                     {
                         Id = 0,

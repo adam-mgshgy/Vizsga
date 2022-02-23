@@ -85,7 +85,7 @@ namespace MoveYourBody.Service
                 );
             modelBuilder.Entity<Training>().HasData(
                 new Training() { Id = 1, Category_id = 1, Contact_phone = "+36701234567", Description = "Rövid leírás az edzésről még sokkal hosszabb leírás fúha nagyon hosszú ki se fér, lássuk meddig megy a szöveg olvassuk tovább", Name = "Edzés 1", Trainer_id = 1 },
-                new Training() { Id = 2, Category_id = 2, Contact_phone = "+36701234567", Description = "Rövid leírás az edzésről", Name = "Edzés 2", Trainer_id = 1 },
+                new Training() { Id = 2, Category_id = 2, Contact_phone = "+36701234567", Description = "Rövid leírás az edzésről", Name = "Edzés 2", Trainer_id = 1, IndexImageId = 1 },
                 new Training() { Id = 3, Category_id = 3, Contact_phone = "+36701234566", Description = "Rövid leírás az edzésről", Name = "Edzés 3", Trainer_id = 2 },
                 new Training() { Id = 4, Category_id = 4, Contact_phone = "+36701234566", Description = "Rövid leírás az edzésről", Name = "Edzés 4", Trainer_id = 2 },
                 new Training() { Id = 5, Category_id = 5, Contact_phone = "+36701234565", Description = "Rövid leírás az edzésről", Name = "Edzés 5", Trainer_id = 3 },
@@ -139,6 +139,15 @@ namespace MoveYourBody.Service
                 new TagTraining() { Id = 12, Tag_id = 6, Training_id = 2 },
                 new TagTraining() { Id = 13, Tag_id = 10, Training_id = 1 },
                 new TagTraining() { Id = 14, Tag_id = 9, Training_id = 3 }
+                );
+
+            modelBuilder.Entity<TrainingImages>().HasData(
+                new TrainingImages() { Id = 1, ImageId = 1, TrainingId = 2}
+                );
+            string data = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==";
+            byte[] imageData = Convert.FromBase64String(data);
+            modelBuilder.Entity<Images>().HasData(
+                new Images() { Id = 1, ImageData = imageData }
                 );
 
             if (isMigration)
