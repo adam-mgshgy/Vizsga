@@ -25,7 +25,7 @@ const routes: Routes = [
   {path: 'addsession', component: AddSessionPageComponent, canActivate:[AuthGuard]},
   {path: 'addsession/:trainingId/:sessionId', component: AddSessionPageComponent, canActivate:[AuthGuard]},
   {path: 'training/:id', component: TrainingPageComponent, canActivate:[AuthGuard]},
-  {path: 'mytrainings', component: MyTrainingsPageComponent, canActivate:[AuthGuard]},
+  {path: 'mytrainings/:mode', component: MyTrainingsPageComponent, canActivate:[AuthGuard]},
   {path: 'admin', component: AdminPageComponent, canActivate:[AuthGuard]},
   {path: 'trainings', component: TrainingsPageComponent, canActivate:[AuthGuard]},
   {path: 'trainings/category/:category', component: TrainingsPageComponent, canActivate:[AuthGuard]},

@@ -26,13 +26,8 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var category = dbContext.Set<Category>().Select(c => new
-                {
-                    id = c.Id,
-                    img_src = c.Img_src,
-                    name = c.Name
-                });
-                return Ok(category);
+                var categories = dbContext.Set<Category>().ToList();
+                return Ok(categories);
             });
         }
         [HttpPut("add"), Authorize(Roles = "Admin")]
