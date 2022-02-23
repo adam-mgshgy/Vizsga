@@ -39,7 +39,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 {
                     Id = 0,
                     Name = category.Name,
-                    Img_src = category.Img_src
+                    ImageId = category.ImageId
                 };
                 dbContext.Set<Category>().Add(newcategory);
                 dbContext.SaveChanges();

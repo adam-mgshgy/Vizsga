@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using MoveYourBody.Service.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure.Internal;
 using System;
 using System.IO;
@@ -42,18 +45,18 @@ namespace MoveYourBody.Service
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(
-                new Category() { Id = 1, Name = "Box", Img_src = "box.jpg" },
-                new Category() { Id = 2, Name = "Crossfit", Img_src = "crossFitt.jpg" },
-                new Category() { Id = 3, Name = "Labdarúgás", Img_src = "football.jpg" },
-                new Category() { Id = 4, Name = "Kosárlabda", Img_src = "basketball.jpg" },
-                new Category() { Id = 5, Name = "Kézilabda", Img_src = "handball.jpg" },
-                new Category() { Id = 6, Name = "Röplabda", Img_src = "volleyball.jpg" },
-                new Category() { Id = 7, Name = "Spartan", Img_src = "spartan.jpg" },
-                new Category() { Id = 8, Name = "Tenisz", Img_src = "tennis.jpg" },
-                new Category() { Id = 9, Name = "TRX", Img_src = "trx.jpg" },
-                new Category() { Id = 10, Name = "Úszás", Img_src = "swimming.jpg" },
-                new Category() { Id = 11, Name = "Lovaglás", Img_src = "riding.jpg" },
-                new Category() { Id = 12, Name = "Jóga", Img_src = "yoga.jpg" }
+                new Category() { Id = 1, Name = "Box", ImageId = 1 }
+                //new Category() { Id = 2, Name = "Crossfit", Img_src = "crossFitt.jpg" },
+                //new Category() { Id = 3, Name = "Labdarúgás", Img_src = "football.jpg" },
+                //new Category() { Id = 4, Name = "Kosárlabda", Img_src = "basketball.jpg" },
+                //new Category() { Id = 5, Name = "Kézilabda", Img_src = "handball.jpg" },
+                //new Category() { Id = 6, Name = "Röplabda", Img_src = "volleyball.jpg" },
+                //new Category() { Id = 7, Name = "Spartan", Img_src = "spartan.jpg" },
+                //new Category() { Id = 8, Name = "Tenisz", Img_src = "tennis.jpg" },
+                //new Category() { Id = 9, Name = "TRX", Img_src = "trx.jpg" },
+                //new Category() { Id = 10, Name = "Úszás", Img_src = "swimming.jpg" },
+                //new Category() { Id = 11, Name = "Lovaglás", Img_src = "riding.jpg" },
+                //new Category() { Id = 12, Name = "Jóga", Img_src = "yoga.jpg" }
 
                 );
             
@@ -147,8 +150,28 @@ namespace MoveYourBody.Service
             string data = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==";
             byte[] imageData = Convert.FromBase64String(data);
             modelBuilder.Entity<Images>().HasData(
-                new Images() { Id = 1, ImageData = imageData }
+                new Images() { Id = 13, ImageData = imageData }
                 );
+
+            var JSON = File.ReadAllText("CategoryImages/CategoryImages.json");
+            JObject dynJson = JsonConvert.DeserializeObject(JSON) as JObject;
+            
+            //byte[] image = Convert.FromBase64String(dynJson["imageData"]["box"].ToString());
+            modelBuilder.Entity<Images>().HasData(
+                new Images() { Id = 1, ImageData = Convert.FromBase64String(dynJson["imageData"]["box"].ToString()) },
+                new Images() { Id = 2, ImageData = Convert.FromBase64String(dynJson["imageData"]["crossfit"].ToString()) },
+                new Images() { Id = 3, ImageData = Convert.FromBase64String(dynJson["imageData"]["football"].ToString()) },
+                new Images() { Id = 4, ImageData = Convert.FromBase64String(dynJson["imageData"]["basketball"].ToString()) },
+                new Images() { Id = 5, ImageData = Convert.FromBase64String(dynJson["imageData"]["handball"].ToString()) },
+                new Images() { Id = 6, ImageData = Convert.FromBase64String(dynJson["imageData"]["volleyball"].ToString()) },
+                new Images() { Id = 7, ImageData = Convert.FromBase64String(dynJson["imageData"]["spartan"].ToString()) },
+                new Images() { Id = 8, ImageData = Convert.FromBase64String(dynJson["imageData"]["tennis"].ToString()) },
+                new Images() { Id = 9, ImageData = Convert.FromBase64String(dynJson["imageData"]["trx"].ToString()) },
+                new Images() { Id = 10, ImageData = Convert.FromBase64String(dynJson["imageData"]["swimming"].ToString()) },
+                new Images() { Id = 11, ImageData = Convert.FromBase64String(dynJson["imageData"]["riding"].ToString()) },
+                new Images() { Id = 12, ImageData = Convert.FromBase64String(dynJson["imageData"]["yoga"].ToString()) }
+
+            );
 
             if (isMigration)
             {
