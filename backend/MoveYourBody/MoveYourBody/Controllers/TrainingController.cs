@@ -35,15 +35,23 @@ namespace MoveYourBody.WebAPI.Controllers
                     };
                     dbContext.Set<Images>().Add(newImage);
                     dbContext.SaveChanges();
-
+                    int imageId = -1;
+                    foreach (var dbimage in dbContext.Set<Images>())
+                    {
+                        if (dbimage.ImageData == image)
+                        {
+                            imageId = dbimage.Id;
+                        }
+                    }
                     TrainingImages newTrainingImages = new TrainingImages()
                     {
                         Id = 0,
-                        ImageId = dbContext.Set<Images>().Where(t => t.ImageData == image).FirstOrDefault().Id,
+                        ImageId = imageId,
                         TrainingId = trainingId,
                     };
                     dbContext.Set<TrainingImages>().Add(newTrainingImages);
                     dbContext.SaveChanges();
+
                     var training = dbContext.Set<Training>().Where(t => t.Id == newTrainingImages.TrainingId).FirstOrDefault();
                     if (dbContext.Set<TrainingImages>().Where(t => t.TrainingId == training.Id).Count() == 1)
                     {
@@ -181,6 +189,7 @@ namespace MoveYourBody.WebAPI.Controllers
             {
                 Training training = dbContext.Set<Training>().Where(t => t.Id == trainingId).FirstOrDefault();
                 User trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault();
+                trainer.PasswordHash = null;
                 Location location = dbContext.Set<Location>().Where(l => l.Id == trainer.Location_id).FirstOrDefault();
                 return Ok(new
                 {
@@ -198,6 +207,7 @@ namespace MoveYourBody.WebAPI.Controllers
             return this.Run(() =>
             {
                 var trainer = dbContext.Set<User>().Where(u => u.Id == trainerId).FirstOrDefault();
+                trainer.PasswordHash = null;
                 var trainings = dbContext.Set<Training>().Where(t => t.Trainer_id == trainerId).ToList();
                 if (trainings == null)
                     return BadRequest(new
@@ -252,6 +262,10 @@ namespace MoveYourBody.WebAPI.Controllers
                     }
                     trainers.Add(dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault());
                 }
+                foreach (var item in trainers)
+                {
+                    item.PasswordHash = null;
+                }
                 return Ok(new
                 {
                     trainings,
@@ -281,6 +295,10 @@ namespace MoveYourBody.WebAPI.Controllers
                     if (!trainers.Contains(trainer)) trainers.Add(trainer);
                     tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
                 }
+                foreach (var item in trainers)
+                {
+                    item.PasswordHash = null;
+                }
                 return Ok(new
                 {
                     trainings,
@@ -308,6 +326,10 @@ namespace MoveYourBody.WebAPI.Controllers
                     if (!trainers.Contains(trainer)) trainers.Add(trainer);
                     tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
                 }
+                foreach (var item in trainers)
+                {
+                    item.PasswordHash = null;
+                }
                 return Ok(new
                 {
                     trainings,
@@ -332,6 +354,10 @@ namespace MoveYourBody.WebAPI.Controllers
                     if (!trainers.Contains(trainer)) trainers.Add(trainer);
                     tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
 
+                }
+                foreach (var item in trainers)
+                {
+                    item.PasswordHash = null;
                 }
                 return Ok(new
                 {
@@ -378,6 +404,10 @@ namespace MoveYourBody.WebAPI.Controllers
                     tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
 
                 }
+                foreach (var item in trainers)
+                {
+                    item.PasswordHash = null;
+                }
                 return Ok(new
                 {
                     trainings,
@@ -422,6 +452,10 @@ namespace MoveYourBody.WebAPI.Controllers
                     tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
 
                 }
+                foreach (var item in trainers)
+                {
+                    item.PasswordHash = null;
+                }
                 return Ok(new
                 {
                     trainings,
@@ -452,6 +486,10 @@ namespace MoveYourBody.WebAPI.Controllers
                     if (!trainers.Contains(trainer)) trainers.Add(trainer);
                     tagTrainings.AddRange(dbContext.Set<TagTraining>().Where(t => t.Training_id == training.Id).ToList());
 
+                }
+                foreach (var item in trainers)
+                {
+                    item.PasswordHash = null;
                 }
                 return Ok(new
                 {
