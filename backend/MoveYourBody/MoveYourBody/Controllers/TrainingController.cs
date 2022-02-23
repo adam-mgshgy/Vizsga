@@ -35,15 +35,23 @@ namespace MoveYourBody.WebAPI.Controllers
                     };
                     dbContext.Set<Images>().Add(newImage);
                     dbContext.SaveChanges();
-
+                    int imageId = -1;
+                    foreach (var dbimage in dbContext.Set<Images>())
+                    {
+                        if (dbimage.ImageData == image)
+                        {
+                            imageId = dbimage.Id;
+                        }
+                    }
                     TrainingImages newTrainingImages = new TrainingImages()
                     {
                         Id = 0,
-                        ImageId = dbContext.Set<Images>().Where(t => t.ImageData == image).FirstOrDefault().Id,
+                        ImageId = imageId,
                         TrainingId = trainingId,
                     };
                     dbContext.Set<TrainingImages>().Add(newTrainingImages);
                     dbContext.SaveChanges();
+
                     var training = dbContext.Set<Training>().Where(t => t.Id == newTrainingImages.TrainingId).FirstOrDefault();
                     if (dbContext.Set<TrainingImages>().Where(t => t.TrainingId == training.Id).Count() == 1)
                     {

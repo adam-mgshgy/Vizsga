@@ -115,10 +115,9 @@ namespace MoveYourBody.WebAPI.Tests
             using (var context = TestDbContext.GenerateTestDbContext())
             {
                 var sut = new TrainingController(context);
-                //string[] base64 = new string[] { "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==" };
-                var result = sut.SaveImages(new string[]{ "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==" }, 2);
-                Assert.IsType<OkObjectResult>(result);
-
+                string[] base64 = new string[] { "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==" };
+                var result = sut.SaveImages(base64, 2);
+                Assert.IsType<OkResult>(result);
             }
         }
 
@@ -336,7 +335,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(5, sessions[0].Number_of_applicants);
                 Assert.Equal("Virág utca 8.", sessions[0].Address_name);
                 Assert.Equal("Sportközpont", sessions[0].Place_name);
-                Assert.Equal("2022. 03. 10. 12:30:00", sessions[0].Date.ToString());
+                Assert.Equal("2022.03.10 12:30:00", sessions[0].Date.ToString());
 
 
                 Assert.IsType<List<Applicant>>(applications);
@@ -386,7 +385,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal("Edzés 2", trainings[0].Name);
                 Assert.Equal("Rövid leírás az edzésről", trainings[0].Description);
                 Assert.Equal("+36701234567", trainings[0].Contact_phone);
-                Assert.Equal(0, trainings[0].IndexImageId);
+                Assert.Equal(1, trainings[0].IndexImageId);
 
 
                 Assert.IsType<List<TagTraining>>(tagTrainings);
@@ -436,7 +435,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal("Edzés 2", trainings[0].Name);
                 Assert.Equal("Rövid leírás az edzésről", trainings[0].Description);
                 Assert.Equal("+36701234567", trainings[0].Contact_phone);
-                Assert.Equal(0, trainings[0].IndexImageId);
+                Assert.Equal(1, trainings[0].IndexImageId);
 
 
                 Assert.IsType<List<TagTraining>>(tagTrainings);
@@ -486,7 +485,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal("Edzés 2", trainings[1].Name);
                 Assert.Equal("Rövid leírás az edzésről", trainings[1].Description);
                 Assert.Equal("+36701234567", trainings[1].Contact_phone);
-                Assert.Equal(0, trainings[1].IndexImageId);
+                Assert.Equal(1, trainings[1].IndexImageId);
 
 
                 Assert.IsType<List<TagTraining>>(tagTrainings);
