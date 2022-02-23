@@ -121,19 +121,19 @@ namespace MoveYourBody.WebAPI.Controllers
                 dbContext.Set<User>().Add(register);
                 dbContext.SaveChanges();
 
-                //SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-                //smtpClient.Credentials = new System.Net.NetworkCredential("contact.moveyourbody@gmail.com", config.GetSection("Auth").GetSection("password").Value);
-                //smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                //smtpClient.EnableSsl = true;
-                //MailMessage mail = new MailMessage();
-                //mail.Subject = "Sikeres regisztráció!";
-                //mail.Body = "<div style='text-align: center'><h1>Kedves " + register.Full_name +"!</h1><hr/><h3>Sikeresen regisztrált a MoveYourBody felületére!</h3><h3>Felhasználóneve a bejelentkezéshez: " + register.Email + "</h3><h2>Jó edzést kíván a MoveYourBody csapata!</h2></div>";
-                //mail.IsBodyHtml = true;
-                //mail.From = new MailAddress("contact.moveyourbody@gmail.com", "MoveYourBody");
-                //mail.To.Add(new MailAddress(register.Email));
-                //smtpClient.Send(mail);
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                smtpClient.Credentials = new System.Net.NetworkCredential("contact.moveyourbody@gmail.com", config.GetSection("Auth").GetSection("password").Value);
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtpClient.EnableSsl = true;
+                MailMessage mail = new MailMessage();
+                mail.Subject = "Sikeres regisztráció!";
+                mail.Body = "<div style='text-align: center'><h1>Kedves " + register.Full_name + "!</h1><hr/><h3>Sikeresen regisztrált a MoveYourBody felületére!</h3><h3>Felhasználóneve a bejelentkezéshez: " + register.Email + "</h3><h2>Jó edzést kíván a MoveYourBody csapata!</h2></div>";
+                mail.IsBodyHtml = true;
+                mail.From = new MailAddress("contact.moveyourbody@gmail.com", "MoveYourBody");
+                mail.To.Add(new MailAddress(register.Email));
+                smtpClient.Send(mail);
 
-                    return Ok(register);
+                return Ok(register);
             });
         }
         [HttpGet("getTrainer")]
