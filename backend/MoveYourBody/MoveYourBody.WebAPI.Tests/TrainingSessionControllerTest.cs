@@ -4,6 +4,7 @@ using MoveYourBody.Service.Models;
 using MoveYourBody.WebAPI.Controllers;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Xunit;
 
 namespace MoveYourBody.WebAPI.Tests
@@ -17,9 +18,11 @@ namespace MoveYourBody.WebAPI.Tests
         {
             //this.context = new TestDbContext();
             //Configuration mocking: https://stackoverflow.com/questions/64794219/how-to-mock-iconfiguration-getvalue
+            byte[] data = Convert.FromBase64String("TTB2M3kwdXJiMGR5");
+            string decodedString = Encoding.UTF8.GetString(data);
             var inMemorySettings = new Dictionary<string, string> {
                 {"TopLevelKey", "TopLevelValue"},
-                {"Auth:password", "Password"}
+                {"Auth:password",  decodedString}
             };
             config = new ConfigurationBuilder()
                         .AddInMemoryCollection(inMemorySettings)
