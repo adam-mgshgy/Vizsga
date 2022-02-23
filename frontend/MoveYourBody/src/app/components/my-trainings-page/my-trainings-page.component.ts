@@ -6,7 +6,6 @@ import { UserModel } from 'src/app/models/user-model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { TrainingSessionModel } from 'src/app/models/training-session-model';
 import { TrainingService } from 'src/app/services/training.service';
-import { TagTrainingService } from 'src/app/services/tag-training.service';
 import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { TagService } from 'src/app/services/tag.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -14,6 +13,7 @@ import { TrainingSessionService } from 'src/app/services/training-session.servic
 import { ApplicantService } from 'src/app/services/applicant.service';
 import { ImagesModel } from 'src/app/models/images-model';
 import { UserService } from 'src/app/services/user.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-my-trainings-page',
@@ -28,7 +28,9 @@ export class MyTrainingsPageComponent implements OnInit {
     private modalService: NgbModal,
     private tagService: TagService,
     private authenticationService: AuthenticationService,
-    private userService: UserService
+    private userService: UserService,
+    private route: ActivatedRoute,
+
   ) {
     this.authenticationService.currentUser.subscribe((x) => (this.user = x));
   }
@@ -39,7 +41,7 @@ export class MyTrainingsPageComponent implements OnInit {
   
   mobile: boolean = false;
   counter = 0;
-
+  mode = '';
   myTrainings: TrainingModel[] = [];
   tagTraining: TagTrainingModel[] = [];
   user: UserModel;
@@ -93,7 +95,9 @@ export class MyTrainingsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.user.role == 'Trainer') {
+    this.route.paramMap.subscribe((params) => {
+      this.mode = params.get('mode');
+    if (this.mode == 'trainer') {
       this.trainingService.getByTrainerId(this.user.id).subscribe(
         (result) => {
           this.myTrainings = result.trainings;
@@ -113,9 +117,7 @@ export class MyTrainingsPageComponent implements OnInit {
                     for (const item of result.images) {
                       if (item.id == training.indexImageId) {
                         this.indexImages.push(item);
-                        
                       }
-                      
                     }
                     console.log(this.indexImages)
                   },
@@ -129,7 +131,7 @@ export class MyTrainingsPageComponent implements OnInit {
         },
         (error) => console.log(error)
       );
-    } else {
+    } else if (this.mode == 'applied') {
       this.trainingService.getByUserId(this.user.id).subscribe(
         (result) => {
           this.trainers = result.trainers;
@@ -138,7 +140,6 @@ export class MyTrainingsPageComponent implements OnInit {
               (result) => {
                 if (result != null) {
                   this.profileImages.push(result);
-                  
                 }
               },
               (error) => console.log(error)
@@ -151,9 +152,7 @@ export class MyTrainingsPageComponent implements OnInit {
                 for (const item of result.images) {
                   if (item.id == training.indexImageId) {
                     this.indexImages.push(item);
-                    
                   }
-                  
                 }
               },
               (error) => console.log(error)
@@ -164,6 +163,7 @@ export class MyTrainingsPageComponent implements OnInit {
         (error) => console.log(error)
       );
     }
+  });
     if (window.innerWidth <= 991) {
       this.mobile = true;
     }
@@ -206,7 +206,7 @@ export class MyTrainingsPageComponent implements OnInit {
     }
   }
   open(content: any, trainingId: number) {
-    if (this.user.role == 'Trainer') {
+    if (this.mode == 'trainer') {
       this.trainingSessionService.listByTrainingId(trainingId).subscribe(
         (result) => {
           this.sessions = result.sessions;
@@ -215,7 +215,7 @@ export class MyTrainingsPageComponent implements OnInit {
         },
         (error) => console.log(error)
       );
-    } else {
+    } else if (this.mode == 'applied'){
       this.trainingSessionService
         .ListAppliedSessions(trainingId, this.user.id)
         .subscribe(

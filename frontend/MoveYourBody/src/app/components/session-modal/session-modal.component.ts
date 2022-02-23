@@ -14,6 +14,7 @@ import { LocationService } from 'src/app/services/location.service';
 })
 export class SessionModalComponent implements OnInit {
   @Input() session = new TrainingSessionModel();
+  @Input() mode = '';
   constructor(
     private applicantService: ApplicantService,
     private locationService: LocationService,
@@ -26,7 +27,7 @@ export class SessionModalComponent implements OnInit {
   public applicants: ApplicantModel[] = [];
   public applicantUsers: UserModel[] = [];
   ngOnInit(): void {
-    if (this.user.role == 'Trainer') {
+    if (this.mode == 'trainer') {
       this.applicantService.listBySessionId(this.session.id).subscribe(
         (result) => {
           this.applicants = result.applicants;
@@ -34,7 +35,7 @@ export class SessionModalComponent implements OnInit {
         },
         (error) => console.log(error)
       );
-    } else {
+    } else if(this.mode == 'applied') {
       this.locationService.getById(this.session.location_id).subscribe(
         (result) => {
           this.location = result[0];
