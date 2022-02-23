@@ -27,12 +27,7 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             return this.Run(() =>
             {
-                var tag = dbContext.Set<Tag>().Select(t => new
-                {
-                    id = t.Id,
-                    name = t.Name,
-                    colour = t.Colour
-                });
+                var tag = dbContext.Set<Tag>().ToList();
                 return Ok(tag);
             });
         }
