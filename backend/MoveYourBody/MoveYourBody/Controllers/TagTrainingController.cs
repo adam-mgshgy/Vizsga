@@ -78,62 +78,17 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(delete);
             });
         }
-                
 
-        [HttpGet("GetTags")]
-        public ActionResult GetTags(int id)
-        {
-            return this.Run(() =>
-            {
-                var training = dbContext.Set<Training>()
-                                            .Where(t => t.Category_id == id)
-                                            .Select(t => new Training()
-                                            {
-                                                Id = t.Id,
-                                                Name = t.Name,
-                                                Trainer_id = t.Trainer_id,
-                                                Category_id = t.Category_id,
-                                                Description = t.Description,
-                                                Contact_phone = t.Contact_phone
-                                            });
-
-                List<int> lista = new List<int>();
-                foreach (var item in training)
-                {
-                    lista.Add(item.Id);
-                }
-                var tagTraining = dbContext.Set<TagTraining>();
-
-                foreach (var item in lista)
-                {
-                    tagTraining.Add(dbContext.Set<TagTraining>().Where(t => t.Training_id == Convert.ToInt32(item)).FirstOrDefault());
-                }                
-
-
-                return Ok(tagTraining.OrderBy(t => t.Training_id));
-            });
-        }
 
         [HttpDelete]
         public ActionResult Delete(TagTraining tagTraining)
-        {
-            //return this.Run(() =>
-            //{                
-            //    dbContext.Remove(tagTraining);
-            //    dbContext.SaveChanges();
-            //    return Ok(tagTraining);
-            //});
+        {           
             return this.Run(() =>
             {
                 var delete = dbContext.Set<TagTraining>().Where(d => d.Tag_id == tagTraining.Tag_id && d.Training_id == tagTraining.Training_id).FirstOrDefault();
-                //return BadRequest(new
-                //{                    
-                //    ErrorMessage = delete
-                //});
-
+                
                 dbContext.Remove(delete);
                 dbContext.SaveChanges();
-
                 
                 return Ok(delete);
             });
