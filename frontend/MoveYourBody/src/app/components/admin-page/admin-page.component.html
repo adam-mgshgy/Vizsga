@@ -35,7 +35,7 @@
             <label for="categoryImg" class="form-label">
                 Kép:
             </label>
-            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="file" class="form-control" id="categoryImg" name="categoryImg" [(ngModel)]="newCategory.img_src">
+            <!-- <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="file" class="form-control" id="categoryImg" name="categoryImg" [(ngModel)]="newCategory.img_src"> -->
         </div>
         <div class="mb-3">
             <button id="createButton" type="submit" class="btn btn-success fs-5" (click)="SaveCategory()" >Kategória mentése</button>

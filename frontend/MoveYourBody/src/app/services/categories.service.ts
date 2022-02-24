@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { CategoryModel } from '../models/category-model';
 import { environment } from 'src/environments/environment';
 import { catchError, map } from 'rxjs/operators';
+import { ImagesModel } from '../models/images-model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,11 +12,11 @@ import { catchError, map } from 'rxjs/operators';
 export class CategoriesService {
   constructor(private http: HttpClient) {}
 
-  getCategories(): Observable<CategoryModel[]> {
+  getCategories(): Observable<any> {
     return this.http
-      .get<CategoryModel[]>(`${environment.ApiURL}/categories`)
+      .get<any>(`${environment.ApiURL}/categories`)
       .pipe(
-        map((data: CategoryModel[]) => {
+        map((data: any) => {
           return data;
         }),
         catchError((err) => {

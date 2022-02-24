@@ -27,7 +27,17 @@ namespace MoveYourBody.WebAPI.Controllers
             return this.Run(() =>
             {
                 var categories = dbContext.Set<Category>().ToList();
-                return Ok(categories);
+                var images = new List<Images>();
+                foreach (var item in categories)
+                {
+                    images.AddRange(dbContext.Set<Images>().Where(i => i.Id == item.ImageId).ToList());
+
+                }
+                return Ok(new
+                {
+                    categories,
+                    images
+                });
             });
         }
         [HttpPut("add"), Authorize(Roles = "Admin")]
@@ -46,14 +56,6 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(newcategory);
             });
         }
-        //[HttpGet("{id}")]
-        //public ActionResult GetById(int id)
-        //{
-        //    return this.Run(() =>
-        //    {
-        //        var category = dbContext.Set<Category>().Where(c => c.Id == id).FirstOrDefault();
-        //        return Ok(category);
-        //    });
-        //}
+       
     }
 }
