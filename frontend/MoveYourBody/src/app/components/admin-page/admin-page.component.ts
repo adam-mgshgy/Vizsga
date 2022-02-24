@@ -26,7 +26,31 @@ export class AdminPageComponent implements OnInit {
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
   }
+  cardImageBase64: string;
+  isImageSaved: boolean;
+  image: string[] = [];
+  fileChangeEvent(fileInput: any) {
+    
+    if (fileInput.target.files && fileInput.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const imgBase64Path = e.target.result;
+        this.cardImageBase64 = imgBase64Path;
+        this.isImageSaved = true;
+        this.image.push(this.cardImageBase64);
 
+        this.save();
+      };
+      reader.readAsDataURL(fileInput.target.files[0]);
+    }
+  }
+  save(){
+    //todo save categoryimage
+  }
+  deleteImage(){
+    this.image = [];
+    this.isImageSaved = false;
+  }
   CancelTag() {
     this.newTag = new TagModel();
   }

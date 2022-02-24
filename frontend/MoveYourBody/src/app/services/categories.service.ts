@@ -16,7 +16,7 @@ export class CategoriesService {
     return this.http
       .get<any>(`${environment.ApiURL}/categories`)
       .pipe(
-        map((data: any) => {
+        map((data) => {
           return data;
         }),
         catchError((err) => {

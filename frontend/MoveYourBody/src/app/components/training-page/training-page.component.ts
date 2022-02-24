@@ -64,7 +64,7 @@ export class TrainingPageComponent implements OnInit {
   };
   category: CategoryModel = {
     id: 0,
-    imgId: 1,
+    imageId: 1,
     name: ''
   };
   sessions: TrainingSessionModel[] = [];

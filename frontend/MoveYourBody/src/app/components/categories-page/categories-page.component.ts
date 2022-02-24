@@ -17,8 +17,8 @@ export class CategoriesPageComponent implements OnInit {
   ngOnInit(): void {
     this.categoryService.getCategories().subscribe(
       (result) => {
-        //this.categories = result.categories;
-        //this.images = result.images;
+        this.categories = result.categories;
+        this.images = result.images;
       },
       (error) => console.log(error)
     );

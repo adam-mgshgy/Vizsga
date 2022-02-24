@@ -21,15 +21,15 @@
         <h1>Számos kategória közül választhat:</h1>
         
         <div id="catImgDiv" class="col-lg-4 mb-5 position-relative">
-            <img class="img-fluid border" id="catImg" src="./assets/images/categoriesPageImages/trx.jpg" alt="TRX edzés">
+            <img class="img-fluid border" id="catImg" [src]="'data:image/png;base64,'+images[8].imageData" alt="TRX edzés">
             <a class="centered text-decoration-none fw-bold" routerLink="/category/TRX" id="catRef"><span class="centered">TRX</span></a>
         </div>
         <div id="catImgDiv" class="col-lg-4 mb-5 position-relative">
-            <img class="img-fluid border" id="catImg" src="./assets/images/categoriesPageImages/box.jpg" alt="Box edzés">
+            <img class="img-fluid border" id="catImg" [src]="'data:image/png;base64,'+images[0].imageData" alt="Box edzés">
             <a class="centered text-decoration-none fw-bold" routerLink="/category/Box" id="catRef"><span class="centered">Box</span></a>
         </div>
         <div id="catImgDiv" class="col-lg-4 mb-5 position-relative">
-            <img class="img-fluid border" id="catImg" src="./assets/images/categoriesPageImages/crossFitt.jpg" alt="Crossfit edzés">
+            <img class="img-fluid border" id="catImg" [src]="'data:image/png;base64,'+images[1].imageData" alt="Crossfit edzés">
             <a class="centered text-decoration-none fw-bold" routerLink="/category/Crossfit" id="catRef"><span class="centered">Crossfit</span></a>
         </div>
     </div>
