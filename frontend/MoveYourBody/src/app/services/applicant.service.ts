@@ -4,8 +4,6 @@ import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { catchError, map } from 'rxjs/operators';
 import { ApplicantModel } from '../models/applicant-model';
-import { TrainingSessionModel } from '../models/training-session-model';
-import { UserModel } from '../models/user-model';
 
 @Injectable({
   providedIn: 'root'

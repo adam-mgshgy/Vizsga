@@ -89,7 +89,6 @@ export class ProfileSettingsComponent implements OnInit {
   }
 
   fileChangeEvent(fileInput: any) {
-    //TODO max image size, input text change
     if (fileInput.target.files && fileInput.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
@@ -97,7 +96,6 @@ export class ProfileSettingsComponent implements OnInit {
         this.cardImageBase64 = imgBase64Path;
         this.isImageSaved = true;
         this.image.push(this.cardImageBase64);
-
         this.saveImage();
       };
       reader.readAsDataURL(fileInput.target.files[0]);

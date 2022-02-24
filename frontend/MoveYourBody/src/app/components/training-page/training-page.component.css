@@ -46,6 +46,8 @@ table button {
 table {
   text-align: center;
   vertical-align: middle;
+  padding: 0;
+  margin: 0;
 }
 #description{
     border: 3px solid #216869;

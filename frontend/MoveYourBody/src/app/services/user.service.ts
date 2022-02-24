@@ -4,7 +4,6 @@ import { UserModel } from '../models/user-model';
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { catchError, map } from 'rxjs/operators';
-import { LoginModel } from '../models/login-model';
 import { ImagesModel } from '../models/images-model';
 
 
@@ -115,7 +114,7 @@ export class UserService {
       })
     );
   }
-  checkEmail(email: string): Observable<boolean> {
+  emailExists(email: string): Observable<boolean> {
     return this.http.get<UserModel>(`${environment.ApiURL}/user/email?email=${email}`).pipe(
       map((data: any) => {
         return data;

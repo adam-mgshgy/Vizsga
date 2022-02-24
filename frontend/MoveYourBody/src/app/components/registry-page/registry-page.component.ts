@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { LocationModel } from 'src/app/models/location-model';
 import { UserModel } from 'src/app/models/user-model';
 import { LocationService } from 'src/app/services/location.service';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-//import { resourceUsage } from 'process';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 
@@ -25,7 +23,6 @@ export class RegistryPageComponent implements OnInit {
 
   constructor(
     private locationService: LocationService,
-    private modalService: NgbModal,
     private userService: UserService,
     private router: Router
   ) {}
@@ -43,7 +40,6 @@ export class RegistryPageComponent implements OnInit {
       if (item.county_name == value) {
         this.newUser.location_id = item.id;
         this.selectedCounty = item.county_name;
-        console.log(this.selectedCounty);
       } else if (value == '') {
         this.newUser.location_id = null;
       } else if (value == item.id) {
@@ -60,7 +56,6 @@ export class RegistryPageComponent implements OnInit {
       if (item.city_name == value) {
         this.newUser.location_id = item.id;
         this.selectedCity = item.city_name;
-        console.log(this.selectedCity);
       } else if (value == '') {
         this.newUser.location_id = null;
       } else if (value == item.id) {
@@ -69,21 +64,28 @@ export class RegistryPageComponent implements OnInit {
     }
   }
   Register() {
-    if(!this.newUser.role) this.newUser.role = 'User';
+    if (!this.newUser.role) this.newUser.role = 'User';
     if (this.errorCheck()) {
-      this.locationService.getLocationId(this.selectedCity).subscribe(
-        (result) => (this.newUser.location_id = result),
-        (error) => console.log(error)
-      );
-      this.newUser.id = 0;
-      this.newUser.imageId = 0;
-      this.userService.Register(this.newUser).subscribe(
-        (result) => {
-          console.log(this.newUser);
-          this.router.navigateByUrl('/login');
-        },
-        (error) => (this.errorMessage = "Ezzel az E-mail címmel már létezik felhasználói fiók!")//!!!!
-      );
+      this.userService.emailExists(this.newUser.email).subscribe((result) => {
+        if (result == true) {
+          this.errorMessage =
+            'Ezzel az E-mail címmel már létezik felhasználói fiók';
+        } else {
+          this.locationService.getLocationId(this.selectedCity).subscribe(
+            (result) => (this.newUser.location_id = result),
+            (error) => console.log(error)
+          );
+          this.newUser.id = 0;
+          this.newUser.imageId = 0;
+          this.userService.Register(this.newUser).subscribe(
+            (result) => {
+              console.log(this.newUser);
+              this.router.navigateByUrl('/login');
+            },
+            (error) => (this.errorMessage = 'Váratlan hiba történt!')
+          );
+        }
+      });
     }
   }
   Cancel() {
@@ -136,15 +138,6 @@ export class RegistryPageComponent implements OnInit {
       this.errorMessage = 'Kérem válasszon várost!';
       return false;
     }
-    // this.userService.checkEmail(this.newUser.email).subscribe((result) => {
-    //   if (result == true) {
-    //     this.errorMessage =
-    //       'Ezzel az E-mail címmel már létezik felhasználói fiók';
-    //     return false;
-    //   } else {
-    //     return true;
-    //   }
-    // });
 
     return true;
   }

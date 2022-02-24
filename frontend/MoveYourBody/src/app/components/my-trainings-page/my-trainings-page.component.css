@@ -2,7 +2,13 @@
   width: 80%;
   padding-top: 2rem;
 }
-
+.full {
+  height: 100%;
+  width: 100%; 
+}
+.cover {
+  object-fit: cover;
+}
 #tag{    
     height: 30px;
     font-size: x-small;

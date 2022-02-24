@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="mb-3">
-                <button id="passwordButton" (click)="pwdChange = !pwdChange" type="button" class="btn btn-info fs-5">
+                <button id="passwordButton" (click)="pwdChange = !pwdChange" type="button" class="btn fs-5">
                    Jelszó módosítása
                 </button>
                 <button *ngIf="pwdChange" id="cancelbtn" (click)="pwdChange = !pwdChange; userModify.password = ''; password2 = ''" type="button" class="btn btn-danger fs-5 ms-2">

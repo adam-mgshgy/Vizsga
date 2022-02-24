@@ -10,15 +10,13 @@
                     <input type="password" name="password" maxlength="255" class="form-control" placeholder="Jelszó" [(ngModel)]="password" />
                 </div>
                 <div class="mb-3 form-label fs-5">
-                    <a class="nav-link active" routerLink="/register" class="ForgetPwd">Regisztrálni szeretnék!</a>
+                    <a class="nav-link active" routerLink="/register" class="register">Regisztrálni szeretnék!</a>
                 </div>
                 <div class="form-label">
                     <input (click)="Login()" type="button" class="btnSubmit" value="Bejelentkezés" />
                 </div>
             </form>
             <p class="text-danger font-weight-bold text-center" *ngIf="errorMessage" id="error">{{errorMessage}}</p>
-
         </div>
-
     </div>
 </div>

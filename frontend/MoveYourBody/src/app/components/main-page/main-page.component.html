@@ -1,18 +1,17 @@
 <div class="parallax">
 
-<div class="container">
-    <img id="logoImage" src="./assets/images/mainPageImages/logo.png" alt="logo">
-    <div class="row">
-        <h1>Az online edzésplatform</h1>
-        <h2>Minden edzés, egy oldalon</h2>
-        <img class="trainingImage" src="./assets/images/mainPageImages/training1.jpg" alt="edzés">
+    <div class="container">
+        <img id="logoImage" src="./assets/images/mainPageImages/logo.png" alt="logo">
+        <div class="row">
+            <h1>Az online edzésplatform</h1>
+            <h2>Minden edzés, egy oldalon</h2>
+            <img class="trainingImage" src="./assets/images/mainPageImages/training1.jpg" alt="edzés">
 
-        <h2>Időpontfoglalás gyorsan és egyszerűen</h2>
-        <img class="trainingImage" src="./assets/images/mainPageImages/training2.jpg" alt="edzés">
+            <h2>Időpontfoglalás gyorsan és egyszerűen</h2>
+            <img class="trainingImage" src="./assets/images/mainPageImages/training2.jpg" alt="edzés">
 
-        <h2>Edzéshirdetés egy helyen</h2>
-        <img class="trainingImage" src="./assets/images/mainPageImages/training3.jpg" alt="edzés">
-
+            <h2>Edzéshirdetés egy helyen</h2>
+            <img class="trainingImage" src="./assets/images/mainPageImages/training3.jpg" alt="edzés">
         <h2><a class="links" routerLink="/login">A belépéshez kattintson ide!</a></h2>
         <h2>Még nem tag? <a class="links" routerLink="/register">Itt regisztrálhat!</a></h2>
         <img class="trainingImage" src="./assets/images/mainPageImages/training4.jpg" alt="edzés">
@@ -22,19 +21,18 @@
         
         <div id="catImgDiv" class="col-lg-4 mb-5 position-relative">
             <img class="img-fluid border" id="catImg" [src]="'data:image/png;base64,'+images[8].imageData" alt="TRX edzés">
-            <a class="centered text-decoration-none fw-bold" routerLink="/category/TRX" id="catRef"><span class="centered">TRX</span></a>
+            <a class="centered text-decoration-none fw-bold" routerLink="/trainings/category/9" id="catRef"><span class="centered">TRX</span></a>
         </div>
         <div id="catImgDiv" class="col-lg-4 mb-5 position-relative">
             <img class="img-fluid border" id="catImg" [src]="'data:image/png;base64,'+images[0].imageData" alt="Box edzés">
-            <a class="centered text-decoration-none fw-bold" routerLink="/category/Box" id="catRef"><span class="centered">Box</span></a>
+            <a class="centered text-decoration-none fw-bold" routerLink="/trainings/category/1" id="catRef"><span class="centered">Box</span></a>
         </div>
         <div id="catImgDiv" class="col-lg-4 mb-5 position-relative">
             <img class="img-fluid border" id="catImg" [src]="'data:image/png;base64,'+images[1].imageData" alt="Crossfit edzés">
-            <a class="centered text-decoration-none fw-bold" routerLink="/category/Crossfit" id="catRef"><span class="centered">Crossfit</span></a>
+            <a class="centered text-decoration-none fw-bold" routerLink="/trainings/category/2" id="catRef"><span class="centered">Crossfit</span></a>
+        </div>
+        <div class="row">
+            <h1><a class="text-decoration-none links" routerLink="/categories">Megnézem az összes kategóriát!</a></h1>
         </div>
     </div>
-    <div class="row">
-        <h1><a class="text-decoration-none links" routerLink="/categories">Megnézem az összes kategóriát!</a></h1>
-    </div>
-</div>
 </div>

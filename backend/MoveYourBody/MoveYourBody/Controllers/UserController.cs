@@ -26,14 +26,12 @@ namespace MoveYourBody.WebAPI.Controllers
         }
 
         
-        [HttpGet("{id}")]                                     // http://localhost:5000/user/12
+        [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
             return this.Run(() =>
             {
-                var user = dbContext.Set<User>()
-                                            .Where(u => u.Id == id)                                            
-                                            .FirstOrDefault();
+                var user = dbContext.Set<User>().Where(u => u.Id == id).FirstOrDefault();
                 user.PasswordHash = null;
 
                 if (user == null)
@@ -81,7 +79,7 @@ namespace MoveYourBody.WebAPI.Controllers
             });
         }
         [HttpGet("email")]                                     
-        public ActionResult CheckEmail([FromQuery] string email)
+        public ActionResult EmailExists([FromQuery] string email)
         {
             return this.Run(() =>
             {
@@ -143,18 +141,8 @@ namespace MoveYourBody.WebAPI.Controllers
             {
                 var training = dbContext.Set<Training>().Where(t => t.Id == training_id).FirstOrDefault();
 
-                var trainer = dbContext.Set<User>().Where(t => t.Id == training.Trainer_id)
-                //    .Select(t => new {
-                //    Id = t.Id,
-                //    Full_name = t.Full_name,
-                //    Email = "",
-                //    Location_id = "",
-                //    Password = "",
-                //    Phone_number = "",
-                //    Trainer = true
-                //})
-                    .FirstOrDefault();
-
+                var trainer = dbContext.Set<User>().Where(t => t.Id == training.Trainer_id).FirstOrDefault();
+                trainer.PasswordHash = null;
                 return Ok(trainer);
             });
         }        
@@ -170,8 +158,9 @@ namespace MoveYourBody.WebAPI.Controllers
                 }
                 dbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 dbContext.SaveChanges();
-                user.Password = "";
-                user.PasswordHash = "";
+                //TODO teszt más!
+                user.Password = null;
+                user.PasswordHash = null;
                 return Ok(user);
             });
         }
@@ -199,7 +188,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 var applications = dbContext.Set<Applicant>().Where(a => a.User_id == delUser.Id).ToList();
                 foreach (var application in applications)
                 {
-                    dbContext.Remove<Applicant>(application); //TODO email kuldes 
+                    dbContext.Remove<Applicant>(application); 
                 }
                 var trainings = dbContext.Set<Training>().Where(t => t.Trainer_id == delUser.Id).ToList();
                 var sessions = new List<TrainingSession>();
@@ -215,6 +204,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 
                 dbContext.Remove(delUser);
                 dbContext.SaveChanges();
+                user.PasswordHash = null;
                 return Ok(user);
             });
         }

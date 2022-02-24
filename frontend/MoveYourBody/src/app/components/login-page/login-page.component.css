@@ -3,12 +3,14 @@
     margin-bottom: 5%;
     text-align: center;
 }
-.login-form-1{
-    padding: 5%;
-}
 .login-container form{
     padding: 5%;
 }
+.login-form-1 .register{
+    color: #216869;
+    font-weight: 600;
+    text-decoration: none;
+} 
 .btnSubmit
 {
     width: 70%;
@@ -24,5 +26,6 @@
 .login-form-1{
     color: #216869;
     font-weight: 600;
+    padding: 5%;
     text-decoration: none;
 }

@@ -13,7 +13,6 @@ button {
 .container-fluid {
   align-content: center;
   text-align: center;
-  /* background-color: rgba(0, 0, 0, 0.5); */
 }
 #cancelSubscriptionButton {
   background-color: #1f2421;
@@ -48,4 +47,8 @@ h5 {
   .parallax {
     min-height: calc(100vh - 79px);
   }
+}
+#passwordButton {
+  color: black;
+  background-color: whitesmoke;
 }
