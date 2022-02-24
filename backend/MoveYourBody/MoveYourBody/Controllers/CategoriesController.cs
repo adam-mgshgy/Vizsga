@@ -52,10 +52,31 @@ namespace MoveYourBody.WebAPI.Controllers
                     ImageId = category.ImageId
                 };
                 dbContext.Set<Category>().Add(newcategory);
+
+               
                 dbContext.SaveChanges();
                 return Ok(newcategory);
             });
         }
-       
+
+        [HttpPut("addImage"), Authorize(Roles = "Admin")]
+        public ActionResult AddImage(string[] img)
+        {
+            return this.Run(() =>
+            {
+                
+                byte[] image = Convert.FromBase64String(img[0].Split(',')[1]);
+                var newimage = new Images
+                {
+                    Id = 0,
+                    ImageData = image
+                };
+                dbContext.Set<Images>().Add(newimage);
+
+                dbContext.SaveChanges();
+
+                return Ok(newimage);
+            });
+        }
     }
 }

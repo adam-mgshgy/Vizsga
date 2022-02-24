@@ -47,7 +47,7 @@
 
                         </ng-container>
                     </div>
-                    <button *ngIf="isImageSaved" class="btn btn-danger mt-3" (click)="deleteImage()">Törlés</button>
+                    <button *ngIf="isImageSaved && image != []" class="btn btn-danger mt-3" (click)="deleteImage()">Törlés</button>
         </div>
         <div class="mb-3">
             <button id="createButton" type="submit" class="btn btn-success fs-5" (click)="SaveCategory()" >Kategória mentése</button>

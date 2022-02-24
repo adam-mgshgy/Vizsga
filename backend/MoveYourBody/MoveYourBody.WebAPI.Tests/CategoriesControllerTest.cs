@@ -51,7 +51,7 @@ namespace MoveYourBody.WebAPI.Tests
             }
         }
         [Fact]
-        public void AdAddCategoryd()
+        public void AddCategory()
         {
             using (var context = TestDbContext.GenerateTestDbContext())
             {
@@ -62,6 +62,7 @@ namespace MoveYourBody.WebAPI.Tests
                     ImageId = 14,
                     Name = "Golf"
                 };
+                string[] images = new string[] { "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==" };
                 var result = sut.AddCategory(newCategory);
 
                 Assert.IsType<OkObjectResult>(result);
@@ -73,7 +74,6 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(14, value.ImageId);
             }
         }
-
-
+        
     }
 }

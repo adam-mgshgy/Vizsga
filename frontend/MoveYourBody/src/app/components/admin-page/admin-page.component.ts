@@ -30,7 +30,6 @@ export class AdminPageComponent implements OnInit {
   isImageSaved: boolean;
   image: string[] = [];
   fileChangeEvent(fileInput: any) {
-    
     if (fileInput.target.files && fileInput.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
@@ -38,16 +37,11 @@ export class AdminPageComponent implements OnInit {
         this.cardImageBase64 = imgBase64Path;
         this.isImageSaved = true;
         this.image.push(this.cardImageBase64);
-
-        this.save();
       };
       reader.readAsDataURL(fileInput.target.files[0]);
     }
   }
-  save(){
-    //todo save categoryimage
-  }
-  deleteImage(){
+  deleteImage() {
     this.image = [];
     this.isImageSaved = false;
   }
@@ -56,6 +50,7 @@ export class AdminPageComponent implements OnInit {
   }
   CancelCategory() {
     this.newCategory = new CategoryModel();
+    this.image = [];
   }
   SaveTag() {
     this.newTag.id = 0;
@@ -66,9 +61,15 @@ export class AdminPageComponent implements OnInit {
   }
   SaveCategory() {
     this.newCategory.id = 0;
-    this.categoriesService.newCategory(this.newCategory).subscribe(
-      (result) => console.log(result),
-      (error) => console.log(error)
+    this.categoriesService.newImage(this.image).subscribe(
+      result => {
+        this.newCategory.imageId = result.id;
+        this.categoriesService.newCategory(this.newCategory).subscribe(
+          (result) => console.log(result),
+          (error) => console.log(error)
+        );
+
+      }
     );
   }
 }
