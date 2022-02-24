@@ -362,6 +362,7 @@ namespace MoveYourBody.WebAPI.Tests
                 List<User> trainers = value.GetPropertyValue<List<User>>("trainers");
                 List<Training> trainings = value.GetPropertyValue<List<Training>>("trainings");
                 List<TagTraining> tagTrainings = value.GetPropertyValue<List<TagTraining>>("tagTrainings");
+                Category category = value.GetPropertyValue<Category>("category");
 
 
                 Assert.IsType<List<User>>(trainers);
@@ -394,6 +395,11 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(4, tagTrainings[1].Tag_id);
                 Assert.Equal(2, tagTrainings[1].Training_id);
 
+                Assert.IsType<Category>(category);
+                Assert.Equal(2, category.Id);
+                Assert.Equal("Crossfit", category.Name);
+                Assert.Equal(2, category.ImageId);
+
             }
         }
 
@@ -412,6 +418,7 @@ namespace MoveYourBody.WebAPI.Tests
                 List<User> trainers = value.GetPropertyValue<List<User>>("trainers");
                 List<Training> trainings = value.GetPropertyValue<List<Training>>("trainings");
                 List<TagTraining> tagTrainings = value.GetPropertyValue<List<TagTraining>>("tagTrainings");
+                Tag tag = value.GetPropertyValue<Tag>("tag");
 
 
                 Assert.IsType<List<User>>(trainers);
@@ -444,6 +451,10 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(4, tagTrainings[1].Tag_id);
                 Assert.Equal(2, tagTrainings[1].Training_id);
 
+                Assert.IsType<Tag>(tag);
+                Assert.Equal(4, tag.Id);
+                Assert.Equal("Szabadtéri", tag.Name);
+                Assert.Equal("black", tag.Colour);
             }
         }
 

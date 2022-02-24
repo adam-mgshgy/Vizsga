@@ -30,14 +30,15 @@
       </div>
     </div>
   </div>
-
-
-
   <div  [ngStyle]="{'width.%': mobile ==true ? '100' : '80'}" class="container-fluid">
     <div class="row title">
-      <h1>
-        Minden Edzés
-      </h1>
+      <h1 *ngIf="categoryId==0 && tagId==0 && trainerId==0 && !trainingName && !locationSearch">Minden Edzés</h1>
+      <h1 *ngIf="categoryId!=0 && tagId==0 && trainerId==0 && !trainingName && !locationSearch">{{categoryName}} edzések</h1>
+      <h1 *ngIf="categoryId==0 && tagId!=0 && trainerId==0 && !trainingName && !locationSearch">{{tagName}} edzések</h1>
+      <h1 *ngIf="categoryId==0 && tagId==0 && trainerId!=0 && !trainingName && !locationSearch">{{trainer.full_name}} edzései</h1>
+      <h1 *ngIf="categoryId==0 && tagId==0 && trainerId==0 && trainingName && !locationSearch">"{{trainingName}}" nevű edzések</h1>
+      <h1 *ngIf="categoryId==0 && tagId==0 && trainerId==0 && !trainingName && selectedCounty && !selectedCity && locationSearch">{{selectedCounty}} megyei edzések</h1>
+      <h1 *ngIf="categoryId==0 && tagId==0 && trainerId==0 && !trainingName && selectedCity && locationSearch">{{selectedCity}} város edzései</h1>
     </div>
     <div class="row">
 

@@ -6,7 +6,6 @@ import { TrainingModel } from 'src/app/models/training-model';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { TagService } from 'src/app/services/tag.service';
 import { TrainingService } from 'src/app/services/training.service';
-import { ResizedEvent } from 'angular-resize-event';
 import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { UserModel } from 'src/app/models/user-model';
 import { LocationService } from 'src/app/services/location.service';
@@ -20,7 +19,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class TrainingsPageComponent implements OnInit {
   categoryId: number;
+  categoryName: string;
   tagId: number;
+  tagName: string;
   trainerId: number;
 
   cities: LocationModel[] = [];
@@ -42,7 +43,7 @@ export class TrainingsPageComponent implements OnInit {
   selectedCounty: string;
   selectedCity: string;
   trainingName: string;
-
+  locationSearch: boolean = false;
   profileImages: ImagesModel[] = [];
   indexImages: ImagesModel[] = [];
 
@@ -71,6 +72,8 @@ export class TrainingsPageComponent implements OnInit {
       },
       (error) => console.log(error)
     );
+    this.locationSearch = false;
+
     this.route.paramMap.subscribe((params) => {
       this.categoryId = Number(params.get('category'));
       this.tagId = Number(params.get('tag'));
@@ -81,10 +84,12 @@ export class TrainingsPageComponent implements OnInit {
       if (this.categoryId) {
         this.profileImages = [];
         this.indexImages = [];
+        this.locationSearch = false;
         this.trainingService.getByCategory(this.categoryId).subscribe(
           (result) => {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
+            this.categoryName = result.category.name;
             console.log(this.trainers);
             for (const item of this.trainers) {
               this.userService.getImageById(item.imageId).subscribe(
@@ -118,10 +123,12 @@ export class TrainingsPageComponent implements OnInit {
       } else if (this.tagId) {
         this.profileImages = [];
         this.indexImages = [];
+        this.locationSearch = false;
         this.trainingService.getByTag(this.tagId).subscribe(
           (result) => {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
+            this.tagName = result.tag.name;
             for (const item of this.trainers) {
               this.userService.getImageById(item.imageId).subscribe(
                 (result) => {
@@ -153,6 +160,7 @@ export class TrainingsPageComponent implements OnInit {
           (error) => console.log(error)
         );
       } else if (this.trainerId) {
+        this.locationSearch = false;
         this.profileImages = [];
         this.indexImages = [];
         this.trainingService.getByTrainerId(this.trainerId).subscribe(
@@ -190,6 +198,8 @@ export class TrainingsPageComponent implements OnInit {
       } else if (this.trainingName) {
         this.profileImages = [];
         this.indexImages = [];
+        this.locationSearch = false;
+
         this.trainingService.getByName(this.trainingName).subscribe(
           (result) => {
             this.trainings = result.trainings;
@@ -228,6 +238,7 @@ export class TrainingsPageComponent implements OnInit {
           (result) => {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
+            this.locationSearch = true;
             for (const item of this.trainers) {
               this.userService.getImageById(item.imageId).subscribe(
                 (result) => {
@@ -259,6 +270,8 @@ export class TrainingsPageComponent implements OnInit {
       } else if (this.selectedCounty) {
         this.profileImages = [];
         this.indexImages = [];
+        this.locationSearch = true;
+
         this.trainingService.getByCounty(this.selectedCounty).subscribe(
           (result) => {
             this.trainings = result.trainings;
@@ -296,6 +309,8 @@ export class TrainingsPageComponent implements OnInit {
           (result) => {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
+            this.locationSearch = false;
+
             for (const item of this.trainers) {
               this.userService.getImageById(item.imageId).subscribe(
                 (result) => {
@@ -345,6 +360,7 @@ export class TrainingsPageComponent implements OnInit {
       (result) => (this.cities = result),
       (error) => console.log(error)
     );
+    this.locationSearch = false;
   }
   CityChanged(value) {
     for (const item of this.cities) {
@@ -354,6 +370,6 @@ export class TrainingsPageComponent implements OnInit {
         this.selectedCity = item.city_name;
       }
     }
+    this.locationSearch = false;
   }
-
 }
