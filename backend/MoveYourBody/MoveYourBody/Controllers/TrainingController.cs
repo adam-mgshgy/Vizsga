@@ -299,11 +299,13 @@ namespace MoveYourBody.WebAPI.Controllers
                 {
                     item.PasswordHash = null;
                 }
+                Category category = dbContext.Set<Category>().Where(c => c.Id == id).FirstOrDefault();
                 return Ok(new
                 {
                     trainings,
                     tagTrainings,
-                    trainers
+                    trainers,
+                    category
                 });
             });
         }
@@ -330,11 +332,14 @@ namespace MoveYourBody.WebAPI.Controllers
                 {
                     item.PasswordHash = null;
                 }
+                Tag tag = dbContext.Set<Tag>().Where(t => t.Id == id).FirstOrDefault();
+
                 return Ok(new
                 {
                     trainings,
                     tagTrainings,
-                    trainers
+                    trainers,
+                    tag
                 });
             });
         }
