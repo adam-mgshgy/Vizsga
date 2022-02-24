@@ -38,9 +38,9 @@ namespace MoveYourBody.WebAPI.Tests
                 List<Category> value = (List<Category>)((OkObjectResult)result).Value;
                 Assert.IsType<List<Category>>(value);
                 Assert.Equal(12, value.Count);
-                Assert.Equal(1, value[0].Id);
-                Assert.Equal("Box", value[0].Name);
-                Assert.Equal(1, value[0].ImageId);
+                Assert.Equal(3, value[2].Id);
+                Assert.Equal("Labdarúgás", value[2].Name);
+                Assert.Equal(3, value[2].ImageId);
             }
         }
         [Fact]
@@ -52,7 +52,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Category newCategory = new Category()
                 {
                     Id = 0,
-                    ImageId = 2,
+                    ImageId = 14,
                     Name = "Golf"
                 };
                 var result = sut.AddCategory(newCategory);
@@ -63,7 +63,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.IsType<Category>(value);
                 Assert.Equal(13, value.Id);
                 Assert.Equal("Golf", value.Name);
-                Assert.Equal(2, value.ImageId);
+                Assert.Equal(14, value.ImageId);
             }
         }
 

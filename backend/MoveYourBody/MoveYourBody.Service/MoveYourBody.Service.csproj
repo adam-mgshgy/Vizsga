@@ -16,6 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="CategoryImages\CategoryImages.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="cities.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
