@@ -49,3 +49,7 @@ h5 {
     min-height: calc(100vh - 79px);
   }
 }
+#passwordButton {
+  color: black;
+  background-color: whitesmoke;
+}

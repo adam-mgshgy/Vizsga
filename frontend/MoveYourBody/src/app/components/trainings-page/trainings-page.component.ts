@@ -358,36 +358,4 @@ export class TrainingsPageComponent implements OnInit {
     }
   }
 
-  actualtags: TagModel[] = [];
-  actualTags(training_id: number) {}
-  onResized(event: ResizedEvent) {
-    this.tagsOnMobile();
-  }
-  tagsOnMobile() {
-    if (window.innerWidth < 2250 && window.innerWidth > 1950) {
-      //5
-    } else if (window.innerWidth <= 1950 && window.innerWidth > 1700) {
-      //4
-    } else if (window.innerWidth <= 1700 && window.innerWidth > 1399) {
-      //3
-    } else if (window.innerWidth <= 1399 && window.innerWidth > 1300) {
-      //5
-    } else if (window.innerWidth <= 1300 && window.innerWidth > 1150) {
-      //4
-    } else if (window.innerWidth <= 1150 && window.innerWidth > 950) {
-      //3
-      //kivonni az elozo traininghez tartozo tageket
-    } else if (window.innerWidth <= 950 && window.innerWidth > 767) {
-      //2
-    } else if (window.innerWidth <= 767 && window.innerWidth > 650) {
-      //5
-    } else if (window.innerWidth <= 650 && window.innerWidth > 580) {
-      //4
-    } else if (window.innerWidth <= 580 && window.innerWidth > 480) {
-      //3
-    } else if (window.innerWidth <= 480) {
-      //2
-    } else {
-    }
-  }
 }

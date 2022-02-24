@@ -49,7 +49,7 @@ export class AuthGuard implements CanActivate {
             this.authService.hasRole('Admin') ||
             this.authService.hasRole('User')
           );
-        case 'mytrainings':
+        case 'mytrainings/:mode':
           return (
             this.authService.hasRole('Trainer') ||
             this.authService.hasRole('Admin') ||

@@ -4,7 +4,6 @@ import { UserModel } from '../models/user-model';
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { catchError, map } from 'rxjs/operators';
-import { LoginModel } from '../models/login-model';
 import { ImagesModel } from '../models/images-model';
 
 

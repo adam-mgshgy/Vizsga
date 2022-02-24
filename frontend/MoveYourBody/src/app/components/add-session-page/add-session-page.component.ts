@@ -84,7 +84,7 @@ export class AddSessionPageComponent implements OnInit {
               (result) => {
                 console.log(result);
                 this.errorMessage = 'Sikeres mentés!';
-                this.router.navigateByUrl('/mytrainings');
+                this.router.navigateByUrl('/mytrainings/trainer');
               },
               (error) => console.log(error)
             );
@@ -99,7 +99,7 @@ export class AddSessionPageComponent implements OnInit {
     this.selectedCounty = '';
     this.date = null;
     this.time = null;
-    this.router.navigateByUrl('/mytrainings');
+    this.router.navigateByUrl('/mytrainings/trainer');
   }
   ngOnInit(): void {
     if (window.innerWidth <= 800) {

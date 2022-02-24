@@ -9,7 +9,6 @@ import { CategoriesService } from 'src/app/services/categories.service';
 import { TagTrainingService } from 'src/app/services/tag-training.service';
 import { TagService } from 'src/app/services/tag.service';
 import { TrainingService } from 'src/app/services/training.service';
-import { LoginService } from 'src/app/services/login.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { TrainingImagesModel } from 'src/app/models/training-images-model';
 import { ImagesModel } from 'src/app/models/images-model';
@@ -242,7 +241,7 @@ export class CreateTrainingPageComponent implements OnInit {
                   );
                 if (result.category_id != null || result.category_id != 0) {
                   this.errorMessage = 'Edzése sikeresen létrehozva!';
-                  this.router.navigateByUrl('/mytrainings');
+                  this.router.navigateByUrl('/mytrainings/trainer');
                 }
               },
               (error) => console.log(error)
@@ -261,7 +260,7 @@ export class CreateTrainingPageComponent implements OnInit {
               );
               if (result.category_id != null || result.category_id != 0) {
                 this.errorMessage = 'Edzése sikeresen létrehozva!';
-                this.router.navigateByUrl('/mytrainings');
+                this.router.navigateByUrl('/mytrainings/trainer');
               }
 
               this.training.id = result.id;
@@ -288,7 +287,7 @@ export class CreateTrainingPageComponent implements OnInit {
         this.trainingService.modifyTraining(this.training).subscribe(
           (result) => {
             this.errorMessage = 'Edzése sikeresen frissítve!';
-            this.router.navigateByUrl('/mytrainings');
+            this.router.navigateByUrl('/mytrainings/trainer');
           },
           (error) => console.log(error)
         );
