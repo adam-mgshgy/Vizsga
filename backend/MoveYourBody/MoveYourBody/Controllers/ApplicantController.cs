@@ -29,7 +29,6 @@ namespace MoveYourBody.WebAPI.Controllers
                     var user = dbContext.Set<User>().Where(u => u.Id == applicant.User_id).First();
                     if (!users.Contains(user))
                     {
-                        user.Password = null;
                         user.PasswordHash = null;
                         users.Add(user);
                     }

@@ -33,7 +33,6 @@ namespace MoveYourBody.WebAPI.Controllers
             {
                 var user = dbContext.Set<User>().Where(u => u.Id == id).FirstOrDefault();
                 user.PasswordHash = null;
-                user.Password = null;
 
                 if (user == null)
                     return BadRequest(new
@@ -143,7 +142,6 @@ namespace MoveYourBody.WebAPI.Controllers
                 var training = dbContext.Set<Training>().Where(t => t.Id == training_id).FirstOrDefault();
 
                 var trainer = dbContext.Set<User>().Where(t => t.Id == training.Trainer_id).FirstOrDefault();
-                trainer.Password = null;
                 trainer.PasswordHash = null;
                 return Ok(trainer);
             });
@@ -206,7 +204,6 @@ namespace MoveYourBody.WebAPI.Controllers
                 
                 dbContext.Remove(delUser);
                 dbContext.SaveChanges();
-                user.Password = null;
                 user.PasswordHash = null;
                 return Ok(user);
             });

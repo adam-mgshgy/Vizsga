@@ -5,20 +5,27 @@
         <div class="card mb-3">
           <div class="row g-0">
             <div class="col-4 align-items-center">
-              <img *ngIf="user.imageId == 0 && mode == 'trainer'" [src]="defaultProfile"  class="img-fluid" alt="..." />
-              <img *ngIf="mode == 'trainer' && profileImages[0] && profileImages.length > 0 && profileImages[0].id == user.imageId " [src]="'data:image/png;base64,'+ profileImages[0].imageData"  class="img-fluid" alt="..." />
+              <img *ngIf="user.imageId == 0 && mode == 'trainer'" [src]="defaultProfile"  
+                    class="img-fluid full cover" alt="..." />
+              <img *ngIf="mode == 'trainer' && profileImages[0] && profileImages.length > 0 && profileImages[0].id == user.imageId " 
+                    [src]="'data:image/png;base64,'+ profileImages[0].imageData"  
+                    class="img-fluid full cover" alt="..." />
 
-              <img *ngIf=" trainers[i]&& trainers[i].imageId == 0 && mode == 'applied'" [src]="defaultProfile"  class="img-fluid" alt="..." />
+              <img *ngIf=" trainers[i]&& trainers[i].imageId == 0 && mode == 'applied'" [src]="defaultProfile"  
+                    class="img-fluid full cover" alt="..." />
               <span *ngFor="let image of profileImages">
-                <img *ngIf="mode == 'applied' && profileImages.length > 0 && image.id == trainers[i].imageId" [src]="'data:image/png;base64,'+ image.imageData"  class="img-fluid" alt="..." />
+                <img *ngIf="mode == 'applied' && profileImages.length > 0 && image.id == trainers[i].imageId" 
+                      [src]="'data:image/png;base64,'+ image.imageData"  class="img-fluid full cover" alt="..." />
               </span>
             </div>
             <div class="col-8" id="bckg">
-              <img *ngIf=" training.indexImageId == 0" [src]="defaultTraining" style="width: 100%; height: 100%;" class="img-fluid" alt="..." />
-
+              <img *ngIf=" training.indexImageId == 0" 
+                    [src]="defaultTraining" 
+                    class="img-fluid full" alt="..." />
               <span *ngFor="let image of indexImages">
-                <img *ngIf="indexImages.length > 0 && image.id == training.indexImageId" [src]="'data:image/png;base64,'+ image.imageData" class="img-fluid" alt="..." />
-
+                <img *ngIf="indexImages.length > 0 && image.id == training.indexImageId" 
+                      [src]="'data:image/png;base64,'+ image.imageData" 
+                      class="img-fluid full cover" alt="..." />
               </span>
             </div>
             <div class="card-body container-fluid row g-0" style="background-color: #343a40">
