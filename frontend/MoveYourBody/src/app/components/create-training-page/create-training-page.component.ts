@@ -122,7 +122,7 @@ export class CreateTrainingPageComponent implements OnInit {
 
     this.categoryService.getCategories().subscribe(
       (result) => {
-        this.categories = result;
+        this.categories = result.categories;
         this.selectCategory(this.training.category_id);
       },
       (error) => console.log(error)

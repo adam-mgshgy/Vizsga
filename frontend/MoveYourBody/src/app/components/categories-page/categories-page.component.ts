@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryModel } from 'src/app/models/category-model';
+import { ImagesModel } from 'src/app/models/images-model';
 import { CategoriesService } from 'src/app/services/categories.service';
 
 @Component({
@@ -9,14 +10,16 @@ import { CategoriesService } from 'src/app/services/categories.service';
 })
 export class CategoriesPageComponent implements OnInit {
   constructor(private categoryService: CategoriesService) {}
-  imgPrefix = './assets/images/categoriesPageImages/';
 
-
+  images: ImagesModel[];
   public categories: CategoryModel[] = [];
 
   ngOnInit(): void {
     this.categoryService.getCategories().subscribe(
-      (result) => this.categories = result,
+      (result) => {
+        this.categories = result.categories;
+        this.images = result.images;
+      },
       (error) => console.log(error)
     );
   }

@@ -39,7 +39,7 @@ export class AppComponent {
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
     
     this.categoryService.getCategories().subscribe(
-      (result) => (this.categories = result),
+      (result) => (this.categories = result.categories),
       (error) => console.log(error)
     );
     this.tagService.getTags().subscribe(

@@ -21,11 +21,11 @@ namespace MoveYourBody.WebAPI.Controllers
             this.dbContext = dbContext;
         }
         [HttpPut("Images")]
-        public ActionResult SaveImages(string[] base64, [FromQuery] int trainingId)
+        public ActionResult SaveImages(string[] images, [FromQuery] int trainingId)
         {
             return this.Run(() =>
             {                
-                foreach (var item in base64)
+                foreach (var item in images)
                 {
                     byte[] image = Convert.FromBase64String(item.Split(',')[1]);
                     Images newImage = new Images()

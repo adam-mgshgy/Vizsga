@@ -81,7 +81,7 @@ namespace MoveYourBody.WebAPI.Tests
 
                 Assert.Equal(3, category.Id);
                 Assert.Equal("Labdarúgás", category.Name);
-                Assert.Equal("football.jpg", category.Img_src);
+                Assert.Equal(3, category.ImageId);
 
                 Assert.Equal(1, tags[0].Id);
                 Assert.Equal(5, tags[1].Id);

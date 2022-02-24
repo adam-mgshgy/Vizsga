@@ -7,7 +7,7 @@
                 <div class="mb-3" id="photo">
                     <h5>Fényképek feltöltése</h5>
                     <div class="custom-file fileInputProfileWrap">
-                        <input type="file" (change)="fileChangeEvent($event)" accept="image/png, image/jpeg" class="fileInputProfile">
+                        <input type="file" (change)="fileChangeEvent($event)" accept="image/png, image/jpeg" class="fileInputProfile form-control">
                         <div class="img-space">
                             <ng-container *ngIf="!create" id="selectedImages">
                                 <div class="row text-center text-lg-start">

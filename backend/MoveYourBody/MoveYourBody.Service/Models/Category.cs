@@ -12,7 +12,7 @@ namespace MoveYourBody.Service.Models
         [Required]
         public string Name { get; set; }
         [Required]
-        public string Img_src { get; set; }
+        public int ImageId { get; set; }
 
     }
 }

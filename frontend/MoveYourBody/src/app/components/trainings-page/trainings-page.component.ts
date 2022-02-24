@@ -58,7 +58,7 @@ export class TrainingsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoryService.getCategories().subscribe(
-      (result) => (this.categories = result),
+      (result) => (this.categories = result.categories),
       (error) => console.log(error)
     );
     this.tagService.getTags().subscribe(
