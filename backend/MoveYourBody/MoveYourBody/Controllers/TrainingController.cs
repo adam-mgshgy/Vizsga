@@ -190,6 +190,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 Training training = dbContext.Set<Training>().Where(t => t.Id == trainingId).FirstOrDefault();
                 User trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault();
                 trainer.PasswordHash = null;
+                trainer.Password = null;
                 Location location = dbContext.Set<Location>().Where(l => l.Id == trainer.Location_id).FirstOrDefault();
                 return Ok(new
                 {
@@ -208,6 +209,7 @@ namespace MoveYourBody.WebAPI.Controllers
             {
                 var trainer = dbContext.Set<User>().Where(u => u.Id == trainerId).FirstOrDefault();
                 trainer.PasswordHash = null;
+                trainer.Password = null;
                 var trainings = dbContext.Set<Training>().Where(t => t.Trainer_id == trainerId).ToList();
                 if (trainings == null)
                     return BadRequest(new
@@ -265,6 +267,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 foreach (var item in trainers)
                 {
                     item.PasswordHash = null;
+                    item.Password = null;
                 }
                 return Ok(new
                 {
@@ -298,6 +301,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 foreach (var item in trainers)
                 {
                     item.PasswordHash = null;
+                    item.Password = null;
                 }
                 return Ok(new
                 {
@@ -329,6 +333,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 foreach (var item in trainers)
                 {
                     item.PasswordHash = null;
+                    item.Password = null;
                 }
                 return Ok(new
                 {
@@ -358,6 +363,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 foreach (var item in trainers)
                 {
                     item.PasswordHash = null;
+                    item.Password = null;
                 }
                 return Ok(new
                 {
@@ -407,6 +413,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 foreach (var item in trainers)
                 {
                     item.PasswordHash = null;
+                    item.Password = null;
                 }
                 return Ok(new
                 {
@@ -455,6 +462,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 foreach (var item in trainers)
                 {
                     item.PasswordHash = null;
+                    item.Password = null;
                 }
                 return Ok(new
                 {
@@ -490,6 +498,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 foreach (var item in trainers)
                 {
                     item.PasswordHash = null;
+                    item.Password = null;
                 }
                 return Ok(new
                 {

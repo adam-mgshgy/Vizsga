@@ -59,7 +59,7 @@ namespace MoveYourBody.WebAPI.Tests
             using (var context = TestDbContext.GenerateTestDbContext())
             {
                 var sut = new UserController(context, config);
-                var result = sut.CheckEmail("jozsiedzo@email.com");
+                var result = sut.EmailExists("jozsiedzo@email.com");
 
                 Assert.IsType<OkObjectResult>(result);
                 bool value = (bool)((OkObjectResult)result).Value;
@@ -118,6 +118,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal("+36701234566", value.Phone_number);
                 Assert.Equal("Trainer", value.Role);
                 Assert.Null(value.Password);
+                Assert.Null(value.PasswordHash);
                 Assert.Equal("z5VEUKSD1u9KhRh5xPn1HKjG13oud+Zi1soA2OcprgNPvog05dxjMcFYC54i0YoWfG4Kf04eYgEBhR1W1DBKOw==", value.PasswordHash);
 
             }
@@ -150,8 +151,8 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(1, value.Location_id);
                 Assert.Equal("+36802547156", value.Phone_number);
                 Assert.Equal("Trainer", value.Role);
-                Assert.Equal("",value.Password);
-                Assert.Equal("",value.PasswordHash);
+                Assert.Null(value.Password);
+                Assert.Null(value.PasswordHash);
 
             }
         }
@@ -195,7 +196,8 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal("+36802547156", value.Phone_number);
                 Assert.Equal("Trainer", value.Role);
                 Assert.Equal("jozsi", value.Password);
-                Assert.Equal("", value.PasswordHash);
+                Assert.Null(value.PasswordHash);
+                Assert.Null(value.Password);
             }
         }
     }

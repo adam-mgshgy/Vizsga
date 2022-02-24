@@ -29,6 +29,8 @@ namespace MoveYourBody.WebAPI.Controllers
                     var user = dbContext.Set<User>().Where(u => u.Id == applicant.User_id).First();
                     if (!users.Contains(user))
                     {
+                        user.Password = null;
+                        user.PasswordHash = null;
                         users.Add(user);
                     }
                 }
@@ -77,7 +79,6 @@ namespace MoveYourBody.WebAPI.Controllers
                 dbContext.Remove(newApplicant);
                 dbContext.Set<TrainingSession>().Where(s => s.Id == newApplicant.Training_session_id).First().Number_of_applicants--;
                 dbContext.SaveChanges();
-                //dbContext.Entry(applicant).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
                 return Ok(newApplicant);
             });
         }
@@ -90,7 +91,6 @@ namespace MoveYourBody.WebAPI.Controllers
                 dbContext.Remove(newApplicant);
                 dbContext.Set<TrainingSession>().Where(s => s.Id == newApplicant.Training_session_id).First().Number_of_applicants--;
                 dbContext.SaveChanges();
-                //dbContext.Entry(applicant).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
                 return Ok(newApplicant);
             });
         }
