@@ -1,7 +1,6 @@
 <div class="parallax">
     <div class="container-fluid fs-5">
         <div [ngStyle]="{'width.%': mobile ? '90' : '50', 'margin-left.%': mobile ? '5' : '25', 'margin-right.%': mobile ? '5' : '25'}" class="color">
-
             <h1 *ngIf="!training.id">Edzés létrehozása</h1>
             <h1 *ngIf="training.id">Edzés szerkesztése</h1>
             <form>
@@ -35,7 +34,6 @@
                         </div>
                     </div>
                     <div *ngIf="isImageSaved && selectNewIndex.length > 0">Indexkép kijelölése csak a képek feltöltése után elérhető!</div>
-                    <!-- <div *ngIf="imageError" [(ngModel)]="imageError">{{imageError}}</div> -->
                     <a class="btn btn-danger me-3" (click)="deleteImage()" *ngIf="selectIndex.length > 0 || selectNewIndex.length > 0">Eltávolítás</a>
                     <a class="btn btn-info" (click)="selectIndexImage()" *ngIf="selectIndex.length > 0 && selectNewIndex.length == 0">Indexkép beállítása</a>
                 </div>

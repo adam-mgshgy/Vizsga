@@ -43,7 +43,6 @@ export class AddSessionPageComponent implements OnInit {
       if (item.county_name == value) {
         this.newSession.location_id = item.id;
         this.selectedCounty = item.county_name;
-        console.log(this.selectedCounty);
       } else if (value == '') {
         this.newSession.location_id = null;
       } else if (value == item.id) {
@@ -60,7 +59,6 @@ export class AddSessionPageComponent implements OnInit {
       if (item.city_name == value) {
         this.newSession.location_id = item.id;
         this.selectedCity = item.city_name;
-        console.log(this.selectedCity);
       } else if (value == '') {
         this.newSession.location_id = null;
       } else if (value == item.id) {
@@ -77,12 +75,10 @@ export class AddSessionPageComponent implements OnInit {
           this.newSession.training_id = this.trainingId;
           this.newSession.min_member = Number(this.newSession.min_member);
           this.newSession.max_member = Number(this.newSession.max_member);
-          console.log(this.newSession);
           this.trainingSessionService
             .createTrainingSession(this.newSession)
             .subscribe(
               (result) => {
-                console.log(result);
                 this.errorMessage = 'Sikeres mentés!';
                 this.router.navigateByUrl('/mytrainings/trainer');
               },
@@ -173,7 +169,7 @@ export class AddSessionPageComponent implements OnInit {
       Number(this.newSession.min_member) > Number(this.newSession.max_member)
     ) {
       this.errorMessage =
-        'Az edzéshez tartozó minimum résztvevők száma nagyobb, mint a maximum!'; //TODO az inputból kikattintva menti csak el a résztvevők számát
+        'Az edzéshez tartozó minimum résztvevők száma nagyobb, mint a maximum!';
       return false;
     }
     if (this.selectedCounty == null) {

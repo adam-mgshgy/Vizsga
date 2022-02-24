@@ -41,7 +41,6 @@ export class LoginpageComponent implements OnInit {
               (x) => (this.user = x)
             );
             this.router.navigateByUrl('/home');
-            console.log(this.user);
           },
           (error) => {
             console.log(error);

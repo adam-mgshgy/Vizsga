@@ -81,7 +81,7 @@ namespace MoveYourBody.WebAPI.Controllers
             });
         }
         [HttpGet("email")]                                     
-        public ActionResult CheckEmail([FromQuery] string email)
+        public ActionResult EmailExists([FromQuery] string email)
         {
             return this.Run(() =>
             {

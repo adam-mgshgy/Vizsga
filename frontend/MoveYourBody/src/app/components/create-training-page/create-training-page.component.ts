@@ -141,7 +141,6 @@ export class CreateTrainingPageComponent implements OnInit {
   isImageSaved: boolean;
   cardImageBase64: string;
   fileChangeEvent(fileInput: any) {
-    //TODO max image size, input text change
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
       const reader = new FileReader();
@@ -350,7 +349,7 @@ export class CreateTrainingPageComponent implements OnInit {
       return false;
     }
     if (this.otherPhoneNumber == true && this.otherPhoneNumberInput == null) {
-      this.errorMessage = 'Kérem adja meg a hadználni kívánt telefonszámot!';
+      this.errorMessage = 'Kérem adja meg a használni kívánt telefonszámot!';
       return false;
     }
     return true;

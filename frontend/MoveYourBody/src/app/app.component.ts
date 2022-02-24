@@ -38,7 +38,6 @@ export class AppComponent {
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
     
-    console.log(this.user)
     this.categoryService.getCategories().subscribe(
       (result) => (this.categories = result),
       (error) => console.log(error)

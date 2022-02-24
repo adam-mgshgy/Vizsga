@@ -14,7 +14,6 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ApplicantService } from 'src/app/services/applicant.service';
 import {Sort} from '@angular/material/sort';
 import { ImagesModel } from 'src/app/models/images-model';
-import { UserService } from 'src/app/services/user.service';
 import { TrainingService } from 'src/app/services/training.service';
 @Component({
   selector: 'app-training-page',
@@ -27,46 +26,14 @@ export class TrainingPageComponent implements OnInit {
   defaultProfile = './assets/images/defaultImages/defaultProfilePicture.png';
   defaultTraining = './assets/images/mainPageImages/logo.png';
   id: Number;
-  user: UserModel = {
-    email: '',
-    full_name: '',
-    id: 0,
-    location_id: 0,
-    password: '',
-    phone_number: '',
-    role: 'User',
-    token: '',
-    imageId: 0
-  };
+  user: UserModel = new UserModel();
 
   errorMessage = '';
   successMessage = '';
-  training: TrainingModel = {
-    category_id: 0,
-    contact_phone: '',
-    description: '',
-    id: 0,
-    name: '',
-    trainer_id: 0,
-    indexImageId: 0
-  };
+  training: TrainingModel = new TrainingModel();
   trainerName: '';
-  trainer: UserModel = {
-    email: '',
-    full_name: '',
-    id: 0,
-    location_id: 0,
-    password: '',
-    phone_number: '',
-    role: 'User',
-    token: '',
-    imageId: 0
-  };
-  category: CategoryModel = {
-    id: 0,
-    img_src: '',
-    name: ''
-  };
+  trainer: UserModel = new UserModel();
+  category: CategoryModel = new CategoryModel();
   sessions: TrainingSessionModel[] = [];
   sortedSessions: TrainingSessionModel[]= [];
   locations: LocationModel[];
@@ -186,6 +153,7 @@ export class TrainingPageComponent implements OnInit {
     var newApplicant = new ApplicantModel();
     newApplicant.user_id = this.user.id;
     newApplicant.id = 1;
+    
     if (this.usersSessions.find((x) => x.training_session_id == sessionId) == undefined) {
       newApplicant.training_session_id = sessionId;
       this.applicantService.newApplicant(newApplicant).subscribe(
@@ -193,8 +161,6 @@ export class TrainingPageComponent implements OnInit {
           this.usersSessions.push(newApplicant);
           var idx = this.sessions.findIndex((s) => s.id == sessionId);
           this.sessions[idx].number_of_applicants++;
-          // idx = this.sortedSessions.findIndex((s) => s.id == sessionId);
-          // this.sortedSessions[idx].number_of_applicants++;
           this.errorMessage = '';
           this.successMessage = 'Sikeres jelentkezés!';
         },

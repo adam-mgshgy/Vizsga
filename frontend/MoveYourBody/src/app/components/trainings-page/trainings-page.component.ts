@@ -337,7 +337,6 @@ export class TrainingsPageComponent implements OnInit {
     for (const item of this.counties) {
       if (item.county_name == value) {
         this.selectedCounty = item.county_name;
-        console.log(this.selectedCounty);
       } else if (value == item.id) {
         this.selectedCounty = item.county_name;
       }
@@ -351,7 +350,6 @@ export class TrainingsPageComponent implements OnInit {
     for (const item of this.cities) {
       if (item.city_name == value) {
         this.selectedCity = item.city_name;
-        console.log(this.selectedCity);
       } else if (value == item.id) {
         this.selectedCity = item.city_name;
       }

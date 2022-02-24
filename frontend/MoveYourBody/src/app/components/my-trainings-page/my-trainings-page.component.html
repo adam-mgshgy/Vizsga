@@ -1,23 +1,23 @@
 <div class="parallax">
-  <div (resized)="onResized($event)" [ngStyle]="{ 'width.%': mobile == true ? '100' : '80' }" class="container-fluid">
+  <div [ngStyle]="{ 'width.%': mobile == true ? '100' : '80' }" class="container-fluid">
     <div class="row">
       <div *ngFor="let training of myTrainings; let i = index" class="col-xxl-4 col-xl-6 col-md-6">
         <div class="card mb-3">
           <div class="row g-0">
             <div class="col-4 align-items-center">
-              <img *ngIf="user.imageId == 0 && mode == 'trainer'" [src]="defaultProfile" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
-              <img *ngIf="mode == 'trainer' && profileImages[0] && profileImages.length > 0 && profileImages[0].id == user.imageId " [src]="'data:image/png;base64,'+ profileImages[0].imageData" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
+              <img *ngIf="user.imageId == 0 && mode == 'trainer'" [src]="defaultProfile"  class="img-fluid" alt="..." />
+              <img *ngIf="mode == 'trainer' && profileImages[0] && profileImages.length > 0 && profileImages[0].id == user.imageId " [src]="'data:image/png;base64,'+ profileImages[0].imageData"  class="img-fluid" alt="..." />
 
-              <img *ngIf=" trainers[i]&& trainers[i].imageId == 0 && mode == 'applied'" [src]="defaultProfile" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
+              <img *ngIf=" trainers[i]&& trainers[i].imageId == 0 && mode == 'applied'" [src]="defaultProfile"  class="img-fluid" alt="..." />
               <span *ngFor="let image of profileImages">
-                <img *ngIf="mode == 'applied' && profileImages.length > 0 && image.id == trainers[i].imageId" [src]="'data:image/png;base64,'+ image.imageData" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
+                <img *ngIf="mode == 'applied' && profileImages.length > 0 && image.id == trainers[i].imageId" [src]="'data:image/png;base64,'+ image.imageData"  class="img-fluid" alt="..." />
               </span>
             </div>
             <div class="col-8" id="bckg">
               <img *ngIf=" training.indexImageId == 0" [src]="defaultTraining" style="width: 100%; height: 100%;" class="img-fluid" alt="..." />
 
               <span *ngFor="let image of indexImages">
-                <img *ngIf="indexImages.length > 0 && image.id == training.indexImageId" [src]="'data:image/png;base64,'+ image.imageData" style="width: 100%; height: 100%; object-fit: cover" class="img-fluid" alt="..." />
+                <img *ngIf="indexImages.length > 0 && image.id == training.indexImageId" [src]="'data:image/png;base64,'+ image.imageData" class="img-fluid" alt="..." />
 
               </span>
             </div>
@@ -51,7 +51,6 @@
                   <span *ngFor="let tag of tagTraining">
                     <mat-chip *ngIf="tags[tag.tag_id-1] && tag.training_id == training.id" id="tag" [ngStyle]="{'background-color':tags[tag.tag_id-1].colour, 'border-color':'white'}" class="btn fw-bold me-1 mb-1">{{tags[tag.tag_id-1].name}}</mat-chip>
                   </span>
-
                 </mat-chip-list>
               </div>
             </div>

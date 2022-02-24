@@ -60,7 +60,6 @@ export class MyTrainingsPageComponent implements OnInit {
     }
     this.trainingSessionService.deleteTrainingSession(session).subscribe(
       (result) => {
-        console.log(result);
         this.sessions.splice(
           this.sessions.findIndex((x) => x.id == session.id),
           1
@@ -74,7 +73,6 @@ export class MyTrainingsPageComponent implements OnInit {
       .deleteApplicantByIds(this.user.id, sessionId)
       .subscribe(
         (result) => {
-          console.log(result);
           this.sessions.splice(
             this.sessions.findIndex((x) => x.id == sessionId),
             1
@@ -113,13 +111,11 @@ export class MyTrainingsPageComponent implements OnInit {
               for (const training of this.myTrainings) {                
                 this.trainingService.getImageById(training.id).subscribe(
                   (result) => {
-                    console.log(result)
                     for (const item of result.images) {
                       if (item.id == training.indexImageId) {
                         this.indexImages.push(item);
                       }
                     }
-                    console.log(this.indexImages)
                   },
                   (error) => console.log(error)
                 );
@@ -168,42 +164,10 @@ export class MyTrainingsPageComponent implements OnInit {
       this.mobile = true;
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
-    this.tagsOnMobile();
     this.tagService.getTags().subscribe(
       (result) => (this.tags = result),
       (error) => console.log(error)
     );
-  }
-
-  onResized(event: ResizedEvent) {
-    this.tagsOnMobile();
-  }
-  tagsOnMobile() {
-    if (window.innerWidth < 2250 && window.innerWidth > 1950) {
-      this.counter = 5;
-    } else if (window.innerWidth <= 1950 && window.innerWidth > 1700) {
-      this.counter = 4;
-    } else if (window.innerWidth <= 1700 && window.innerWidth > 1399) {
-      this.counter = 3;
-    } else if (window.innerWidth <= 1399 && window.innerWidth > 1300) {
-      this.counter = 5;
-    } else if (window.innerWidth <= 1300 && window.innerWidth > 1150) {
-      this.counter = 4;
-    } else if (window.innerWidth <= 1150 && window.innerWidth > 950) {
-      this.counter = 3;
-    } else if (window.innerWidth <= 950 && window.innerWidth > 767) {
-      this.counter = 2;
-    } else if (window.innerWidth <= 767 && window.innerWidth > 650) {
-      this.counter = 5;
-    } else if (window.innerWidth <= 650 && window.innerWidth > 580) {
-      this.counter = 4;
-    } else if (window.innerWidth <= 580 && window.innerWidth > 480) {
-      this.counter = 3;
-    } else if (window.innerWidth <= 480) {
-      this.counter = 2;
-    } else {
-      this.counter = 6;
-    }
   }
   open(content: any, trainingId: number) {
     if (this.mode == 'trainer') {

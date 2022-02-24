@@ -37,7 +37,6 @@ export class TagTrainingService {
       }),
       body: model
     }
-    console.log(options)
     
     return this.http.delete<any>(`${environment.ApiURL}/tagTraining`, options)
     .pipe(

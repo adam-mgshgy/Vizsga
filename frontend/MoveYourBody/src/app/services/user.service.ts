@@ -114,7 +114,7 @@ export class UserService {
       })
     );
   }
-  checkEmail(email: string): Observable<boolean> {
+  emailExists(email: string): Observable<boolean> {
     return this.http.get<UserModel>(`${environment.ApiURL}/user/email?email=${email}`).pipe(
       map((data: any) => {
         return data;

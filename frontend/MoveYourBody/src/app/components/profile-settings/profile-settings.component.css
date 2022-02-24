@@ -13,7 +13,6 @@ button {
 .container-fluid {
   align-content: center;
   text-align: center;
-  /* background-color: rgba(0, 0, 0, 0.5); */
 }
 #cancelSubscriptionButton {
   background-color: #1f2421;
