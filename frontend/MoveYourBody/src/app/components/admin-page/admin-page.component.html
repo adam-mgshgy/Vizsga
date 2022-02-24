@@ -35,7 +35,19 @@
             <label for="categoryImg" class="form-label">
                 Kép:
             </label>
-            <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="file" class="form-control" id="categoryImg" name="categoryImg" [(ngModel)]="newCategory.img_src">
+            <!-- <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="file" class="form-control" id="categoryImg" name="categoryImg" > -->
+            <input type="file" [ngStyle]="{'width.%': mobile ? '80' : '50'}" (change)="fileChangeEvent($event)" accept="image/png, image/jpeg" class="fileInputProfile form-control">
+                    <div class="img-space">
+                        <ng-container  id="selectedImages">
+                            <div class="row text-center text-lg-start">
+                                <div class="col-lg-3 col-md-4 col-6">                                   
+                                    <img *ngIf="isImageSaved" class="img-fluid img-thumbnail" [src]="image" >
+                                </div>
+                            </div>
+
+                        </ng-container>
+                    </div>
+                    <button *ngIf="isImageSaved && image != []" class="btn btn-danger mt-3" (click)="deleteImage()">Törlés</button>
         </div>
         <div class="mb-3">
             <button id="createButton" type="submit" class="btn btn-success fs-5" (click)="SaveCategory()" >Kategória mentése</button>

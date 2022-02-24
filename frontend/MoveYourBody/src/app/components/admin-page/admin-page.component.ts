@@ -26,12 +26,31 @@ export class AdminPageComponent implements OnInit {
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
   }
-
+  cardImageBase64: string;
+  isImageSaved: boolean;
+  image: string[] = [];
+  fileChangeEvent(fileInput: any) {
+    if (fileInput.target.files && fileInput.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const imgBase64Path = e.target.result;
+        this.cardImageBase64 = imgBase64Path;
+        this.isImageSaved = true;
+        this.image.push(this.cardImageBase64);
+      };
+      reader.readAsDataURL(fileInput.target.files[0]);
+    }
+  }
+  deleteImage() {
+    this.image = [];
+    this.isImageSaved = false;
+  }
   CancelTag() {
     this.newTag = new TagModel();
   }
   CancelCategory() {
     this.newCategory = new CategoryModel();
+    this.image = [];
   }
   SaveTag() {
     this.newTag.id = 0;
@@ -42,9 +61,15 @@ export class AdminPageComponent implements OnInit {
   }
   SaveCategory() {
     this.newCategory.id = 0;
-    this.categoriesService.newCategory(this.newCategory).subscribe(
-      (result) => console.log(result),
-      (error) => console.log(error)
+    this.categoriesService.newImage(this.image).subscribe(
+      result => {
+        this.newCategory.imageId = result.id;
+        this.categoriesService.newCategory(this.newCategory).subscribe(
+          (result) => console.log(result),
+          (error) => console.log(error)
+        );
+
+      }
     );
   }
 }

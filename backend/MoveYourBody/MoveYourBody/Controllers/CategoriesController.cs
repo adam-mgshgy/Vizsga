@@ -27,7 +27,17 @@ namespace MoveYourBody.WebAPI.Controllers
             return this.Run(() =>
             {
                 var categories = dbContext.Set<Category>().ToList();
-                return Ok(categories);
+                var images = new List<Images>();
+                foreach (var item in categories)
+                {
+                    images.AddRange(dbContext.Set<Images>().Where(i => i.Id == item.ImageId).ToList());
+
+                }
+                return Ok(new
+                {
+                    categories,
+                    images
+                });
             });
         }
         [HttpPut("add"), Authorize(Roles = "Admin")]
@@ -39,21 +49,34 @@ namespace MoveYourBody.WebAPI.Controllers
                 {
                     Id = 0,
                     Name = category.Name,
-                    Img_src = category.Img_src
+                    ImageId = category.ImageId
                 };
                 dbContext.Set<Category>().Add(newcategory);
+
+               
                 dbContext.SaveChanges();
                 return Ok(newcategory);
             });
         }
-        //[HttpGet("{id}")]
-        //public ActionResult GetById(int id)
-        //{
-        //    return this.Run(() =>
-        //    {
-        //        var category = dbContext.Set<Category>().Where(c => c.Id == id).FirstOrDefault();
-        //        return Ok(category);
-        //    });
-        //}
+
+        [HttpPut("addImage"), Authorize(Roles = "Admin")]
+        public ActionResult AddImage(string[] img)
+        {
+            return this.Run(() =>
+            {
+                
+                byte[] image = Convert.FromBase64String(img[0].Split(',')[1]);
+                var newimage = new Images
+                {
+                    Id = 0,
+                    ImageData = image
+                };
+                dbContext.Set<Images>().Add(newimage);
+
+                dbContext.SaveChanges();
+
+                return Ok(newimage);
+            });
+        }
     }
 }
