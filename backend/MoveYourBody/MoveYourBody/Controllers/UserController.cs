@@ -159,7 +159,6 @@ namespace MoveYourBody.WebAPI.Controllers
                 dbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 dbContext.SaveChanges();
                 //TODO teszt más!
-                user.Password = null;
                 user.PasswordHash = null;
                 return Ok(user);
             });

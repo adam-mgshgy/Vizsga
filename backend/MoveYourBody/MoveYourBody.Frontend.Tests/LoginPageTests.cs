@@ -6,7 +6,7 @@ using Xunit;
 
 namespace MoveYourBody.Frontend.Tests
 {
-    public class UnitTest1
+    public class LoginPageTests
     {
         [Fact]
         public void LoginTest()
