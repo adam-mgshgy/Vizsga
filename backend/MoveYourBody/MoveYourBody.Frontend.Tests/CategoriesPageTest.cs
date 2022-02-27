@@ -64,7 +64,7 @@ namespace MoveYourBody.Frontend.Tests
                 driver.Navigate().GoToUrl("http://localhost:4200/categories");
                 driver.Manage().Window.Maximize();
 
-                System.Threading.Thread.Sleep(300);
+                System.Threading.Thread.Sleep(3000);
 
                 driver.FindElement(By.XPath("(//a[@id='catRef']/span)[12]")).Click();
                 System.Threading.Thread.Sleep(30);

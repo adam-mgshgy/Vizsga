@@ -67,7 +67,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(1, sessions[0].Number_of_applicants);
                 Assert.Equal("Virág utca 8.", sessions[0].Address_name);
                 Assert.Equal("Sportközpont", sessions[0].Place_name);
-                Assert.Equal("2022.03.12 12:30:00", sessions[0].Date.ToString());
+                Assert.Equal("2022. 03. 12. 12:30:00", sessions[0].Date.ToString());
 
                 Assert.Equal("Edzõ Béla", trainer);
 
@@ -124,7 +124,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(1, sessions[0].Number_of_applicants);
                 Assert.Equal("Virág utca 8.", sessions[0].Address_name);
                 Assert.Equal("Sportközpont", sessions[0].Place_name);
-                Assert.Equal("2022.03.12 12:30:00", sessions[0].Date.ToString());
+                Assert.Equal("2022. 03. 12. 12:30:00", sessions[0].Date.ToString());
 
                 Assert.Equal(3, training.Id);
                 Assert.Equal(3, training.Category_id);
@@ -167,7 +167,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(1, session.Number_of_applicants);
                 Assert.Equal("Virág utca 8.", session.Address_name);
                 Assert.Equal("Sportközpont", session.Place_name);
-                Assert.Equal("2022.03.12 12:30:00", session.Date.ToString());
+                Assert.Equal("2022. 03. 12. 12:30:00", session.Date.ToString());
 
                 Assert.Equal(3, training.Id);
                 Assert.Equal(3, training.Category_id);
@@ -220,7 +220,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(0, session.Number_of_applicants);
                 Assert.Equal("Jó utca 2.", session.Address_name);
                 Assert.Equal("Sportközpont", session.Place_name);
-                Assert.Equal("2022.02.22 12:45:00", session.Date.ToString());
+                Assert.Equal("2022. 02. 22. 12:45:00", session.Date.ToString());
             }
         }
 
