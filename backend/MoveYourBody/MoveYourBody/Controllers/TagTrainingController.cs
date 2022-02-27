@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +21,7 @@ namespace MoveYourBody.WebAPI.Controllers
             this.dbContext = dbContext;
         }
 
-        [HttpPut]
+        [HttpPut, Authorize(Roles = "Trainer, Admin")]
         public ActionResult New(TagTraining tagTraining)
         {
             return this.Run(() =>
@@ -80,7 +81,7 @@ namespace MoveYourBody.WebAPI.Controllers
         }
 
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Trainer, Admin")]
         public ActionResult Delete(TagTraining tagTraining)
         {           
             return this.Run(() =>
