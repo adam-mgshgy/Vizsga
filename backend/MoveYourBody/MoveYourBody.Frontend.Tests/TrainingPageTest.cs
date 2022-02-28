@@ -21,20 +21,19 @@ namespace MoveYourBody.Frontend.Tests
                 driver.FindElement(By.Name("password")).SendKeys("jani");
                 driver.FindElement(By.CssSelector(".btnSubmit")).Click();
 
-                System.Threading.Thread.Sleep(300);
+                By.XPath("//ul[@id='userDropdown']/li/a").WaitForExists(driver, 5);                
 
                 driver.Navigate().GoToUrl("http://localhost:4200/training/1");
-
-                System.Threading.Thread.Sleep(3000);
-
+                
+                By.XPath("//td[@id='apply1']/button").WaitForExists(driver, 5);
                 driver.FindElement(By.XPath("//td[@id='apply1']/button")).Click();
                 Assert.Equal("5/10", driver.FindElement(By.XPath("//td[@id='numberOfApplicants1']")).Text);
                 Assert.Equal("Erre az edzésre már jelentkezett!", driver.FindElement(By.XPath("//p[@id='error']")).Text);
 
                 driver.FindElement(By.XPath("//td[@id='apply3']/button")).Click();
-                System.Threading.Thread.Sleep(300);
+                
                 Assert.Equal("3/10", driver.FindElement(By.XPath("//td[@id='numberOfApplicants3']")).Text);
-                System.Threading.Thread.Sleep(300);
+                
 
                 Assert.Equal("Sikeres jelentkezés!", driver.FindElement(By.XPath("//p[@id='success']")).Text);
 
