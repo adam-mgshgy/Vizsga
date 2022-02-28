@@ -130,7 +130,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 mail.From = new MailAddress("contact.moveyourbody@gmail.com", "MoveYourBody");
                 mail.To.Add(new MailAddress(register.Email));
                 smtpClient.Send(mail);
-
+                register.PasswordHash = null;
                 return Ok(register);
             });
         }
@@ -203,8 +203,8 @@ namespace MoveYourBody.WebAPI.Controllers
                 
                 dbContext.Remove(delUser);
                 dbContext.SaveChanges();
-                user.PasswordHash = null;
-                return Ok(user);
+                delUser.PasswordHash = null;
+                return Ok(delUser);
             });
         }
     }

@@ -84,8 +84,7 @@ namespace MoveYourBody.WebAPI.Tests
                     Password = "titkos",
                     Phone_number = "+36704598715",
                     Role = "User",
-                    ImageId = 0,
-                    PasswordHash = ""
+                    ImageId = 0
                 };
                 var result = sut.New(user);
                 Assert.IsType<OkObjectResult>(result);
@@ -96,8 +95,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(1, value.Location_id);
                 Assert.Equal("+36704598715", value.Phone_number);
                 Assert.Equal("User", value.Role);
-                Assert.Equal("titkos", value.Password);
-                Assert.Equal("7fJcZIiRtzawzbLXmNxGld4nOnuyXRp2Ya35LmhSLeRQPWINvz4NoFRcL6c2WsKo5qYvk7ZpVaTIFImoi1EIwQ==", value.PasswordHash);
+                Assert.Null(value.PasswordHash);
             }
         }
         [Fact]
@@ -119,7 +117,6 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal("Trainer", value.Role);
                 Assert.Null(value.Password);
                 Assert.Null(value.PasswordHash);
-                Assert.Equal("z5VEUKSD1u9KhRh5xPn1HKjG13oud+Zi1soA2OcprgNPvog05dxjMcFYC54i0YoWfG4Kf04eYgEBhR1W1DBKOw==", value.PasswordHash);
 
             }
         }
@@ -151,7 +148,6 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(1, value.Location_id);
                 Assert.Equal("+36802547156", value.Phone_number);
                 Assert.Equal("Trainer", value.Role);
-                Assert.Null(value.Password);
                 Assert.Null(value.PasswordHash);
 
             }
@@ -178,26 +174,24 @@ namespace MoveYourBody.WebAPI.Tests
                 {
                     Id = 1,
                     Email = "jozsiedzo@email.com",
-                    Full_name = "Edzõ Józsi",
-                    Location_id = 1,
+                    Full_name = "Edzõ József",
+                    Location_id = 58,
                     Password = "jozsi",
-                    Phone_number = "+36802547156",
+                    Phone_number = "+36701234567",
                     Role = "Trainer",
-                    ImageId = 0,
-                    PasswordHash = ""
+                    ImageId = 0
                 };
                 var result = sut.Delete(deleteUser);
                 Assert.IsType<OkObjectResult>(result);
                 User value = (User)((OkObjectResult)result).Value;
                 Assert.Equal("jozsiedzo@email.com", value.Email);
-                Assert.Equal("Edzõ Józsi", value.Full_name);
+                Assert.Equal("Edzõ József", value.Full_name);
                 Assert.Equal(1, value.Id);
-                Assert.Equal(1, value.Location_id);
-                Assert.Equal("+36802547156", value.Phone_number);
+                Assert.Equal("+36701234567", value.Phone_number);
                 Assert.Equal("Trainer", value.Role);
-                Assert.Equal("jozsi", value.Password);
-                Assert.Null(value.PasswordHash);
+                Assert.Equal(58, value.Location_id);
                 Assert.Null(value.Password);
+                Assert.Null(value.PasswordHash);
             }
         }
     }
