@@ -20,7 +20,7 @@ namespace MoveYourBody.Frontend.Tests
                 driver.FindElement(By.Name("password")).SendKeys("jozsi");
                 driver.FindElement(By.CssSelector(".btnSubmit")).Click();
 
-                By.XPath("//ul[@id='userDropdown']/li/a").WaitForExists(driver, 25);
+                By.XPath("//ul[@id='userDropdown']/li/a").WaitForExists(driver, 50);
 
                 Assert.Equal("Edzõ József", driver.FindElement(By.XPath("//ul[@id='userDropdown']/li/a")).Text);
 

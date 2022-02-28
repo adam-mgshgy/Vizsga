@@ -19,32 +19,32 @@ namespace MoveYourBody.Frontend.Tests
                 driver.FindElement(By.Name("email")).SendKeys("jozsiedzo@email.com");
                 driver.FindElement(By.Name("password")).SendKeys("jozsi");
                 driver.FindElement(By.CssSelector(".btnSubmit")).Click();
-                driver.FindElement(By.XPath("//ul[@id='userDropdown']/li/a")).WaitForDisplayed(5);
+                By.XPath("//ul[@id='userDropdown']/li/a").WaitForExists(driver, 25);
 
                 Assert.Equal("Edzõ József", driver.FindElement(By.XPath("//ul[@id='userDropdown']/li/a")).Text);
 
                 driver.FindElement(By.XPath("//ul[@id='userDropdown']/li/a")).Click();
-                driver.FindElement(By.LinkText("Edzéseim")).WaitForDisplayed(5);
+                By.LinkText("Edzéseim").WaitForExists(driver, 5);
                 driver.FindElement(By.LinkText("Edzéseim")).Click();
-                driver.FindElement(By.ClassName("container")).WaitForDisplayed(20);
-
-                driver.FindElement(By.Id("modify")).WaitForDisplayed(5);
+                By.ClassName("container").WaitForExists(driver, 25);
+                By.Id("modify").WaitForExists(driver, 25);
                 Assert.Equal("Szerkesztés", driver.FindElement(By.Id("modify")).Text);
+                driver.FindElement(By.XPath("//button[@id='modify']")).Click();
+                By.ClassName("container").WaitForExists(driver, 25);
 
-                driver.FindElement(By.Id("name")).WaitForDisplayed(5);
-                Assert.Equal("Edzés 1", driver.FindElement(By.Id("name")).Text);
+                Assert.Equal("Edzés szerkesztése", driver.FindElement(By.CssSelector("h1")).Text);
+                Assert.Equal("Edzés 1", driver.FindElement(By.Id("name")).GetAttribute("value"));
 
-                driver.FindElement(By.Id("category")).WaitForDisplayed(5);
-                Assert.Equal("Box", driver.FindElement(By.Id("category")).Selected.ToString());
+                Assert.Equal("Box", driver.FindElement(By.Id("category")).GetAttribute("value"));
 
-                driver.FindElement(By.Id("description")).WaitForDisplayed(5);
-                Assert.Equal("Rövid leírás az edzésrõl még sokkal hosszabb leírás fúha nagyon hosszú ki se fér, lássuk meddig megy a szöveg olvassuk tovább", driver.FindElement(By.Id("description")).Text);
+                Assert.Equal("Rövid leírás az edzésrõl még sokkal hosszabb leírás fúha nagyon hosszú ki se fér, lássuk meddig megy a szöveg olvassuk tovább", driver.FindElement(By.Id("description")).GetAttribute("value"));
 
-                driver.FindElement(By.XPath(".mb-3 > .form-check-label:nth-child(2)")).WaitForDisplayed(5);
-                Assert.Equal("A saját telefonszámom szeretném használni (+36701234567)", driver.FindElement(By.XPath(".mb-3 > .form-check-label:nth-child(2)")).Text);
+                Assert.Equal("A saját telefonszámom szeretném használni (+36701234567)", driver.FindElement(By.CssSelector(".mb-3 > .form-check-label:nth-child(2)")).Text);
 
-                driver.FindElement(By.Id("Csoportos")).WaitForDisplayed(5);
-                Assert.Equal("Csoportos", driver.FindElement(By.Id("Csoportos")).Text);
+                Assert.Equal("Csoportos", driver.FindElement(By.CssSelector(".checks:nth-child(1) > .form-check-label")).Text);
+                Assert.Equal("Saját testsúlyos", driver.FindElement(By.CssSelector(".checks:nth-child(2) > .form-check-label")).Text);
+                Assert.Equal("Aerobic", driver.FindElement(By.CssSelector(".checks:nth-child(8) > .form-check-label")).Text);
+                Assert.Equal("Köredzés", driver.FindElement(By.CssSelector(".checks:nth-child(10) > .form-check-label")).Text);
 
                 //logout
                 driver.FindElement(By.LinkText("Edzõ József")).Click();
