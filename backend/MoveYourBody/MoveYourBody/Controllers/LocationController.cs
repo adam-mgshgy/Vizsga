@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MoveYourBody.Service;
 using MoveYourBody.Service.Models;
@@ -17,7 +18,7 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             this.dbContext = dbContext;
         }
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Trainer, Admin, User")]
         public ActionResult List()
         {
             return this.Run(() =>
@@ -26,7 +27,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(locations);
             });
         }
-        [HttpGet("counties")]
+        [HttpGet("counties"), Authorize(Roles = "Trainer, Admin, User")]
         public ActionResult ListCounties()
         {
             return this.Run(() =>
@@ -38,7 +39,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(location);
             });
         }
-        [HttpGet("field")]                                  
+        [HttpGet("field"), Authorize(Roles = "Trainer, Admin, User")]                                  
         public ActionResult ListByField([FromQuery] string field)
         {
                 return this.Run(() =>

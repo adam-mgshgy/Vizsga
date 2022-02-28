@@ -69,8 +69,8 @@
                     <td>{{session.date | date: 'yyyy.MM.dd. HH:mm'}}</td>
                     <td>{{session.price}}</td>
                     <td>{{session.minutes}}</td>
-                    <td *ngIf="!mobile">{{session.number_of_applicants + '/' + session.max_member}}</td>
-                    <td *ngIf="session.number_of_applicants != session.max_member"><button class="btn fw-bold mb-2 mt-2" (click)="Apply(session.id)">Jelentkezek!</button></td>
+                    <td id="numberOfApplicants{{session.id}}" *ngIf="!mobile">{{session.number_of_applicants + '/' + session.max_member}}</td>
+                    <td id="apply{{session.id}}" *ngIf="session.number_of_applicants != session.max_member"><button class="btn fw-bold mb-2 mt-2" (click)="Apply(session.id)">Jelentkezek!</button></td>
                     <td *ngIf="session.number_of_applicants == session.max_member"><button class="btn btn-danger fw-bold mb-2 mt-2" disabled>Betelt!</button></td>
                 </tr>
             </tbody>

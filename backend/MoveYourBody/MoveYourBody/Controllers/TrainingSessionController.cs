@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Protocols;
@@ -24,7 +25,7 @@ namespace MoveYourBody.WebAPI.Controllers
             this.config = config;
 
         }
-        [HttpGet("list")]
+        [HttpGet("list"), Authorize(Roles = "Trainer, Admin, User")]
         public ActionResult ListByTraining([FromQuery] int trainingId)
         {
             return this.Run(() =>
@@ -52,7 +53,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 });
             });
         }
-        [HttpGet("applied")]
+        [HttpGet("applied"), Authorize(Roles = "Trainer, Admin, User")]
         public ActionResult ListAppliedSessions([FromQuery] int trainingId, [FromQuery] int userId)
         {
             return this.Run(() =>
@@ -94,7 +95,7 @@ namespace MoveYourBody.WebAPI.Controllers
             });
 
         }
-        [HttpPut("create")]
+        [HttpPut("create"), Authorize(Roles = "Trainer, Admin")]
         public ActionResult CreateSession(TrainingSession session)
         {
             return this.Run(() =>
@@ -119,7 +120,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(newSession);
             });
         }
-        [HttpPost("modify")]
+        [HttpPost("modify"), Authorize(Roles = "Trainer, Admin")]
         public ActionResult Modify(TrainingSession session)
         {
             return this.Run(() =>
@@ -129,7 +130,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(session);
             });
         }
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Trainer, Admin, User")]
         public ActionResult Delete(TrainingSession session)
         {
             return this.Run(() =>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MoveYourBody.Service;
 using MoveYourBody.Service.Models;
@@ -17,7 +18,7 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             this.dbContext = dbContext;
         }
-        [HttpGet("list/session")]
+        [HttpGet("list/session"), Authorize(Roles = "Trainer, Admin, User")]
         public ActionResult ListBySessionId([FromQuery] int trainingSessionId)
         {
             return this.Run(() =>
@@ -40,7 +41,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 });
             });
         }
-        [HttpGet("list/user")]
+        [HttpGet("list/user"), Authorize(Roles = "Trainer, Admin, User")]
         public ActionResult ListByUserId([FromQuery] int userId)
         {
             return this.Run(() =>
@@ -50,7 +51,7 @@ namespace MoveYourBody.WebAPI.Controllers
             });
         }
 
-        [HttpPut("add")]
+        [HttpPut("add"), Authorize(Roles = "Trainer, Admin, User")]
         public ActionResult AddApplicant(Applicant applicant)
         {
             return this.Run(() =>
@@ -69,7 +70,7 @@ namespace MoveYourBody.WebAPI.Controllers
             });
         }
         
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Trainer, Admin, User")]
         public ActionResult Delete([FromQuery] int applicantId)
         {
             return this.Run(() =>
@@ -81,7 +82,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(newApplicant);
             });
         }
-        [HttpDelete("delete")]
+        [HttpDelete("delete"), Authorize(Roles = "Trainer, Admin, User")]
         public ActionResult DeleteByIds([FromQuery] int userId, [FromQuery] int sessionId)
         {
             return this.Run(() =>

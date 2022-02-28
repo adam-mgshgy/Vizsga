@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +21,7 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             this.dbContext = dbContext;
         }
-        [HttpPut("Images")]
+        [HttpPut("Images"), Authorize(Roles = "Trainer, Admin")]
         public ActionResult SaveImages(string[] images, [FromQuery] int trainingId)
         {
             return this.Run(() =>
@@ -67,7 +68,7 @@ namespace MoveYourBody.WebAPI.Controllers
 
             });
         }
-        [HttpGet("Images/{id}")]
+        [HttpGet("Images/{id}"), Authorize(Roles = "Trainer, Admin, User")]
         public ActionResult GetImageById(int id)
         {
             return this.Run(() =>
@@ -92,7 +93,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 });
             });
         }
-        [HttpPut]
+        [HttpPut, Authorize(Roles = "Trainer, Admin")]
         public ActionResult New(Training training)
         {
             return this.Run(() =>
@@ -115,7 +116,7 @@ namespace MoveYourBody.WebAPI.Controllers
 
             });
         }
-        [HttpPost("modify")]
+        [HttpPost("modify"), Authorize(Roles = "Trainer, Admin")]
         public ActionResult Modify(Training training)
         {
             return this.Run(() =>
@@ -125,7 +126,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(training);
             });
         }
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Trainer, Admin")]
         public ActionResult Delete(Training training)
         {
             return this.Run(() =>
@@ -135,7 +136,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(training);
             });
         }
-        [HttpDelete("Images/delete")]
+        [HttpDelete("Images/delete"), Authorize(Roles = "Trainer, Admin")]
         public ActionResult DeleteImage(int[] id)
         {
             return this.Run(() =>

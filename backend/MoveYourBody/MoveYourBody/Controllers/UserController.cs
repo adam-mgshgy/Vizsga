@@ -26,7 +26,7 @@ namespace MoveYourBody.WebAPI.Controllers
         }
 
         
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), Authorize(Roles = "Trainer, Admin, User")]
         public ActionResult GetById(int id)
         {
             return this.Run(() =>
@@ -42,7 +42,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(user);
             });
         }
-        [HttpPut("image")]
+        [HttpPut("image"), Authorize(Roles = "Trainer, Admin, User")]
         public ActionResult SaveImages(string[] base64, [FromQuery] int userId)
         {
             return this.Run(() =>
@@ -66,7 +66,7 @@ namespace MoveYourBody.WebAPI.Controllers
 
             });
         }
-        [HttpGet("image")]                                     
+        [HttpGet("image"), Authorize(Roles = "Trainer, Admin, User")]                                     
         public ActionResult GetImageById(int imageId)
         {
             return this.Run(() =>
@@ -78,7 +78,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(image);
             });
         }
-        [HttpGet("email")]                                     
+        [HttpGet("email"), Authorize(Roles = "Trainer, Admin, User")]                                     
         public ActionResult EmailExists([FromQuery] string email)
         {
             return this.Run(() =>
@@ -134,7 +134,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(register);
             });
         }
-        [HttpGet("getTrainer")]
+        [HttpGet("getTrainer"), Authorize(Roles = "Trainer, Admin, User")]
         public ActionResult GetTrainer(int training_id)
         {
             return this.Run(() =>
@@ -147,7 +147,7 @@ namespace MoveYourBody.WebAPI.Controllers
             });
         }        
 
-        [HttpPost("modify")]
+        [HttpPost("modify"), Authorize(Roles = "Trainer, Admin, User")]
         public ActionResult Modify(User user)
         {
             return this.Run(() =>
@@ -163,7 +163,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(user);
             });
         }
-        [HttpDelete("image/delete")]
+        [HttpDelete("image/delete"), Authorize(Roles = "Trainer, Admin, User")]
         public ActionResult DeleteImage(int id)
         {
             return this.Run(() =>
@@ -178,7 +178,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok();
             });
         }
-        [HttpDelete]//, Authorize(Roles = "Admin, Trainer, User")]
+        [HttpDelete, Authorize(Roles = "Trainer, Admin, User")]
         public ActionResult Delete(User user)
         {
             var delUser = dbContext.Set<User>().FirstOrDefault(u => u.Id == user.Id);
