@@ -37,6 +37,10 @@ ul {
   opacity: 1;
   cursor: pointer;
 }
+.fileInputProfile {
+  width: 50%;
+  margin: auto;
+}
 
 .row img:hover {
   opacity: 0.8;
