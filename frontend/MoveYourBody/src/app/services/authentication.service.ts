@@ -57,6 +57,7 @@ export class AuthenticationService {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
     localStorage.removeItem('jwt');
+    
   }
 
   hasRole(roleName: string): boolean {

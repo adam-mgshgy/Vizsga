@@ -335,7 +335,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(5, sessions[0].Number_of_applicants);
                 Assert.Equal("Virág utca 8.", sessions[0].Address_name);
                 Assert.Equal("Sportközpont", sessions[0].Place_name);
-                Assert.Equal("2022.03.10 12:30:00", sessions[0].Date.ToString());
+                Assert.Equal("2022. 03. 10. 12:30:00", sessions[0].Date.ToString());
 
 
                 Assert.IsType<List<Applicant>>(applications);

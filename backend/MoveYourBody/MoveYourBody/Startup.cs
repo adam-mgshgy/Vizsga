@@ -53,6 +53,7 @@ namespace MoveYourBody
                     ValidIssuer = "MoveYourBody",
                     ValidAudience = "MoveYourBody",
                     RequireExpirationTime = true,
+                    ClockSkew = TimeSpan.Zero
                 };
             });
 
