@@ -19,8 +19,11 @@ namespace MoveYourBody.Frontend.Tests
                 driver.FindElement(By.Name("email")).SendKeys("jozsiedzo@email.com");
                 driver.FindElement(By.Name("password")).SendKeys("jozsi");
                 driver.FindElement(By.CssSelector(".btnSubmit")).Click();
-                driver.FindElement(By.XPath("//ul[@id='userDropdown']/li/a")).WaitForDisplayed(5);
-               
+                System.Threading.Thread.Sleep(3000);
+
+                driver.FindElement(By.XPath("//ul[@id='userDropdown']/li/a")).WaitForDisplayed(50);
+
+                System.Threading.Thread.Sleep(3000);
 
                 Assert.Equal("Edzõ József", driver.FindElement(By.XPath("//ul[@id='userDropdown']/li/a")).Text);
                 driver.FindElement(By.LinkText("Edzõ József")).Click();
