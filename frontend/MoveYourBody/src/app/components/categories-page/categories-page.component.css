@@ -1,6 +1,6 @@
 #catImg {
   border-radius: 25px;
-  
+  object-fit: fill;
 }
 #catImgDiv{
   display: flex;
@@ -32,4 +32,22 @@ a#catRef{
     rgba(33, 104, 105, 1) 100%
   );
   padding-top: 2rem;
+}
+@media screen and (max-width: 767px){
+  #catImg{
+    width: 500px;
+    height: 350px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px){
+  #catImg{
+    width: 550px;
+    height: 300px;
+  }
+}
+@media screen and (min-width: 992px){
+  #catImg{
+    width: 750px;
+    height: 300px;
+  }
 }
