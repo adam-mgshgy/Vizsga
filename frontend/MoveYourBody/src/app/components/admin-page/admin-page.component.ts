@@ -63,7 +63,7 @@ export class AdminPageComponent implements OnInit {
     this.newCategory.id = 0;
     this.categoriesService.newImage(this.image).subscribe(
       result => {
-        this.newCategory.imageId = result.id;
+        this.newCategory.image_id = result.id;
         this.categoriesService.newCategory(this.newCategory).subscribe(
           (result) => console.log(result),
           (error) => console.log(error)

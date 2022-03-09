@@ -84,7 +84,7 @@ namespace MoveYourBody.WebAPI.Tests
                     Password = "titkos",
                     Phone_number = "+36704598715",
                     Role = "User",
-                    ImageId = 0
+                    Image_id = 0
                 };
                 var result = sut.New(user);
                 Assert.IsType<OkObjectResult>(result);
@@ -111,7 +111,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal("belaedzo@email.com", value.Email);
                 Assert.Equal("Edzõ Béla", value.Full_name);
                 Assert.Equal(2, value.Id);
-                Assert.Equal(0, value.ImageId);
+                Assert.Equal(0, value.Image_id);
                 Assert.Equal(59, value.Location_id);
                 Assert.Equal("+36701234566", value.Phone_number);
                 Assert.Equal("Trainer", value.Role);
@@ -135,7 +135,7 @@ namespace MoveYourBody.WebAPI.Tests
                     Password = "jozsi",
                     Phone_number = "+36802547156",
                     Role = "Trainer",
-                    ImageId = 0
+                    Image_id = 0
                 };
                 var result = sut.Modify(modifyUser);
                 Assert.IsType<OkObjectResult>(result);
@@ -179,7 +179,7 @@ namespace MoveYourBody.WebAPI.Tests
                     Password = "jozsi",
                     Phone_number = "+36701234567",
                     Role = "Trainer",
-                    ImageId = 0
+                    Image_id = 0
                 };
                 var result = sut.Delete(deleteUser);
                 Assert.IsType<OkObjectResult>(result);

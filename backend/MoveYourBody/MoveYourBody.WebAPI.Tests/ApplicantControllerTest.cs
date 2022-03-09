@@ -57,8 +57,8 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(9, users[1].Id);
                 Assert.Equal(64, users[0].Location_id);
                 Assert.Equal(66, users[1].Location_id);
-                Assert.Equal(0, users[0].ImageId);
-                Assert.Equal(0, users[1].ImageId);
+                Assert.Equal(0, users[0].Image_id);
+                Assert.Equal(0, users[1].Image_id);
                 Assert.Equal("+36701234561", users[0].Phone_number);
                 Assert.Equal("+36701234568", users[1].Phone_number);
                 Assert.Equal("User", users[0].Role);

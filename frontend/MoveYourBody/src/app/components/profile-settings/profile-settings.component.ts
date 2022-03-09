@@ -45,8 +45,8 @@ export class ProfileSettingsComponent implements OnInit {
     this.userService.getUserById(this.user.id).subscribe(
       (result) => {
         this.user = result;
-        if (this.user.imageId != 0) {
-          this.userService.getImageById(this.user.imageId).subscribe(
+        if (this.user.image_id != 0) {
+          this.userService.getImageById(this.user.image_id).subscribe(
             (result) => {
               this.profileImage = result;
             },
@@ -104,12 +104,13 @@ export class ProfileSettingsComponent implements OnInit {
   saveImage() {
     console.log(this.image);
     this.userService.saveImage(this.image, this.user.id).subscribe(
-      (result) => {console.log(result);
+      (result) => {
+        console.log(result);
         this.userService.getUserById(this.user.id).subscribe(
           (result) => {
             this.user = result;
-            if (this.user.imageId != 0) {
-              this.userService.getImageById(this.user.imageId).subscribe(
+            if (this.user.image_id != 0) {
+              this.userService.getImageById(this.user.image_id).subscribe(
                 (result) => {
                   this.profileImage = result;
                 },
@@ -124,7 +125,7 @@ export class ProfileSettingsComponent implements OnInit {
     );
   }
   deleteImage() {
-    if (this.user.imageId != 0) {
+    if (this.user.image_id != 0) {
       console.log(this.profileImage);
       this.userService.deleteImage(this.profileImage.id).subscribe(
         (result) => {
@@ -138,7 +139,7 @@ export class ProfileSettingsComponent implements OnInit {
         },
         (error) => console.log(error)
       );
-    } 
+    }
   }
   CountyChanged() {
     this.locationService.getCities(this.selectedCounty).subscribe(
@@ -160,7 +161,10 @@ export class ProfileSettingsComponent implements OnInit {
       this.errorMessage = 'Kérem adja meg a nevét!';
       return false;
     }
-    if (this.pwdChange && (this.userModify.password == '' || this.password2 == '')) {
+    if (
+      this.pwdChange &&
+      (this.userModify.password == '' || this.password2 == '')
+    ) {
       this.errorMessage = 'Kérem adjon meg jelszót!';
       return false;
     }
@@ -185,9 +189,8 @@ export class ProfileSettingsComponent implements OnInit {
   save() {
     if (this.errorCheck()) {
       if (!this.pwdChange) {
-        this.userModify.password = "";
-      }
-      else {
+        this.userModify.password = '';
+      } else {
         this.userModify.password = this.password2;
       }
       this.locationService.getLocationId(this.selectedCity).subscribe(

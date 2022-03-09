@@ -12,7 +12,7 @@
                                 <div class="col-lg-3 col-md-4 col-6">
                                     <mat-checkbox id="selectedImage" class="example-margin" [checked]="selected">
                                     </mat-checkbox>
-                                    <img class="img-fluid img-thumbnail" [src]="'data:image/png;base64,'+ profileImage.imageData" (click)="selected = !selected">
+                                    <img class="img-fluid img-thumbnail" [src]="'data:image/png;base64,'+ profileImage.image_data" (click)="selected = !selected">
                                 </div>
                             </div>
 
@@ -61,7 +61,7 @@
             </div>
             <div class="mb-3">
                 <button id="passwordButton" (click)="pwdChange = !pwdChange" type="button" class="btn fs-5">
-                   Jelszó módosítása
+                    Jelszó módosítása
                 </button>
                 <button *ngIf="pwdChange" id="cancelbtn" (click)="pwdChange = !pwdChange; userModify.password = ''; password2 = ''" type="button" class="btn btn-danger fs-5 ms-2">
                     X
@@ -75,7 +75,7 @@
                 <label for="password2" class="form-label fs-5">Jelszó ismét:</label>
                 <input [ngStyle]="{'width.%': mobile ? '80' : '50'}" type="password" maxlength="255" class="form-control pwd" name="password2" [(ngModel)]="password2">
             </div>
-            
+
             <div class="mb-3">
                 <button id="subscribeButton" (click)="ChangeTrainerValue()" [ngClass]="userModify.role == 'Trainer' ? 'd-none' : 'd-inline-block'" type="button" class="btn btn-info fs-5" data-bs-toggle="tooltip" data-bs-html="true" title="Ha szeretne edzővé válni és feltölteni edzéseit, kattintson!">
                     Edzővé válok!

@@ -1,9 +1,9 @@
 <div class="container mt-4">
     <div class="row">
         <h1 class="mb-4 text-center">{{training.name}}</h1>
-         <div class="col-lg-4 col-md-10 col-sm-10 trainer" [routerLink]="'/trainings/trainer/' + training.trainer_id">
+        <div class="col-lg-4 col-md-10 col-sm-10 trainer" [routerLink]="'/trainings/trainer/' + training.trainer_id">
             <img *ngIf="!profileImage" [src]="defaultProfile" alt="">
-            <img *ngIf="profileImage" [src]="'data:image/png;base64,'+ profileImage.imageData" alt="">
+            <img *ngIf="profileImage" [src]="'data:image/png;base64,'+ profileImage.image_data" alt="">
             <h2>{{trainerName}}</h2>
             <h4 class="fw-2">{{training.contact_phone}}</h4>
         </div>
@@ -13,7 +13,7 @@
             </div>
             <div class="carousel-inner">
                 <div *ngFor="let image of Images; let i=index" class="carousel-item" [ngClass]="{'active': i == 0 }">
-                    <img [src]="'data:image/png;base64,'+ image.imageData" class="d-block w-100" alt="...">
+                    <img [src]="'data:image/png;base64,'+ image.image_data" class="d-block w-100" alt="...">
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#slider" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -29,17 +29,17 @@
     <div class="row mt-5 mb-5">
         <div class="col-lg-4">
             <h3 class="mb-4"><a [routerLink]="'/trainings/category/' + category.id">{{category.name}}</a></h3>
-                <mat-chip-list>
-                    <span *ngFor="let tag of tags">
+            <mat-chip-list>
+                <span *ngFor="let tag of tags">
                     <mat-chip id="tag" [ngStyle]="{'background-color':tag.colour, 'border-color':'white'}" class="btn fw-bold me-1 mb-1" [routerLink]="'/trainings/tag/' + tag.id">{{tag.name}}</mat-chip>
                 </span>
-                </mat-chip-list>                            
+            </mat-chip-list>
         </div>
         <div class="col">
             <h2 id="descriptionTitle" class="mb-2">Az edzés leírása: </h2>
             <div>
                 <h4 class="mb-4 mt-4">{{training.description}}</h4>
-            </div> 
+            </div>
         </div>
     </div>
 

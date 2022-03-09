@@ -30,7 +30,7 @@
       </div>
     </div>
   </div>
-  <div  [ngStyle]="{'width.%': mobile ==true ? '100' : '80'}" class="container-fluid">
+  <div [ngStyle]="{'width.%': mobile ==true ? '100' : '80'}" class="container-fluid">
     <div class="row title">
       <h1 id="allTrainings" *ngIf="categoryId==0 && tagId==0 && trainerId==0 && !trainingName && !locationSearch">Minden Edzés</h1>
       <h1 id="filteredByCategory" *ngIf="categoryId!=0 && tagId==0 && trainerId==0 && !trainingName && !locationSearch">{{categoryName}} edzések</h1>
@@ -45,29 +45,23 @@
       <div *ngFor="let training of trainings;let i=index" id="training" class="col-xxl-4 col-xl-6 col-md-6">
         <div class="card mb-3">
           <div class="row g-0">
-            <div class="col-4 align-items-center">             
+            <div class="col-4 align-items-center">
+              <span *ngFor="let trainer of trainers">
+                <img *ngIf="training.trainer_id == trainer.id && trainer.image_id == 0" [routerLink]="'/trainings/trainer/' + training.trainer_id" [src]="defaultProfile" class="img-fluid full cover" alt="..." />
+              </span>
+              <span *ngFor="let image of profileImages">
                 <span *ngFor="let trainer of trainers">
-                  <img *ngIf="training.trainer_id == trainer.id && trainer.imageId == 0" 
-                       [routerLink]="'/trainings/trainer/' + training.trainer_id" [src]="defaultProfile"  
-                       class="img-fluid full cover" alt="..." />
+                  <img *ngIf="profileImages.length > 0 && image.id == trainer.image_id && training.trainer_id == trainer.id" [routerLink]="'/trainings/trainer/' + training.trainer_id" [src]="'data:image/png;base64,'+ image.image_data" class="img-fluid full cover" alt="..." />
                 </span>
-                <span *ngFor="let image of profileImages">
-                  <span *ngFor="let trainer of trainers">
-                    <img *ngIf="profileImages.length > 0 && image.id == trainer.imageId && training.trainer_id == trainer.id" 
-                         [routerLink]="'/trainings/trainer/' + training.trainer_id" [src]="'data:image/png;base64,'+ image.imageData" 
-                         class="img-fluid full cover" alt="..." />
-                  </span>
-                </span>
-              
+              </span>
+
             </div>
 
             <div class="col-8" id="bckg">
-              <img *ngIf=" training.indexImageId == 0" [src]="defaultTraining" class="img-fluid full" alt="..." />
+              <img *ngIf=" training.index_image_id == 0" [src]="defaultTraining" class="img-fluid full" alt="..." />
 
               <span *ngFor="let image of indexImages">
-                <img *ngIf="indexImages.length > 0 && image.id == training.indexImageId" [src]="'data:image/png;base64,'+ image.imageData" 
-                      [routerLink]="'/training/' + training.id" 
-                      class="img-fluid hoverLink full cover" alt="..." />
+                <img *ngIf="indexImages.length > 0 && image.id == training.index_image_id" [src]="'data:image/png;base64,'+ image.image_data" [routerLink]="'/training/' + training.id" class="img-fluid hoverLink full cover" alt="..." />
               </span>
             </div>
 

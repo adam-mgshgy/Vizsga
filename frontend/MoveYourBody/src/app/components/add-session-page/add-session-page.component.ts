@@ -14,7 +14,7 @@ import { TrainingModel } from 'src/app/models/training-model';
   styleUrls: ['./add-session-page.component.css'],
 })
 export class AddSessionPageComponent implements OnInit {
-  trainingId: number;
+  training_id: number;
   sessionId: number;
 
   mobile: boolean = false;
@@ -72,7 +72,7 @@ export class AddSessionPageComponent implements OnInit {
         (result) => {
           this.newSession.location_id = result[0].id;
           this.newSession.id = 1;
-          this.newSession.training_id = this.trainingId;
+          this.newSession.training_id = this.training_id;
           this.newSession.min_member = Number(this.newSession.min_member);
           this.newSession.max_member = Number(this.newSession.max_member);
           this.trainingSessionService
@@ -110,7 +110,7 @@ export class AddSessionPageComponent implements OnInit {
     );
 
     this.route.paramMap.subscribe((params) => {
-      this.trainingId = Number(params.get('trainingId'));
+      this.training_id = Number(params.get('training_id'));
       this.sessionId = Number(params.get('sessionId'));
       if (this.sessionId) {
         this.trainingSessionService.getById(this.sessionId).subscribe(
@@ -126,7 +126,7 @@ export class AddSessionPageComponent implements OnInit {
         );
       } else {
         this.newSession.id = 1;
-        this.trainingService.listByTrainingId(this.trainingId).subscribe(
+        this.trainingService.listBytraining_id(this.training_id).subscribe(
           (result) => {
             this.selectedCounty = result.location.county_name;
             this.CountyChanged(this.selectedCounty);
