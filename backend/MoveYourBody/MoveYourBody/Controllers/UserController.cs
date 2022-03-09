@@ -51,13 +51,13 @@ namespace MoveYourBody.WebAPI.Controllers
                 Images newImage = new Images()
                 {
                     Id = 0,
-                    ImageData = image
+                    Image_data = image
                 };
                 dbContext.Set<Images>().Add(newImage);
                 dbContext.SaveChanges();
 
                 var user = dbContext.Set<User>().Where(u => u.Id == userId).FirstOrDefault();
-                user.ImageId = dbContext.Set<Images>().Where(i => i.ImageData == image).FirstOrDefault().Id;
+                user.Image_id = dbContext.Set<Images>().Where(i => i.Image_data == image).FirstOrDefault().Id;
 
                 dbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 dbContext.SaveChanges();
@@ -67,12 +67,12 @@ namespace MoveYourBody.WebAPI.Controllers
             });
         }
         [HttpGet("image"), Authorize(Roles = "Trainer, Admin, User")]                                     
-        public ActionResult GetImageById(int imageId)
+        public ActionResult GetImageById(int image_id)
         {
             return this.Run(() =>
             {
                 var image = dbContext.Set<Images>()
-                                            .Where(i => i.Id == imageId)
+                                            .Where(i => i.Id == image_id)
                                             .FirstOrDefault();
                 
                 return Ok(image);
@@ -171,8 +171,8 @@ namespace MoveYourBody.WebAPI.Controllers
                 
                 var image = dbContext.Set<Images>().Where(i => i.Id == id).FirstOrDefault();
                 dbContext.Remove(image);
-                var user = dbContext.Set<User>().Where(u => u.ImageId == id).FirstOrDefault();
-                user.ImageId = 0;
+                var user = dbContext.Set<User>().Where(u => u.Image_id == id).FirstOrDefault();
+                user.Image_id = 0;
                 dbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 dbContext.SaveChanges();
                 return Ok();

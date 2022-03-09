@@ -9,8 +9,8 @@ namespace MoveYourBody.Service.Models
     {
         [Key]
         public int Id { get; set; }
-        public int ImageId { get; set; }
-        public int TrainingId { get; set; }        
+        public int Image_id { get; set; }
+        public int Training_id { get; set; }        
 
     }
 }

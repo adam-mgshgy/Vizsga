@@ -3,7 +3,7 @@
         <div class="row">
             <div *ngFor="let category of categories" id="catImgDiv" class="col-lg-4 col-md-6 col-sm-12 mb-5  position-relative">
                 <span *ngFor="let image of images">
-                    <img *ngIf="image.id == category.imageId" class="img-fluid border" id="catImg" [src]="'data:image/png;base64,'+ image.imageData" alt="">
+                    <img *ngIf="image.id == category.image_id" class="img-fluid border" id="catImg" [src]="'data:image/png;base64,'+ image.image_data" alt="">
                     <a class="centered text-decoration-none fw-bold" [routerLink]="'/trainings/category/' + category.id" id="catRef"><span class="centered">{{category.name}}</span></a>
 
                 </span>

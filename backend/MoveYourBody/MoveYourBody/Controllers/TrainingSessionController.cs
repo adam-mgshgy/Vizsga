@@ -26,23 +26,23 @@ namespace MoveYourBody.WebAPI.Controllers
 
         }
         [HttpGet("list"), Authorize(Roles = "Trainer, Admin, User")]
-        public ActionResult ListByTraining([FromQuery] int trainingId)
+        public ActionResult ListByTraining([FromQuery] int training_id)
         {
             return this.Run(() =>
             {
-                var sessions = dbContext.Set<TrainingSession>().Where(s => s.Training_id == trainingId).OrderBy(t => t.Date).ToList();
-                Training training = dbContext.Set<Training>().Where(t => t.Id == trainingId).FirstOrDefault();
+                var sessions = dbContext.Set<TrainingSession>().Where(s => s.Training_id == training_id).OrderBy(t => t.Date).ToList();
+                Training training = dbContext.Set<Training>().Where(t => t.Id == training_id).FirstOrDefault();
                 Category category = dbContext.Set<Category>().Where(c => c.Id == training.Category_id).FirstOrDefault();
-                var tagIds = dbContext.Set<TagTraining>().Where(t => t.Training_id == trainingId).ToList();
+                var tagIds = dbContext.Set<TagTraining>().Where(t => t.Training_id == training_id).ToList();
                 var tags = new List<Tag>();
                 foreach (var tag in tagIds)
                 {
                     tags.AddRange(dbContext.Set<Tag>().Where(t => t.Id == tag.Tag_id).ToList());
                 }
                 var trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault().Full_name;
-                var imageId = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault().ImageId;
+                var image_id = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault().Image_id;
 
-                var image = dbContext.Set<Images>().Where(i =>i.Id == imageId).FirstOrDefault();
+                var image = dbContext.Set<Images>().Where(i =>i.Id == image_id).FirstOrDefault();
                 return Ok(new { 
                     sessions,
                     trainer,
@@ -54,7 +54,7 @@ namespace MoveYourBody.WebAPI.Controllers
             });
         }
         [HttpGet("applied"), Authorize(Roles = "Trainer, Admin, User")]
-        public ActionResult ListAppliedSessions([FromQuery] int trainingId, [FromQuery] int userId)
+        public ActionResult ListAppliedSessions([FromQuery] int training_id, [FromQuery] int userId)
         {
             return this.Run(() =>
             {
@@ -62,13 +62,13 @@ namespace MoveYourBody.WebAPI.Controllers
                 var sessions = new List<TrainingSession>(); 
                 foreach (var appl in applications)
                 {
-                    var sess = dbContext.Set<TrainingSession>().Where(s => s.Training_id == trainingId && s.Id == appl.Training_session_id).FirstOrDefault();
+                    var sess = dbContext.Set<TrainingSession>().Where(s => s.Training_id == training_id && s.Id == appl.Training_session_id).FirstOrDefault();
                     if (sess != null)
                     {
                         sessions.Add(sess);
                     }
                 }
-                Training training = dbContext.Set<Training>().Where(t => t.Id == trainingId).FirstOrDefault();
+                Training training = dbContext.Set<Training>().Where(t => t.Id == training_id).FirstOrDefault();
                 sessions = sessions.OrderBy(s => s.Date).ToList();
                 return Ok(new
                 {

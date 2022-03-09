@@ -30,7 +30,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 var images = new List<Images>();
                 foreach (var item in categories)
                 {
-                    images.AddRange(dbContext.Set<Images>().Where(i => i.Id == item.ImageId).ToList());
+                    images.AddRange(dbContext.Set<Images>().Where(i => i.Id == item.Image_id).ToList());
 
                 }
                 return Ok(new
@@ -49,7 +49,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 {
                     Id = 0,
                     Name = category.Name,
-                    ImageId = category.ImageId
+                    Image_id = category.Image_id
                 };
                 dbContext.Set<Category>().Add(newcategory);
 
@@ -69,7 +69,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 var newimage = new Images
                 {
                     Id = 0,
-                    ImageData = image
+                    Image_data = image
                 };
                 dbContext.Set<Images>().Add(newimage);
 

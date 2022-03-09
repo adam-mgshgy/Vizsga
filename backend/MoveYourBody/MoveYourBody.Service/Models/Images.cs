@@ -9,6 +9,6 @@ namespace MoveYourBody.Service.Models
     {
         [Key]
         public int Id { get; set; }
-        public byte[] ImageData { get; set; }
+        public byte[] Image_data { get; set; }
     }
 }

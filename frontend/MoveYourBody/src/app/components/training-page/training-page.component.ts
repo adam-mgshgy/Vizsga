@@ -12,7 +12,7 @@ import { LocationService } from 'src/app/services/location.service';
 import { ApplicantModel } from 'src/app/models/applicant-model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ApplicantService } from 'src/app/services/applicant.service';
-import {Sort} from '@angular/material/sort';
+import { Sort } from '@angular/material/sort';
 import { ImagesModel } from 'src/app/models/images-model';
 import { TrainingService } from 'src/app/services/training.service';
 @Component({
@@ -35,7 +35,7 @@ export class TrainingPageComponent implements OnInit {
   trainer: UserModel = new UserModel();
   category: CategoryModel = new CategoryModel();
   sessions: TrainingSessionModel[] = [];
-  sortedSessions: TrainingSessionModel[]= [];
+  sortedSessions: TrainingSessionModel[] = [];
   locations: LocationModel[];
   tagTraining: TagTrainingModel[] = [];
   tags: TagModel[] = [];
@@ -55,7 +55,7 @@ export class TrainingPageComponent implements OnInit {
   }
   sortData(sort: Sort) {
     let dataTemp = [];
-    this.sessions.forEach(session => {
+    this.sessions.forEach((session) => {
       var year = Number(session.date.substring(0, 4));
       var month = Number(session.date.substring(5, 7));
       var day = Number(session.date.substring(8, 10));
@@ -65,7 +65,6 @@ export class TrainingPageComponent implements OnInit {
       if (sessionDate > this.currentDate) {
         dataTemp.push(session);
       }
-
     });
 
     const data = dataTemp;
@@ -106,14 +105,14 @@ export class TrainingPageComponent implements OnInit {
       },
       (error) => console.log(error)
     );
-    this.trainingSessionService.listByTrainingId(this.id).subscribe(
+    this.trainingSessionService.listBytraining_id(this.id).subscribe(
       (result) => {
         this.sessions = result.sessions;
         this.training = result.training;
         this.trainerName = result.trainer;
         this.category = result.category;
         this.tags = result.tags;
-        this.profileImage = result.image
+        this.profileImage = result.image;
         this.trainingService.getImageById(this.training.id).subscribe(
           (result) => {
             for (const item of result.images) {
@@ -123,7 +122,7 @@ export class TrainingPageComponent implements OnInit {
           (error) => console.log(error)
         );
 
-        this.sessions.forEach(session => {
+        this.sessions.forEach((session) => {
           var year = Number(session.date.substring(0, 4));
           var month = Number(session.date.substring(5, 7));
           var day = Number(session.date.substring(8, 10));
@@ -132,10 +131,9 @@ export class TrainingPageComponent implements OnInit {
           var sessionDate = new Date(year, month - 1, day, hour, minute);
           if (sessionDate < this.currentDate) {
             session.isPast = true;
-          }
-          else {
+          } else {
             session.isPast = false;
-            this.sortedSessions.push(session)
+            this.sortedSessions.push(session);
           }
         });
       },
@@ -153,8 +151,11 @@ export class TrainingPageComponent implements OnInit {
     var newApplicant = new ApplicantModel();
     newApplicant.user_id = this.user.id;
     newApplicant.id = 1;
-    
-    if (this.usersSessions.find((x) => x.training_session_id == sessionId) == undefined) {
+
+    if (
+      this.usersSessions.find((x) => x.training_session_id == sessionId) ==
+      undefined
+    ) {
       newApplicant.training_session_id = sessionId;
       this.applicantService.newApplicant(newApplicant).subscribe(
         (result) => {

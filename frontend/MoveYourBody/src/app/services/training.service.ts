@@ -31,11 +31,14 @@ export class TrainingService {
         })
       );
   }
-  saveImage(images: any, trainingId: number): Observable<TrainingImagesModel> {
+  saveImage(images: any, training_id: number): Observable<TrainingImagesModel> {
     return this.http
-      .put<TrainingImagesModel>(`${environment.ApiURL}/training/Images?trainingId=${trainingId}`, images)
+      .put<TrainingImagesModel>(
+        `${environment.ApiURL}/training/Images?training_id=${training_id}`,
+        images
+      )
       .pipe(
-        map((data: TrainingImagesModel) => {          
+        map((data: TrainingImagesModel) => {
           return data;
         }),
         catchError((err) => {
@@ -148,9 +151,7 @@ export class TrainingService {
 
   getByTrainerId(trainerId: any): Observable<any> {
     return this.http
-      .get<any>(
-        `${environment.ApiURL}/training/TrainerId/${trainerId}`
-      )
+      .get<any>(`${environment.ApiURL}/training/TrainerId/${trainerId}`)
       .pipe(
         map((data: any) => {
           return data;
@@ -246,9 +247,11 @@ export class TrainingService {
         })
       );
   }
-  listByTrainingId(trainingId: any): Observable<any> {
+  listBytraining_id(training_id: any): Observable<any> {
     return this.http
-      .get<any>(`${environment.ApiURL}/training/data?trainingId=${trainingId}`)
+      .get<any>(
+        `${environment.ApiURL}/training/data?training_id=${training_id}`
+      )
       .pipe(
         map((data) => {
           return data;
@@ -261,17 +264,15 @@ export class TrainingService {
       );
   }
   getAll(): Observable<any> {
-    return this.http
-      .get<any>(`${environment.ApiURL}/training/all`)
-      .pipe(
-        map((data: any) => {
-          return data;
-        }),
-        catchError((err) => {
-          if (!environment.production && err.status == 404) {
-            return of(err);
-          } else throw err;
-        })
-      );
+    return this.http.get<any>(`${environment.ApiURL}/training/all`).pipe(
+      map((data: any) => {
+        return data;
+      }),
+      catchError((err) => {
+        if (!environment.production && err.status == 404) {
+          return of(err);
+        } else throw err;
+      })
+    );
   }
 }

@@ -92,7 +92,7 @@ export class TrainingsPageComponent implements OnInit {
             this.categoryName = result.category.name;
             console.log(this.trainers);
             for (const item of this.trainers) {
-              this.userService.getImageById(item.imageId).subscribe(
+              this.userService.getImageById(item.image_id).subscribe(
                 (result) => {
                   if (result != null) {
                     this.profileImages.push(result);
@@ -107,7 +107,7 @@ export class TrainingsPageComponent implements OnInit {
                 (result) => {
                   console.log(result);
                   for (const item of result.images) {
-                    if (item.id == training.indexImageId) {
+                    if (item.id == training.index_image_id) {
                       this.indexImages.push(item);
                     }
                   }
@@ -130,7 +130,7 @@ export class TrainingsPageComponent implements OnInit {
             this.trainers = result.trainers;
             this.tagName = result.tag.name;
             for (const item of this.trainers) {
-              this.userService.getImageById(item.imageId).subscribe(
+              this.userService.getImageById(item.image_id).subscribe(
                 (result) => {
                   console.log(result);
                   if (result != null) {
@@ -146,7 +146,7 @@ export class TrainingsPageComponent implements OnInit {
                 (result) => {
                   console.log(result);
                   for (const item of result.images) {
-                    if (item.id == training.indexImageId) {
+                    if (item.id == training.index_image_id) {
                       this.indexImages.push(item);
                     }
                   }
@@ -169,7 +169,7 @@ export class TrainingsPageComponent implements OnInit {
             this.trainer = result.trainer;
             this.trainers.push(this.trainer);
             for (const item of this.trainers) {
-              this.userService.getImageById(item.imageId).subscribe(
+              this.userService.getImageById(item.image_id).subscribe(
                 (result) => {
                   console.log(result);
                   if (result != null) {
@@ -183,7 +183,7 @@ export class TrainingsPageComponent implements OnInit {
               this.trainingService.getImageById(training.id).subscribe(
                 (result) => {
                   for (const item of result.images) {
-                    if (item.id == training.indexImageId) {
+                    if (item.id == training.index_image_id) {
                       this.indexImages.push(item);
                     }
                   }
@@ -205,7 +205,7 @@ export class TrainingsPageComponent implements OnInit {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
             for (const item of this.trainers) {
-              this.userService.getImageById(item.imageId).subscribe(
+              this.userService.getImageById(item.image_id).subscribe(
                 (result) => {
                   if (result != null) {
                     this.profileImages.push(result);
@@ -219,7 +219,7 @@ export class TrainingsPageComponent implements OnInit {
                 (result) => {
                   console.log(result);
                   for (const item of result.images) {
-                    if (item.id == training.indexImageId) {
+                    if (item.id == training.index_image_id) {
                       this.indexImages.push(item);
                     }
                   }
@@ -240,7 +240,7 @@ export class TrainingsPageComponent implements OnInit {
             this.trainers = result.trainers;
             this.locationSearch = true;
             for (const item of this.trainers) {
-              this.userService.getImageById(item.imageId).subscribe(
+              this.userService.getImageById(item.image_id).subscribe(
                 (result) => {
                   console.log(result);
                   if (result != null) {
@@ -255,7 +255,7 @@ export class TrainingsPageComponent implements OnInit {
                 (result) => {
                   console.log(result);
                   for (const item of result.images) {
-                    if (item.id == training.indexImageId) {
+                    if (item.id == training.index_image_id) {
                       this.indexImages.push(item);
                     }
                   }
@@ -277,7 +277,7 @@ export class TrainingsPageComponent implements OnInit {
             this.trainings = result.trainings;
             this.trainers = result.trainers;
             for (const item of this.trainers) {
-              this.userService.getImageById(item.imageId).subscribe(
+              this.userService.getImageById(item.image_id).subscribe(
                 (result) => {
                   console.log(result);
                   if (result != null) {
@@ -292,7 +292,7 @@ export class TrainingsPageComponent implements OnInit {
                 (result) => {
                   console.log(result);
                   for (const item of result.images) {
-                    if (item.id == training.indexImageId) {
+                    if (item.id == training.index_image_id) {
                       this.indexImages.push(item);
                     }
                   }
@@ -312,7 +312,7 @@ export class TrainingsPageComponent implements OnInit {
             this.locationSearch = false;
 
             for (const item of this.trainers) {
-              this.userService.getImageById(item.imageId).subscribe(
+              this.userService.getImageById(item.image_id).subscribe(
                 (result) => {
                   if (result != null) {
                     this.profileImages.push(result);
@@ -325,7 +325,7 @@ export class TrainingsPageComponent implements OnInit {
               this.trainingService.getImageById(training.id).subscribe(
                 (result) => {
                   for (const item of result.images) {
-                    if (item.id == training.indexImageId) {
+                    if (item.id == training.index_image_id) {
                       this.indexImages.push(item);
                     }
                   }
