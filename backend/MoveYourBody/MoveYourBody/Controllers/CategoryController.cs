@@ -13,10 +13,10 @@ namespace MoveYourBody.WebAPI.Controllers
 {
     [Route("categories")]
     [ApiController]
-    public class CategoriesController : ControllerBase
+    public class CategoryController : ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
-        public CategoriesController(ApplicationDbContext dbContext)
+        public CategoryController(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -27,10 +27,10 @@ namespace MoveYourBody.WebAPI.Controllers
             return this.Run(() =>
             {
                 var categories = dbContext.Set<Category>().ToList();
-                var images = new List<Images>();
+                var images = new List<Image>();
                 foreach (var item in categories)
                 {
-                    images.AddRange(dbContext.Set<Images>().Where(i => i.Id == item.Image_id).ToList());
+                    images.AddRange(dbContext.Set<Image>().Where(i => i.Id == item.Image_id).ToList());
 
                 }
                 return Ok(new
@@ -66,12 +66,12 @@ namespace MoveYourBody.WebAPI.Controllers
             {
                 
                 byte[] image = Convert.FromBase64String(img[0].Split(',')[1]);
-                var newimage = new Images
+                var newimage = new Image
                 {
                     Id = 0,
                     Image_data = image
                 };
-                dbContext.Set<Images>().Add(newimage);
+                dbContext.Set<Image>().Add(newimage);
 
                 dbContext.SaveChanges();
 

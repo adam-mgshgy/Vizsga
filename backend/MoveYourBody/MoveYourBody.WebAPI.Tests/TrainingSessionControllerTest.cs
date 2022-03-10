@@ -48,7 +48,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Training training = value.GetPropertyValue<Training>("training");
                 Assert.IsType<Training>(training);
 
-                Images image = value.GetPropertyValue<Images>("image");
+                Image image = value.GetPropertyValue<Image>("image");
                 Assert.Null(image);
 
                 Category category = value.GetPropertyValue<Category>("category");

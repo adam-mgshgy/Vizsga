@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MoveYourBody.Service.Models
 {
-    public class Images
+    public class Image
     {
         [Key]
         public int Id { get; set; }

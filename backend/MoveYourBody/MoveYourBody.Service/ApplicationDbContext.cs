@@ -17,7 +17,7 @@ namespace MoveYourBody.Service
         public DbSet<Location> Location { get; set; }
         public DbSet<Training> Training { get; set; }
         public DbSet<TrainingImages> TrainingImages { get; set; }
-        public DbSet<Images> Images { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         public DbSet<TrainingSession> TrainingSession { get; set; }
         public DbSet<TagTraining> TagTraining { get; set; }
@@ -156,21 +156,21 @@ namespace MoveYourBody.Service
             var JSON = File.ReadAllText("CategoryImages/CategoryImages.json");
             JObject dynJson = JsonConvert.DeserializeObject(JSON) as JObject;
             
-            modelBuilder.Entity<Images>().HasData(
-                new Images() { Id = 1, Image_data = Convert.FromBase64String(dynJson["image_data"]["box"].ToString()) },
-                new Images() { Id = 2, Image_data = Convert.FromBase64String(dynJson["image_data"]["crossfit"].ToString()) },
-                new Images() { Id = 3, Image_data = Convert.FromBase64String(dynJson["image_data"]["football"].ToString()) },
-                new Images() { Id = 4, Image_data = Convert.FromBase64String(dynJson["image_data"]["basketball"].ToString()) },
-                new Images() { Id = 5, Image_data = Convert.FromBase64String(dynJson["image_data"]["handball"].ToString()) },
-                new Images() { Id = 6, Image_data = Convert.FromBase64String(dynJson["image_data"]["volleyball"].ToString()) },
-                new Images() { Id = 7, Image_data = Convert.FromBase64String(dynJson["image_data"]["spartan"].ToString()) },
-                new Images() { Id = 8, Image_data = Convert.FromBase64String(dynJson["image_data"]["tennis"].ToString()) },
-                new Images() { Id = 9, Image_data = Convert.FromBase64String(dynJson["image_data"]["trx"].ToString()) },
-                new Images() { Id = 10, Image_data = Convert.FromBase64String(dynJson["image_data"]["swimming"].ToString()) },
-                new Images() { Id = 11, Image_data = Convert.FromBase64String(dynJson["image_data"]["riding"].ToString()) },
-                new Images() { Id = 12, Image_data = Convert.FromBase64String(dynJson["image_data"]["yoga"].ToString()) },
+            modelBuilder.Entity<Image>().HasData(
+                new Image() { Id = 1, Image_data = Convert.FromBase64String(dynJson["image_data"]["box"].ToString()) },
+                new Image() { Id = 2, Image_data = Convert.FromBase64String(dynJson["image_data"]["crossfit"].ToString()) },
+                new Image() { Id = 3, Image_data = Convert.FromBase64String(dynJson["image_data"]["football"].ToString()) },
+                new Image() { Id = 4, Image_data = Convert.FromBase64String(dynJson["image_data"]["basketball"].ToString()) },
+                new Image() { Id = 5, Image_data = Convert.FromBase64String(dynJson["image_data"]["handball"].ToString()) },
+                new Image() { Id = 6, Image_data = Convert.FromBase64String(dynJson["image_data"]["volleyball"].ToString()) },
+                new Image() { Id = 7, Image_data = Convert.FromBase64String(dynJson["image_data"]["spartan"].ToString()) },
+                new Image() { Id = 8, Image_data = Convert.FromBase64String(dynJson["image_data"]["tennis"].ToString()) },
+                new Image() { Id = 9, Image_data = Convert.FromBase64String(dynJson["image_data"]["trx"].ToString()) },
+                new Image() { Id = 10, Image_data = Convert.FromBase64String(dynJson["image_data"]["swimming"].ToString()) },
+                new Image() { Id = 11, Image_data = Convert.FromBase64String(dynJson["image_data"]["riding"].ToString()) },
+                new Image() { Id = 12, Image_data = Convert.FromBase64String(dynJson["image_data"]["yoga"].ToString()) },
 
-                new Images() { Id = 13, Image_data = image_data }
+                new Image() { Id = 13, Image_data = image_data }
             );
 
             if (isMigration)

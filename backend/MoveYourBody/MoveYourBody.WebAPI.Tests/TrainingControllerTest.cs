@@ -132,9 +132,9 @@ namespace MoveYourBody.WebAPI.Tests
                 var value = ((OkObjectResult)result).Value;
 
                 List<TrainingImages> trainingImages = value.GetPropertyValue<List<TrainingImages>>("trainingImages");
-                List<Images> images = value.GetPropertyValue<List<Images>>("images");
+                List<Image> images = value.GetPropertyValue<List<Image>>("images");
                 Assert.IsType<List<TrainingImages>>(trainingImages);
-                Assert.IsType<List<Images>>(images);
+                Assert.IsType<List<Image>>(images);
 
                 Assert.Equal("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==", Convert.ToBase64String(images[0].Image_data));
             }

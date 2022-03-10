@@ -29,15 +29,15 @@ namespace MoveYourBody.WebAPI.Controllers
                 foreach (var item in images)
                 {
                     byte[] image = Convert.FromBase64String(item.Split(',')[1]);
-                    Images newImage = new Images()
+                    Image newImage = new Image()
                     {
                         Id = 0,
                         Image_data = image,
                     };
-                    dbContext.Set<Images>().Add(newImage);
+                    dbContext.Set<Image>().Add(newImage);
                     dbContext.SaveChanges();
                     int image_id = -1;
-                    foreach (var dbimage in dbContext.Set<Images>())
+                    foreach (var dbimage in dbContext.Set<Image>())
                     {
                         if (dbimage.Image_data == image)
                         {
@@ -56,7 +56,7 @@ namespace MoveYourBody.WebAPI.Controllers
                     var training = dbContext.Set<Training>().Where(t => t.Id == newTrainingImages.Training_id).FirstOrDefault();
                     if (dbContext.Set<TrainingImages>().Where(t => t.Training_id == training.Id).Count() == 1)
                     {
-                        training.Index_image_id = dbContext.Set<Images>().Where(t => t.Image_data == image).FirstOrDefault().Id;
+                        training.Index_image_id = dbContext.Set<Image>().Where(t => t.Image_data == image).FirstOrDefault().Id;
                         dbContext.Entry(training).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
 
                     }
@@ -80,11 +80,11 @@ namespace MoveYourBody.WebAPI.Controllers
                 {
                     lista.Add(item.Image_id);
                 }
-                var images = dbContext.Set<Images>().Where(t => t.Id == -1).ToList();
+                var images = dbContext.Set<Image>().Where(t => t.Id == -1).ToList();
 
                 foreach (var item in lista)
                 {
-                    images.Add(dbContext.Set<Images>().Where(t => t.Id == item).FirstOrDefault());
+                    images.Add(dbContext.Set<Image>().Where(t => t.Id == item).FirstOrDefault());
                 }
 
                 return Ok(new {
@@ -145,7 +145,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 {
                     var trainingImages = dbContext.Set<TrainingImages>().Where(t => t.Image_id == item).FirstOrDefault();
                     dbContext.Remove(trainingImages);
-                    var image = dbContext.Set<Images>().Where(i => i.Id == trainingImages.Image_id).FirstOrDefault();
+                    var image = dbContext.Set<Image>().Where(i => i.Id == trainingImages.Image_id).FirstOrDefault();
                     dbContext.Remove(image);
                     dbContext.SaveChanges();
 

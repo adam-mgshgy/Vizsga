@@ -42,7 +42,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 var trainer = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault().Full_name;
                 var image_id = dbContext.Set<User>().Where(u => u.Id == training.Trainer_id).FirstOrDefault().Image_id;
 
-                var image = dbContext.Set<Images>().Where(i =>i.Id == image_id).FirstOrDefault();
+                var image = dbContext.Set<Image>().Where(i =>i.Id == image_id).FirstOrDefault();
                 return Ok(new { 
                     sessions,
                     trainer,
