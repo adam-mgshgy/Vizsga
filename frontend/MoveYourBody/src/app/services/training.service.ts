@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { TrainingModel } from '../models/training-model';
 import { catchError, map } from 'rxjs/operators';
-import { TrainingImagesModel } from '../models/training-images-model';
+import { TrainingImageModel } from '../models/training-images-model';
 
 @Injectable({
   providedIn: 'root',
@@ -31,14 +31,14 @@ export class TrainingService {
         })
       );
   }
-  saveImage(images: any, training_id: number): Observable<TrainingImagesModel> {
+  saveImage(images: any, training_id: number): Observable<TrainingImageModel> {
     return this.http
-      .put<TrainingImagesModel>(
+      .put<TrainingImageModel>(
         `${environment.ApiURL}/training/Images?training_id=${training_id}`,
         images
       )
       .pipe(
-        map((data: TrainingImagesModel) => {
+        map((data: TrainingImageModel) => {
           return data;
         }),
         catchError((err) => {

@@ -16,7 +16,7 @@ namespace MoveYourBody.Service
         public DbSet<User> User { get; set; }
         public DbSet<Location> Location { get; set; }
         public DbSet<Training> Training { get; set; }
-        public DbSet<TrainingImages> TrainingImages { get; set; }
+        public DbSet<TrainingImage> TrainingImage{ get; set; }
         public DbSet<Image> Images { get; set; }
 
         public DbSet<TrainingSession> TrainingSession { get; set; }
@@ -144,8 +144,8 @@ namespace MoveYourBody.Service
                 new TagTraining() { Id = 14, Tag_id = 9, Training_id = 3 }
                 );
 
-            modelBuilder.Entity<TrainingImages>().HasData(
-                new TrainingImages() { Id = 1, Image_id = 13, Training_id = 2}
+            modelBuilder.Entity<TrainingImage>().HasData(
+                new TrainingImage() { Id = 1, Image_id = 13, Training_id = 2}
                 );
 
 

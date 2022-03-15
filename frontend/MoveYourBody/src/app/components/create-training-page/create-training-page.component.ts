@@ -10,7 +10,7 @@ import { TagTrainingService } from 'src/app/services/tag-training.service';
 import { TagService } from 'src/app/services/tag.service';
 import { TrainingService } from 'src/app/services/training.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { TrainingImagesModel } from 'src/app/models/training-images-model';
+import { TrainingImageModel } from 'src/app/models/training-images-model';
 import { ImagesModel } from 'src/app/models/images-model';
 
 @Component({
@@ -39,7 +39,7 @@ export class CreateTrainingPageComponent implements OnInit {
   training: TrainingModel = new TrainingModel();
   myTrainings: TrainingModel[] = [];
 
-  trainingImages: TrainingImagesModel[] = [];
+  trainingImages: TrainingImageModel[] = [];
   Images: ImagesModel[] = [];
 
   selectedTag: number[] = []; //Adatbázisban lévő edzéshez mentett tagek
