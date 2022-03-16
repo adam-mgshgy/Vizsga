@@ -1,23 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CategoryModel } from 'src/app/models/category-model';
-import { TagModel } from 'src/app/models/tag-model';
-import { TrainingModel } from 'src/app/models/training-model';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { TagService } from 'src/app/services/tag.service';
 import { TrainingService } from 'src/app/services/training.service';
+import { LocationService } from 'src/app/services/location.service';
+import { UserService } from 'src/app/services/user.service';
+import { CategoryModel } from 'src/app/models/category-model';
+import { TagModel } from 'src/app/models/tag-model';
+import { TrainingModel } from 'src/app/models/training-model';
 import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { UserModel } from 'src/app/models/user-model';
-import { LocationService } from 'src/app/services/location.service';
 import { LocationModel } from 'src/app/models/location-model';
 import { ImagesModel } from 'src/app/models/images-model';
-import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-trainings',
   templateUrl: './trainings-page.component.html',
   styleUrls: ['./trainings-page.component.css'],
 })
 export class TrainingsPageComponent implements OnInit {
+  constructor(
+    private route: ActivatedRoute,
+    private trainingService: TrainingService,
+    private categoryService: CategoriesService,
+    private tagService: TagService,
+    private locationService: LocationService,
+    private router: Router,
+    private userService: UserService
+  ) {}
+
   categoryId: number;
   categoryName: string;
   tagId: number;
@@ -46,16 +56,6 @@ export class TrainingsPageComponent implements OnInit {
   locationSearch: boolean = false;
   profileImages: ImagesModel[] = [];
   indexImages: ImagesModel[] = [];
-
-  constructor(
-    private route: ActivatedRoute,
-    private trainingService: TrainingService,
-    private categoryService: CategoriesService,
-    private tagService: TagService,
-    private locationService: LocationService,
-    private router: Router,
-    private userService: UserService
-  ) {}
 
   ngOnInit(): void {
     this.categoryService.getCategories().subscribe(
@@ -340,6 +340,7 @@ export class TrainingsPageComponent implements OnInit {
       }
     });
   }
+
   Search() {
     if (this.selectedCity) {
       this.router.navigateByUrl('trainings/city/' + this.selectedCity);

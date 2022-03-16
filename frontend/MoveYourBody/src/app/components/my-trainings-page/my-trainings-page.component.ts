@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ResizedEvent } from 'angular-resize-event';
-import { TagModel } from 'src/app/models/tag-model';
-import { TrainingModel } from 'src/app/models/training-model';
-import { UserModel } from 'src/app/models/user-model';
+import { ActivatedRoute } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { TrainingSessionModel } from 'src/app/models/training-session-model';
 import { TrainingService } from 'src/app/services/training.service';
-import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { TagService } from 'src/app/services/tag.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { TrainingSessionService } from 'src/app/services/training-session.service';
 import { ApplicantService } from 'src/app/services/applicant.service';
-import { ImagesModel } from 'src/app/models/images-model';
 import { UserService } from 'src/app/services/user.service';
-import { ActivatedRoute } from '@angular/router';
+import { ImagesModel } from 'src/app/models/images-model';
+import { TagModel } from 'src/app/models/tag-model';
+import { TrainingModel } from 'src/app/models/training-model';
+import { UserModel } from 'src/app/models/user-model';
+import { TrainingSessionModel } from 'src/app/models/training-session-model';
+import { TagTrainingModel } from 'src/app/models/tag-training-model';
 
 @Component({
   selector: 'app-my-trainings-page',
@@ -51,45 +50,7 @@ export class MyTrainingsPageComponent implements OnInit {
   ordered_session: any[] = [];
   profileImages: ImagesModel[] = [];
   indexImages: ImagesModel[] = [];
-
   currentDate = new Date();
-  deleteSession(session: TrainingSessionModel) {
-    if (session.number_of_applicants > 0) {
-      alert('Figyelem, az alkalomra már vannak jelentkezők!');
-    }
-    this.trainingSessionService.deleteTrainingSession(session).subscribe(
-      (result) => {
-        this.sessions.splice(
-          this.sessions.findIndex((x) => x.id == session.id),
-          1
-        );
-      },
-      (error) => console.log(error)
-    );
-  }
-  deleteApplication(sessionId: number) {
-    this.applicantService
-      .deleteApplicantByIds(this.user.id, sessionId)
-      .subscribe(
-        (result) => {
-          this.sessions.splice(
-            this.sessions.findIndex((x) => x.id == sessionId),
-            1
-          );
-
-          if (this.sessions.length == 0) {
-            this.myTrainings.splice(
-              this.myTrainings.findIndex(
-                (x) => x.id == this.currentTraining.id
-              ),
-              1
-            );
-            this.close();
-          }
-        },
-        (error) => console.log(error)
-      );
-  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -171,7 +132,59 @@ export class MyTrainingsPageComponent implements OnInit {
       (error) => console.log(error)
     );
   }
-  open(content: any, training_id: number) {
+  CheckIfPast() {
+    this.sessions.forEach((session) => {
+      var year = Number(session.date.substring(0, 4));
+      var month = Number(session.date.substring(5, 7));
+      var day = Number(session.date.substring(8, 10));
+      var hour = Number(session.date.substring(11, 13));
+      var minute = Number(session.date.substring(14, 16));
+      var sessionDate = new Date(year, month - 1, day, hour, minute);
+      if (sessionDate < this.currentDate) {
+        session.isPast = true;
+      } else {
+        session.isPast = false;
+      }
+    });
+  }
+  deleteSession(session: TrainingSessionModel) {
+    if (session.number_of_applicants > 0) {
+      alert('Figyelem, az alkalomra már vannak jelentkezők!');
+    }
+    this.trainingSessionService.deleteTrainingSession(session).subscribe(
+      (result) => {
+        this.sessions.splice(
+          this.sessions.findIndex((x) => x.id == session.id),
+          1
+        );
+      },
+      (error) => console.log(error)
+    );
+  }
+  deleteApplication(sessionId: number) {
+    this.applicantService
+      .deleteApplicantByIds(this.user.id, sessionId)
+      .subscribe(
+        (result) => {
+          this.sessions.splice(
+            this.sessions.findIndex((x) => x.id == sessionId),
+            1
+          );
+          
+          if (this.sessions.length == 0) {
+            this.myTrainings.splice(
+              this.myTrainings.findIndex(
+                (x) => x.id == this.currentTraining.id
+              ),
+              1
+            );
+            this.close();
+          }
+        },
+        (error) => console.log(error)
+      );
+  }
+  open(content: any, trainingId: number) {
     if (this.mode == 'trainer') {
       this.trainingSessionService.listBytraining_id(training_id).subscribe(
         (result) => {
@@ -216,19 +229,5 @@ export class MyTrainingsPageComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-  CheckIfPast() {
-    this.sessions.forEach((session) => {
-      var year = Number(session.date.substring(0, 4));
-      var month = Number(session.date.substring(5, 7));
-      var day = Number(session.date.substring(8, 10));
-      var hour = Number(session.date.substring(11, 13));
-      var minute = Number(session.date.substring(14, 16));
-      var sessionDate = new Date(year, month - 1, day, hour, minute);
-      if (sessionDate < this.currentDate) {
-        session.isPast = true;
-      } else {
-        session.isPast = false;
-      }
-    });
-  }
+  
 }

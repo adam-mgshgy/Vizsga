@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { CategoryModel } from './models/category-model';
-import { UserModel } from './models/user-model';
-import { CategoriesService } from './services/categories.service';
-import { AuthenticationService } from './services/authentication.service';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthenticationService } from './services/authentication.service';
 import { TagService } from './services/tag.service';
+import { CategoriesService } from './services/categories.service';
 import { TagModel } from './models/tag-model';
-import { TrainingService } from './services/training.service';
+import { CategoryModel } from './models/category-model';
+import { UserModel } from './models/user-model';
 
 @Component({
   selector: 'app-root',
@@ -15,12 +14,6 @@ import { TrainingService } from './services/training.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  mobile: boolean = false;
-  title = 'MoveYourBody';
-  categories: CategoryModel[] = [];
-  tags: TagModel[] = [];
-  user: UserModel;
-  trainingName: string;
   constructor(
     private router: Router,
     private categoryService: CategoriesService,
@@ -32,6 +25,12 @@ export class AppComponent {
       (x) => (this.user = x)
     );
   }
+  mobile: boolean = false;
+  title = 'MoveYourBody';
+  categories: CategoryModel[] = [];
+  tags: TagModel[] = [];
+  user: UserModel;
+  trainingName: string;
   ngOnInit() {
     if (window.innerWidth <= 800) {
       this.mobile = true;

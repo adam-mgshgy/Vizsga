@@ -1,26 +1,37 @@
 import { Component, OnInit } from '@angular/core';
+import {Sort} from '@angular/material/sort';
+import { ActivatedRoute } from '@angular/router';
+import { TrainingSessionService } from 'src/app/services/training-session.service';
+import { ApplicantService } from 'src/app/services/applicant.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { LocationService } from 'src/app/services/location.service';
+import { TrainingService } from 'src/app/services/training.service';
 import { TrainingSessionModel } from 'src/app/models/training-session-model';
 import { TagModel } from 'src/app/models/tag-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
 import { LocationModel } from 'src/app/models/location-model';
-import { ActivatedRoute } from '@angular/router';
 import { CategoryModel } from 'src/app/models/category-model';
 import { TagTrainingModel } from 'src/app/models/tag-training-model';
-import { TrainingSessionService } from 'src/app/services/training-session.service';
-import { LocationService } from 'src/app/services/location.service';
 import { ApplicantModel } from 'src/app/models/applicant-model';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { ApplicantService } from 'src/app/services/applicant.service';
-import { Sort } from '@angular/material/sort';
 import { ImagesModel } from 'src/app/models/images-model';
-import { TrainingService } from 'src/app/services/training.service';
 @Component({
   selector: 'app-training-page',
   templateUrl: './training-page.component.html',
   styleUrls: ['./training-page.component.css'],
 })
 export class TrainingPageComponent implements OnInit {
+  constructor(
+    private trainingSessionService: TrainingSessionService,
+    private route: ActivatedRoute,
+    private locationService: LocationService,
+    private applicantService: ApplicantService,
+    private authenticationService: AuthenticationService,
+    private trainingService: TrainingService
+  ) {
+    this.authenticationService.currentUser.subscribe((x) => (this.user = x));
+  }
+
   profileImage: ImagesModel = new ImagesModel();
   Images: ImagesModel[] = [];
   defaultProfile = './assets/images/defaultImages/defaultProfilePicture.png';
@@ -43,52 +54,6 @@ export class TrainingPageComponent implements OnInit {
 
   usersSessions: ApplicantModel[] = [];
   mobile: boolean = false;
-  constructor(
-    private trainingSessionService: TrainingSessionService,
-    private route: ActivatedRoute,
-    private locationService: LocationService,
-    private applicantService: ApplicantService,
-    private authenticationService: AuthenticationService,
-    private trainingService: TrainingService
-  ) {
-    this.authenticationService.currentUser.subscribe((x) => (this.user = x));
-  }
-  sortData(sort: Sort) {
-    let dataTemp = [];
-    this.sessions.forEach((session) => {
-      var year = Number(session.date.substring(0, 4));
-      var month = Number(session.date.substring(5, 7));
-      var day = Number(session.date.substring(8, 10));
-      var hour = Number(session.date.substring(11, 13));
-      var minute = Number(session.date.substring(14, 16));
-      var sessionDate = new Date(year, month - 1, day, hour, minute);
-      if (sessionDate > this.currentDate) {
-        dataTemp.push(session);
-      }
-    });
-
-    const data = dataTemp;
-    if (!sort.active || sort.direction === '') {
-      this.sortedSessions = data;
-      return;
-    }
-    this.sortedSessions = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'date':
-          return this.compare(a.date, b.date, isAsc);
-        case 'price':
-          return this.compare(a.price, b.price, isAsc);
-        case 'minutes':
-          return this.compare(a.minutes, b.minutes, isAsc);
-        default:
-          return 0;
-      }
-    });
-  }
-  compare(a: number | string, b: number | string, isAsc: boolean) {
-    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-  }
 
   ngOnInit(): void {
     if (window.innerWidth <= 800) {
@@ -146,6 +111,45 @@ export class TrainingPageComponent implements OnInit {
       (error) => console.log(error)
     );
   }
+  sortData(sort: Sort) {
+    let dataTemp = [];
+    this.sessions.forEach(session => {
+      var year = Number(session.date.substring(0, 4));
+      var month = Number(session.date.substring(5, 7));
+      var day = Number(session.date.substring(8, 10));
+      var hour = Number(session.date.substring(11, 13));
+      var minute = Number(session.date.substring(14, 16));
+      var sessionDate = new Date(year, month - 1, day, hour, minute);
+      if (sessionDate > this.currentDate) {
+        dataTemp.push(session);
+      }
+
+    });
+
+    const data = dataTemp;
+    if (!sort.active || sort.direction === '') {
+      this.sortedSessions = data;
+      return;
+    }
+    this.sortedSessions = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'date':
+          return this.compare(a.date, b.date, isAsc);
+        case 'price':
+          return this.compare(a.price, b.price, isAsc);
+        case 'minutes':
+          return this.compare(a.minutes, b.minutes, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+  compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
+  
 
   Apply(sessionId: number) {
     var newApplicant = new ApplicantModel();
