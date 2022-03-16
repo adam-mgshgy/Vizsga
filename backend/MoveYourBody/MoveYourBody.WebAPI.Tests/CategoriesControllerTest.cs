@@ -15,7 +15,6 @@ namespace MoveYourBody.WebAPI.Tests
 
         public CategoriesControllerTest()
         {
-            //this.context = new TestDbContext();
             //Configuration mocking: https://stackoverflow.com/questions/64794219/how-to-mock-iconfiguration-getvalue
             var inMemorySettings = new Dictionary<string, string> {
                 {"TopLevelKey", "TopLevelValue"},

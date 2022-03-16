@@ -11,12 +11,10 @@ namespace MoveYourBody.WebAPI.Tests
 {
     public class UserControllerTest
     {
-        //TestDbContext context;
         IConfiguration config;
 
         public UserControllerTest()
         {
-            //this.context = new TestDbContext();
             //Configuration mocking: https://stackoverflow.com/questions/64794219/how-to-mock-iconfiguration-getvalue
             //
             byte[] data = Convert.FromBase64String("TTB2M3kwdXJiMGR5");
@@ -40,7 +38,6 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.IsType<OkObjectResult>(result);
 
                 User value = (User)((OkObjectResult)result).Value;
-                //new User() { Email = "jozsiedzo@email.com", Full_name = "Edzõ József", Id = 1, Location_id = 58, Password = "jozsi", Phone_number = "+36701234567", Role = "Trainer" },
 
                 Assert.Equal("jozsiedzo@email.com", value.Email);
                 Assert.Equal("Edzõ József", value.Full_name);
@@ -105,7 +102,6 @@ namespace MoveYourBody.WebAPI.Tests
             {
                 var sut = new UserController(context, config);
                 var result = sut.GetTrainer(3);
-                //new User() { Email = "belaedzo@email.com", Full_name = "Edzõ Béla", Id = 2, Location_id = 59, Password = "bela", Phone_number = "+36701234566", Role = "Trainer" },
                 Assert.IsType<OkObjectResult>(result);
                 User value = (User)((OkObjectResult)result).Value;
                 Assert.Equal("belaedzo@email.com", value.Email);

@@ -33,11 +33,11 @@ namespace MoveYourBody.Frontend.Tests
                 By.ClassName("container").WaitForExists(driver, 25);
 
                 Assert.Equal("Edzés szerkesztése", driver.FindElement(By.CssSelector("h1")).Text);
-                Assert.Equal("Edzés 1", driver.FindElement(By.Id("name")).GetAttribute("value"));
+                Assert.Equal("Box Józsival", driver.FindElement(By.Id("name")).GetAttribute("value"));
 
                 Assert.Equal("Box", driver.FindElement(By.Id("category")).GetAttribute("value"));
 
-                Assert.Equal("Rövid leírás az edzésrõl még sokkal hosszabb leírás fúha nagyon hosszú ki se fér, lássuk meddig megy a szöveg olvassuk tovább", driver.FindElement(By.Id("description")).GetAttribute("value"));
+                Assert.Equal("Szeretettel vár Józsi Edzõ a legnépszerûbb box edzésén! Kezdõket és haladókat is szívesen fogadunk. Nem kell más, csak egy törölközõ, víz, és hatalmas lelkesedés!", driver.FindElement(By.Id("description")).GetAttribute("value"));
 
                 Assert.Equal("A saját telefonszámom szeretném használni (+36701234567)", driver.FindElement(By.CssSelector(".mb-3 > .form-check-label:nth-child(2)")).Text);
 

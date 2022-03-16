@@ -14,7 +14,6 @@ namespace MoveYourBody.WebAPI.Tests
         IConfiguration config;
         public TrainingControllerTest()
         {
-            //this.context = new TestDbContext();
             //Configuration mocking: https://stackoverflow.com/questions/64794219/how-to-mock-iconfiguration-getvalue
             var inMemorySettings = new Dictionary<string, string> {
                 {"TopLevelKey", "TopLevelValue"},
@@ -33,15 +32,14 @@ namespace MoveYourBody.WebAPI.Tests
             {
                 var sut = new TrainingController(context);
                 var result = sut.GetById(2);
-                //new Training() { Id = 2, Category_id = 2, Contact_phone = "+36701234567", Description = "Rövid leírás az edzésről", Name = "Edzés 2", Trainer_id = 1 },
 
                 Assert.IsType<OkObjectResult>(result);
                 Training value = (Training)((OkObjectResult)result).Value;
                 Assert.Equal(2, value.Id);
                 Assert.Equal(2, value.Category_id);
                 Assert.Equal("+36701234567", value.Contact_phone);
-                Assert.Equal("Rövid leírás az edzésről", value.Description);
-                Assert.Equal("Edzés 2", value.Name);
+                Assert.Equal("Gyere Crossfit edzésre Józsi edzővel, ha szeretnél fitt lenni!", value.Description);
+                Assert.Equal("Józsi Crossfit", value.Name);
                 Assert.Equal(1, value.Trainer_id);
             }
         }
@@ -81,7 +79,6 @@ namespace MoveYourBody.WebAPI.Tests
         {
             using (var context = TestDbContext.GenerateTestDbContext())
             {
-                //new Training() { Id = 5, Category_id = 5, Contact_phone = "+36701234565", Description = "Rövid leírás az edzésről", Name = "Edzés 5", Trainer_id = 3 },
 
                 var sut = new TrainingController(context);
                 Training modifyTraining = new Training()
@@ -145,7 +142,6 @@ namespace MoveYourBody.WebAPI.Tests
         {
             using (var context = TestDbContext.GenerateTestDbContext())
             {
-                //new Training() { Id = 5, Category_id = 5, Contact_phone = "+36701234565", Description = "Rövid leírás az edzésről", Name = "Edzés 5", Trainer_id = 3 },
                 var sut = new TrainingController(context);
 
                 Training training = new Training()
@@ -153,8 +149,8 @@ namespace MoveYourBody.WebAPI.Tests
                     Id = 5,
                     Category_id = 5,
                     Trainer_id = 3,
-                    Name = "Edzés 5",
-                    Description = "Rövid leírás az edzésről",
+                    Name = "Gézi Kézi",
+                    Description = "Géza Edző kézilabda edzése",
                     Contact_phone = "+36701234565",
                     Index_image_id = 0
                 };
@@ -165,8 +161,8 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(5, value.Id);
                 Assert.Equal(5, value.Category_id);
                 Assert.Equal(3, value.Trainer_id);
-                Assert.Equal("Edzés 5", value.Name);
-                Assert.Equal("Rövid leírás az edzésről", value.Description);
+                Assert.Equal("Gézi Kézi", value.Name);
+                Assert.Equal("Géza Edző kézilabda edzése", value.Description);
                 Assert.Equal("+36701234565", value.Contact_phone);
                 Assert.Equal(0, value.Index_image_id);
 
@@ -190,7 +186,6 @@ namespace MoveYourBody.WebAPI.Tests
 
 
                 Assert.IsType<User>(trainer);
-                //new Training() { Id = 5, Category_id = 5, Contact_phone = "+36701234565", Description = "Rövid leírás az edzésről", Name = "Edzés 5", Trainer_id = 3 },
                 Assert.Equal(3, trainer.Id);
                 Assert.Equal("gezaedzo@email.com", trainer.Email);
                 Assert.Equal("Edző Géza", trainer.Full_name);
@@ -207,14 +202,13 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(5, training.Id);
                 Assert.Equal(5, training.Category_id);
                 Assert.Equal(3, training.Trainer_id);
-                Assert.Equal("Edzés 5", training.Name);
-                Assert.Equal("Rövid leírás az edzésről", training.Description);
+                Assert.Equal("Gézi Kézi", training.Name);
+                Assert.Equal("Géza Edző kézilabda edzése", training.Description);
                 Assert.Equal("+36701234565", training.Contact_phone);
                 Assert.Equal(0, training.Index_image_id);
 
 
                 Assert.IsType<Location>(location);
-                //{ 1, "Csurgó", "Somogy" },
                 Assert.Equal(60, location.Id);
                 Assert.Equal("Csurgó", location.City_name);
                 Assert.Equal("Somogy", location.County_name);
@@ -240,7 +234,6 @@ namespace MoveYourBody.WebAPI.Tests
 
 
                 Assert.IsType<User>(trainer);
-                //new User() { Email = "gezaedzo@email.com", Full_name = "Edző Géza", Id = 3, Location_id = 60, Password = "geza", Phone_number = "+36701234565", Role = "Trainer" }
                 Assert.Equal(3, trainer.Id);
                 Assert.Equal("gezaedzo@email.com", trainer.Email);
                 Assert.Equal("Edző Géza", trainer.Full_name);
@@ -255,10 +248,10 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.IsType<List<Training>>(trainings);
                 //new Training() { Id = 5, Category_id = 5, Contact_phone = "+36701234565", Description = "Rövid leírás az edzésről", Name = "Edzés 5", Trainer_id = 3 },
                 Assert.Equal(5, trainings[0].Id);
-                Assert.Equal(5, trainings[1].Category_id);
+                Assert.Equal(12, trainings[1].Category_id);
                 Assert.Equal(3, trainings[0].Trainer_id);
-                Assert.Equal("Edzés 6", trainings[1].Name);
-                Assert.Equal("Rövid leírás az edzésről", trainings[0].Description);
+                Assert.Equal("Jóga edzés", trainings[1].Name);
+                Assert.Equal("Jóga Gézával", trainings[0].Description);
                 Assert.Equal("+36701234565", trainings[1].Contact_phone);
                 Assert.Equal(0, trainings[0].Index_image_id);
 
@@ -310,8 +303,8 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(1, trainings[0].Id);
                 Assert.Equal(1, trainings[0].Category_id);
                 Assert.Equal(1, trainings[0].Trainer_id);
-                Assert.Equal("Edzés 1", trainings[0].Name);
-                Assert.Equal("Rövid leírás az edzésről még sokkal hosszabb leírás fúha nagyon hosszú ki se fér, lássuk meddig megy a szöveg olvassuk tovább", trainings[0].Description);
+                Assert.Equal("Box Józsival", trainings[0].Name);
+                Assert.Equal("Szeretettel vár Józsi Edző a legnépszerűbb box edzésén! Kezdőket és haladókat is szívesen fogadunk. Nem kell más, csak egy törölköző, víz, és hatalmas lelkesedés!", trainings[0].Description);
                 Assert.Equal("+36701234567", trainings[0].Contact_phone);
                 Assert.Equal(0, trainings[0].Index_image_id);
 
@@ -335,7 +328,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(5, sessions[0].Number_of_applicants);
                 Assert.Equal("Virág utca 8.", sessions[0].Address_name);
                 Assert.Equal("Sportközpont", sessions[0].Place_name);
-                Assert.Equal("2022. 03. 10. 12:30:00", sessions[0].Date.ToString());
+                Assert.Equal("2022. 04. 10. 12:30:00", sessions[0].Date.ToString());
 
 
                 Assert.IsType<List<Applicant>>(applications);
@@ -383,8 +376,8 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(2, trainings[0].Id);
                 Assert.Equal(2, trainings[0].Category_id);
                 Assert.Equal(1, trainings[0].Trainer_id);
-                Assert.Equal("Edzés 2", trainings[0].Name);
-                Assert.Equal("Rövid leírás az edzésről", trainings[0].Description);
+                Assert.Equal("Józsi Crossfit", trainings[0].Name);
+                Assert.Equal("Gyere Crossfit edzésre Józsi edzővel, ha szeretnél fitt lenni!", trainings[0].Description);
                 Assert.Equal("+36701234567", trainings[0].Contact_phone);
                 Assert.Equal(1, trainings[0].Index_image_id);
 
@@ -439,8 +432,8 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(2, trainings[0].Id);
                 Assert.Equal(2, trainings[0].Category_id);
                 Assert.Equal(1, trainings[0].Trainer_id);
-                Assert.Equal("Edzés 2", trainings[0].Name);
-                Assert.Equal("Rövid leírás az edzésről", trainings[0].Description);
+                Assert.Equal("Józsi Crossfit", trainings[0].Name);
+                Assert.Equal("Gyere Crossfit edzésre Józsi edzővel, ha szeretnél fitt lenni!", trainings[0].Description);
                 Assert.Equal("+36701234567", trainings[0].Contact_phone);
                 Assert.Equal(1, trainings[0].Index_image_id);
 
@@ -493,8 +486,8 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(2, trainings[1].Id);
                 Assert.Equal(2, trainings[1].Category_id);
                 Assert.Equal(1, trainings[1].Trainer_id);
-                Assert.Equal("Edzés 2", trainings[1].Name);
-                Assert.Equal("Rövid leírás az edzésről", trainings[1].Description);
+                Assert.Equal("Józsi Crossfit", trainings[1].Name);
+                Assert.Equal("Gyere Crossfit edzésre Józsi edzővel, ha szeretnél fitt lenni!", trainings[1].Description);
                 Assert.Equal("+36701234567", trainings[1].Contact_phone);
                 Assert.Equal(1, trainings[1].Index_image_id);
 
@@ -543,8 +536,8 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(4, trainings[1].Id);
                 Assert.Equal(4, trainings[1].Category_id);
                 Assert.Equal(2, trainings[1].Trainer_id);
-                Assert.Equal("Edzés 4", trainings[1].Name);
-                Assert.Equal("Rövid leírás az edzésről", trainings[1].Description);
+                Assert.Equal("Kosár Bélával", trainings[1].Name);
+                Assert.Equal("Kosarazzunk együtt!", trainings[1].Description);
                 Assert.Equal("+36701234566", trainings[1].Contact_phone);
                 Assert.Equal(0, trainings[1].Index_image_id);
 
@@ -593,8 +586,8 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(5, trainings[1].Id);
                 Assert.Equal(5, trainings[1].Category_id);
                 Assert.Equal(3, trainings[1].Trainer_id);
-                Assert.Equal("Edzés 5", trainings[1].Name);
-                Assert.Equal("Rövid leírás az edzésről", trainings[1].Description);
+                Assert.Equal("Gézi Kézi", trainings[1].Name);
+                Assert.Equal("Géza Edző kézilabda edzése", trainings[1].Description);
                 Assert.Equal("+36701234565", trainings[1].Contact_phone);
                 Assert.Equal(0, trainings[1].Index_image_id);
 
@@ -643,8 +636,8 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(5, trainings[0].Id);
                 Assert.Equal(5, trainings[0].Category_id);
                 Assert.Equal(3, trainings[0].Trainer_id);
-                Assert.Equal("Edzés 5", trainings[0].Name);
-                Assert.Equal("Rövid leírás az edzésről", trainings[0].Description);
+                Assert.Equal("Gézi Kézi", trainings[0].Name);
+                Assert.Equal("Géza Edző kézilabda edzése", trainings[0].Description);
                 Assert.Equal("+36701234565", trainings[0].Contact_phone);
                 Assert.Equal(0, trainings[0].Index_image_id);
 
