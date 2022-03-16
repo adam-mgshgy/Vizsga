@@ -23,3 +23,6 @@
  #logoLink {
    width: 60px;
  }
+ .clickable {
+    cursor: pointer;
+ }

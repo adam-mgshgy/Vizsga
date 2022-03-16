@@ -60,7 +60,7 @@
             </li>
             <li *ngIf="user.role == 'Trainer'"><a class="dropdown-item" routerLink="/mytrainings/trainer">Edzéseim</a></li>
             <li><a class="dropdown-item" routerLink="/mytrainings/applied">Jelentkezéseim</a></li>
-            <li><a class=" dropdown-item" (click)="Logout()">Kijelentkezés</a></li>
+            <li><a class="dropdown-item clickable" (click)="Logout()">Kijelentkezés</a></li>
           </ul>
         </li>
       </ul>
