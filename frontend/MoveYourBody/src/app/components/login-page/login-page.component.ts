@@ -1,8 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { UserModel } from 'src/app/models/user-model';
+import { Component, OnInit} from '@angular/core';
 import { first } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UserModel } from 'src/app/models/user-model';
 
 @Component({
   selector: 'app-loginpage',
@@ -10,8 +10,6 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./login-page.component.css'],
 })
 export class LoginpageComponent implements OnInit {
-  user: UserModel;
-
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService
@@ -20,11 +18,12 @@ export class LoginpageComponent implements OnInit {
       this.router.navigate(['/']);
     }
   }
-
-  ngOnInit(): void {}
+  user: UserModel;
   public email = '';
   public password = '';
   errorMessage = '';
+
+  ngOnInit(): void {}
 
   Login() {
     if (this.email == '') {

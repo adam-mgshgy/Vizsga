@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryModel } from 'src/app/models/category-model';
-import { TagModel } from 'src/app/models/tag-model';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { TagService } from 'src/app/services/tag.service';
+import { CategoryModel } from 'src/app/models/category-model';
+import { TagModel } from 'src/app/models/tag-model';
 
 @Component({
   selector: 'app-admin-page',
@@ -10,15 +10,18 @@ import { TagService } from 'src/app/services/tag.service';
   styleUrls: ['./admin-page.component.css'],
 })
 export class AdminPageComponent implements OnInit {
-  mobile: boolean = false;
-  errorMessage = '';
-
-  newTag: TagModel = new TagModel();
-  newCategory: CategoryModel = new CategoryModel();
   constructor(
     private tagService: TagService,
     private categoriesService: CategoriesService
   ) {}
+
+  mobile: boolean = false;
+  errorMessage = '';
+  newTag: TagModel = new TagModel();
+  newCategory: CategoryModel = new CategoryModel();
+  cardImageBase64: string;
+  isImageSaved: boolean;
+  image: string[] = [];
 
   ngOnInit(): void {
     if (window.innerWidth <= 800) {
@@ -26,9 +29,7 @@ export class AdminPageComponent implements OnInit {
     }
     window.onresize = () => (this.mobile = window.innerWidth <= 991);
   }
-  cardImageBase64: string;
-  isImageSaved: boolean;
-  image: string[] = [];
+ 
   fileChangeEvent(fileInput: any) {
     if (fileInput.target.files && fileInput.target.files[0]) {
       const reader = new FileReader();
@@ -40,10 +41,6 @@ export class AdminPageComponent implements OnInit {
       };
       reader.readAsDataURL(fileInput.target.files[0]);
     }
-  }
-  deleteImage() {
-    this.image = [];
-    this.isImageSaved = false;
   }
   CancelTag() {
     this.newTag = new TagModel();
@@ -71,5 +68,9 @@ export class AdminPageComponent implements OnInit {
 
       }
     );
+  }
+  deleteImage() {
+    this.image = [];
+    this.isImageSaved = false;
   }
 }

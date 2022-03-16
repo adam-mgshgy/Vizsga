@@ -12,8 +12,6 @@ export class TagTrainingService {
 
   constructor(private http: HttpClient) { }
 
- //TODO modify
-
   newTagTraining(model: TagTrainingModel): Observable<TagTrainingModel> {
     return this.http.put<TagTrainingModel>(`${environment.ApiURL}/tagTraining`, model).pipe(
       map((data: TagTrainingModel) => {

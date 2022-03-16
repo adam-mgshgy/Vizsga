@@ -4,7 +4,6 @@ import { Observable, of } from 'rxjs';
 import { CategoryModel } from '../models/category-model';
 import { environment } from 'src/environments/environment';
 import { catchError, map } from 'rxjs/operators';
-import { ImagesModel } from '../models/images-model';
 
 @Injectable({
   providedIn: 'root',

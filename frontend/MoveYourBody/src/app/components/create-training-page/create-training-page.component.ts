@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { CategoriesService } from 'src/app/services/categories.service';
+import { TrainingService } from 'src/app/services/training.service';
+import { TagTrainingService } from 'src/app/services/tag-training.service';
+import { TagService } from 'src/app/services/tag.service';
 import { CategoryModel } from 'src/app/models/category-model';
 import { TagModel } from 'src/app/models/tag-model';
 import { TagTrainingModel } from 'src/app/models/tag-training-model';
 import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
-import { CategoriesService } from 'src/app/services/categories.service';
-import { TagTrainingService } from 'src/app/services/tag-training.service';
-import { TagService } from 'src/app/services/tag.service';
-import { TrainingService } from 'src/app/services/training.service';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { TrainingImageModel } from 'src/app/models/training-images-model';
 import { ImagesModel } from 'src/app/models/images-model';
 
@@ -19,33 +19,6 @@ import { ImagesModel } from 'src/app/models/images-model';
   styleUrls: ['./create-training-page.component.css'],
 })
 export class CreateTrainingPageComponent implements OnInit {
-  id: string | null = null;
-  isChecked = false;
-
-  selectedCat = '';
-  otherPhoneNumber = false;
-  otherPhoneNumberInput: string;
-
-  create = true;
-
-  mobile: boolean = false;
-
-  errorMessage = '';
-
-  user: UserModel;
-
-  categories: CategoryModel[] = [];
-  tags: TagModel[] = [];
-  training: TrainingModel = new TrainingModel();
-  myTrainings: TrainingModel[] = [];
-
-  trainingImages: TrainingImageModel[] = [];
-  Images: ImagesModel[] = [];
-
-  selectedTag: number[] = []; //Adatbázisban lévő edzéshez mentett tagek
-  selectedNewTag: number[] = []; //újonnan mentésre váró tagek id-ja
-  deleteTag: number[] = []; //Adatbázisban lévő edzéshez mentett tagek törlése (id-val)
-
   constructor(
     private route: ActivatedRoute,
     private categoryService: CategoriesService,
@@ -57,6 +30,32 @@ export class CreateTrainingPageComponent implements OnInit {
   ) {
     this.authenticationService.currentUser.subscribe((x) => (this.user = x));
   }
+
+  id: string | null = null;
+  isChecked = false;
+  selectedCat = '';
+  otherPhoneNumber = false;
+  otherPhoneNumberInput: string;
+  create = true;
+  mobile: boolean = false;
+  errorMessage = '';
+  user: UserModel;
+  categories: CategoryModel[] = [];
+  tags: TagModel[] = [];
+  training: TrainingModel = new TrainingModel();
+  myTrainings: TrainingModel[] = [];
+  trainingImages: TrainingImageModel[] = [];
+  Images: ImagesModel[] = [];
+  selectedTag: number[] = []; 
+  selectedNewTag: number[] = []; 
+  deleteTag: number[] = []; 
+  images: string[] = [];
+  imageError: string;
+  isImageSaved: boolean;
+  cardImageBase64: string;
+  selectNewIndex: number[] = [];
+  selectIndex: number[] = [];
+  delete: string[] = [];
 
   ngOnInit(): void {
     if (window.innerWidth <= 800) {
@@ -131,11 +130,7 @@ export class CreateTrainingPageComponent implements OnInit {
       (error) => console.log(error)
     );
   }
-
-  images: string[] = [];
-  imageError: string;
-  isImageSaved: boolean;
-  cardImageBase64: string;
+ 
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
@@ -165,13 +160,7 @@ export class CreateTrainingPageComponent implements OnInit {
       );
     }
   }
-
-  selectNewIndex: number[] = [];
-  selectIndex: number[] = [];
-
-  delete: string[] = [];
   selectedNewImage(i: number) {
-    //Új képek kiválasztása
     if (this.selectNewIndex.includes(i)) {
       this.selectNewIndex.splice(this.selectNewIndex.indexOf(i), 1);
     } else {
@@ -179,42 +168,82 @@ export class CreateTrainingPageComponent implements OnInit {
     }
   }
   selectedImage(i: number) {
-    //Adatbazisbol betoltott képek kiválasztása
     if (this.selectIndex.includes(i)) {
       this.selectIndex.splice(this.selectIndex.indexOf(i), 1);
     } else {
       this.selectIndex.push(i);
     }
   }
-  deleteImage() {
-    for (const index of this.selectNewIndex) {
-      this.images.splice(index, 1);
-      this.selectNewIndex.splice(this.selectNewIndex.indexOf(index), 1);
+  phone() {
+    this.otherPhoneNumber = false;
+  }
+  otherPhone() {
+    this.otherPhoneNumber = true;
+  }
+  selectCategory(value) {
+    for (const item of this.categories) {
+      if (item.name == value) {
+        this.training.category_id = item.id;
+        this.selectedCat = item.name;
+      } else if (value == '') {
+        this.training.category_id = null;
+      } else if (value == item.id) {
+        this.selectedCat = item.name;
+      }
     }
-
-    this.trainingService.deleteImage(this.selectIndex).subscribe(
-      (result) => {
-        this.selectIndex = [];
-        this.trainingService.getById(this.training.id).subscribe(
-          (result) => {
-            this.training = result;
-          },
-          (error) => console.log(error)
-        );
-        this.trainingService.getImageById(this.training.id).subscribe(
-          (result) => {
-            this.trainingImages = result.trainingImages;
-            this.Images = result.images;
-          },
-          (error) => console.log(error)
-        );
-      },
-      (error) => console.log(error)
-    );
-
-    if (this.images.length < 1) {
-      this.cardImageBase64 = null;
-      this.isImageSaved = false;
+  }
+  onTagChange(value) {
+    if (this.selectedNewTag.includes(value.id)) {
+      this.selectedNewTag.splice(this.selectedNewTag.indexOf(value.id), 1);
+    } else if (this.selectedTag.includes(value.id)) {
+      this.selectedTag.splice(this.selectedTag.indexOf(value.id), 1);
+      this.deleteTag.push(value.id);
+    } else if (this.deleteTag.includes(value.id)) {
+      this.deleteTag.splice(this.deleteTag.indexOf(value.id), 1);
+      this.selectedTag.push(value.id);
+    } else {
+      this.selectedNewTag.push(value.id);
+    }
+    console.log(this.deleteTag);
+  }
+  checkTags(value) {
+    for (const item of this.selectedTag) {
+      if (value == item) {
+        return true;
+      }
+    }
+    return false;
+  }
+  errorCheck(): boolean {
+    if (this.training.name == '') {
+      this.errorMessage = 'Kérem adja meg az edzés nevét!';
+      return false;
+    }
+    if (this.training.category_id == null) {
+      this.errorMessage = 'Kérem adja meg az edzéshez tartozó kategóriát!';
+      return false;
+    }
+    if (this.training.description == '') {
+      this.errorMessage =
+        'Kérem adjon meg az edzéshez egy rövid tájékoztató leírást!';
+      return false;
+    }
+    if (this.otherPhoneNumber == true && this.otherPhoneNumberInput == null) {
+      this.errorMessage = 'Kérem adja meg a használni kívánt telefonszámot!';
+      return false;
+    }
+    return true;
+  }
+  saveTags() {
+    let tagtraining = new TagTrainingModel();
+    tagtraining.training_id = this.training.id;
+    tagtraining.id = 0;
+    for (const item of this.selectedNewTag) {
+      tagtraining.tag_id = item;
+      this.tagTrainingService.newTagTraining(tagtraining).subscribe(
+        (result) => {},
+        (error) => console.log(error)
+      );
     }
   }
   save() {
@@ -259,7 +288,7 @@ export class CreateTrainingPageComponent implements OnInit {
               }
 
               this.training.id = result.id;
-              //
+              
               if (this.selectedNewTag) {
                 this.saveTags();
               }
@@ -285,7 +314,6 @@ export class CreateTrainingPageComponent implements OnInit {
           },
           (error) => console.log(error)
         );
-        //TAGTRAINING
 
         if (this.selectedNewTag) {
           this.saveTags();
@@ -296,16 +324,35 @@ export class CreateTrainingPageComponent implements OnInit {
       }
     }
   }
-  saveTags() {
-    let tagtraining = new TagTrainingModel();
-    tagtraining.training_id = this.training.id;
-    tagtraining.id = 0;
-    for (const item of this.selectedNewTag) {
-      tagtraining.tag_id = item;
-      this.tagTrainingService.newTagTraining(tagtraining).subscribe(
-        (result) => {},
-        (error) => console.log(error)
-      );
+  deleteImage() {
+    for (const index of this.selectNewIndex) {
+      this.images.splice(index, 1);
+      this.selectNewIndex.splice(this.selectNewIndex.indexOf(index), 1);
+    }
+
+    this.trainingService.deleteImage(this.selectIndex).subscribe(
+      (result) => {
+        this.selectIndex = [];
+        this.trainingService.getById(this.training.id).subscribe(
+          (result) => {
+            this.training = result;
+          },
+          (error) => console.log(error)
+        );
+        this.trainingService.getImageById(this.training.id).subscribe(
+          (result) => {
+            this.trainingImages = result.trainingImages;
+            this.Images = result.images;
+          },
+          (error) => console.log(error)
+        );
+      },
+      (error) => console.log(error)
+    );
+
+    if (this.images.length < 1) {
+      this.cardImageBase64 = null;
+      this.isImageSaved = false;
     }
   }
   deleteTags() {
@@ -319,67 +366,5 @@ export class CreateTrainingPageComponent implements OnInit {
         (error) => console.log(error)
       );
     }
-  }
-
-  errorCheck(): boolean {
-    if (this.training.name == '') {
-      this.errorMessage = 'Kérem adja meg az edzés nevét!';
-      return false;
-    }
-    if (this.training.category_id == null) {
-      this.errorMessage = 'Kérem adja meg az edzéshez tartozó kategóriát!';
-      return false;
-    }
-    if (this.training.description == '') {
-      this.errorMessage =
-        'Kérem adjon meg az edzéshez egy rövid tájékoztató leírást!';
-      return false;
-    }
-    if (this.otherPhoneNumber == true && this.otherPhoneNumberInput == null) {
-      this.errorMessage = 'Kérem adja meg a használni kívánt telefonszámot!';
-      return false;
-    }
-    return true;
-  }
-  phone() {
-    this.otherPhoneNumber = false;
-  }
-  otherPhone() {
-    this.otherPhoneNumber = true;
-  }
-  selectCategory(value) {
-    for (const item of this.categories) {
-      if (item.name == value) {
-        this.training.category_id = item.id;
-        this.selectedCat = item.name;
-      } else if (value == '') {
-        this.training.category_id = null;
-      } else if (value == item.id) {
-        this.selectedCat = item.name;
-      }
-    }
-  }
-  checkTags(value) {
-    for (const item of this.selectedTag) {
-      if (value == item) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  onTagChange(value) {
-    if (this.selectedNewTag.includes(value.id)) {
-      this.selectedNewTag.splice(this.selectedNewTag.indexOf(value.id), 1);
-    } else if (this.selectedTag.includes(value.id)) {
-      this.selectedTag.splice(this.selectedTag.indexOf(value.id), 1);
-      this.deleteTag.push(value.id);
-    } else if (this.deleteTag.includes(value.id)) {
-      this.deleteTag.splice(this.deleteTag.indexOf(value.id), 1);
-      this.selectedTag.push(value.id);
-    } else {
-      this.selectedNewTag.push(value.id);
-    }
-    console.log(this.deleteTag);
   }
 }
