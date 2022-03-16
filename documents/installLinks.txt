@@ -1,3 +1,0 @@
-npm i -g @angular/cli
-ng add @angular/material
-ng add @ng-bootstrap/ng-bootstrap
