@@ -28,8 +28,7 @@ export class MyTrainingsPageComponent implements OnInit {
     private tagService: TagService,
     private authenticationService: AuthenticationService,
     private userService: UserService,
-    private route: ActivatedRoute,
-
+    private route: ActivatedRoute
   ) {
     this.authenticationService.currentUser.subscribe((x) => (this.user = x));
   }
@@ -37,7 +36,7 @@ export class MyTrainingsPageComponent implements OnInit {
   category: string | null = null;
   defaultProfile = './assets/images/defaultImages/defaultProfilePicture.png';
   defaultTraining = './assets/images/mainPageImages/logo.png';
-  
+
   mobile: boolean = false;
   counter = 0;
   mode = '';
@@ -52,74 +51,78 @@ export class MyTrainingsPageComponent implements OnInit {
   profileImages: ImagesModel[] = [];
   indexImages: ImagesModel[] = [];
   currentDate = new Date();
+
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.mode = params.get('mode');
-    if (this.mode == 'trainer') {
-      this.trainingService.getByTrainerId(this.user.id).subscribe(
-        (result) => {
-          this.myTrainings = result.trainings;
-          this.userService.getUserById(this.user.id).subscribe(
-            (result) => {
-              this.user = result;
-              this.userService.getImageById(this.user.imageId).subscribe(
-                (result) => {
-                  this.profileImages.push(result);
-                },
-                (error) => console.log(error)
-              );                            
-              for (const training of this.myTrainings) {                
-                this.trainingService.getImageById(training.id).subscribe(
+      if (this.mode == 'trainer') {
+        this.trainingService.getByTrainerId(this.user.id).subscribe(
+          (result) => {
+            this.myTrainings = result.trainings;
+            this.userService.getUserById(this.user.id).subscribe(
+              (result) => {
+                this.user = result;
+                this.userService.getImageById(this.user.image_id).subscribe(
                   (result) => {
-                    for (const item of result.images) {
-                      if (item.id == training.indexImageId) {
-                        this.indexImages.push(item);
-                      }
-                    }
+                    this.profileImages.push(result);
                   },
                   (error) => console.log(error)
                 );
-              }
-            },
-            (error) => console.log(error)
-          );
-          this.tagTraining = result.tagTrainings;
-        },
-        (error) => console.log(error)
-      );
-    } else if (this.mode == 'applied') {
-      this.trainingService.getByUserId(this.user.id).subscribe(
-        (result) => {
-          this.trainers = result.trainers;
-          for (const item of this.trainers) {
-            this.userService.getImageById(item.imageId).subscribe(
-              (result) => {
-                if (result != null) {
-                  this.profileImages.push(result);
+                for (const training of this.myTrainings) {
+                  this.trainingService.getImageById(training.id).subscribe(
+                    (result) => {
+                      for (const item of result.images) {
+                        if (item.id == training.index_image_id) {
+                          this.indexImages.push(item);
+                        }
+                      }
+                    },
+                    (error) => console.log(error)
+                  );
                 }
               },
               (error) => console.log(error)
             );
-          }
-          this.myTrainings = result.trainings;
-          for (const training of this.myTrainings) {                
-            this.trainingService.getImageById(training.id).subscribe(
-              (result) => {
-                for (const item of result.images) {
-                  if (item.id == training.indexImageId) {
-                    this.indexImages.push(item);
+            this.tagTraining = result.tagTrainings;
+          },
+          (error) => console.log(error)
+        );
+      } else if (this.mode == 'applied') {
+        this.trainingService.getByUserId(this.user.id).subscribe(
+          (result) => {
+            this.trainers = result.trainers;
+            for (const item of this.trainers) {
+              this.userService.getImageById(item.image_id).subscribe(
+                (result) => {
+                  if (result != null) {
+                    this.profileImages.push(result);
                   }
-                }
-              },
-              (error) => console.log(error)
+                },
+                (error) => console.log(error)
+              );
+            }
+            this.myTrainings = result.trainings;
+            for (const training of this.myTrainings) {
+              this.trainingService.getImageById(training.id).subscribe(
+                (result) => {
+                  for (const item of result.images) {
+                    if (item.id == training.index_image_id) {
+                      this.indexImages.push(item);
+                    }
+                  }
+                },
+                (error) => console.log(error)
+              );
+            }
+            this.tagTraining.push.apply(
+              this.tagTraining,
+              result.tagTrainingList
             );
-          }
-          this.tagTraining.push.apply(this.tagTraining, result.tagTrainingList);
-        },
-        (error) => console.log(error)
-      );
-    }
-  });
+          },
+          (error) => console.log(error)
+        );
+      }
+    });
     if (window.innerWidth <= 991) {
       this.mobile = true;
     }
@@ -183,7 +186,7 @@ export class MyTrainingsPageComponent implements OnInit {
   }
   open(content: any, trainingId: number) {
     if (this.mode == 'trainer') {
-      this.trainingSessionService.listByTrainingId(trainingId).subscribe(
+      this.trainingSessionService.listBytraining_id(training_id).subscribe(
         (result) => {
           this.sessions = result.sessions;
           this.currentTraining = result.training;
@@ -191,9 +194,9 @@ export class MyTrainingsPageComponent implements OnInit {
         },
         (error) => console.log(error)
       );
-    } else if (this.mode == 'applied'){
+    } else if (this.mode == 'applied') {
       this.trainingSessionService
-        .ListAppliedSessions(trainingId, this.user.id)
+        .ListAppliedSessions(training_id, this.user.id)
         .subscribe(
           (result) => {
             this.sessions = result.sessions;

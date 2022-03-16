@@ -14,31 +14,90 @@ import { TrainingsPageComponent } from './components/trainings-page/trainings-pa
 import { AuthGuard } from './JWT/auth-guard.service';
 
 const routes: Routes = [
-  {path: '', redirectTo:'home', pathMatch: 'full'},
-  {path: 'home', component: MainpageComponent},
-  {path: 'login', component: LoginpageComponent},
-  {path: 'categories', component: CategoriesPageComponent, canActivate:[AuthGuard]},
-  {path: 'register', component: RegistryPageComponent},
-  {path: 'profile', component: ProfileSettingsComponent, canActivate:[AuthGuard]},
-  {path: 'createtraining', component: CreateTrainingPageComponent, canActivate:[AuthGuard]},
-  {path: 'createtraining/:id', component: CreateTrainingPageComponent, canActivate:[AuthGuard]},
-  {path: 'addsession', component: AddSessionPageComponent, canActivate:[AuthGuard]},
-  {path: 'addsession/:trainingId/:sessionId', component: AddSessionPageComponent, canActivate:[AuthGuard]},
-  {path: 'training/:id', component: TrainingPageComponent, canActivate:[AuthGuard]},
-  {path: 'mytrainings/:mode', component: MyTrainingsPageComponent, canActivate:[AuthGuard]},
-  {path: 'admin', component: AdminPageComponent, canActivate:[AuthGuard]},
-  {path: 'trainings', component: TrainingsPageComponent, canActivate:[AuthGuard]},
-  {path: 'trainings/category/:category', component: TrainingsPageComponent, canActivate:[AuthGuard]},
-  {path: 'trainings/tag/:tag', component: TrainingsPageComponent, canActivate:[AuthGuard]},
-  {path: 'trainings/trainer/:trainer', component: TrainingsPageComponent, canActivate:[AuthGuard]},
-  {path: 'trainings/name/:name', component: TrainingsPageComponent, canActivate:[AuthGuard]},
-  {path: 'trainings/county/:county', component: TrainingsPageComponent, canActivate:[AuthGuard]},
-  {path: 'trainings/city/:city', component: TrainingsPageComponent, canActivate:[AuthGuard]}
-
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: MainpageComponent },
+  { path: 'login', component: LoginpageComponent },
+  {
+    path: 'categories',
+    component: CategoriesPageComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'register', component: RegistryPageComponent },
+  {
+    path: 'profile',
+    component: ProfileSettingsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'createtraining',
+    component: CreateTrainingPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'createtraining/:id',
+    component: CreateTrainingPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'addsession',
+    component: AddSessionPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'addsession/:training_id/:sessionId',
+    component: AddSessionPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'training/:id',
+    component: TrainingPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'mytrainings/:mode',
+    component: MyTrainingsPageComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'admin', component: AdminPageComponent, canActivate: [AuthGuard] },
+  {
+    path: 'trainings',
+    component: TrainingsPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'trainings/category/:category',
+    component: TrainingsPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'trainings/tag/:tag',
+    component: TrainingsPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'trainings/trainer/:trainer',
+    component: TrainingsPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'trainings/name/:name',
+    component: TrainingsPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'trainings/county/:county',
+    component: TrainingsPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'trainings/city/:city',
+    component: TrainingsPageComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

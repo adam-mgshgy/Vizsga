@@ -78,9 +78,11 @@ export class TrainingSessionService {
         })
       );
   }
-  listByTrainingId(trainingId: any): Observable<any> {
+  listBytraining_id(training_id: any): Observable<any> {
     return this.http
-      .get<any>(`${environment.ApiURL}/sessions/list?trainingId=${trainingId}`)
+      .get<any>(
+        `${environment.ApiURL}/sessions/list?training_id=${training_id}`
+      )
       .pipe(
         map((data) => {
           return data;
@@ -92,10 +94,10 @@ export class TrainingSessionService {
         })
       );
   }
-  ListAppliedSessions(trainingId: any, userId: any): Observable<any> {
+  ListAppliedSessions(training_id: any, userId: any): Observable<any> {
     return this.http
       .get<any>(
-        `${environment.ApiURL}/sessions/applied?trainingId=${trainingId}&userId=${userId}`
+        `${environment.ApiURL}/sessions/applied?training_id=${training_id}&userId=${userId}`
       )
       .pipe(
         map((data) => {
@@ -110,9 +112,7 @@ export class TrainingSessionService {
   }
   getById(sessionId: number): Observable<any> {
     return this.http
-      .get<any>(
-        `${environment.ApiURL}/sessions/get?sessionId=${sessionId}`
-      )
+      .get<any>(`${environment.ApiURL}/sessions/get?sessionId=${sessionId}`)
       .pipe(
         map((data: any) => {
           return data;

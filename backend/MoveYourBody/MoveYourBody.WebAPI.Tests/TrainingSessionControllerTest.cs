@@ -48,7 +48,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Training training = value.GetPropertyValue<Training>("training");
                 Assert.IsType<Training>(training);
 
-                Images image = value.GetPropertyValue<Images>("image");
+                Image image = value.GetPropertyValue<Image>("image");
                 Assert.Null(image);
 
                 Category category = value.GetPropertyValue<Category>("category");
@@ -74,14 +74,14 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(3, training.Id);
                 Assert.Equal(3, training.Category_id);
                 Assert.Equal(2, training.Trainer_id);
-                Assert.Equal(0, training.IndexImageId);
+                Assert.Equal(0, training.Index_image_id);
                 Assert.Equal("Edzés 3", training.Name);
                 Assert.Equal("Rövid leírás az edzésrõl", training.Description);
                 Assert.Equal("+36701234566", training.Contact_phone);
 
                 Assert.Equal(3, category.Id);
                 Assert.Equal("Labdarúgás", category.Name);
-                Assert.Equal(3, category.ImageId);
+                Assert.Equal(3, category.Image_id);
 
                 Assert.Equal(1, tags[0].Id);
                 Assert.Equal(5, tags[1].Id);
@@ -129,7 +129,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(3, training.Id);
                 Assert.Equal(3, training.Category_id);
                 Assert.Equal(2, training.Trainer_id);
-                Assert.Equal(0, training.IndexImageId);
+                Assert.Equal(0, training.Index_image_id);
                 Assert.Equal("Edzés 3", training.Name);
                 Assert.Equal("Rövid leírás az edzésrõl", training.Description);
                 Assert.Equal("+36701234566", training.Contact_phone);
@@ -172,7 +172,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(3, training.Id);
                 Assert.Equal(3, training.Category_id);
                 Assert.Equal(2, training.Trainer_id);
-                Assert.Equal(0, training.IndexImageId);
+                Assert.Equal(0, training.Index_image_id);
                 Assert.Equal("Edzés 3", training.Name);
                 Assert.Equal("Rövid leírás az edzésrõl", training.Description);
                 Assert.Equal("+36701234566", training.Contact_phone);

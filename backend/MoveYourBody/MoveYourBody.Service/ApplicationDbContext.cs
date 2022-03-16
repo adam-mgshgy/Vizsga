@@ -16,8 +16,8 @@ namespace MoveYourBody.Service
         public DbSet<User> User { get; set; }
         public DbSet<Location> Location { get; set; }
         public DbSet<Training> Training { get; set; }
-        public DbSet<TrainingImages> TrainingImages { get; set; }
-        public DbSet<Images> Images { get; set; }
+        public DbSet<TrainingImage> TrainingImage{ get; set; }
+        public DbSet<Image> Images { get; set; }
 
         public DbSet<TrainingSession> TrainingSession { get; set; }
         public DbSet<TagTraining> TagTraining { get; set; }
@@ -45,18 +45,18 @@ namespace MoveYourBody.Service
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(
-                new Category() { Id = 1, Name = "Box", ImageId = 1 },
-                new Category() { Id = 2, Name = "Crossfit", ImageId = 2 },
-                new Category() { Id = 3, Name = "Labdarúgás", ImageId = 3 },
-                new Category() { Id = 4, Name = "Kosárlabda", ImageId = 4 },
-                new Category() { Id = 5, Name = "Kézilabda", ImageId = 5 },
-                new Category() { Id = 6, Name = "Röplabda", ImageId = 6 },
-                new Category() { Id = 7, Name = "Spartan", ImageId = 7 },
-                new Category() { Id = 8, Name = "Tenisz", ImageId = 8 },
-                new Category() { Id = 9, Name = "TRX", ImageId = 9 },
-                new Category() { Id = 10, Name = "Úszás", ImageId = 10 },
-                new Category() { Id = 11, Name = "Lovaglás", ImageId = 11 },
-                new Category() { Id = 12, Name = "Jóga", ImageId = 12 }
+                new Category() { Id = 1, Name = "Box", Image_id = 1 },
+                new Category() { Id = 2, Name = "Crossfit", Image_id = 2 },
+                new Category() { Id = 3, Name = "Labdarúgás", Image_id = 3 },
+                new Category() { Id = 4, Name = "Kosárlabda", Image_id = 4 },
+                new Category() { Id = 5, Name = "Kézilabda", Image_id = 5 },
+                new Category() { Id = 6, Name = "Röplabda", Image_id = 6 },
+                new Category() { Id = 7, Name = "Spartan", Image_id = 7 },
+                new Category() { Id = 8, Name = "Tenisz", Image_id = 8 },
+                new Category() { Id = 9, Name = "TRX", Image_id = 9 },
+                new Category() { Id = 10, Name = "Úszás", Image_id = 10 },
+                new Category() { Id = 11, Name = "Lovaglás", Image_id = 11 },
+                new Category() { Id = 12, Name = "Jóga", Image_id = 12 }
 
                 );
             
@@ -88,7 +88,7 @@ namespace MoveYourBody.Service
                 );
             modelBuilder.Entity<Training>().HasData(
                 new Training() { Id = 1, Category_id = 1, Contact_phone = "+36701234567", Description = "Rövid leírás az edzésről még sokkal hosszabb leírás fúha nagyon hosszú ki se fér, lássuk meddig megy a szöveg olvassuk tovább", Name = "Edzés 1", Trainer_id = 1 },
-                new Training() { Id = 2, Category_id = 2, Contact_phone = "+36701234567", Description = "Rövid leírás az edzésről", Name = "Edzés 2", Trainer_id = 1, IndexImageId = 1 },
+                new Training() { Id = 2, Category_id = 2, Contact_phone = "+36701234567", Description = "Rövid leírás az edzésről", Name = "Edzés 2", Trainer_id = 1, Index_image_id = 1 },
                 new Training() { Id = 3, Category_id = 3, Contact_phone = "+36701234566", Description = "Rövid leírás az edzésről", Name = "Edzés 3", Trainer_id = 2 },
                 new Training() { Id = 4, Category_id = 4, Contact_phone = "+36701234566", Description = "Rövid leírás az edzésről", Name = "Edzés 4", Trainer_id = 2 },
                 new Training() { Id = 5, Category_id = 5, Contact_phone = "+36701234565", Description = "Rövid leírás az edzésről", Name = "Edzés 5", Trainer_id = 3 },
@@ -144,33 +144,33 @@ namespace MoveYourBody.Service
                 new TagTraining() { Id = 14, Tag_id = 9, Training_id = 3 }
                 );
 
-            modelBuilder.Entity<TrainingImages>().HasData(
-                new TrainingImages() { Id = 1, ImageId = 13, TrainingId = 2}
+            modelBuilder.Entity<TrainingImage>().HasData(
+                new TrainingImage() { Id = 1, Image_id = 13, Training_id = 2}
                 );
 
 
             string data = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==";
-            byte[] imageData = Convert.FromBase64String(data);
+            byte[] image_data = Convert.FromBase64String(data);
            
 
             var JSON = File.ReadAllText("CategoryImages/CategoryImages.json");
             JObject dynJson = JsonConvert.DeserializeObject(JSON) as JObject;
             
-            modelBuilder.Entity<Images>().HasData(
-                new Images() { Id = 1, ImageData = Convert.FromBase64String(dynJson["imageData"]["box"].ToString()) },
-                new Images() { Id = 2, ImageData = Convert.FromBase64String(dynJson["imageData"]["crossfit"].ToString()) },
-                new Images() { Id = 3, ImageData = Convert.FromBase64String(dynJson["imageData"]["football"].ToString()) },
-                new Images() { Id = 4, ImageData = Convert.FromBase64String(dynJson["imageData"]["basketball"].ToString()) },
-                new Images() { Id = 5, ImageData = Convert.FromBase64String(dynJson["imageData"]["handball"].ToString()) },
-                new Images() { Id = 6, ImageData = Convert.FromBase64String(dynJson["imageData"]["volleyball"].ToString()) },
-                new Images() { Id = 7, ImageData = Convert.FromBase64String(dynJson["imageData"]["spartan"].ToString()) },
-                new Images() { Id = 8, ImageData = Convert.FromBase64String(dynJson["imageData"]["tennis"].ToString()) },
-                new Images() { Id = 9, ImageData = Convert.FromBase64String(dynJson["imageData"]["trx"].ToString()) },
-                new Images() { Id = 10, ImageData = Convert.FromBase64String(dynJson["imageData"]["swimming"].ToString()) },
-                new Images() { Id = 11, ImageData = Convert.FromBase64String(dynJson["imageData"]["riding"].ToString()) },
-                new Images() { Id = 12, ImageData = Convert.FromBase64String(dynJson["imageData"]["yoga"].ToString()) },
+            modelBuilder.Entity<Image>().HasData(
+                new Image() { Id = 1, Image_data = Convert.FromBase64String(dynJson["image_data"]["box"].ToString()) },
+                new Image() { Id = 2, Image_data = Convert.FromBase64String(dynJson["image_data"]["crossfit"].ToString()) },
+                new Image() { Id = 3, Image_data = Convert.FromBase64String(dynJson["image_data"]["football"].ToString()) },
+                new Image() { Id = 4, Image_data = Convert.FromBase64String(dynJson["image_data"]["basketball"].ToString()) },
+                new Image() { Id = 5, Image_data = Convert.FromBase64String(dynJson["image_data"]["handball"].ToString()) },
+                new Image() { Id = 6, Image_data = Convert.FromBase64String(dynJson["image_data"]["volleyball"].ToString()) },
+                new Image() { Id = 7, Image_data = Convert.FromBase64String(dynJson["image_data"]["spartan"].ToString()) },
+                new Image() { Id = 8, Image_data = Convert.FromBase64String(dynJson["image_data"]["tennis"].ToString()) },
+                new Image() { Id = 9, Image_data = Convert.FromBase64String(dynJson["image_data"]["trx"].ToString()) },
+                new Image() { Id = 10, Image_data = Convert.FromBase64String(dynJson["image_data"]["swimming"].ToString()) },
+                new Image() { Id = 11, Image_data = Convert.FromBase64String(dynJson["image_data"]["riding"].ToString()) },
+                new Image() { Id = 12, Image_data = Convert.FromBase64String(dynJson["image_data"]["yoga"].ToString()) },
 
-                new Images() { Id = 13, ImageData = imageData }
+                new Image() { Id = 13, Image_data = image_data }
             );
 
             if (isMigration)

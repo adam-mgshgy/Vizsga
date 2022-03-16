@@ -76,7 +76,6 @@ export class RegistryPageComponent implements OnInit {
       }
     }
   }
-  
   Cancel() {
     this.newUser = new UserModel();
     this.selectedCounty = '';

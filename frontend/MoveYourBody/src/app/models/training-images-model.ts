@@ -1,5 +1,5 @@
-export class TrainingImagesModel{
-    public id: number | null = null;
-    public imageId: number | null = null;
-    public trainingId: number | null = null;
+export class TrainingImageModel {
+  public id: number | null = null;
+  public image_id: number | null = null;
+  public training_id: number | null = null;
 }

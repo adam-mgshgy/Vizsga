@@ -41,7 +41,7 @@ export class AuthGuard implements CanActivate {
           return this.authService.hasRole('Trainer');
         case 'addsession':
           return this.authService.hasRole('Trainer');
-        case 'addsession/:trainingId/:sessionId':
+        case 'addsession/:training_id/:sessionId':
           return this.authService.hasRole('Trainer');
         case 'training/:id':
           return (
