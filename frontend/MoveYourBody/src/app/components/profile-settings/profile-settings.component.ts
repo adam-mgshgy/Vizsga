@@ -13,11 +13,6 @@ import { ImagesModel } from 'src/app/models/images-model';
   styleUrls: ['./profile-settings.component.css'],
 })
 export class ProfileSettingsComponent implements OnInit {
-  errorMessage = '';
-  password2 = '';
-  user: UserModel;
-  userModify: UserModel;
-
   constructor(
     private locationService: LocationService,
     private userService: UserService,
@@ -26,7 +21,10 @@ export class ProfileSettingsComponent implements OnInit {
   ) {
     this.authenticationService.currentUser.subscribe((x) => (this.user = x));
   }
-
+  errorMessage = '';
+  password2 = '';
+  user: UserModel;
+  userModify: UserModel;
   locations: LocationModel[] = [];
   counties: LocationModel[] = [];
   cities: LocationModel[] = [];

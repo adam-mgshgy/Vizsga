@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LocationModel } from 'src/app/models/location-model';
-import { UserModel } from 'src/app/models/user-model';
+import { Router } from '@angular/router';
 import { LocationService } from 'src/app/services/location.service';
 import { UserService } from 'src/app/services/user.service';
-import { Router } from '@angular/router';
+import { LocationModel } from 'src/app/models/location-model';
+import { UserModel } from 'src/app/models/user-model';
 
 @Component({
   selector: 'app-registry-page',
@@ -11,6 +11,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./registry-page.component.css'],
 })
 export class RegistryPageComponent implements OnInit {
+  constructor(
+    private locationService: LocationService,
+    private userService: UserService,
+    private router: Router
+  ) {}
   mobile: boolean = false;
   locations: LocationModel[] = [];
   counties: LocationModel[] = [];
@@ -21,12 +26,20 @@ export class RegistryPageComponent implements OnInit {
   errorMessage = '';
   password2 = '';
 
-  constructor(
-    private locationService: LocationService,
-    private userService: UserService,
-    private router: Router
-  ) {}
-
+  ngOnInit(): void {
+    if (window.innerWidth <= 800) {
+      this.mobile = true;
+    }
+    window.onresize = () => (this.mobile = window.innerWidth <= 991);
+    this.locationService.getLocations().subscribe(
+      (result) => (this.locations = result),
+      (error) => console.log(error)
+    );
+    this.locationService.getCounties().subscribe(
+      (result) => (this.counties = result),
+      (error) => console.log(error)
+    );
+  }
   TrainerChecked(event: any) {
     if (event.target.checked) {
       this.newUser.role = 'Trainer';
@@ -63,52 +76,13 @@ export class RegistryPageComponent implements OnInit {
       }
     }
   }
-  Register() {
-    if (!this.newUser.role) this.newUser.role = 'User';
-    if (this.errorCheck()) {
-      this.userService.emailExists(this.newUser.email).subscribe((result) => {
-        if (result == true) {
-          this.errorMessage =
-            'Ezzel az E-mail címmel már létezik felhasználói fiók';
-        } else {
-          this.locationService.getLocationId(this.selectedCity).subscribe(
-            (result) => (this.newUser.location_id = result),
-            (error) => console.log(error)
-          );
-          this.newUser.id = 0;
-          this.newUser.imageId = 0;
-          this.userService.Register(this.newUser).subscribe(
-            (result) => {
-              console.log(this.newUser);
-              this.router.navigateByUrl('/login');
-            },
-            (error) => (this.errorMessage = 'Váratlan hiba történt!')
-          );
-        }
-      });
-    }
-  }
+  
   Cancel() {
     this.newUser = new UserModel();
     this.selectedCounty = '';
     this.selectedCity = '';
     this.password2 = '';
   }
-  ngOnInit(): void {
-    if (window.innerWidth <= 800) {
-      this.mobile = true;
-    }
-    window.onresize = () => (this.mobile = window.innerWidth <= 991);
-    this.locationService.getLocations().subscribe(
-      (result) => (this.locations = result),
-      (error) => console.log(error)
-    );
-    this.locationService.getCounties().subscribe(
-      (result) => (this.counties = result),
-      (error) => console.log(error)
-    );
-  }
-
   errorCheck(): boolean {
     if (this.newUser.full_name == '') {
       this.errorMessage = 'Kérem adja meg a nevét!';
@@ -141,4 +115,30 @@ export class RegistryPageComponent implements OnInit {
 
     return true;
   }
+  Register() {
+    if (!this.newUser.role) this.newUser.role = 'User';
+    if (this.errorCheck()) {
+      this.userService.emailExists(this.newUser.email).subscribe((result) => {
+        if (result == true) {
+          this.errorMessage =
+            'Ezzel az E-mail címmel már létezik felhasználói fiók';
+        } else {
+          this.locationService.getLocationId(this.selectedCity).subscribe(
+            (result) => (this.newUser.location_id = result),
+            (error) => console.log(error)
+          );
+          this.newUser.id = 0;
+          this.newUser.imageId = 0;
+          this.userService.Register(this.newUser).subscribe(
+            (result) => {
+              console.log(this.newUser);
+              this.router.navigateByUrl('/login');
+            },
+            (error) => (this.errorMessage = 'Váratlan hiba történt!')
+          );
+        }
+      });
+    }
+  }
+  
 }

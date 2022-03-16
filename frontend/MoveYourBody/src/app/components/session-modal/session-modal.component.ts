@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ApplicantService } from 'src/app/services/applicant.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { LocationService } from 'src/app/services/location.service';
 import { ApplicantModel } from 'src/app/models/applicant-model';
 import { LocationModel } from 'src/app/models/location-model';
 import { TrainingSessionModel } from 'src/app/models/training-session-model';
 import { UserModel } from 'src/app/models/user-model';
-import { ApplicantService } from 'src/app/services/applicant.service';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { LocationService } from 'src/app/services/location.service';
 
 @Component({
   selector: 'app-session-modal',
@@ -15,6 +15,7 @@ import { LocationService } from 'src/app/services/location.service';
 export class SessionModalComponent implements OnInit {
   @Input() session = new TrainingSessionModel();
   @Input() mode = '';
+  
   constructor(
     private applicantService: ApplicantService,
     private locationService: LocationService,
@@ -24,8 +25,8 @@ export class SessionModalComponent implements OnInit {
   }
   user: UserModel;
   location: LocationModel;
-  public applicants: ApplicantModel[] = [];
-  public applicantUsers: UserModel[] = [];
+  applicants: ApplicantModel[] = [];
+  applicantUsers: UserModel[] = [];
   ngOnInit(): void {
     if (this.mode == 'trainer') {
       this.applicantService.listBySessionId(this.session.id).subscribe(
