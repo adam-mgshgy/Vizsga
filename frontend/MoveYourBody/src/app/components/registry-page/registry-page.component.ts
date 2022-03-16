@@ -127,7 +127,7 @@ export class RegistryPageComponent implements OnInit {
             (error) => console.log(error)
           );
           this.newUser.id = 0;
-          this.newUser.imageId = 0;
+          this.newUser.image_id = 0;
           this.userService.Register(this.newUser).subscribe(
             (result) => {
               console.log(this.newUser);

@@ -184,7 +184,7 @@ export class MyTrainingsPageComponent implements OnInit {
         (error) => console.log(error)
       );
   }
-  open(content: any, trainingId: number) {
+  open(content: any, training_id: number) {
     if (this.mode == 'trainer') {
       this.trainingSessionService.listBytraining_id(training_id).subscribe(
         (result) => {
