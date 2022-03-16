@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Time } from '@angular/common';
+import { LocationService } from 'src/app/services/location.service';
+import { TrainingService } from 'src/app/services/training.service';
+import { TrainingSessionService } from 'src/app/services/training-session.service';
 import { LocationModel } from 'src/app/models/location-model';
 import { TrainingSessionModel } from 'src/app/models/training-session-model';
-import { LocationService } from 'src/app/services/location.service';
-import { TrainingSessionService } from 'src/app/services/training-session.service';
-import { Time } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TrainingService } from 'src/app/services/training.service';
 import { TrainingModel } from 'src/app/models/training-model';
 
 @Component({
@@ -14,9 +14,16 @@ import { TrainingModel } from 'src/app/models/training-model';
   styleUrls: ['./add-session-page.component.css'],
 })
 export class AddSessionPageComponent implements OnInit {
+  constructor(
+    private locationService: LocationService,
+    private trainingService: TrainingService,
+    private trainingSessionService: TrainingSessionService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+
   training_id: number;
   sessionId: number;
-
   mobile: boolean = false;
   counties: LocationModel[] = [];
   cities: LocationModel[] = [];
@@ -26,77 +33,8 @@ export class AddSessionPageComponent implements OnInit {
   training: TrainingModel = new TrainingModel();
   date: Date;
   time: Time;
-
   errorMessage = '';
-  constructor(
-    private locationService: LocationService,
-    private trainingService: TrainingService,
-    private trainingSessionService: TrainingSessionService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
-  TimeChanged() {
-    this.newSession.date = new Date(this.date + ' ' + this.time).toISOString();
-  }
-  CountyChanged(value) {
-    for (const item of this.counties) {
-      if (item.county_name == value) {
-        this.newSession.location_id = item.id;
-        this.selectedCounty = item.county_name;
-      } else if (value == '') {
-        this.newSession.location_id = null;
-      } else if (value == item.id) {
-        this.selectedCounty = item.county_name;
-      }
-    }
-    this.locationService.getCities(this.selectedCounty).subscribe(
-      (result) => (this.cities = result),
-      (error) => console.log(error)
-    );
-  }
-  CityChanged(value) {
-    for (const item of this.cities) {
-      if (item.city_name == value) {
-        this.newSession.location_id = item.id;
-        this.selectedCity = item.city_name;
-      } else if (value == '') {
-        this.newSession.location_id = null;
-      } else if (value == item.id) {
-        this.selectedCity = item.city_name;
-      }
-    }
-  }
-  SaveSession() {
-    if (this.errorCheck()) {
-      this.locationService.getLocationId(this.selectedCity).subscribe(
-        (result) => {
-          this.newSession.location_id = result[0].id;
-          this.newSession.id = 1;
-          this.newSession.training_id = this.training_id;
-          this.newSession.min_member = Number(this.newSession.min_member);
-          this.newSession.max_member = Number(this.newSession.max_member);
-          this.trainingSessionService
-            .createTrainingSession(this.newSession)
-            .subscribe(
-              (result) => {
-                this.errorMessage = 'Sikeres mentés!';
-                this.router.navigateByUrl('/mytrainings/trainer');
-              },
-              (error) => console.log(error)
-            );
-        },
-        (error) => console.log(error)
-      );
-    }
-  }
-  Cancel() {
-    this.newSession = new TrainingSessionModel();
-    this.selectedCity = '';
-    this.selectedCounty = '';
-    this.date = null;
-    this.time = null;
-    this.router.navigateByUrl('/mytrainings/trainer');
-  }
+
   ngOnInit(): void {
     if (window.innerWidth <= 800) {
       this.mobile = true;
@@ -138,6 +76,48 @@ export class AddSessionPageComponent implements OnInit {
       }
     });
   }
+  
+  TimeChanged() {
+    this.newSession.date = new Date(this.date + ' ' + this.time).toISOString();
+  }
+  CountyChanged(value) {
+    for (const item of this.counties) {
+      if (item.county_name == value) {
+        this.newSession.location_id = item.id;
+        this.selectedCounty = item.county_name;
+      } else if (value == '') {
+        this.newSession.location_id = null;
+      } else if (value == item.id) {
+        this.selectedCounty = item.county_name;
+      }
+    }
+    this.locationService.getCities(this.selectedCounty).subscribe(
+      (result) => (this.cities = result),
+      (error) => console.log(error)
+    );
+  }
+  CityChanged(value) {
+    for (const item of this.cities) {
+      if (item.city_name == value) {
+        this.newSession.location_id = item.id;
+        this.selectedCity = item.city_name;
+      } else if (value == '') {
+        this.newSession.location_id = null;
+      } else if (value == item.id) {
+        this.selectedCity = item.city_name;
+      }
+    }
+  }
+ 
+  Cancel() {
+    this.newSession = new TrainingSessionModel();
+    this.selectedCity = '';
+    this.selectedCounty = '';
+    this.date = null;
+    this.time = null;
+    this.router.navigateByUrl('/mytrainings/trainer');
+  }
+ 
   errorCheck(): boolean {
     if (this.newSession.date == '') {
       this.errorMessage = 'Kérem adjon meg dátumot!';
@@ -189,5 +169,29 @@ export class AddSessionPageComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  SaveSession() {
+    if (this.errorCheck()) {
+      this.locationService.getLocationId(this.selectedCity).subscribe(
+        (result) => {
+          this.newSession.location_id = result[0].id;
+          this.newSession.id = 1;
+          this.newSession.training_id = this.training_id;
+          this.newSession.min_member = Number(this.newSession.min_member);
+          this.newSession.max_member = Number(this.newSession.max_member);
+          this.trainingSessionService
+            .createTrainingSession(this.newSession)
+            .subscribe(
+              (result) => {
+                this.errorMessage = 'Sikeres mentés!';
+                this.router.navigateByUrl('/mytrainings/trainer');
+              },
+              (error) => console.log(error)
+            );
+        },
+        (error) => console.log(error)
+      );
+    }
   }
 }

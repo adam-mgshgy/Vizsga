@@ -9,8 +9,8 @@ import { ApplicantModel } from '../models/applicant-model';
   providedIn: 'root'
 })
 export class ApplicantService {
-
   constructor(private http: HttpClient) { }
+  
   newApplicant(model: ApplicantModel): Observable<ApplicantModel> {
     return this.http.put<ApplicantModel>(`${environment.ApiURL}/applicants/add`, model).pipe(
       map((data: ApplicantModel) => {
