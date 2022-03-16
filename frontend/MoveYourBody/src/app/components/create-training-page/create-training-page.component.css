@@ -28,6 +28,7 @@ ul {
 }
 #createButton {
   background-color: #216869;
+  color:white;
 }
 #close:hover {
   cursor: pointer;

@@ -18,7 +18,7 @@ namespace MoveYourBody.WebAPI.Controllers
         {
             this.dbContext = dbContext;
         }
-        [HttpGet, Authorize(Roles = "Trainer, Admin, User")]
+        [HttpGet]
         public ActionResult List()
         {
             return this.Run(() =>
@@ -27,7 +27,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(locations);
             });
         }
-        [HttpGet("counties"), Authorize(Roles = "Trainer, Admin, User")]
+        [HttpGet("counties")]
         public ActionResult ListCounties()
         {
             return this.Run(() =>
@@ -39,7 +39,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(location);
             });
         }
-        [HttpGet("field"), Authorize(Roles = "Trainer, Admin, User")]                                  
+        [HttpGet("field")]                                  
         public ActionResult ListByField([FromQuery] string field)
         {
                 return this.Run(() =>
