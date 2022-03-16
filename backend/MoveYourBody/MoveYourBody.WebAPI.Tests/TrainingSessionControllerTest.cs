@@ -11,12 +11,10 @@ namespace MoveYourBody.WebAPI.Tests
 {
     public class TrainingSessionControllerTest
     {
-        //TestDbContext context;
         IConfiguration config;
 
         public TrainingSessionControllerTest()
         {
-            //this.context = new TestDbContext();
             //Configuration mocking: https://stackoverflow.com/questions/64794219/how-to-mock-iconfiguration-getvalue
             byte[] data = Convert.FromBase64String("TTB2M3kwdXJiMGR5");
             string decodedString = Encoding.UTF8.GetString(data);
@@ -67,7 +65,7 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(1, sessions[0].Number_of_applicants);
                 Assert.Equal("Virág utca 8.", sessions[0].Address_name);
                 Assert.Equal("Sportközpont", sessions[0].Place_name);
-                Assert.Equal("2022. 03. 12. 12:30:00", sessions[0].Date.ToString());
+                Assert.Equal("2022. 03. 30. 12:30:00", sessions[0].Date.ToString());
 
                 Assert.Equal("Edzõ Béla", trainer);
 
@@ -75,8 +73,8 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(3, training.Category_id);
                 Assert.Equal(2, training.Trainer_id);
                 Assert.Equal(0, training.Index_image_id);
-                Assert.Equal("Edzés 3", training.Name);
-                Assert.Equal("Rövid leírás az edzésrõl", training.Description);
+                Assert.Equal("Fociedzés", training.Name);
+                Assert.Equal("Fociedzés Bélával, gyertek sokan", training.Description);
                 Assert.Equal("+36701234566", training.Contact_phone);
 
                 Assert.Equal(3, category.Id);
@@ -124,14 +122,14 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(1, sessions[0].Number_of_applicants);
                 Assert.Equal("Virág utca 8.", sessions[0].Address_name);
                 Assert.Equal("Sportközpont", sessions[0].Place_name);
-                Assert.Equal("2022. 03. 12. 12:30:00", sessions[0].Date.ToString());
+                Assert.Equal("2022. 03. 30. 12:30:00", sessions[0].Date.ToString());
 
                 Assert.Equal(3, training.Id);
                 Assert.Equal(3, training.Category_id);
                 Assert.Equal(2, training.Trainer_id);
                 Assert.Equal(0, training.Index_image_id);
-                Assert.Equal("Edzés 3", training.Name);
-                Assert.Equal("Rövid leírás az edzésrõl", training.Description);
+                Assert.Equal("Fociedzés", training.Name);
+                Assert.Equal("Fociedzés Bélával, gyertek sokan", training.Description);
                 Assert.Equal("+36701234566", training.Contact_phone);
 
             }
@@ -167,14 +165,14 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(1, session.Number_of_applicants);
                 Assert.Equal("Virág utca 8.", session.Address_name);
                 Assert.Equal("Sportközpont", session.Place_name);
-                Assert.Equal("2022. 03. 12. 12:30:00", session.Date.ToString());
+                Assert.Equal("2022. 03. 30. 12:30:00", session.Date.ToString());
 
                 Assert.Equal(3, training.Id);
                 Assert.Equal(3, training.Category_id);
                 Assert.Equal(2, training.Trainer_id);
                 Assert.Equal(0, training.Index_image_id);
-                Assert.Equal("Edzés 3", training.Name);
-                Assert.Equal("Rövid leírás az edzésrõl", training.Description);
+                Assert.Equal("Fociedzés", training.Name);
+                Assert.Equal("Fociedzés Bélával, gyertek sokan", training.Description);
                 Assert.Equal("+36701234566", training.Contact_phone);
 
                 Assert.Equal(59, location.Id);
@@ -230,7 +228,6 @@ namespace MoveYourBody.WebAPI.Tests
             using (var context = TestDbContext.GenerateTestDbContext())
             {
                 var sut = new TrainingSessionController(context, config);
-                //new TrainingSession() { Address_name = "Virág utca 8.", Date = new DateTime(2022, 3, 10, 12, 0, 0), Id = 11, Location_id = 61, Max_member = 10, Min_member = 5, Minutes = 45, Number_of_applicants = 1, Place_name = "Sportközpont", Price = 1500, Training_id = 7 }
 
                 TrainingSession modifySession = new TrainingSession()
                 {
@@ -273,13 +270,12 @@ namespace MoveYourBody.WebAPI.Tests
             using (var context = TestDbContext.GenerateTestDbContext())
             {
                 var sut = new TrainingSessionController(context, config);
-                //new TrainingSession() { Address_name = "Virág utca 8.", Date = new DateTime(2022, 3, 10, 12, 0, 0), Id = 11, Location_id = 61, Max_member = 10, Min_member = 5, Minutes = 45, Number_of_applicants = 1, Place_name = "Sportközpont", Price = 1500, Training_id = 7 }
 
                 TrainingSession deleteSession = new TrainingSession()
                 {
                     Id = 11,
                     Address_name = "Virág utca 8.",
-                    Date = new DateTime(2022, 3, 10, 12, 0, 0),
+                    Date = new DateTime(2022, 5, 10, 12, 0, 0),
                     Location_id = 61,
                     Max_member = 10,
                     Min_member = 5,
@@ -306,17 +302,8 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.Equal(1, session.Number_of_applicants);
                 Assert.Equal("Virág utca 8.", session.Address_name);
                 Assert.Equal("Sportközpont", session.Place_name);
-                Assert.Equal("2022. 03. 10. 12:00:00", session.Date.ToString());
+                Assert.Equal("2022. 05. 10. 12:00:00", session.Date.ToString());
             }
         }
-        //[Fact]
-        //public void Register()
-        //{
-        //    using (var context = TestDbContext.GenerateTestDbContext())
-        //    {
-        //var sut = new UserController(context, config);
-
-        //    }
-        //}
     }
 }

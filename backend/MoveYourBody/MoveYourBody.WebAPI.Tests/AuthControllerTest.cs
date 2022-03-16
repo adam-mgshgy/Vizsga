@@ -15,7 +15,6 @@ namespace MoveYourBody.WebAPI.Tests
         IConfiguration config;
         public AuthControllerTest()
         {
-            //this.context = new TestDbContext();
             //Configuration mocking: https://stackoverflow.com/questions/64794219/how-to-mock-iconfiguration-getvalue
             var inMemorySettings = new Dictionary<string, string> {
                 {"TopLevelKey", "TopLevelValue"},
@@ -35,7 +34,6 @@ namespace MoveYourBody.WebAPI.Tests
         {
             using (var context = TestDbContext.GenerateTestDbContext())
             {
-
                 var sut = new AuthController(config, context);
 
                 TagTraining tagTraining = new TagTraining()

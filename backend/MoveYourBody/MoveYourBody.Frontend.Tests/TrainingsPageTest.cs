@@ -26,8 +26,8 @@ namespace MoveYourBody.Frontend.Tests
                 
                 System.Threading.Thread.Sleep(300);
 
-                driver.FindElement(By.XPath("//h3[contains(.,'Edzés 7')]"));
-                Assert.Equal("Edzés 7", driver.FindElement(By.XPath("//h3[contains(.,'Edzés 7')]")).Text);
+                driver.FindElement(By.XPath("//h3[contains(.,'GézaFitt')]"));
+                Assert.Equal("GézaFitt", driver.FindElement(By.XPath("//h3[contains(.,'GézaFitt')]")).Text);
                 Assert.Equal(7, driver.FindElements(By.XPath("//div[@id='training']")).Count);
                 Assert.Equal("Erõnléti", driver.FindElement(By.XPath("(//mat-chip[@id='tag'])[14]")).Text);
                 Assert.Equal("Minden Edzés", driver.FindElement(By.XPath("//h1[@id='allTrainings']")).Text);

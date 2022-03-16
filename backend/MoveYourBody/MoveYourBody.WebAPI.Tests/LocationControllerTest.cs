@@ -10,12 +10,10 @@ namespace MoveYourBody.WebAPI.Tests
 {
     public class LocationControllerTest
     {
-        //TestDbContext context;
         IConfiguration config;
 
         public LocationControllerTest()
         {
-            //this.context = new TestDbContext();
             //Configuration mocking: https://stackoverflow.com/questions/64794219/how-to-mock-iconfiguration-getvalue
             var inMemorySettings = new Dictionary<string, string> {
                 {"TopLevelKey", "TopLevelValue"},
@@ -36,8 +34,6 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.IsType<OkObjectResult>(result);
 
                 Location[] value = (Location[])((OkObjectResult)result).Value;
-                //Assert.Equal("jozsiedzo@email.com", value.Email);
-                //Assert.Equal("Edzõ József", value.Full_name);
                 Assert.IsType<OkObjectResult>(result);
 
             }
@@ -51,12 +47,6 @@ namespace MoveYourBody.WebAPI.Tests
                 var result = sut.ListCounties();
 
                 Assert.IsType<OkObjectResult>(result);
-
-                //Location[] value = (Location[])((OkObjectResult)result).Value; ???
-                //Assert.Equal("jozsiedzo@email.com", value.Email);
-                //Assert.Equal("Edzõ József", value.Full_name);
-   
-
             }
         }
         [Fact]
@@ -70,7 +60,6 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.IsType<OkObjectResult>(result);
                 Location[] value = (Location[])((OkObjectResult)result).Value;
                 Location location = (Location)value[0];
-                //{ 1, "Aba", "Fejér" },
                 Assert.Equal(1, location.Id);
                 Assert.Equal("Aba", location.City_name);
                 Assert.Equal("Fejér", location.County_name);
@@ -87,7 +76,6 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.IsType<OkObjectResult>(result);
                 Location[] value = (Location[])((OkObjectResult)result).Value;
                 Location location = (Location)value[0];
-                //{ 1, "Aba", "Fejér" },
                 Assert.Equal(1, location.Id);
                 Assert.Equal("Aba", location.City_name);
                 Assert.Equal("Fejér", location.County_name);
@@ -104,20 +92,10 @@ namespace MoveYourBody.WebAPI.Tests
                 Assert.IsType<OkObjectResult>(result);
                 Location[] value = (Location[])((OkObjectResult)result).Value;
                 Location location = (Location)value[0];
-                //{ 1, "Aba", "Fejér" },
                 Assert.Equal(1, location.Id);
                 Assert.Equal("Aba", location.City_name);
                 Assert.Equal("Fejér", location.County_name);
             }
         }
-        //[Fact]
-        //public void Register()
-        //{
-        //    using (var context = TestDbContext.GenerateTestDbContext())
-        //    {
-        //var sut = new UserController(context, config);
-
-        //    }
-        //}
     }
 }

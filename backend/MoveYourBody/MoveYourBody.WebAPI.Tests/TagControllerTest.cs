@@ -14,7 +14,6 @@ namespace MoveYourBody.WebAPI.Tests
         IConfiguration config;
         public TagControllerTest()
         {
-            //this.context = new TestDbContext();
             //Configuration mocking: https://stackoverflow.com/questions/64794219/how-to-mock-iconfiguration-getvalue
             var inMemorySettings = new Dictionary<string, string> {
                 {"TopLevelKey", "TopLevelValue"},
@@ -23,7 +22,6 @@ namespace MoveYourBody.WebAPI.Tests
             config = new ConfigurationBuilder()
                         .AddInMemoryCollection(inMemorySettings)
                         .Build();
-
         }       
 
         [Fact]
