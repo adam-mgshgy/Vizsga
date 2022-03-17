@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-moveyourbody-pv-claim
+spec:
+  storageClassName: standard
+  volumeName: mysql-moveyourbody-pv
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi

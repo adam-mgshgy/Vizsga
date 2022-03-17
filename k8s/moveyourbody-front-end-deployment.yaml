@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moveyourbody-front-end-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: moveyourbody-front-end
+  template:
+    metadata:
+      labels:
+        component: moveyourbody-front-end
+    spec:
+      containers:
+        - name: client
+          image: ghcr.io/adam-mgshgy/moveyourbodycli:1.0.1
+          ports:
+            - containerPort: 80

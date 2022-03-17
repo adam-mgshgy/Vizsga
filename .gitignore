@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 backend/MoveYourBody/MoveYourBody.Service/Migrations
 frontend/MoveYourBody/.angular
+frontend/MoveYourBody/dist
