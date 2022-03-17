@@ -35,7 +35,7 @@ namespace MoveYourBody
                 option.UseMySql(Configuration.GetConnectionString("moveyourbody"));
             });
 
-            var secret = "uqMSgheawJFWEFMFcGhkKxnEsdzPSmVVhbhitlEB";
+            var secret = Configuration.GetSection("JwtConfig")["secret"];
 
             var key = Encoding.ASCII.GetBytes(secret);
             services.AddAuthentication(x =>
@@ -75,12 +75,12 @@ namespace MoveYourBody
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext dbContext)
         {
             app.UseSwagger();
             app.UseSwaggerUI(option =>
             {
-                option.SwaggerEndpoint("/swagger/v1/swagger.json", "MoveYourBody API V1");
+                option.SwaggerEndpoint("../swagger/v1/swagger.json", "MoveYourBody API V1");
             });
             if (env.IsDevelopment())
             {
@@ -89,7 +89,7 @@ namespace MoveYourBody
 #if DEBUG
             app.UseCors("EnableCORS");
 #endif
-
+            dbContext.Database.EnsureCreated();
             app.UseRouting();
 
             app.UseAuthentication();

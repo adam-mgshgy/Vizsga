@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moveyourbody-back-end-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: moveyourbody-back-end
+  template:
+    metadata:
+      labels:
+        component: moveyourbody-back-end
+    spec:
+      containers:
+        - name: backend
+          image: ghcr.io/adam-mgshgy/moveyourbody:1.0.1
+          env:
+          - name: ConnectionStrings__moveyourbody
+            value: "Server=mysql-moveyourbody-cluster-ip-service.default.svc.cluster.local;Database=moveyourbody;Uid=root;Pwd=M0veY0urB@dy;"
+          - name: JwtConfig__secret
+            value: "kzwCbtqcOkSGzNEwLVQXEziDIQHsEDPRPUmsFtMv"
+          - name: JwtConfig__expirationInMinutes
+            value: "31"
+          - name: MySql__version
+            value: "10.7.3"
+          - name: MySql__type
+            value: "MariaDb"
+          ports:
+            - containerPort: 80
