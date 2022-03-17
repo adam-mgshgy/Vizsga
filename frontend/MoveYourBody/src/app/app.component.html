@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container-fluid">
-    <a [ngStyle]="{'width.px': mobile ? '250' : '170'}" id="logoLink" routerLink="/home"><img id="logoImage" src="./assets/images/mainPageImages/logoWhite.png" alt="logo"></a>
+    <div><a id="logoLink" routerLink="/home"><img id="logoImage" src="./assets/images/mainPageImages/logoWhite.png" alt="logo"></a></div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -47,7 +47,7 @@
       <ul id="userDropdown" class="navbar-nav ml-auto me-2 mb-2 mb-lg-0 dropdown-menu-end">
 
         <li *ngIf="user" class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle fs-4" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+          <a class="nav-link dropdown-toggle font" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
             {{user.full_name}}
           </a>
           <ul class="dropdown-menu dropdown-menu-end">

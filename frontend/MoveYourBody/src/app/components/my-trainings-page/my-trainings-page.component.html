@@ -1,5 +1,5 @@
 <div class="parallax">
-  <div [ngStyle]="{ 'width.%': mobile == true ? '100' : '80' }" class="container-fluid">
+  <div [ngStyle]="{ 'width.%': mobile == true ? '100' : '80' }" class="container-fluid custom">
     <div class="row">
       <div id="training" *ngFor="let training of myTrainings; let i = index" class="col-xxl-4 col-xl-6 col-md-6">
         <div class="card mb-3">
@@ -56,14 +56,14 @@
         </div>
       </div>
       <div class="col">
-        <button *ngIf="mode == 'trainer'" id="newTraining" class="btn fw-bold mx-2" routerLink="/createtraining">
+        <button *ngIf="mode == 'trainer'" id="newTraining" class="btn fw-bold mb-4" routerLink="/createtraining">
           Új edzés
         </button>
       </div>
     </div>
-    <div class="noApplications">
-      <h2 id="notApplied" *ngIf="myTrainings.length == 0 && mode == 'applied'">Még nem jelentkezett egy edzésre sem!</h2>
-      <h2 id="categories"><a *ngIf="myTrainings.length == 0 && mode == 'applied'" routerLink="/categories">Megnézem az összes kategóriát!</a></h2>
+    <div class="noApplications" *ngIf="myTrainings.length == 0 && mode == 'applied'">
+      <h2 id="notApplied">Még nem jelentkezett egy edzésre sem!</h2>
+      <h2 id="categories"><a routerLink="/categories">Megnézem az összes kategóriát!</a></h2>
     </div>
   </div>
 

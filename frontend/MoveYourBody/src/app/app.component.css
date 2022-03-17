@@ -18,11 +18,16 @@
     margin-right: 2rem;
  }
  #logoImage {
-   width: 100%;
+   max-height: 40px;
+   height: 40px;
+
  }
  #logoLink {
    width: 60px;
  }
  .clickable {
     cursor: pointer;
+ }
+ .font {
+    font-size: medium;
  }
