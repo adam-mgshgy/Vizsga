@@ -12,6 +12,7 @@ import { TrainingModel } from 'src/app/models/training-model';
 import { UserModel } from 'src/app/models/user-model';
 import { TrainingImageModel } from 'src/app/models/training-images-model';
 import { ImagesModel } from 'src/app/models/images-model';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-create-training-page',
@@ -297,7 +298,6 @@ export class CreateTrainingPageComponent implements OnInit {
           );
         }
       } else {
-        console.log(this.images);
         this.trainingService.saveImage(this.images, this.training.id).subscribe(
           (result) => console.log(result),
           (error) => console.log(error)

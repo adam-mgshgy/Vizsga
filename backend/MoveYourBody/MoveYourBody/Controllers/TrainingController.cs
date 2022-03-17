@@ -150,14 +150,15 @@ namespace MoveYourBody.WebAPI.Controllers
                     dbContext.SaveChanges();
 
                     var training = dbContext.Set<Training>().Where(t => t.Id == trainingImages.Training_id).FirstOrDefault();
-                    if (training.Index_image_id == item && dbContext.Set<TrainingImage>().Where(t => t.Training_id == trainingImages.Training_id) != null)
+                    if (training.Index_image_id == item && dbContext.Set<TrainingImage>().Where(t => t.Training_id == trainingImages.Training_id).FirstOrDefault() != null)
                     {
                         training.Index_image_id = dbContext.Set<TrainingImage>().Where(t => t.Training_id == trainingImages.Training_id).FirstOrDefault().Image_id;
                     }
-                    else if (dbContext.Set<TrainingImage>().Where(t => t.Training_id == trainingImages.Training_id) == null)
+                    else if (dbContext.Set<TrainingImage>().Where(t => t.Training_id == trainingImages.Training_id).FirstOrDefault() == null)
                     {
                         training.Index_image_id = 0;
                     }
+                    
                     dbContext.Entry(training).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 }
                 dbContext.SaveChanges();
