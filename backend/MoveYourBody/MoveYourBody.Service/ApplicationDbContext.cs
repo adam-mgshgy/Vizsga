@@ -173,7 +173,7 @@ namespace MoveYourBody.Service
                 new Image() { Id = 13, Image_data = image_data }
             );
 
-            if (isMigration || true)
+            if (isMigration)
             {
                 string[] lines = File.ReadAllText("cities.csv").Trim().Split('\n');
                 int i = 1;
