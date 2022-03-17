@@ -2,19 +2,22 @@
   width: 80%;
   padding-top: 2rem;
 }
+.custom {
+  min-height: calc(100vh - 56px);
+}
 .full {
   height: 100%;
-  width: 100%; 
+  width: 100%;
 }
 .cover {
   object-fit: cover;
 }
-#tag{    
-    height: 30px;
-    font-size: x-small;
-    border: 0px;
-    color: white;
-    cursor: pointer;
+#tag {
+  height: 30px;
+  font-size: x-small;
+  border: 0px;
+  color: white;
+  cursor: pointer;
 }
 #moreTag {
   height: 30px;
@@ -38,7 +41,7 @@
   border-color: white;
 }
 #newTraining {
-  width: 40%;
+  width: 300px;
   height: 150px;
   font-size: xx-large;
   background-color: #9cc5a1;
@@ -52,22 +55,17 @@
   text-align: center;
   color: white;
 }
-.noApplications a {  
+.noApplications a {
   text-decoration: none;
   color: white;
   font-weight: bold;
 }
 .parallax {
   background-image: url("../../../assets/images/backgrounds/background2.jpeg");
-  min-height: calc(100vh - 59px);
+  min-height: calc(100vh - 56px);
 
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-@media screen and (max-width: 991px) {
-  .parallax {
-    min-height: calc(100vh - 79px);
-  }
 }
