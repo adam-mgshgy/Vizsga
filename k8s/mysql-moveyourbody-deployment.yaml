@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-moveyourbody
+spec:
+  selector:
+    matchLabels:
+      app: mysql-moveyourbody
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql-moveyourbody
+    spec:
+      containers:
+        - image: mariadb:10.7.3
+          name: mysql-moveyourbody
+          env:
+            - name: MARIADB_ROOT_PASSWORD
+              value: M0veY0urB@dy
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-moveyourbody-pv-claim
