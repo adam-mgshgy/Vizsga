@@ -78,7 +78,7 @@ namespace MoveYourBody.WebAPI.Controllers
                 return Ok(image);
             });
         }
-        [HttpGet("email"), Authorize(Roles = "Trainer, Admin, User")]                                     
+        [HttpGet("email")]                                     
         public ActionResult EmailExists([FromQuery] string email)
         {
             return this.Run(() =>
